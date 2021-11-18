@@ -25,6 +25,7 @@ Note: This will change and vary as we add more dependencies or libraries in our 
 ```
 
 -   Using VS-code you can compile and run the whole project using `Java Projects` tab on the bottom-left using `play` button over `deltaducks`.
+    
     ![vscode-snipit](https://i.ibb.co/kq8qFfk/Screenshot-2021-11-18-190003.png)
 -   It should succesfully compile and print `Hello World!`
 
