@@ -1,0 +1,9 @@
+#loading-preloader {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  margin-top: 0px;
+  top: 0px;
+  left: 0;
+  z-index: 9999;
+}
