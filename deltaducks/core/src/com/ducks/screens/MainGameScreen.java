@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.ducks.DeltaDucks;
+import com.ducks.entities.Bullet;
+
+import java.util.ArrayList;
 
 public class MainGameScreen implements Screen {
 
@@ -25,6 +28,8 @@ public class MainGameScreen implements Screen {
     public static final float VERTICAL_ROLL_TIMER_SWITCH_TIME = 0.25f;
     public static final float HORIZONTAL_ROLL_TIMER_SWITCH_TIME = 0.25f;
 
+    public static final float SHOOT_WAIT_TIME = 0.3f;
+
 
 
     Animation<TextureRegion>[] rolls;
@@ -34,8 +39,11 @@ public class MainGameScreen implements Screen {
     float rollVerticalTimer;
     float rollHorizontalTimer;
     float stateTime;
+    float shootTimer;
 
     DeltaDucks game;
+
+    ArrayList<Bullet> bullets;
 
     public static final int UP_INDEX = 8;
     public static final int DOWN_INDEX = 0;
@@ -54,6 +62,8 @@ public class MainGameScreen implements Screen {
     public void show() {
         x = Gdx.graphics.getWidth()/2 - SHIP_WIDTH/2;
         y = Gdx.graphics.getHeight()/2 - SHIP_HEIGHT/2;
+
+        bullets = new ArrayList <Bullet> ();
 
         roll = 8;
         rolls = new Animation[16];
@@ -77,11 +87,51 @@ public class MainGameScreen implements Screen {
         rolls[14] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[10]);
         rolls[15] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[9]);
 
-        EX = roll;
+        EX = roll; // Dummy variable to look out for changes in the animation states (from 0 to 15)
     }
 
     @Override
     public void render(float delta) {
+        //Shooting Code
+        shootTimer += delta;
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && shootTimer >= SHOOT_WAIT_TIME) {
+            shootTimer = 0;
+
+//            int offset = 4;
+//            if (roll == 1 || roll == 3)
+//                offset = 8;
+//            if (roll == 0 || roll == 4)
+//                offset = 16;
+            int state;
+            if (roll == 0)
+                state = 1;
+            else if (roll < 4)
+                state = 7;
+            else if (roll == 4)
+                state = 3;
+            else if (roll < 8)
+                state = 5;
+            else if (roll == 8)
+                state = 0;
+            else if (roll < 12)
+                state = 4;
+            else if (roll == 12)
+                state = 2;
+            else
+                state = 6;
+            bullets.add(new Bullet(x + SHIP_WIDTH/2 - 3, y + SHIP_HEIGHT/2 - 12, state));
+//            bullets.add(new Bullet(x + SHIP_WIDTH - offset));
+        }
+        // Update Bullets
+        ArrayList <Bullet> bulletsToRemove = new ArrayList <Bullet> ();
+        for (Bullet bullet : bullets) {
+            bullet.update(delta);
+            if (bullet.remove)
+                bulletsToRemove.add(bullet);
+        }
+
+        bullets.removeAll(bulletsToRemove);
+
         // Movement Code
         if (Gdx.input.isKeyPressed(Input.Keys.UP)){
             y += SPEED * Gdx.graphics.getDeltaTime();
@@ -212,14 +262,20 @@ public class MainGameScreen implements Screen {
 //        if(roll == 16)
 //            roll = 15;
         if (EX != roll) {
-            System.out.println(roll);
+//            System.out.println(roll);
             EX = roll;
         }
+
+        stateTime += delta;
 
         Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.batch.begin();
+
+        for(Bullet bullet : bullets) {
+            bullet.render(game.batch);
+        }
 
         game.batch.draw(rolls[roll].getKeyFrame(stateTime, true), x, y, SHIP_WIDTH, SHIP_HEIGHT);
 
