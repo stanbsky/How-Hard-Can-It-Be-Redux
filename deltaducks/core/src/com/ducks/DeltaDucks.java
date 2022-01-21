@@ -13,6 +13,16 @@ public class DeltaDucks extends Game {
 	public static final int WIDTH = 1280;
 	public static final int HEIGHT = 720;
 
+	public static final int VIRTUAL_WIDTH = 480*2; // 400
+	public static final int VIRTUAL_HEIGHT = 480; // 208
+
+
+	public static final float PIXEL_PER_METER = 100;
+
+	public static final short BIT_SEA = 2;
+	public static final short BIT_LAND = 4;
+	public static final short BIT_PLAYER = 8;
+
 	public SpriteBatch batch;
 
 	@Override

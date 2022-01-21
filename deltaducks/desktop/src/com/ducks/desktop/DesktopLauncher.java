@@ -12,7 +12,7 @@ public class DesktopLauncher {
 		config.title = "Delta Ducks";
 		config.width = DeltaDucks.WIDTH;
 		config.height = DeltaDucks.HEIGHT;
-		config.resizable = false;
+//		config.resizable = false;
 
 		new LwjglApplication(new DeltaDucks(), config);
 	}
