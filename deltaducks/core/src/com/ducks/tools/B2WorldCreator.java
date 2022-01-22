@@ -15,17 +15,6 @@ public class B2WorldCreator {
         FixtureDef fdef = new FixtureDef();
         Body body;
 //        fdef.friction = 0.4f;
-        // Sea
-        for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((rect.getX() + rect.getWidth() / 2) / DeltaDucks.PIXEL_PER_METER, (rect.getY() + rect.getHeight() / 2) / DeltaDucks.PIXEL_PER_METER);
-            body = world.createBody(bdef);
-            shape.setAsBox(rect.getWidth() / 2 / DeltaDucks.PIXEL_PER_METER, rect.getHeight() / 2 / DeltaDucks.PIXEL_PER_METER);
-            fdef.shape = shape;
-            fdef.filter.categoryBits = DeltaDucks.BIT_SEA;
-            body.createFixture(fdef).setUserData("Sea");
-        }
 
         // Ground
         for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
@@ -38,6 +27,49 @@ public class B2WorldCreator {
             fdef.filter.categoryBits = DeltaDucks.BIT_LAND;
             body.createFixture(fdef).setUserData("Land");
         }
-
+        // Sea
+        for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / DeltaDucks.PIXEL_PER_METER, (rect.getY() + rect.getHeight() / 2) / DeltaDucks.PIXEL_PER_METER);
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth() / 2 / DeltaDucks.PIXEL_PER_METER, rect.getHeight() / 2 / DeltaDucks.PIXEL_PER_METER);
+            fdef.shape = shape;
+//            fdef.density = 0.0f;
+//            fdef.restitution = 0.5f;
+//            fdef.friction = 0f;
+            fdef.filter.categoryBits = DeltaDucks.BIT_SEA;
+            body.createFixture(fdef).setUserData("Sea");
+        }
+// Pipe
+//        for (MapObject object : map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class)) {
+//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+//            bdef.type = BodyDef.BodyType.StaticBody;
+//            bdef.position.set((rect.getX() + rect.getWidth() / 2) / DeltaDucks.PIXEL_PER_METER, (rect.getY() + rect.getHeight() / 2) / DeltaDucks.PIXEL_PER_METER);
+//            body = world.createBody(bdef);
+//            shape.setAsBox(rect.getWidth() / 2 / DeltaDucks.PIXEL_PER_METER, rect.getHeight() / 2 / DeltaDucks.PIXEL_PER_METER);
+//            fdef.shape = shape;
+//            body.createFixture(fdef);
+//        }
+//        // Coin
+//        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+//            bdef.type = BodyDef.BodyType.StaticBody;
+//            bdef.position.set((rect.getX() + rect.getWidth() / 2) / DeltaDucks.PIXEL_PER_METER, (rect.getY() + rect.getHeight() / 2) / DeltaDucks.PIXEL_PER_METER);
+//            body = world.createBody(bdef);
+//            shape.setAsBox(rect.getWidth() / 2 / DeltaDucks.PIXEL_PER_METER, rect.getHeight() / 2 / DeltaDucks.PIXEL_PER_METER);
+//            fdef.shape = shape;
+//            body.createFixture(fdef);
+//        }
+//        // Brick
+//        for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
+//            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+//            bdef.type = BodyDef.BodyType.StaticBody;
+//            bdef.position.set((rect.getX() + rect.getWidth() / 2) / DeltaDucks.PIXEL_PER_METER, (rect.getY() + rect.getHeight() / 2) / DeltaDucks.PIXEL_PER_METER);
+//            body = world.createBody(bdef);
+//            shape.setAsBox(rect.getWidth() / 2 / DeltaDucks.PIXEL_PER_METER, rect.getHeight() / 2 / DeltaDucks.PIXEL_PER_METER);
+//            fdef.shape = shape;
+//            body.createFixture(fdef);
+//        }
     }
 }
