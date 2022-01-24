@@ -18,6 +18,8 @@ import com.ducks.scenes.Hud;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.Content;
 import com.ducks.tools.MyContactListener;
+import sprites.Monsters;
+import sprites.Pirates;
 import sprites.Ship;
 
 public class MainGameScreen implements Screen {
@@ -38,6 +40,9 @@ public class MainGameScreen implements Screen {
     private Box2DDebugRenderer b2dr;
 
     private Ship player;
+    private Pirates bots;
+    private Monsters creatures;
+
 //    private Player player;
     private MyContactListener contactListener;
 
@@ -52,6 +57,8 @@ public class MainGameScreen implements Screen {
         this.game = game;
         resources = new Content();
         atlas = new TextureAtlas("sprites/ship.pack");
+        MainGameScreen.resources.loadTexture("bunny.png", "badlogic");
+        MainGameScreen.resources.loadTexture("Idle.png", "worm");
     }
 
     public TextureAtlas getAtlas() { return atlas;}
@@ -69,18 +76,23 @@ public class MainGameScreen implements Screen {
 
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
 
+
         // Set Up Box2D
         world = new World(new Vector2(0, 0), true);
-        contactListener = new MyContactListener();
+
+        player = new Ship(world, this);
+
+        contactListener = new MyContactListener(player);
         world.setContactListener(contactListener);
         b2dr = new Box2DDebugRenderer();
 
         new B2WorldCreator(world, map);
 
         // Create Player
-        player = new Ship(world, this);
-//        player = new Player(body.b2body);
 
+//        player = new Player(body.b2body);
+        bots = new Pirates(world, this);
+        creatures = new Monsters(world, this);
 
     }
 
@@ -103,6 +115,8 @@ public class MainGameScreen implements Screen {
         world.step(deltaTime, 6, 2);
 
         player.update(deltaTime);
+        creatures.update(deltaTime);
+        hud.update(deltaTime);
 
         gameCam.position.x = player.b2body.getPosition().x;
         gameCam.position.y = player.b2body.getPosition().y;
@@ -125,9 +139,12 @@ public class MainGameScreen implements Screen {
         // Render our Box2DDebugLines
         b2dr.render(world, gameCam.combined);
 
+
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         player.draw(game.batch);
+//        bots.draw(game.batch);
+        creatures.draw(game.batch);
         game.batch.end();
 
         // Set our batch to now draw what the Hud camera sees.
@@ -135,7 +152,10 @@ public class MainGameScreen implements Screen {
         hud.stage.draw();
 
 //        player.render(game.batch);
-
+//        game.batch.setProjectionMatrix(gamePort.getCamera().combined);
+//        game.batch.begin();
+//        game.batch.draw(MainGameScreen.resources.getTexture("badlogic"), 0, 500 / DeltaDucks.PIXEL_PER_METER, 32*4 / DeltaDucks.PIXEL_PER_METER, 32 / DeltaDucks.PIXEL_PER_METER);
+//        game.batch.end();
 
 //        game.batch.draw(resources.getTexture("badlogic"),0,0);
 

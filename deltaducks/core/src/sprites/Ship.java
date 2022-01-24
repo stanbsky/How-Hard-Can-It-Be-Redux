@@ -34,6 +34,13 @@ public class Ship extends Sprite {
     private final int PIXEL_SHIP_WIDTH = 64;
     private final int PIXEL_SHIP_HEIGHT = 64;
 
+    private final float MULTIPLIER = 1.3f;
+
+    private final int SHIP_WIDTH = Math.round(PIXEL_SHIP_WIDTH * MULTIPLIER);
+    private final int SHIP_HEIGHT = Math.round(PIXEL_SHIP_HEIGHT * MULTIPLIER);
+
+    private final int SPRITE_RADIUS = 1;
+
     private final float SHIP_FRAME_DURATION = 0.5f;
     private final float VERTICAL_ROLL_TIMER_SWITCH_TIME = 0.25f;
     private final float HORIZONTAL_ROLL_TIMER_SWITCH_TIME = 0.25f;
@@ -95,11 +102,11 @@ public class Ship extends Sprite {
         rolls[15] = new Animation(SHIP_FRAME_DURATION, frames.get(9));
 
 
-        shipStand = new TextureRegion(getTexture(), PIXEL_SHIP_WIDTH *0, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT);
+        shipStand = new TextureRegion(getTexture(), PIXEL_SHIP_WIDTH * 0, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT);
 
 
         defineShip();
-        setBounds(0, 0, PIXEL_SHIP_WIDTH / DeltaDucks.PIXEL_PER_METER, PIXEL_SHIP_HEIGHT / DeltaDucks.PIXEL_PER_METER);
+        setBounds(0, 0, SHIP_WIDTH / DeltaDucks.PIXEL_PER_METER, SHIP_HEIGHT / DeltaDucks.PIXEL_PER_METER);
         setRegion(shipStand);
     }
 
@@ -110,7 +117,7 @@ public class Ship extends Sprite {
 
     public TextureRegion getFrame(float deltaTime) {
         currentState = getState();
-        System.out.println(currentState);
+//        System.out.println(currentState);
         TextureRegion region;
         switch (currentState) {
             case MOVING:
@@ -227,11 +234,12 @@ public class Ship extends Sprite {
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
             default:
-                region = shipStand;
+                currentState = previousState;
+                region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
         }
 
-        System.out.println(roll);
+//        System.out.println(roll);
 
 //        if((b2body.getLinearVelocity().x < 0 || !movingRight) && !region.isFlipX()){
 //            region.flip(true, false);
@@ -269,11 +277,11 @@ public class Ship extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(6 / DeltaDucks.PIXEL_PER_METER);
+        shape.setRadius(12 / DeltaDucks.PIXEL_PER_METER);
 
         fdef.shape = shape;
         fdef.filter.categoryBits = DeltaDucks.BIT_PLAYER;
-        fdef.filter.maskBits = DeltaDucks.BIT_LAND;
+        fdef.filter.maskBits = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_MONSTERS;
         fdef.restitution = 0.2f;
         b2body.createFixture(fdef).setUserData("Player");
 
@@ -281,7 +289,7 @@ public class Ship extends Sprite {
         polyShape.setAsBox(2 / DeltaDucks.PIXEL_PER_METER, 2 / DeltaDucks.PIXEL_PER_METER, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
         fdef.shape = polyShape;
         fdef.filter.categoryBits = DeltaDucks.BIT_PLAYER;
-        fdef.filter.maskBits = DeltaDucks.BIT_LAND;
+        fdef.filter.maskBits = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_MONSTERS;
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("Sensor");
 

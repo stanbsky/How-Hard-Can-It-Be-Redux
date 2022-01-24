@@ -13,7 +13,7 @@ public class Player extends B2DSprite {
     public Player(Body body) {
         super(body);
 
-        MainGameScreen.resources.loadTexture("bunny.png", "badlogic");
+//        MainGameScreen.resources.loadTexture("bunny.png", "badlogic");
         Texture texture = MainGameScreen.resources.getTexture("badlogic");
 
         TextureRegion[] sprites = TextureRegion.split(texture, 32, 32)[0];
