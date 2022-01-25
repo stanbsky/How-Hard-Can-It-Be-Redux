@@ -6,9 +6,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -33,7 +35,10 @@ public class MainGameScreen implements Screen {
 
     private TmxMapLoader mapLoader;
     private TiledMap map;
+    private MapProperties prop;
     private OrthogonalTiledMapRenderer renderer;
+    private int mapPixelWidth;
+    private int mapPixelHeight;
 
     // Box2d Variables
     private World world;
@@ -72,7 +77,16 @@ public class MainGameScreen implements Screen {
         // Create Map
         mapLoader = new TmxMapLoader();
         map = mapLoader.load("test_map.tmx");
+        prop = map.getProperties();
         renderer = new OrthogonalTiledMapRenderer(map, 1 / DeltaDucks.PIXEL_PER_METER);
+
+        int mapWidth = prop.get("width", Integer.class);
+        int mapHeight = prop.get("height", Integer.class);
+        int tilePixelWidth = prop.get("tilewidth", Integer.class);
+        int tilePixelHeight = prop.get("tileheight", Integer.class);
+        mapPixelWidth = mapWidth * tilePixelWidth;
+        mapPixelHeight = mapHeight * tilePixelHeight;
+
 
         gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
 
@@ -120,9 +134,52 @@ public class MainGameScreen implements Screen {
 
         gameCam.position.x = player.b2body.getPosition().x;
         gameCam.position.y = player.b2body.getPosition().y;
+
+        gameCam.position.x = MathUtils.clamp(gameCam.position.x, gameCam.viewportWidth/2, mapPixelWidth/DeltaDucks.PIXEL_PER_METER - gameCam.viewportWidth/2);
+        gameCam.position.y = MathUtils.clamp(gameCam.position.y, gameCam.viewportHeight/2, mapPixelHeight/DeltaDucks.PIXEL_PER_METER - gameCam.viewportHeight/2);
+
         gameCam.update();
 
         renderer.setView(gameCam);
+    }
+
+    public void centerCamera() {
+        float mapLeft = 0;
+        float mapRight = 0 + gamePort.getWorldWidth();
+        float mapBottom = 0;
+        float mapTop = 0 + gamePort.getWorldHeight();
+        float cameraHalfWidth = gameCam.viewportWidth * .5f;
+        float cameraHalfHeight = gameCam.viewportHeight * .5f;
+
+        float cameraLeft = gameCam.position.x - cameraHalfWidth;
+        float cameraRight = gameCam.position.x - cameraHalfWidth;
+        float cameraBottom = gameCam.position.y - cameraHalfHeight;
+        float cameraTop = gameCam.position.y - cameraHalfHeight;
+
+        if(gamePort.getWorldWidth() < gameCam.viewportWidth)
+        {
+            gameCam.position.x = mapRight / 2;
+        }
+        else if(cameraLeft <= mapLeft)
+        {
+            gameCam.position.x = mapLeft + cameraHalfWidth;
+        }
+        else if(cameraRight >= mapRight)
+        {
+            gameCam.position.x = mapRight - cameraHalfWidth;
+        }
+        if(gamePort.getWorldHeight() < gameCam.viewportHeight)
+        {
+            gameCam.position.y = mapTop / 2;
+        }
+        else if(cameraBottom <= mapBottom)
+        {
+            gameCam.position.y = mapBottom + cameraHalfHeight;
+        }
+        else if(cameraTop >= mapTop)
+        {
+            gameCam.position.y = mapTop - cameraHalfHeight;
+        }
     }
 
 
