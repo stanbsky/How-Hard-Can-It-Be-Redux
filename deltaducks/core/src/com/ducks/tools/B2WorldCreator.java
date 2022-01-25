@@ -1,8 +1,10 @@
 package com.ducks.tools;
 
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -25,6 +27,18 @@ public class B2WorldCreator {
             shape.setAsBox(rect.getWidth() / 2 / DeltaDucks.PIXEL_PER_METER, rect.getHeight() / 2 / DeltaDucks.PIXEL_PER_METER);
             fdef.shape = shape;
             fdef.filter.categoryBits = DeltaDucks.BIT_LAND;
+            body.createFixture(fdef).setUserData("Land");
+        }
+        // Boundaries
+        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            bdef.type = BodyDef.BodyType.StaticBody;
+            bdef.position.set((rect.getX() + rect.getWidth() / 2) / DeltaDucks.PIXEL_PER_METER, (rect.getY() + rect.getHeight() / 2) / DeltaDucks.PIXEL_PER_METER);
+            body = world.createBody(bdef);
+            shape.setAsBox(rect.getWidth() / 2 / DeltaDucks.PIXEL_PER_METER, rect.getHeight() / 2 / DeltaDucks.PIXEL_PER_METER);
+            fdef.shape = shape;
+            fdef.filter.categoryBits = DeltaDucks.BIT_BOUNDARY;
+            fdef.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_PIRATES;
             body.createFixture(fdef).setUserData("Land");
         }
         // Sea

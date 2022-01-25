@@ -281,7 +281,7 @@ public class Ship extends Sprite {
 
         fdef.shape = shape;
         fdef.filter.categoryBits = DeltaDucks.BIT_PLAYER;
-        fdef.filter.maskBits = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_MONSTERS;
+        fdef.filter.maskBits = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_MONSTERS | DeltaDucks.BIT_BOUNDARY;
         fdef.restitution = 0.2f;
         b2body.createFixture(fdef).setUserData("Player");
 
@@ -289,7 +289,7 @@ public class Ship extends Sprite {
         polyShape.setAsBox(2 / DeltaDucks.PIXEL_PER_METER, 2 / DeltaDucks.PIXEL_PER_METER, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
         fdef.shape = polyShape;
         fdef.filter.categoryBits = DeltaDucks.BIT_PLAYER;
-        fdef.filter.maskBits = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_MONSTERS;
+        fdef.filter.maskBits = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_MONSTERS | DeltaDucks.BIT_BOUNDARY;
         fdef.isSensor = true;
         b2body.createFixture(fdef).setUserData("Sensor");
 

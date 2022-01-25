@@ -143,45 +143,6 @@ public class MainGameScreen implements Screen {
         renderer.setView(gameCam);
     }
 
-    public void centerCamera() {
-        float mapLeft = 0;
-        float mapRight = 0 + gamePort.getWorldWidth();
-        float mapBottom = 0;
-        float mapTop = 0 + gamePort.getWorldHeight();
-        float cameraHalfWidth = gameCam.viewportWidth * .5f;
-        float cameraHalfHeight = gameCam.viewportHeight * .5f;
-
-        float cameraLeft = gameCam.position.x - cameraHalfWidth;
-        float cameraRight = gameCam.position.x - cameraHalfWidth;
-        float cameraBottom = gameCam.position.y - cameraHalfHeight;
-        float cameraTop = gameCam.position.y - cameraHalfHeight;
-
-        if(gamePort.getWorldWidth() < gameCam.viewportWidth)
-        {
-            gameCam.position.x = mapRight / 2;
-        }
-        else if(cameraLeft <= mapLeft)
-        {
-            gameCam.position.x = mapLeft + cameraHalfWidth;
-        }
-        else if(cameraRight >= mapRight)
-        {
-            gameCam.position.x = mapRight - cameraHalfWidth;
-        }
-        if(gamePort.getWorldHeight() < gameCam.viewportHeight)
-        {
-            gameCam.position.y = mapTop / 2;
-        }
-        else if(cameraBottom <= mapBottom)
-        {
-            gameCam.position.y = mapBottom + cameraHalfHeight;
-        }
-        else if(cameraTop >= mapTop)
-        {
-            gameCam.position.y = mapTop - cameraHalfHeight;
-        }
-    }
-
 
     @Override
     public void render(float delta) {
