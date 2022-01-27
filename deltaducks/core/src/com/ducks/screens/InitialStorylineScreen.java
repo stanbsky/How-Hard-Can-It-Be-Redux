@@ -61,8 +61,12 @@ public class InitialStorylineScreen implements Screen {
                 case 1:
                     Layout.setText(font, "And Continue...");
                     break;
-                default:
+                case 2:
                     Layout.setText(font, "The End...");
+                    break;
+                default:
+                    this.dispose();
+                    game.setScreen(new MainGameScreen(this.game));
                     break;
             }
         }

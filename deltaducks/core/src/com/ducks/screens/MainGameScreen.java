@@ -3,20 +3,21 @@ package com.ducks.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.scenes.Hud;
+import com.ducks.scenes.Minimap;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.Content;
 import com.ducks.tools.MyContactListener;
@@ -47,6 +48,7 @@ public class MainGameScreen implements Screen {
     private Ship player;
     private Pirates bots;
     private Monsters creatures;
+    private Minimap radar;
 
 //    private Player player;
     private MyContactListener contactListener;
@@ -107,7 +109,7 @@ public class MainGameScreen implements Screen {
 //        player = new Player(body.b2body);
         bots = new Pirates(world, this);
         creatures = new Monsters(world, this);
-
+        radar = new Minimap(gameCam);
     }
 
     public void handleInput(float deltaTime) {
@@ -163,6 +165,7 @@ public class MainGameScreen implements Screen {
         player.draw(game.batch);
 //        bots.draw(game.batch);
         creatures.draw(game.batch);
+        radar.draw(game.batch);
         game.batch.end();
 
         // Set our batch to now draw what the Hud camera sees.
@@ -176,6 +179,15 @@ public class MainGameScreen implements Screen {
 //        game.batch.end();
 
 //        game.batch.draw(resources.getTexture("badlogic"),0,0);
+//        game.batch.setProjectionMatrix(gameCam.combined);
+//        game.batch.begin();
+//        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+//        pixmap.setColor(new Color(0.1f, 0.1f, 0.1f, .3f));
+//        pixmap.fillRectangle(0, 0, 1, 1);
+//        System.out.println(gameCam.position.x);
+//        game.batch.draw(new Texture(pixmap), gameCam.position.x - gameCam.viewportWidth/2, gameCam.position.y  - gameCam.viewportHeight/2);
+//        game.batch.end();
+
 
     }
 

@@ -33,7 +33,7 @@ public class DeltaDucks extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		this.setScreen(new InitialStorylineScreen(this));
+		this.setScreen(new MainGameScreen(this));
 	}
 
 	@Override
