@@ -109,7 +109,7 @@ public class MainGameScreen implements Screen {
 //        player = new Player(body.b2body);
         bots = new Pirates(world, this);
         creatures = new Monsters(world, this);
-        radar = new Minimap(gameCam);
+        radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
     }
 
     public void handleInput(float deltaTime) {
@@ -133,6 +133,7 @@ public class MainGameScreen implements Screen {
         player.update(deltaTime);
         creatures.update(deltaTime);
         hud.update(deltaTime);
+        radar.update(player.b2body);
 
         gameCam.position.x = player.b2body.getPosition().x;
         gameCam.position.y = player.b2body.getPosition().y;
