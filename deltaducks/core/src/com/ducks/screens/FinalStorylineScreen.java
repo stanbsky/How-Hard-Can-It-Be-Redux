@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 
-public class InitialStorylineScreen implements Screen {
+public class FinalStorylineScreen implements Screen {
     DeltaDucks game;
 
     private OrthographicCamera gameCam;
@@ -28,49 +28,51 @@ public class InitialStorylineScreen implements Screen {
     private GlyphLayout Layout;
 
     private int state;
+    private float stateTimer;
 
-    public InitialStorylineScreen(DeltaDucks game) {
+    public FinalStorylineScreen(DeltaDucks game) {
         this.game = game;
     }
 
     @Override
     public void show() {
+        gameCam = new OrthographicCamera();
+        gamePort = new FitViewport(DeltaDucks.WIDTH, DeltaDucks.HEIGHT, gameCam);
+
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/boy.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
         parameter.size = 10;
         smallFont = generator.generateFont(parameter);
 
         parameter.size = 25;
         font = generator.generateFont(parameter);
 
-        gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(DeltaDucks.WIDTH, DeltaDucks.HEIGHT, gameCam);
-
         state = 0;
-        Layout = new GlyphLayout(font, "There was once a Pirate \n known as The King Of Yorkshire...");
-        escLayout = new GlyphLayout(smallFont, "Press Esc to Continue..");
+        Layout = new GlyphLayout();
+        escLayout = new GlyphLayout(smallFont, "Press Esc to Exit..");
     }
 
     public void handleInput(float deltaTime) {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            this.dispose();
-            game.setScreen(new MainGameScreen(this.game));
+            Gdx.app.exit();
         }
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            switch (++state){
-                case 1:
-                    Layout.setText(font, "And Continue...");
-                    break;
-                default:
-                    Layout.setText(font, "The End...");
-                    break;
-            }
-        }
-
     }
-
     public void update(float deltaTime) {
         handleInput(deltaTime);
+        stateTimer += deltaTime;
+        if(stateTimer>=1){
+            state++;
+            stateTimer = 0;
+        }
+        switch (state){
+            case 0:
+                Layout.setText(font,"You're The King Of Yorkshire Now..");
+                break;
+            default:
+                Layout.setText(font,"Thanks for Playing!");
+                break;
+        }
     }
 
     @Override
@@ -82,7 +84,6 @@ public class InitialStorylineScreen implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
 
         game.batch.begin();
-//        font.getData().setScale(1f);
         font.draw(game.batch, Layout, -Layout.width/2, -0);
         smallFont.draw(game.batch, escLayout, -escLayout.width/2, -gameCam.viewportHeight/3);
         game.batch.end();
