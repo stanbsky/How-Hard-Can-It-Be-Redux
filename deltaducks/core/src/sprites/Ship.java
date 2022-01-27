@@ -69,6 +69,8 @@ public class Ship extends Sprite {
 
         roll = 8;
         rolls = new Animation[16];
+        rollVerticalTimer = 2f;
+        rollHorizontalTimer = 2f;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for(int i=2; i<4; i++) {
@@ -145,6 +147,12 @@ public class Ship extends Sprite {
                         roll--;
                     }
                 }
+                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                    roll = UP_INDEX+2;
+                }
+                if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                    roll = UP_INDEX-2;
+                }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
             case SOUTH:
@@ -168,6 +176,12 @@ public class Ship extends Sprite {
                     } else if (roll == LAST_INDEX) {
                         roll = FIRST_INDEX;
                     }
+                }
+                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                    roll = RIGHT_INDEX+2;
+                }
+                if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                    roll = LEFT_INDEX-2;
                 }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
@@ -231,6 +245,12 @@ public class Ship extends Sprite {
                         roll++;
                     }
                 }
+                if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                    roll = LEFT_INDEX+2;
+                }
+                if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+                    roll = LEFT_INDEX-2;
+                }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
             default:
@@ -238,7 +258,6 @@ public class Ship extends Sprite {
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
         }
-
 //        System.out.println(roll);
 
 //        if((b2body.getLinearVelocity().x < 0 || !movingRight) && !region.isFlipX()){
