@@ -5,6 +5,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.ducks.screens.InitialStorylineScreen;
 import com.ducks.screens.MainGameScreen;
 import com.ducks.screens.MainMenuScreen;
 
@@ -31,7 +32,7 @@ public class DeltaDucks extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		this.setScreen(new MainMenuScreen(this));
+		this.setScreen(new InitialStorylineScreen(this));
 	}
 
 	@Override
