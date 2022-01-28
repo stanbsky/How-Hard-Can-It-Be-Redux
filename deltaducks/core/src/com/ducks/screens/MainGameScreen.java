@@ -169,9 +169,9 @@ public class MainGameScreen implements Screen {
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
-        player.draw(game.batch);
         bots.draw(game.batch);
         creatures.draw(game.batch);
+        player.draw(game.batch);
         radar.draw(game.batch);
         game.batch.end();
 
