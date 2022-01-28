@@ -16,11 +16,11 @@ public class Pirates extends Sprite {
 
     private Animation<TextureRegion> pirateIdle;
 
-    private final int PIXEL_PIRATE_WIDTH = 32;
-    private final int PIXEL_PIRATE_HEIGHT = 32;
+    private final int PIXEL_PIRATE_WIDTH = 716;
+    private final int PIXEL_PIRATE_HEIGHT = 811;
 
-    private final int PIRATE_WIDTH = 32;
-    private final int PIRATE_HEIGHT = 32;
+    private final float PIRATE_WIDTH = 32*2f;
+    private final float PIRATE_HEIGHT = 32*2f;
 
     private final int NUMBER_OF_PIRATES = 10;
 
@@ -28,11 +28,11 @@ public class Pirates extends Sprite {
     Body pirateBody;
 
     public Pirates(World world, MainGameScreen screen, int x, int y, int r) {
-        super(MainGameScreen.resources.getTexture("badlogic"));
+        super(MainGameScreen.resources.getTexture("pirate"));
         this.world = world;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for(int i=0; i<4; i++) {
+        for(int i=0; i<1; i++) {
             frames.add(new TextureRegion(getTexture(), i * PIXEL_PIRATE_WIDTH, 0, PIXEL_PIRATE_WIDTH, PIXEL_PIRATE_HEIGHT));
         }
 

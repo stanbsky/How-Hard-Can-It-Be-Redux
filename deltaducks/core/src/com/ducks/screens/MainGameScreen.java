@@ -23,6 +23,7 @@ import com.ducks.scenes.Minimap;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.Content;
 import com.ducks.tools.MyContactListener;
+import sprites.Crosshair;
 import sprites.Monsters;
 import sprites.Pirates;
 import sprites.Ship;
@@ -53,6 +54,7 @@ public class MainGameScreen implements Screen {
 //    private Monsters creatures;
     private ListOfMonsters creatures;
     private Minimap radar;
+    private Crosshair crosshair;
 
 //    private Player player;
     private MyContactListener contactListener;
@@ -70,6 +72,8 @@ public class MainGameScreen implements Screen {
         atlas = new TextureAtlas("sprites/ship.pack");
         MainGameScreen.resources.loadTexture("bunny.png", "badlogic");
         MainGameScreen.resources.loadTexture("Idle.png", "worm");
+        MainGameScreen.resources.loadTexture("crosshair.png", "crosshair");
+        MainGameScreen.resources.loadTexture("ship_light_SE.png", "pirate");
     }
 
     public TextureAtlas getAtlas() { return atlas;}
@@ -115,6 +119,7 @@ public class MainGameScreen implements Screen {
         bots = new ListOfPirates(world, this);
         creatures = new ListOfMonsters(world, this);
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
+        crosshair = new Crosshair(world, this, player, gameCam);
     }
 
     public void handleInput(float deltaTime) {
@@ -140,6 +145,7 @@ public class MainGameScreen implements Screen {
         creatures.update(deltaTime);
         hud.update(deltaTime);
         radar.update(player.b2body);
+        crosshair.update(deltaTime);
 
         gameCam.position.x = player.b2body.getPosition().x;
         gameCam.position.y = player.b2body.getPosition().y;
@@ -173,6 +179,7 @@ public class MainGameScreen implements Screen {
         creatures.draw(game.batch);
         player.draw(game.batch);
         radar.draw(game.batch);
+        crosshair.draw(game.batch);
         game.batch.end();
 
         // Set our batch to now draw what the Hud camera sees.
