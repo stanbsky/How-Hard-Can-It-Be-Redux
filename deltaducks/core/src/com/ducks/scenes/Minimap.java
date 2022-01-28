@@ -5,16 +5,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.utils.Disposable;
 import com.ducks.DeltaDucks;
 
-import java.awt.image.BufferedImage;
-
-public class Minimap {
+public class Minimap implements Disposable {
     private float ratio = .1f;
 
     public OrthographicCamera gameCam;
@@ -55,5 +50,10 @@ public class Minimap {
     }
     public void draw(SpriteBatch batch) {
         batch.draw(new Texture(pixmap), gameCam.position.x - gameCam.viewportWidth/2, gameCam.position.y  - gameCam.viewportHeight/2, pixmap.getWidth() / DeltaDucks.PIXEL_PER_METER, pixmap.getHeight() / DeltaDucks.PIXEL_PER_METER);
+    }
+
+    @Override
+    public void dispose() {
+        pixmap.dispose();
     }
 }

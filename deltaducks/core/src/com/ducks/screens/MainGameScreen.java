@@ -16,6 +16,8 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
+import com.ducks.entities.ListOfMonsters;
+import com.ducks.entities.ListOfPirates;
 import com.ducks.scenes.Hud;
 import com.ducks.scenes.Minimap;
 import com.ducks.tools.B2WorldCreator;
@@ -46,8 +48,10 @@ public class MainGameScreen implements Screen {
     private Box2DDebugRenderer b2dr;
 
     private Ship player;
-    private Pirates bots;
-    private Monsters creatures;
+//    private Pirates bots;
+    private ListOfPirates bots;
+//    private Monsters creatures;
+    private ListOfMonsters creatures;
     private Minimap radar;
 
 //    private Player player;
@@ -107,8 +111,9 @@ public class MainGameScreen implements Screen {
         // Create Player
 
 //        player = new Player(body.b2body);
-        bots = new Pirates(world, this);
-        creatures = new Monsters(world, this);
+//        bots = new Pirates(world, this, 64, 64, 12);
+        bots = new ListOfPirates(world, this);
+        creatures = new ListOfMonsters(world, this);
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
     }
 
@@ -131,6 +136,7 @@ public class MainGameScreen implements Screen {
         world.step(deltaTime, 6, 2);
 
         player.update(deltaTime);
+        bots.update(deltaTime);
         creatures.update(deltaTime);
         hud.update(deltaTime);
         radar.update(player.b2body);
@@ -164,7 +170,7 @@ public class MainGameScreen implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
         player.draw(game.batch);
-//        bots.draw(game.batch);
+        bots.draw(game.batch);
         creatures.draw(game.batch);
         radar.draw(game.batch);
         game.batch.end();
@@ -172,22 +178,6 @@ public class MainGameScreen implements Screen {
         // Set our batch to now draw what the Hud camera sees.
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
-
-//        player.render(game.batch);
-//        game.batch.setProjectionMatrix(gamePort.getCamera().combined);
-//        game.batch.begin();
-//        game.batch.draw(MainGameScreen.resources.getTexture("badlogic"), 0, 500 / DeltaDucks.PIXEL_PER_METER, 32*4 / DeltaDucks.PIXEL_PER_METER, 32 / DeltaDucks.PIXEL_PER_METER);
-//        game.batch.end();
-
-//        game.batch.draw(resources.getTexture("badlogic"),0,0);
-//        game.batch.setProjectionMatrix(gameCam.combined);
-//        game.batch.begin();
-//        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-//        pixmap.setColor(new Color(0.1f, 0.1f, 0.1f, .3f));
-//        pixmap.fillRectangle(0, 0, 1, 1);
-//        System.out.println(gameCam.position.x);
-//        game.batch.draw(new Texture(pixmap), gameCam.position.x - gameCam.viewportWidth/2, gameCam.position.y  - gameCam.viewportHeight/2);
-//        game.batch.end();
 
 
     }
@@ -219,5 +209,6 @@ public class MainGameScreen implements Screen {
         world.dispose();
         b2dr.dispose();
         hud.dispose();
+        radar.dispose();
     }
 }

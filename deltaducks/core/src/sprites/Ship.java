@@ -289,7 +289,7 @@ public class Ship extends Sprite {
 
     public void defineShip() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(32 / DeltaDucks.PIXEL_PER_METER, 32 / DeltaDucks.PIXEL_PER_METER);
+        bdef.position.set(100 / DeltaDucks.PIXEL_PER_METER, 100 / DeltaDucks.PIXEL_PER_METER);
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.linearDamping = 1f;
         b2body = world.createBody(bdef);
