@@ -3,7 +3,7 @@ package com.ducks.tools;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
-import sprites.Ship;
+import com.ducks.sprites.Ship;
 
 public class MyContactListener implements ContactListener {
 

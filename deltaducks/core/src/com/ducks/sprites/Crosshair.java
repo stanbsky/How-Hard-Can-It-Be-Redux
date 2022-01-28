@@ -1,4 +1,4 @@
-package sprites;
+package com.ducks.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -18,8 +18,8 @@ public class Crosshair extends Sprite {
 
     private Animation<TextureRegion> wormIdle;
 
-    private final int PIXEL_WORM_WIDTH = 200;
-    private final int PIXEL_WORM_HEIGHT = 200;
+    private final int PIXEL_WORM_WIDTH = 256;
+    private final int PIXEL_WORM_HEIGHT = 256;
 
     private final float WORM_WIDTH = PIXEL_WORM_WIDTH * .2f;
     private final float WORM_HEIGHT = PIXEL_WORM_HEIGHT * .2f;
@@ -34,15 +34,16 @@ public class Crosshair extends Sprite {
 
 
     public Crosshair(World world, MainGameScreen screen, Ship player, OrthographicCamera gameCam) {
-        super(MainGameScreen.resources.getTexture("crosshair"));
+        super(MainGameScreen.resources.getTexture("mehnat"));
         this.world = world;
         this.player = player;
         this.gameCam = gameCam;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for(int i=0; i<1; i++) {
-            frames.add(new TextureRegion(getTexture(), i * PIXEL_WORM_WIDTH, 0, PIXEL_WORM_WIDTH, PIXEL_WORM_HEIGHT));
-        }
+//        for(int i=0; i<1; i++) {
+//            frames.add(new TextureRegion(getTexture(), i * PIXEL_WORM_WIDTH, 0, PIXEL_WORM_WIDTH, PIXEL_WORM_HEIGHT));
+//        }
+        frames.add(new TextureRegion(getTexture(), 1 * PIXEL_WORM_WIDTH, 2 * PIXEL_WORM_HEIGHT, PIXEL_WORM_WIDTH, PIXEL_WORM_HEIGHT));
         wormIdle = new Animation(0.1f, frames);
         frames.clear();
 //        setX(player.b2body.getPosition().x + 1);

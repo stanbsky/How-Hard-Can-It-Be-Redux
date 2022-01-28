@@ -1,11 +1,11 @@
 package com.ducks.entities;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.screens.MainGameScreen;
-import sprites.Pirates;
+import com.ducks.sprites.Pirates;
 
 public class ListOfPirates {
 
@@ -24,7 +24,7 @@ public class ListOfPirates {
 
     public void spawnPirates() {
         for(int i = 0; i < NUMBER_OF_PIRATES; i++) {
-            pirateBodies.add(new Pirates(world, screen, 32*i, 32*i, 6*2));
+            pirateBodies.add(new Pirates(world, screen, (int) (Gdx.graphics.getWidth() * Math.random()), (int) (Gdx.graphics.getHeight() * Math.random()), 6*5));
         }
     }
 

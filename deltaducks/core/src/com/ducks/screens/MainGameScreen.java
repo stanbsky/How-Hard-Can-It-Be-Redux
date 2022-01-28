@@ -10,7 +10,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -20,13 +19,13 @@ import com.ducks.entities.ListOfMonsters;
 import com.ducks.entities.ListOfPirates;
 import com.ducks.scenes.Hud;
 import com.ducks.scenes.Minimap;
+import com.ducks.scenes.Subtitle;
+import com.ducks.scenes.Tutorial;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.Content;
 import com.ducks.tools.MyContactListener;
-import sprites.Crosshair;
-import sprites.Monsters;
-import sprites.Pirates;
-import sprites.Ship;
+import com.ducks.sprites.Crosshair;
+import com.ducks.sprites.Ship;
 
 public class MainGameScreen implements Screen {
 
@@ -55,6 +54,8 @@ public class MainGameScreen implements Screen {
     private ListOfMonsters creatures;
     private Minimap radar;
     private Crosshair crosshair;
+    private Tutorial tutorial;
+    private Subtitle subtitle;
 
 //    private Player player;
     private MyContactListener contactListener;
@@ -69,11 +70,13 @@ public class MainGameScreen implements Screen {
     public MainGameScreen(DeltaDucks game) {
         this.game = game;
         resources = new Content();
-        atlas = new TextureAtlas("sprites/ship.pack");
+        atlas = new TextureAtlas("com/ducks/sprites/ship.pack");
         MainGameScreen.resources.loadTexture("bunny.png", "badlogic");
         MainGameScreen.resources.loadTexture("Idle.png", "worm");
         MainGameScreen.resources.loadTexture("crosshair.png", "crosshair");
         MainGameScreen.resources.loadTexture("ship_light_SE.png", "pirate");
+        MainGameScreen.resources.loadTexture("cannon_ball_and_explosion2.png", "mehnat");
+        MainGameScreen.resources.loadTexture("arrow.png", "arrow");
     }
 
     public TextureAtlas getAtlas() { return atlas;}
@@ -83,6 +86,7 @@ public class MainGameScreen implements Screen {
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
         hud = new Hud(game.batch);
+        subtitle = new Subtitle(game.batch);
 
         // Create Map
         mapLoader = new TmxMapLoader();
@@ -120,6 +124,7 @@ public class MainGameScreen implements Screen {
         creatures = new ListOfMonsters(world, this);
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
         crosshair = new Crosshair(world, this, player, gameCam);
+        tutorial = new Tutorial(gameCam, player);
     }
 
     public void handleInput(float deltaTime) {
@@ -145,6 +150,7 @@ public class MainGameScreen implements Screen {
         creatures.update(deltaTime);
         hud.update(deltaTime);
         radar.update(player.b2body);
+        tutorial.update(deltaTime);
         crosshair.update(deltaTime);
 
         gameCam.position.x = player.b2body.getPosition().x;
@@ -179,6 +185,7 @@ public class MainGameScreen implements Screen {
         creatures.draw(game.batch);
         player.draw(game.batch);
         radar.draw(game.batch);
+        tutorial.draw(game.batch);
         crosshair.draw(game.batch);
         game.batch.end();
 
@@ -186,6 +193,8 @@ public class MainGameScreen implements Screen {
         game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
         hud.stage.draw();
 
+        game.batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
+        subtitle.stage.draw();
 
     }
 

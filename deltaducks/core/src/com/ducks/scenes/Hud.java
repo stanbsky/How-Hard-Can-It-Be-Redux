@@ -77,6 +77,9 @@ public class Hud implements Disposable {
         goldLabel.setText(String.format("%06d", gold));
     }
 
+    public float getTimer() {
+        return timeCount;
+    }
     @Override
     public void dispose() {
         stage.dispose();

@@ -1,6 +1,5 @@
-package sprites;
+package com.ducks.sprites;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -21,8 +20,8 @@ public class Monsters extends Sprite {
     private final int WORM_WIDTH = 90;
     private final int WORM_HEIGHT = 90;
 
-    private final int SPAWN_X = 10;
-    private final int SPAWN_Y = 32*4;
+    private final int SPAWN_X = 200;
+    private final int SPAWN_Y = 400;
     private final int SPAWN_RADIUS = 6*2;
 
     float stateTime;
@@ -52,7 +51,7 @@ public class Monsters extends Sprite {
         Body monsterBody;
         BodyDef bdef = new BodyDef();
         bdef.position.set(x / DeltaDucks.PIXEL_PER_METER, y / DeltaDucks.PIXEL_PER_METER);
-        bdef.type = BodyDef.BodyType.DynamicBody;
+        bdef.type = BodyDef.BodyType.StaticBody;
         bdef.linearDamping = 1f;
         monsterBody = world.createBody(bdef);
 

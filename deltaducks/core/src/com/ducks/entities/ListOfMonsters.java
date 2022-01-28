@@ -4,8 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.screens.MainGameScreen;
-import sprites.Monsters;
-import sprites.Pirates;
+import com.ducks.sprites.Monsters;
 
 public class ListOfMonsters {
 

@@ -1,4 +1,4 @@
-package sprites;
+package com.ducks.sprites;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
-import com.ducks.scenes.Hud;
 import com.ducks.screens.MainGameScreen;
 
 public class Pirates extends Sprite {
@@ -75,7 +74,7 @@ public class Pirates extends Sprite {
 
         fdef.shape = shape;
         fdef.filter.categoryBits = DeltaDucks.BIT_PIRATES;
-        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_PIRATES;
+        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND;
         fdef.restitution = 0.2f;
         pirateBody.createFixture(fdef).setUserData("Pirates");
     }

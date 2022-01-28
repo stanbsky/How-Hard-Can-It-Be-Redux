@@ -1,4 +1,4 @@
-package sprites;
+package com.ducks.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -289,14 +289,14 @@ public class Ship extends Sprite {
 
     public void defineShip() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(100 / DeltaDucks.PIXEL_PER_METER, 100 / DeltaDucks.PIXEL_PER_METER);
+        bdef.position.set(200 / DeltaDucks.PIXEL_PER_METER, 200 / DeltaDucks.PIXEL_PER_METER);
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.linearDamping = 1f;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(12 / DeltaDucks.PIXEL_PER_METER);
+        shape.setRadius(PIXEL_SHIP_WIDTH/2 / DeltaDucks.PIXEL_PER_METER);
 
         fdef.shape = shape;
         fdef.filter.categoryBits = DeltaDucks.BIT_PLAYER;
