@@ -15,18 +15,14 @@ public class Monsters extends Sprite {
     private Animation <TextureRegion> wormIdle;
 
     private final int PIXEL_WORM_WIDTH = 90;
-    private final int PIXEL_WORM_HEIGHT = 90;
+    public static final int PIXEL_WORM_HEIGHT = 90;
 
-    private final int WORM_WIDTH = 90;
-    private final int WORM_HEIGHT = 90;
-
-    private final int SPAWN_X = 200;
-    private final int SPAWN_Y = 400;
-    private final int SPAWN_RADIUS = 6*2;
+    private final float WORM_WIDTH = PIXEL_WORM_WIDTH * 1.5f;
+    private final float WORM_HEIGHT = PIXEL_WORM_HEIGHT * 1.5f;
 
     float stateTime;
 
-    public Monsters(World world, MainGameScreen screen) {
+    public Monsters(World world, MainGameScreen screen, float spawn_x, float spawn_y, float spawn_radius) {
         super(MainGameScreen.resources.getTexture("worm"));
         this.world = world;
 
@@ -37,8 +33,8 @@ public class Monsters extends Sprite {
         wormIdle = new Animation(0.1f, frames);
         frames.clear();
 
-        defineMonster(SPAWN_X, SPAWN_Y, SPAWN_RADIUS);
-        setBounds((SPAWN_X - WORM_WIDTH / 2f) / DeltaDucks.PIXEL_PER_METER, (SPAWN_Y - WORM_HEIGHT / 2f) / DeltaDucks.PIXEL_PER_METER, WORM_WIDTH / DeltaDucks.PIXEL_PER_METER, WORM_HEIGHT / DeltaDucks.PIXEL_PER_METER);
+        defineMonster(spawn_x, spawn_y, spawn_radius);
+        setBounds((spawn_x - WORM_WIDTH / 2f) / DeltaDucks.PIXEL_PER_METER, (spawn_y - WORM_HEIGHT / 2f) / DeltaDucks.PIXEL_PER_METER, WORM_WIDTH / DeltaDucks.PIXEL_PER_METER, WORM_HEIGHT / DeltaDucks.PIXEL_PER_METER);
         setRegion(wormIdle.getKeyFrame(stateTime, true));
     }
 
@@ -47,7 +43,7 @@ public class Monsters extends Sprite {
         setRegion(wormIdle.getKeyFrame(stateTime, true));
     }
 
-    public void defineMonster(int x, int y, int radius) {
+    public void defineMonster(float x, float y, float radius) {
         Body monsterBody;
         BodyDef bdef = new BodyDef();
         bdef.position.set(x / DeltaDucks.PIXEL_PER_METER, y / DeltaDucks.PIXEL_PER_METER);

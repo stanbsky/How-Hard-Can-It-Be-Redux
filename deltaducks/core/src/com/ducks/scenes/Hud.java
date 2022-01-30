@@ -78,7 +78,7 @@ public class Hud implements Disposable {
     }
 
     public float getTimer() {
-        return timeCount;
+        return worldTimer;
     }
     @Override
     public void dispose() {

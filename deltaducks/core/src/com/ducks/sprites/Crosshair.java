@@ -2,82 +2,87 @@ package com.ducks.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
 
 public class Crosshair extends Sprite {
-    public World world;
-    Ship player;
+    private World world;
+    private Ship player;
 
-    private Animation<TextureRegion> wormIdle;
+    private Animation<TextureRegion> crosshairIdle;
 
-    private final int PIXEL_WORM_WIDTH = 256;
-    private final int PIXEL_WORM_HEIGHT = 256;
+    private final int PIXEL_CROSSHAIR_WIDTH = 256;
+    private final int PIXEL_CROSSHAIR_HEIGHT = 256;
 
-    private final float WORM_WIDTH = PIXEL_WORM_WIDTH * .2f;
-    private final float WORM_HEIGHT = PIXEL_WORM_HEIGHT * .2f;
+    private final float CROSSHAIR_WIDTH = PIXEL_CROSSHAIR_WIDTH * .2f;
+    private final float CROSSHAIR_HEIGHT = PIXEL_CROSSHAIR_HEIGHT * .2f;
 
-    float stateTime;
+    private float stateTime;
 
-    private final Vector2 mouseInWorld2D = new Vector2();
-    private final Vector3 mouseInWorld3D = new Vector3();
+    private static Vector2 mouseInWorld2D = new Vector2();
+    private  Vector3 mouseInWorld3D = new Vector3();
     private OrthographicCamera gameCam;
 
-    float angle = 45f;
 
+    float worldCordX;
+    float worldCordY;
 
-    public Crosshair(World world, MainGameScreen screen, Ship player, OrthographicCamera gameCam) {
+    static Vector2 points;
+
+    private float angle = 45f;
+
+    Viewport gamePort;
+    public Crosshair(World world, MainGameScreen screen, Ship player, OrthographicCamera gameCam, Viewport gamePort) {
         super(MainGameScreen.resources.getTexture("mehnat"));
         this.world = world;
         this.player = player;
         this.gameCam = gameCam;
+        this.gamePort = gamePort;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-//        for(int i=0; i<1; i++) {
-//            frames.add(new TextureRegion(getTexture(), i * PIXEL_WORM_WIDTH, 0, PIXEL_WORM_WIDTH, PIXEL_WORM_HEIGHT));
-//        }
-        frames.add(new TextureRegion(getTexture(), 1 * PIXEL_WORM_WIDTH, 2 * PIXEL_WORM_HEIGHT, PIXEL_WORM_WIDTH, PIXEL_WORM_HEIGHT));
-        wormIdle = new Animation(0.1f, frames);
+
+        frames.add(new TextureRegion(getTexture(), 1 * PIXEL_CROSSHAIR_WIDTH, 2 * PIXEL_CROSSHAIR_HEIGHT, PIXEL_CROSSHAIR_WIDTH, PIXEL_CROSSHAIR_HEIGHT));
+        crosshairIdle = new Animation(0.1f, frames);
         frames.clear();
-//        setX(player.b2body.getPosition().x + 1);
-//        setY(player.b2body.getPosition().y + 1);
-        setBounds(player.b2body.getPosition().x + 1, player.b2body.getPosition().y + 1, WORM_WIDTH / DeltaDucks.PIXEL_PER_METER, WORM_HEIGHT / DeltaDucks.PIXEL_PER_METER);
-        setRegion(wormIdle.getKeyFrame(stateTime, true));
+
+        setBounds(player.b2body.getPosition().x, player.b2body.getPosition().y, CROSSHAIR_WIDTH / DeltaDucks.PIXEL_PER_METER, CROSSHAIR_HEIGHT / DeltaDucks.PIXEL_PER_METER);
+        setRegion(crosshairIdle.getKeyFrame(stateTime, true));
+
+//        Gdx.graphics.setCursor(Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("bunny.png")), (int)getWidth()/2, (int)getHeight()/2));
     }
 
     public void update(float deltaTime) {
         stateTime += deltaTime;
 
+        Vector3 loc = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        gameCam.unproject(loc, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        worldCordX = player.b2body.getPosition().x - loc.x  + player.b2body.getFixtureList().get(0).getShape().getRadius();
+        worldCordY = player.b2body.getPosition().y - loc.y  + player.b2body.getFixtureList().get(0).getShape().getRadius();
+        points = new Vector2(worldCordX, worldCordY).nor().scl(-1);
 
-        mouseInWorld3D.x = Gdx.input.getX();
-        mouseInWorld3D.y = Gdx.input.getY();
-        mouseInWorld3D.z = 0;
-        gameCam.unproject(mouseInWorld3D);
-        mouseInWorld2D.x = mouseInWorld3D.x;
-        mouseInWorld2D.y = mouseInWorld3D.y;
+        setPosition(player.b2body.getPosition().x + points.x, player.b2body.getPosition().y + points.y);
 
-        Vector2 body = new Vector2(player.b2body.getPosition().x, player.b2body.getPosition().y);
-        Vector2 mouse = new Vector2(mouseInWorld2D.x, mouseInWorld2D.y);
+    }
 
-        float m1 = player.b2body.getPosition().y / player.b2body.getPosition().x;
-        float m2 = mouseInWorld2D.y / mouseInWorld2D.x;
-//        System.out.println(mouseInWorld2D + " " + player.b2body.getPosition());
-//        System.out.println(Math.toDegrees(Math.atan((m1-m2)/(1+m1*m2))));
-        Vector2 crosshairVector = new Vector2(mouseInWorld2D.x, mouseInWorld2D.y);
-        Vector2 playerVector = new Vector2(player.b2body.getPosition().x, player.b2body.getPosition().y);
-        Vector2 distanceVector = new Vector2(1, 0);
+    public static float getCrosshairX() {
+        return points.x;
+    }
 
-        distanceVector.setAngleDeg(crosshairVector.angleDeg(playerVector));
-        crosshairVector = playerVector.add(distanceVector);
+    public static float getCrosshairY() {
+        return points.y;
+    }
 
-//        setPosition ( crosshairVector.x ,  crosshairVector.y );
-        setPosition ( mouseInWorld2D.x - getWidth()/2,  mouseInWorld2D.y - getHeight()/2);
+    public static Vector2 getCrosshair() {
+        return points;
     }
 }

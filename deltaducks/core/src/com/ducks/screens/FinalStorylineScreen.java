@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 
 public class FinalStorylineScreen implements Screen {
-    DeltaDucks game;
+    private DeltaDucks game;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;

@@ -3,16 +3,21 @@ package com.ducks.entities;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
 import com.ducks.sprites.Monsters;
 
 public class ListOfMonsters {
 
-    public World world;
-    MainGameScreen screen;
+    private World world;
+    private MainGameScreen screen;
 
-    public Array<Monsters> monsterBodies;
+    private Array<Monsters> monsterBodies;
     private final int NUMBER_OF_MONSTERS = 1;
+
+    private final int SPAWN_X = 200;
+    private final int SPAWN_Y = 400;
+    private final float SPAWN_RADIUS = 10f * 1.5f * Monsters.PIXEL_WORM_HEIGHT / DeltaDucks.PIXEL_PER_METER;
 
     public ListOfMonsters(World world, MainGameScreen screen) {
         this.world = world;
@@ -23,7 +28,7 @@ public class ListOfMonsters {
 
     public void spawnMonsters() {
         for(int i = 0; i < NUMBER_OF_MONSTERS; i++) {
-            monsterBodies.add(new Monsters(world, screen));
+            monsterBodies.add(new Monsters(world, screen, SPAWN_X,SPAWN_Y, SPAWN_RADIUS));
         }
     }
 

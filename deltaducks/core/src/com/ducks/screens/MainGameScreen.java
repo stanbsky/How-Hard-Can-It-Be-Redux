@@ -21,6 +21,7 @@ import com.ducks.scenes.Hud;
 import com.ducks.scenes.Minimap;
 import com.ducks.scenes.Subtitle;
 import com.ducks.scenes.Tutorial;
+import com.ducks.sprites.Bullet;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.Content;
 import com.ducks.tools.MyContactListener;
@@ -56,6 +57,7 @@ public class MainGameScreen implements Screen {
     private Crosshair crosshair;
     private Tutorial tutorial;
     private Subtitle subtitle;
+    private Bullet bullet;
 
 //    private Player player;
     private MyContactListener contactListener;
@@ -120,10 +122,11 @@ public class MainGameScreen implements Screen {
 
 //        player = new Player(body.b2body);
 //        bots = new Pirates(world, this, 64, 64, 12);
-        bots = new ListOfPirates(world, this);
+        bots = new ListOfPirates(world, this, mapPixelWidth, mapPixelHeight);
         creatures = new ListOfMonsters(world, this);
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
-        crosshair = new Crosshair(world, this, player, gameCam);
+        crosshair = new Crosshair(world, this, player, gameCam, gamePort);
+        bullet = new Bullet(world, player);
         tutorial = new Tutorial(gameCam, player);
     }
 
@@ -138,10 +141,26 @@ public class MainGameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -MAX_VELOCITY)
             player.b2body.applyForce(new Vector2(-ACCELERATION, 0), player.b2body.getWorldCenter(), true);
 
+        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+            bullet.update(deltaTime);
+        }
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)){
+
+            bullet.bulletBody.applyForceToCenter(Crosshair.getCrosshair().scl(100), true);
+        }
+    }
+
+    public void handleTime(float deltaTime) {
+        if(hud.getTimer()<0.1f){
+//            Gdx.app.exit();
+//            this.dispose();
+            game.setScreen(new FinalStorylineScreen(this.game));
+        }
     }
 
     public void update(float deltaTime) {
         handleInput(deltaTime);
+        handleTime(deltaTime);
 
         world.step(deltaTime, 6, 2);
 
@@ -151,7 +170,9 @@ public class MainGameScreen implements Screen {
         hud.update(deltaTime);
         radar.update(player.b2body);
         tutorial.update(deltaTime);
+        subtitle.update(deltaTime);
         crosshair.update(deltaTime);
+//        bullet.update(deltaTime);
 
         gameCam.position.x = player.b2body.getPosition().x;
         gameCam.position.y = player.b2body.getPosition().y;
@@ -187,6 +208,7 @@ public class MainGameScreen implements Screen {
         radar.draw(game.batch);
         tutorial.draw(game.batch);
         crosshair.draw(game.batch);
+        bullet.draw(game.batch);
         game.batch.end();
 
         // Set our batch to now draw what the Hud camera sees.

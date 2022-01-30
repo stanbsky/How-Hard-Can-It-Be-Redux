@@ -11,22 +11,19 @@ import com.ducks.screens.MainGameScreen;
 public class Pirates extends Sprite {
 
     public World world;
-    public Array <Body> pirateBodies;
 
     private Animation<TextureRegion> pirateIdle;
 
     private final int PIXEL_PIRATE_WIDTH = 716;
-    private final int PIXEL_PIRATE_HEIGHT = 811;
+    public static final int PIXEL_PIRATE_HEIGHT = 811;
 
     private final float PIRATE_WIDTH = 32*2f;
     private final float PIRATE_HEIGHT = 32*2f;
 
-    private final int NUMBER_OF_PIRATES = 10;
+    private float stateTime;
+    private Body pirateBody;
 
-    float stateTime;
-    Body pirateBody;
-
-    public Pirates(World world, MainGameScreen screen, int x, int y, int r) {
+    public Pirates(World world, MainGameScreen screen, float spawn_x, float spawn_y, float radius) {
         super(MainGameScreen.resources.getTexture("pirate"));
         this.world = world;
 
@@ -39,21 +36,10 @@ public class Pirates extends Sprite {
         frames.clear();
 
 
-        pirateBodies = new Array<Body>();
-
-        definePirates(x, y, r);
+        definePirates(spawn_x, spawn_y, radius);
         setBounds(0, 0, PIRATE_WIDTH / DeltaDucks.PIXEL_PER_METER, PIRATE_HEIGHT / DeltaDucks.PIXEL_PER_METER);
         setRegion(pirateIdle.getKeyFrame(stateTime, true));
-
-//        spawnPirates();
     }
-
-//    public void spawnPirates() {
-//        for(int i = 0; i < NUMBER_OF_PIRATES; i++) {
-//            pirateBodies.add(definePirates(32*i, 32*i, 6*2));
-//            Hud.addScore(200);
-//        }
-//    }
 
     public void update(float deltaTime) {
         stateTime += deltaTime;
@@ -61,7 +47,7 @@ public class Pirates extends Sprite {
         setRegion(pirateIdle.getKeyFrame(stateTime, true));
     }
 
-    public void definePirates(int x, int y, int radius) {
+    public void definePirates(float x, float y, float radius) {
         BodyDef bdef = new BodyDef();
         bdef.position.set(x / DeltaDucks.PIXEL_PER_METER, y / DeltaDucks.PIXEL_PER_METER);
         bdef.type = BodyDef.BodyType.DynamicBody;

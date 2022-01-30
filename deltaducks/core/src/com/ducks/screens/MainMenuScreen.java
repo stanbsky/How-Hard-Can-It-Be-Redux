@@ -12,7 +12,7 @@ import com.ducks.DeltaDucks;
 
 public class MainMenuScreen implements Screen {
 
-    DeltaDucks game;
+    private DeltaDucks game;
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
@@ -25,11 +25,11 @@ public class MainMenuScreen implements Screen {
     private static final int PLAY_BUTTON_Y = 300;
     private static final int EXIT_BUTTON_Y = 170;
 
-    Texture playButtonActive, playButtonInactive;
-    Texture exitButtonActive, exitButtonInactive;
+    private Texture playButtonActive, playButtonInactive;
+    private Texture exitButtonActive, exitButtonInactive;
 
-    int play_button_X;
-    int exit_button_X;
+    private int play_button_X;
+    private int exit_button_X;
 
     public MainMenuScreen(DeltaDucks game) {
         this.game = game;
