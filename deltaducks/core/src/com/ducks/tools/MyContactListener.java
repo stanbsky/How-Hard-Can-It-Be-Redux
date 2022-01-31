@@ -3,6 +3,7 @@ package com.ducks.tools;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
+import com.ducks.scenes.Hud;
 import com.ducks.scenes.Subtitle;
 import com.ducks.sprites.Ship;
 
@@ -55,6 +56,11 @@ public class MyContactListener implements ContactListener {
                 fb.setUserData("Pirate Dead");
             }
         }
+
+        if(checkCollision(fa, fb, "Player", "Cannon Alive")) {
+            Hud.decHealth();
+        }
+
 
         if(fa.getUserData() != null && fa.getUserData().equals("Bullet Alive")){
             fa.setUserData("Bullet Dead");

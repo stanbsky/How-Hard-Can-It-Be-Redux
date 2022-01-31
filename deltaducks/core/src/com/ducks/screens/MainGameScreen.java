@@ -166,6 +166,9 @@ public class MainGameScreen implements Screen {
 //            this.dispose();
             game.setScreen(new FinalStorylineScreen(this.game));
         }
+        if(hud.getHealth()<=0f) {
+            game.setScreen(new FinalStorylineScreen(this.game));
+        }
     }
 
     public void update(float deltaTime) {

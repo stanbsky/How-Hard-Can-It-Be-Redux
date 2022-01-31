@@ -30,7 +30,7 @@ public class Hud implements Disposable {
     private static Label goldLabel;
     private Label playerLabel;
 
-    private float health;
+    private static float health;
 
     public Hud(SpriteBatch batch) {
         worldTimer = 300;
@@ -67,9 +67,13 @@ public class Hud implements Disposable {
         stage.draw();
         batch.begin();
         Texture healthBar = MainGameScreen.resources.getTexture("blank");
-        batch.setColor(Color.GREEN);
-
-        batch.draw(healthBar, 160, 0, 10f, 160 * health);
+        if (health > .6f)
+            batch.setColor(Color.GREEN);
+        else if (health > .2f)
+            batch.setColor(Color.ORANGE);
+        else
+            batch.setColor(Color.RED);
+        batch.draw(healthBar, 160, 0, 5f, 150 * health + 10f);
         batch.setColor(Color.WHITE);
         batch.end();
     }
@@ -92,6 +96,15 @@ public class Hud implements Disposable {
         gold = value;
         goldLabel.setText(String.format("%06d", gold));
     }
+
+    public static float getHealth() {
+        return health;
+    }
+
+    public static void decHealth() {
+        health-=.2f;
+    }
+
 
     public float getTimer() {
         return worldTimer;

@@ -70,7 +70,7 @@ public class Cannon extends Sprite {
 
         fdef.shape = shape;
         fdef.filter.categoryBits = DeltaDucks.BIT_BULLETS;
-        fdef.filter.maskBits = DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
+        fdef.filter.maskBits = DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY | DeltaDucks.BIT_PLAYER;
         fdef.restitution = 0.2f;
         bulletBody.createFixture(fdef).setUserData("Cannon Alive");
     }

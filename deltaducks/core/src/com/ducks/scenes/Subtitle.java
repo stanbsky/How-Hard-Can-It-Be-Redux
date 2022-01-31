@@ -55,8 +55,6 @@ public class Subtitle implements Disposable {
         if(stateTimer >= tolerateTime) {
             stateTimer = 0;
             state++;
-            System.out.println(state);
-            System.out.println(subtitle);
         }
         switch (state) {
             case 0:
