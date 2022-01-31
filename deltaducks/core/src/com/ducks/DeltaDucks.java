@@ -28,6 +28,8 @@ public class DeltaDucks extends Game {
 	public static final short BIT_MONSTERS = 32;
 	public static final short BIT_BOUNDARY = 64;
 	public static final short BIT_BULLETS = 124;
+	public static final short BIT_CANNONS = 248;
+	public static final short BIT_COLLEGES = 496;
 
 	public SpriteBatch batch;
 

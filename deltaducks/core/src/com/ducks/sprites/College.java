@@ -1,7 +1,10 @@
 package com.ducks.sprites;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -9,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.entities.ListOfCannons;
 import com.ducks.screens.MainGameScreen;
+import sun.tools.jar.Main;
 
 public class College extends Sprite {
     public World world;
@@ -29,12 +33,17 @@ public class College extends Sprite {
     public enum CollegeName {DERWENT};
     private CollegeName collegeName;
 
+    public float health;
+    Texture healthBar;
 
     public College(World world, MainGameScreen screen, float spawn_x, float spawn_y, float spawn_radius, CollegeName collegeName, ListOfCannons cannons) {
         super(MainGameScreen.resources.getTexture("college"));
         this.world = world;
         this.collegeName = collegeName;
         this.cannons = cannons;
+
+        health = 1f;
+        healthBar = MainGameScreen.resources.getTexture("blank");
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for(int i=0; i<1; i++) {
@@ -54,6 +63,17 @@ public class College extends Sprite {
         if(collegeBody.getFixtureList().get(1).getUserData().toString().contains("Attack")) {
             cannons.spawnBullet(this);
         }
+        if(collegeBody.getFixtureList().get(0).getUserData().toString().contains("Damage")) {
+            collegeBody.getFixtureList().get(0).setUserData("College");
+            health-=.2f;
+        }
+    }
+
+    public void extendedDraw(SpriteBatch batch) {
+        this.draw(batch);
+        batch.setColor(Color.GREEN);
+        batch.draw(healthBar, collegeBody.getPosition().x - .5f * health/2 - .1f/2, collegeBody.getPosition().y + collegeBody.getFixtureList().get(0).getShape().getRadius() + .05f, .5f * health + .1f, .05f);
+        batch.setColor(Color.WHITE);
     }
 
     public void defineCollege(float x, float y, float radius) {
@@ -68,18 +88,23 @@ public class College extends Sprite {
         shape.setRadius(radius / DeltaDucks.PIXEL_PER_METER);
 
         fdef.shape = shape;
-        fdef.filter.categoryBits = DeltaDucks.BIT_MONSTERS;
-        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER;
+        fdef.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
+        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_BULLETS;
         fdef.restitution = 0.2f;
         collegeBody.createFixture(fdef).setUserData("College");
 
         PolygonShape polyShape = new PolygonShape();
         polyShape.setAsBox(radius * 3 / DeltaDucks.PIXEL_PER_METER, radius * 3 / DeltaDucks.PIXEL_PER_METER, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
         fdef.shape = polyShape;
-        fdef.filter.categoryBits = DeltaDucks.BIT_MONSTERS;
+        fdef.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
         fdef.filter.maskBits = DeltaDucks.BIT_PLAYER;
         fdef.isSensor = true;
         collegeBody.createFixture(fdef).setUserData("College Sensor");
     }
+
+    public void dispose() {
+        world.destroyBody(collegeBody);
+    }
+
 
 }

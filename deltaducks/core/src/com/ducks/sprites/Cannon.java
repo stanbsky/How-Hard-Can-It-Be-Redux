@@ -26,7 +26,7 @@ public class Cannon extends Sprite {
     float spawnTimer;
     public Body bulletBody;
 
-    private final float BULLET_SPEED = 500f;
+    private final float BULLET_SPEED = 100f;
     private final float BULLET_SPAWN_DURATION = 2f;
 
     public Cannon(World world, College college, Ship player) {
@@ -36,7 +36,7 @@ public class Cannon extends Sprite {
         this.player = player;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        frames.add(new TextureRegion(getTexture(), 0 * PIXEL_BULLET_WIDTH, 0 * PIXEL_BULLET_HEIGHT, PIXEL_BULLET_WIDTH, PIXEL_BULLET_HEIGHT));
+        frames.add(new TextureRegion(getTexture(), 1 * PIXEL_BULLET_WIDTH, 0 * PIXEL_BULLET_HEIGHT, PIXEL_BULLET_WIDTH, PIXEL_BULLET_HEIGHT));
         cannonIdle = new Animation(0.1f, frames);
         frames.clear();
 //        System.out.println("Yikes");
@@ -69,8 +69,8 @@ public class Cannon extends Sprite {
         shape.setRadius(10 / DeltaDucks.PIXEL_PER_METER);
 
         fdef.shape = shape;
-        fdef.filter.categoryBits = DeltaDucks.BIT_BULLETS;
-        fdef.filter.maskBits = DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY | DeltaDucks.BIT_PLAYER;
+        fdef.filter.categoryBits = DeltaDucks.BIT_CANNONS;
+        fdef.filter.maskBits = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PLAYER; // BIT_BOUNDARIES won't work here
         fdef.restitution = 0.2f;
         bulletBody.createFixture(fdef).setUserData("Cannon Alive");
     }

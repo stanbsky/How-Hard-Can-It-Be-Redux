@@ -44,12 +44,11 @@ public class ListOfBullets {
             if(!bullet.bulletBody.getFixtureList().get(0).getUserData().equals("Bullet Alive")) {
                 bulletBodiesToRemove.add(bullet);
                 bullet.dispose();
+            } else {
+                bullet.update(deltaTime);
             }
         }
         bulletBodies.removeAll(bulletBodiesToRemove, true);
-        for( Bullet bullet : bulletBodies) {
-            bullet.update(deltaTime);
-        }
     }
 
     public void draw(SpriteBatch batch) {

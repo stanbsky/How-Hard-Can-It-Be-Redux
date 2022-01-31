@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
+import com.ducks.sprites.Cannon;
 import com.ducks.sprites.College;
 import com.ducks.sprites.Monster;
 
@@ -37,14 +38,21 @@ public class ListOfColleges {
     }
 
     public void update(float deltaTime) {
+        Array<College> collegeBodiesToRemove = new Array<College>();
         for( College college : collegeBodies) {
-            college.update(deltaTime);
+            if(college.health <= 0){
+                collegeBodiesToRemove.add(college);
+                college.dispose();
+            } else {
+                college.update(deltaTime);
+            }
         }
+        collegeBodies.removeAll(collegeBodiesToRemove, true);
     }
 
     public void draw(SpriteBatch batch) {
         for( College college : collegeBodies) {
-            college.draw(batch);
+            college.extendedDraw(batch);
         }
     }
 }

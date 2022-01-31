@@ -24,14 +24,6 @@ public class MyContactListener implements ContactListener {
         Fixture fb = contact.getFixtureB();
 
         System.out.println(fa.getUserData()+", "+fb.getUserData());
-        if(fa.getUserData() != null && fa.getUserData().equals("Sensor")){
-            System.out.println("Sensor Fa");
-            playerHitsGround = true;
-        }
-        if(fb.getUserData() != null && fb.getUserData().equals("Sensor")){
-            System.out.println("Sensor Fb");
-            playerHitsGround = true;
-        }
 
         if(checkCollision(fa, fb, "Player", "Monster Sensor")) {
 
@@ -56,19 +48,32 @@ public class MyContactListener implements ContactListener {
                 fb.setUserData("Pirate Dead");
             }
         }
+        if(checkCollision(fa, fb, "College", "Bullet Alive")) {
+            if(fa.getUserData() != null && fa.getUserData().equals("Bullet Alive")){
+                fa.setUserData("Bullet Dead");
+            } else {
+                fb.setUserData("Bullet Dead");
+            }
+            if(fa.getUserData() != null && fa.getUserData().equals("College")){
+                fa.setUserData("College Damage");
+            } else {
+                fb.setUserData("College Damage");
+            }
+        }
+
 
         if(checkCollision(fa, fb, "Player", "Cannon Alive")) {
             Hud.decHealth();
         }
 
 
-        if(fa.getUserData() != null && fa.getUserData().equals("Bullet Alive")){
-            fa.setUserData("Bullet Dead");
-        }
-        if(fb.getUserData() != null && fb.getUserData().equals("Bullet Alive")){
-            fb.setUserData("Bullet Dead");
-        }
-
+//        if(fa.getUserData() != null && fa.getUserData().equals("Bullet Alive")){
+//            fa.setUserData("Bullet Dead");
+//        }
+//        if(fb.getUserData() != null && fb.getUserData().equals("Bullet Alive")){
+//            fb.setUserData("Bullet Dead");
+//        }
+//
         if(fa.getUserData() != null && fa.getUserData().equals("Cannon Alive")){
             fa.setUserData("Cannon Dead");
         }

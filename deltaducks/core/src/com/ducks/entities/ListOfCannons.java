@@ -42,12 +42,11 @@ public class ListOfCannons {
             if(!cannon.bulletBody.getFixtureList().get(0).getUserData().equals("Cannon Alive")) {
                 CannonBodiesToRemove.add(cannon);
                 cannon.dispose();
+            } else {
+                cannon.update(deltaTime);
             }
         }
         cannonBodies.removeAll(CannonBodiesToRemove, true);
-        for( Cannon cannon : cannonBodies) {
-            cannon.update(deltaTime);
-        }
     }
 
     public void draw(SpriteBatch batch) {

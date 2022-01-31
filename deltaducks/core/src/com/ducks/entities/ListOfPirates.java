@@ -43,12 +43,11 @@ public class ListOfPirates {
             if(!pirate.pirateBody.getFixtureList().get(0).getUserData().equals("Pirate")) {
                 piratesBodiesToRemove.add(pirate);
                 pirate.dispose();
+            } else {
+                pirate.update(deltaTime);
             }
         }
         pirateBodies.removeAll(piratesBodiesToRemove, true);
-        for( Pirate pirate : pirateBodies) {
-            pirate.update(deltaTime);
-        }
     }
 
     public void draw(SpriteBatch batch) {

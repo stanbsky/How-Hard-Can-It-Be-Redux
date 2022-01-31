@@ -26,7 +26,7 @@ public class Bullet extends Sprite {
     float spawnTimer;
     public Body bulletBody;
 
-    private final float BULLET_SPEED = 500f;
+    private final float BULLET_SPEED = 200f;
     private final float BULLET_SPAWN_DURATION = 2f;
     OrthographicCamera gameCam;
 
