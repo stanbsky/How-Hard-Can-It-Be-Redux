@@ -1,5 +1,6 @@
 package com.ducks.entities;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -34,7 +35,7 @@ public class ListOfCannons {
 //        cannonBodies.add(new Cannon(world, college, player));
     }
 
-    public void update(float deltaTime) {
+    public void update(float deltaTime, OrthographicCamera gameCam) {
         shootTimer += deltaTime;
         Array<Cannon> CannonBodiesToRemove = new Array<Cannon>();
         for( Cannon cannon : cannonBodies) {

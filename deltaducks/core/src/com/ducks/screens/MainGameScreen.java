@@ -82,6 +82,7 @@ public class MainGameScreen implements Screen {
         MainGameScreen.resources.loadTexture("cannon_ball_and_explosion2.png", "mehnat");
         MainGameScreen.resources.loadTexture("arrow.png", "arrow");
         MainGameScreen.resources.loadTexture("COLLEGE.png", "college");
+        MainGameScreen.resources.loadTexture("blank.png", "blank");
     }
 
     public TextureAtlas getAtlas() { return atlas;}
@@ -130,7 +131,7 @@ public class MainGameScreen implements Screen {
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
         crosshair = new Crosshair(world, this, player, gameCam, gamePort);
 //        bullet = new Bullet(world, player);
-        bullets = new ListOfBullets(world, this, player, crosshair);
+        bullets = new ListOfBullets(world, this, player, crosshair, gameCam);
         cannons = new ListOfCannons(world, this, player, crosshair);
         colleges = new ListOfColleges(world, this, cannons);
         tutorial = new Tutorial(gameCam, player);
@@ -184,7 +185,7 @@ public class MainGameScreen implements Screen {
         crosshair.update(deltaTime);
 //        bullet.update(deltaTime);
         bullets.update(deltaTime);
-        cannons.update(deltaTime);
+        cannons.update(deltaTime, gameCam);
 
         gameCam.position.x = player.b2body.getPosition().x;
         gameCam.position.y = player.b2body.getPosition().y;
@@ -227,8 +228,9 @@ public class MainGameScreen implements Screen {
         game.batch.end();
 
         // Set our batch to now draw what the Hud camera sees.
-        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-        hud.stage.draw();
+//        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+//        hud.stage.draw();
+        hud.draw(game.batch);
 
         game.batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
         subtitle.stage.draw();

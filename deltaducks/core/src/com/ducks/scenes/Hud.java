@@ -1,8 +1,9 @@
 package com.ducks.scenes;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
+import com.ducks.screens.MainGameScreen;
 
 public class Hud implements Disposable {
     public Stage stage;
@@ -28,11 +30,14 @@ public class Hud implements Disposable {
     private static Label goldLabel;
     private Label playerLabel;
 
+    private float health;
+
     public Hud(SpriteBatch batch) {
         worldTimer = 300;
         timeCount = 0;
         score = 0;
         gold = 0;
+        health = 1f;
 
         viewport = new FitViewport(DeltaDucks.VIRTUAL_WIDTH, DeltaDucks.VIRTUAL_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, batch);
@@ -54,8 +59,19 @@ public class Hud implements Disposable {
         table.add(scoreLabel).expandX();
         table.add(goldLabel).expandX();
         table.add(countdownLabel).expandX();
-
         stage.addActor(table);
+    }
+
+    public void draw(SpriteBatch batch) {
+        batch.setProjectionMatrix(stage.getCamera().combined);
+        stage.draw();
+        batch.begin();
+        Texture healthBar = MainGameScreen.resources.getTexture("blank");
+        batch.setColor(Color.GREEN);
+
+        batch.draw(healthBar, 160, 0, 10f, 160 * health);
+        batch.setColor(Color.WHITE);
+        batch.end();
     }
 
     public void update(float deltaTime) {

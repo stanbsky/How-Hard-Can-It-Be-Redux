@@ -1,8 +1,10 @@
 package com.ducks.sprites;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
@@ -26,11 +28,13 @@ public class Bullet extends Sprite {
 
     private final float BULLET_SPEED = 500f;
     private final float BULLET_SPAWN_DURATION = 2f;
+    OrthographicCamera gameCam;
 
-    public Bullet(World world, Ship player, Crosshair crosshair) {
+    public Bullet(World world, Ship player, Crosshair crosshair, OrthographicCamera gameCam) {
         super(MainGameScreen.resources.getTexture("mehnat"));
         this.world = world;
         this.player = player;
+        this.gameCam = gameCam;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         frames.add(new TextureRegion(getTexture(), 0 * PIXEL_BULLET_WIDTH, 0 * PIXEL_BULLET_HEIGHT, PIXEL_BULLET_WIDTH, PIXEL_BULLET_HEIGHT));
@@ -48,6 +52,9 @@ public class Bullet extends Sprite {
         spawnTimer += deltaTime;
         setPosition(bulletBody.getPosition().x - getWidth()/2, bulletBody.getPosition().y - getHeight()/2);
         if(spawnTimer > BULLET_SPAWN_DURATION) {
+            bulletBody.getFixtureList().get(0).setUserData("Bullet Dead");
+        }
+        if(!gameCam.frustum.pointInFrustum(new Vector3(bulletBody.getPosition().x, bulletBody.getPosition().y, 0))) {
             bulletBody.getFixtureList().get(0).setUserData("Bullet Dead");
         }
     }

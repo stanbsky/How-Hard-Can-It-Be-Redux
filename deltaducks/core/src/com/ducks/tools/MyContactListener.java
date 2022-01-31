@@ -63,6 +63,13 @@ public class MyContactListener implements ContactListener {
             fb.setUserData("Bullet Dead");
         }
 
+        if(fa.getUserData() != null && fa.getUserData().equals("Cannon Alive")){
+            fa.setUserData("Cannon Dead");
+        }
+        if(fb.getUserData() != null && fb.getUserData().equals("Cannon Alive")){
+            fb.setUserData("Cannon Dead");
+        }
+
     }
 
     @Override
