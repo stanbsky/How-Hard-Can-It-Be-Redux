@@ -3,288 +3,234 @@ package com.ducks.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
-import com.ducks.entities.Bullet;
-
-import java.util.ArrayList;
+import com.ducks.entities.ListOfBullets;
+import com.ducks.entities.ListOfMonsters;
+import com.ducks.entities.ListOfPirates;
+import com.ducks.scenes.Hud;
+import com.ducks.scenes.Minimap;
+import com.ducks.scenes.Subtitle;
+import com.ducks.scenes.Tutorial;
+import com.ducks.sprites.Bullet;
+import com.ducks.tools.B2WorldCreator;
+import com.ducks.tools.Content;
+import com.ducks.tools.MyContactListener;
+import com.ducks.sprites.Crosshair;
+import com.ducks.sprites.Ship;
 
 public class MainGameScreen implements Screen {
 
-    public static final float SPEED = 100;
-
-    public static final float SHIP_FRAME_DURATION = 0.5f;
-    public static final int SHIP_WIDTH_PIXEL = 64;
-    public static final int SHIP_HEIGHT_PIXEL = 64;
-//    public static final int SHIP_WIDTH = SHIP_WIDTH_PIXEL * 2;
-//    public static final int SHIP_HEIGHT = SHIP_HEIGHT_PIXEL * 2;
-    public static final int SHIP_WIDTH = SHIP_WIDTH_PIXEL;
-    public static final int SHIP_HEIGHT = SHIP_HEIGHT_PIXEL;
-
-//    public static final float ROLL_TIMER_SWITCH_TIME = 0.25f;
-    public static final float VERTICAL_ROLL_TIMER_SWITCH_TIME = 0.25f;
-    public static final float HORIZONTAL_ROLL_TIMER_SWITCH_TIME = 0.25f;
-
-    public static final float SHOOT_WAIT_TIME = 0.3f;
-
-
-
-    Animation<TextureRegion>[] rolls;
-
-    float x, y;
-    int roll;
-    float rollVerticalTimer;
-    float rollHorizontalTimer;
-    float stateTime;
-    float shootTimer;
 
     DeltaDucks game;
 
-    ArrayList<Bullet> bullets;
+    private OrthographicCamera gameCam;
+    private Viewport gamePort;
+    private Hud hud;
 
-    public static final int UP_INDEX = 8;
-    public static final int DOWN_INDEX = 0;
-    public static final int LEFT_INDEX = 4;
-    public static final int RIGHT_INDEX = 12;
-    public static final int FIRST_INDEX = 0;
-    public static final int LAST_INDEX = 15;
+    private TmxMapLoader mapLoader;
+    private TiledMap map;
+    private MapProperties prop;
+    private OrthogonalTiledMapRenderer renderer;
+    private int mapPixelWidth;
+    private int mapPixelHeight;
 
-    int EX;
+    // Box2d Variables
+    private World world;
+    private Box2DDebugRenderer b2dr;
+
+    private Ship player;
+//    private Pirates bots;
+    private ListOfPirates bots;
+//    private Monsters creatures;
+    private ListOfMonsters creatures;
+    private Minimap radar;
+    private Crosshair crosshair;
+    private Tutorial tutorial;
+    private Subtitle subtitle;
+    private Bullet bullet;
+    private ListOfBullets bullets;
+
+//    private Player player;
+    private MyContactListener contactListener;
+
+    private static float ACCELERATION = 0.5f;
+    private static float MAX_VELOCITY = 2f;
+
+    public static Content resources;
+    private TextureAtlas atlas;
+
 
     public MainGameScreen(DeltaDucks game) {
         this.game = game;
+        resources = new Content();
+        atlas = new TextureAtlas("com/ducks/sprites/ship.pack");
+        MainGameScreen.resources.loadTexture("bunny.png", "badlogic");
+        MainGameScreen.resources.loadTexture("Idle.png", "worm");
+        MainGameScreen.resources.loadTexture("crosshair.png", "crosshair");
+        MainGameScreen.resources.loadTexture("ship_light_SE.png", "pirate");
+        MainGameScreen.resources.loadTexture("cannon_ball_and_explosion2.png", "mehnat");
+        MainGameScreen.resources.loadTexture("arrow.png", "arrow");
     }
+
+    public TextureAtlas getAtlas() { return atlas;}
 
     @Override
     public void show() {
-        x = Gdx.graphics.getWidth()/2 - SHIP_WIDTH/2;
-        y = Gdx.graphics.getHeight()/2 - SHIP_HEIGHT/2;
+        gameCam = new OrthographicCamera();
+        gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
+        hud = new Hud(game.batch);
+        subtitle = new Subtitle(game.batch);
 
-        bullets = new ArrayList <Bullet> ();
+        // Create Map
+        mapLoader = new TmxMapLoader();
+        map = mapLoader.load("test_map.tmx");
+        prop = map.getProperties();
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / DeltaDucks.PIXEL_PER_METER);
 
-        roll = 8;
-        rolls = new Animation[16];
+        int mapWidth = prop.get("width", Integer.class);
+        int mapHeight = prop.get("height", Integer.class);
+        int tilePixelWidth = prop.get("tilewidth", Integer.class);
+        int tilePixelHeight = prop.get("tileheight", Integer.class);
+        mapPixelWidth = mapWidth * tilePixelWidth;
+        mapPixelHeight = mapHeight * tilePixelHeight;
 
-        TextureRegion [] rollSpriteSheet = TextureRegion.split(new Texture("game/strip.png"), SHIP_WIDTH_PIXEL, SHIP_HEIGHT_PIXEL)[0];
 
-        rolls[0] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[8]); // Down
-        rolls[1] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[7]);
-        rolls[2] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[6]);
-        rolls[3] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[5]);
-        rolls[4] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[4]); // Left
-        rolls[5] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[3]);
-        rolls[6] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[2]);
-        rolls[7] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[1]);
-        rolls[8] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[0]); // UP
-        rolls[9] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[15]);
-        rolls[10] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[14]);
-        rolls[11] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[13]);
-        rolls[12] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[12]); // Right
-        rolls[13] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[11]);
-        rolls[14] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[10]);
-        rolls[15] = new Animation(SHIP_FRAME_DURATION, rollSpriteSheet[9]);
+        gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
 
-        EX = roll; // Dummy variable to look out for changes in the animation states (from 0 to 15)
+
+        // Set Up Box2D
+        world = new World(new Vector2(0, 0), true);
+
+        player = new Ship(world, this);
+
+        contactListener = new MyContactListener(player);
+        world.setContactListener(contactListener);
+        b2dr = new Box2DDebugRenderer();
+
+        new B2WorldCreator(world, map);
+
+        // Create Player
+
+//        player = new Player(body.b2body);
+//        bots = new Pirates(world, this, 64, 64, 12);
+        bots = new ListOfPirates(world, this, mapPixelWidth, mapPixelHeight);
+        creatures = new ListOfMonsters(world, this);
+        radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
+        crosshair = new Crosshair(world, this, player, gameCam, gamePort);
+//        bullet = new Bullet(world, player);
+        bullets = new ListOfBullets(world, this, player, crosshair);
+        tutorial = new Tutorial(gameCam, player);
     }
+
+    public void handleInput(float deltaTime) {
+//
+        if (Gdx.input.isKeyPressed(Input.Keys.UP) && player.b2body.getLinearVelocity().y <= MAX_VELOCITY)
+            player.b2body.applyForce(new Vector2(0, ACCELERATION), player.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && player.b2body.getLinearVelocity().y >= -MAX_VELOCITY)
+            player.b2body.applyForce(new Vector2(0, -ACCELERATION), player.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= MAX_VELOCITY)
+            player.b2body.applyForce(new Vector2(ACCELERATION, 0), player.b2body.getWorldCenter(), true);
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -MAX_VELOCITY)
+            player.b2body.applyForce(new Vector2(-ACCELERATION, 0), player.b2body.getWorldCenter(), true);
+
+//        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+//            bullet.update(deltaTime);
+//        }
+//        if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)){
+//
+//            bullet.bulletBody.applyForceToCenter(Crosshair.getCrosshair().scl(100), true);
+//        }
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+            bullets.spawnBullet();
+        }
+    }
+
+    public void handleTime(float deltaTime) {
+        if(hud.getTimer()<0.1f){
+//            Gdx.app.exit();
+//            this.dispose();
+            game.setScreen(new FinalStorylineScreen(this.game));
+        }
+    }
+
+    public void update(float deltaTime) {
+        handleInput(deltaTime);
+        handleTime(deltaTime);
+
+        world.step(deltaTime, 6, 2);
+
+        player.update(deltaTime);
+        bots.update(deltaTime);
+        creatures.update(deltaTime);
+        hud.update(deltaTime);
+        radar.update(player.b2body);
+        tutorial.update(deltaTime);
+        subtitle.update(deltaTime);
+        crosshair.update(deltaTime);
+//        bullet.update(deltaTime);
+        bullets.update(deltaTime);
+
+        gameCam.position.x = player.b2body.getPosition().x;
+        gameCam.position.y = player.b2body.getPosition().y;
+
+        gameCam.position.x = MathUtils.clamp(gameCam.position.x, gameCam.viewportWidth/2, mapPixelWidth/DeltaDucks.PIXEL_PER_METER - gameCam.viewportWidth/2);
+        gameCam.position.y = MathUtils.clamp(gameCam.position.y, gameCam.viewportHeight/2, mapPixelHeight/DeltaDucks.PIXEL_PER_METER - gameCam.viewportHeight/2);
+
+        gameCam.update();
+
+        renderer.setView(gameCam);
+    }
+
 
     @Override
     public void render(float delta) {
-        //Shooting Code
-        shootTimer += delta;
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && shootTimer >= SHOOT_WAIT_TIME) {
-            shootTimer = 0;
-
-//            int offset = 4;
-//            if (roll == 1 || roll == 3)
-//                offset = 8;
-//            if (roll == 0 || roll == 4)
-//                offset = 16;
-            int state;
-            if (roll == 0)
-                state = 1;
-            else if (roll < 4)
-                state = 7;
-            else if (roll == 4)
-                state = 3;
-            else if (roll < 8)
-                state = 5;
-            else if (roll == 8)
-                state = 0;
-            else if (roll < 12)
-                state = 4;
-            else if (roll == 12)
-                state = 2;
-            else
-                state = 6;
-            bullets.add(new Bullet(x + SHIP_WIDTH/2 - 3, y + SHIP_HEIGHT/2 - 12, state));
-//            bullets.add(new Bullet(x + SHIP_WIDTH - offset));
-        }
-        // Update Bullets
-        ArrayList <Bullet> bulletsToRemove = new ArrayList <Bullet> ();
-        for (Bullet bullet : bullets) {
-            bullet.update(delta);
-            if (bullet.remove)
-                bulletsToRemove.add(bullet);
-        }
-
-        bullets.removeAll(bulletsToRemove);
-
-        // Movement Code
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)){
-            y += SPEED * Gdx.graphics.getDeltaTime();
-            if (y + SHIP_HEIGHT > Gdx.graphics.getHeight()) // Gdx.graphics.getWidth()
-                y = Gdx.graphics.getHeight() - SHIP_HEIGHT;
-            if (Gdx.input.isKeyPressed(Input.Keys.UP) && !Gdx.input.isKeyPressed(Input.Keys.DOWN) && roll != UP_INDEX) {
-                rollVerticalTimer = 0;
-                if (roll > DOWN_INDEX && roll < UP_INDEX) {
-                    roll++;
-                } else if (roll == FIRST_INDEX) {
-                    roll = LAST_INDEX;
-                } else if (roll <= LAST_INDEX) {
-                    roll--;
-                }
-            }
-            rollVerticalTimer += Gdx.graphics.getDeltaTime();
-            if (Math.abs(rollVerticalTimer) > VERTICAL_ROLL_TIMER_SWITCH_TIME && roll != UP_INDEX) {
-                rollVerticalTimer -= VERTICAL_ROLL_TIMER_SWITCH_TIME;
-                if (roll > DOWN_INDEX && roll < UP_INDEX) {
-                    roll++;
-                } else if (roll == FIRST_INDEX) {
-                    roll = LAST_INDEX;
-                } else if (roll <= LAST_INDEX) {
-                    roll--;
-                }
-            }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-            y -= SPEED * Gdx.graphics.getDeltaTime();
-            if (y < 0)
-                y = 0;
-            if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && !Gdx.input.isKeyPressed(Input.Keys.UP) && roll != DOWN_INDEX) {
-                rollVerticalTimer = 0;
-                if (roll <= UP_INDEX && roll > FIRST_INDEX) {
-                    roll--;
-                } else if (roll > UP_INDEX && roll < LAST_INDEX) {
-                    roll++;
-                } else if (roll == LAST_INDEX) {
-                    roll = FIRST_INDEX;
-                }
-            }
-            rollVerticalTimer -= Gdx.graphics.getDeltaTime();
-            if (Math.abs(rollVerticalTimer) > VERTICAL_ROLL_TIMER_SWITCH_TIME && roll != DOWN_INDEX) {
-                rollVerticalTimer -= VERTICAL_ROLL_TIMER_SWITCH_TIME;
-                if (roll <= UP_INDEX && roll > FIRST_INDEX) {
-                    roll--;
-                } else if (roll > UP_INDEX && roll < LAST_INDEX) {
-                    roll++;
-                } else if (roll == LAST_INDEX) {
-                    roll = FIRST_INDEX;
-                }
-            }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-            x -= SPEED * Gdx.graphics.getDeltaTime();
-            if (x < 0)
-                x = 0;
-            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT) && roll != LEFT_INDEX) {
-                rollHorizontalTimer = 0;
-                if (roll >= DOWN_INDEX && roll < LEFT_INDEX) {
-                    roll++;
-                } else if (roll <= RIGHT_INDEX) {
-                    roll--;
-                } else if (roll == LAST_INDEX) {
-                    roll = FIRST_INDEX;
-                } else {
-                    roll++;
-                }
-            }
-            rollHorizontalTimer -= Gdx.graphics.getDeltaTime();
-            if (Math.abs(rollHorizontalTimer) > HORIZONTAL_ROLL_TIMER_SWITCH_TIME && roll != LEFT_INDEX) {
-                rollHorizontalTimer -= HORIZONTAL_ROLL_TIMER_SWITCH_TIME;
-                if (roll >= DOWN_INDEX && roll < LEFT_INDEX) {
-                    roll++;
-                } else if (roll <= RIGHT_INDEX) {
-                    roll--;
-                } else if (roll == LAST_INDEX) {
-                    roll = FIRST_INDEX;
-                } else {
-                    roll++;
-                }
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                roll = UP_INDEX-2;
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-                roll = LEFT_INDEX-2;
-            }
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-            x += SPEED * Gdx.graphics.getDeltaTime();
-            if (x + SHIP_WIDTH > Gdx.graphics.getWidth()) // Gdx.graphics.getWidth()
-                x = Gdx.graphics.getWidth() - SHIP_WIDTH;
-            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && roll != RIGHT_INDEX) {
-                rollHorizontalTimer = 0;
-                if (roll <= LAST_INDEX && roll > RIGHT_INDEX) {
-                    roll--;
-                } else if (roll <= LEFT_INDEX && roll > FIRST_INDEX) {
-                    roll--;
-                } else if (roll == FIRST_INDEX) {
-                    roll = LAST_INDEX;
-                } else {
-                    roll++;
-                }
-            }
-            rollHorizontalTimer += Gdx.graphics.getDeltaTime();
-            if (Math.abs(rollHorizontalTimer) > HORIZONTAL_ROLL_TIMER_SWITCH_TIME && roll != RIGHT_INDEX) {
-                rollHorizontalTimer -= HORIZONTAL_ROLL_TIMER_SWITCH_TIME;
-                if (roll <= LAST_INDEX && roll > RIGHT_INDEX) {
-                    roll--;
-                } else if (roll <= LEFT_INDEX && roll > FIRST_INDEX) {
-                    roll--;
-                } else if (roll == FIRST_INDEX) {
-                    roll = LAST_INDEX;
-                } else {
-                    roll++;
-                }
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                roll = UP_INDEX+2;
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-                roll = RIGHT_INDEX+2;
-            }
-        }
-//        if(roll == -1)
-//            roll = 0;
-//        if(roll == 16)
-//            roll = 15;
-        if (EX != roll) {
-//            System.out.println(roll);
-            EX = roll;
-        }
-
-        stateTime += delta;
+        update(delta);
 
         Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        // Render our game map
+        renderer.render();
+
+        // Render our Box2DDebugLines
+        b2dr.render(world, gameCam.combined);
+
+
+        game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
-
-        for(Bullet bullet : bullets) {
-            bullet.render(game.batch);
-        }
-
-        game.batch.draw(rolls[roll].getKeyFrame(stateTime, true), x, y, SHIP_WIDTH, SHIP_HEIGHT);
-
+        bots.draw(game.batch);
+        creatures.draw(game.batch);
+        radar.draw(game.batch);
+        tutorial.draw(game.batch);
+        bullets.draw(game.batch);
+        player.draw(game.batch);
+        crosshair.draw(game.batch);
+//        bullet.draw(game.batch);
         game.batch.end();
+
+        // Set our batch to now draw what the Hud camera sees.
+        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
+
+        game.batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
+        subtitle.stage.draw();
+
     }
 
     @Override
     public void resize(int width, int height) {
-
+        gamePort.update(width, height);
     }
 
     @Override
@@ -304,6 +250,11 @@ public class MainGameScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        map.dispose();
+        renderer.dispose();
+        world.dispose();
+        b2dr.dispose();
+        hud.dispose();
+        radar.dispose();
     }
 }

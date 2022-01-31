@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="0.0" y="894.0">com.ducks.scenes.Minimap</node>
+    <node x="239.0" y="872.0">com.ducks.entities.ListOfMonsters</node>
+    <node x="1592.0" y="817.0">com.ducks.sprites.Crosshair</node>
+    <node x="1065.0000000000002" y="1274.0">com.ducks.screens.MainGameScreen</node>
+    <node x="256.0" y="275.0">com.ducks.sprites.Monsters</node>
+    <node x="1862.0" y="927.0">com.ducks.tools.MyContactListener</node>
+    <node x="1114.625" y="264.0">com.ducks.sprites.Pirates</node>
+    <node x="929.0000000000001" y="817.0">com.ducks.scenes.Hud</node>
+    <node x="735.0000000000001" y="950.0">com.ducks.tools.B2WorldCreator</node>
+    <node x="1837.768961352657" y="0.0">com.ducks.sprites.Ship</node>
+    <node x="1118.0" y="872.0">com.ducks.entities.ListOfPirates</node>
+    <node x="1160.3333333333335" y="1885.0">com.ducks.scenes.Tutorial</node>
+    <node x="484.0000000000001" y="850.0">com.ducks.scenes.Subtitle</node>
+    <node x="1335.0" y="938.0">com.ducks.tools.Content</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.ducks.sprites.Crosshair" target="com.ducks.sprites.Ship">
+      <point x="-62.5" y="-148.5" />
+      <point x="1654.5" y="787.0" />
+      <point x="1854.380072463768" y="787.0" />
+      <point x="-132.8888888888889" y="368.5" />
+    </edge>
+    <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.tools.Content">
+      <point x="37.48148148148141" y="-280.5" />
+      <point x="1228.9814814814818" y="1164.0" />
+      <point x="1394.25" y="1164.0" />
+      <point x="-59.25" y="27.5" />
+    </edge>
+    <edge source="com.ducks.scenes.Tutorial" target="com.ducks.sprites.Ship">
+      <point x="92.39999999999998" y="-170.5" />
+      <point x="1368.2333333333336" y="1865.0" />
+      <point x="2114.240740740741" y="1865.0" />
+      <point x="2114.240740740741" y="797.0" />
+      <point x="2120.157850241546" y="797.0" />
+      <point x="132.8888888888889" y="368.5" />
+    </edge>
+    <edge source="com.ducks.entities.ListOfMonsters" target="com.ducks.sprites.Monsters">
+      <point x="-74.66666666666669" y="-93.5" />
+      <point x="276.33333333333326" y="797.0" />
+      <point x="287.25" y="797.0" />
+      <point x="-93.75" y="93.5" />
+    </edge>
+    <edge source="com.ducks.entities.ListOfPirates" target="com.ducks.screens.MainGameScreen">
+      <point x="24.5" y="93.5" />
+      <point x="1240.5" y="1134.0" />
+      <point x="1200.8703703703707" y="1134.0" />
+      <point x="9.370370370370324" y="-280.5" />
+    </edge>
+    <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.scenes.Tutorial">
+      <point x="0.0" y="280.5" />
+      <point x="1191.5000000000002" y="1865.0" />
+      <point x="1229.6333333333337" y="1865.0" />
+      <point x="-46.19999999999993" y="-170.5" />
+    </edge>
+    <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.tools.MyContactListener">
+      <point x="84.33333333333326" y="-280.5" />
+      <point x="1275.8333333333335" y="1214.0" />
+      <point x="1912.25" y="1214.0" />
+      <point x="-50.25" y="38.5" />
+    </edge>
+    <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.scenes.Minimap">
+      <point x="-121.81481481481501" y="-280.5" />
+      <point x="1069.6851851851852" y="1254.0" />
+      <point x="54.75" y="1254.0" />
+      <point x="-54.75" y="71.5" />
+    </edge>
+    <edge source="com.ducks.entities.ListOfMonsters" target="com.ducks.screens.MainGameScreen">
+      <point x="28.0" y="93.5" />
+      <point x="379.0" y="1214.0" />
+      <point x="1107.1666666666667" y="1214.0" />
+      <point x="-84.33333333333348" y="-280.5" />
+    </edge>
+    <edge source="com.ducks.sprites.Monsters" target="com.ducks.screens.MainGameScreen">
+      <point x="93.75" y="93.5" />
+      <point x="474.75" y="797.0" />
+      <point x="473.5000000000001" y="797.0" />
+      <point x="473.5000000000001" y="1194.0" />
+      <point x="1125.9074074074076" y="1194.0" />
+      <point x="-65.59259259259272" y="-280.5" />
+    </edge>
+    <edge source="com.ducks.sprites.Ship" target="com.ducks.screens.MainGameScreen">
+      <point x="0.0" y="368.5" />
+      <point x="1987.268961352657" y="787.0" />
+      <point x="2073.5" y="787.0" />
+      <point x="2073.5" y="1234.0" />
+      <point x="1294.5740740740744" y="1234.0" />
+      <point x="103.07407407407402" y="-280.5" />
+    </edge>
+    <edge source="com.ducks.sprites.Pirates" target="com.ducks.screens.MainGameScreen">
+      <point x="93.375" y="104.5" />
+      <point x="1332.5" y="797.0" />
+      <point x="1324.5" y="797.0" />
+      <point x="1324.5" y="1154.0" />
+      <point x="1219.6111111111113" y="1154.0" />
+      <point x="28.111111111110972" y="-280.5" />
+    </edge>
+    <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.tools.B2WorldCreator">
+      <point x="-37.48148148148164" y="-280.5" />
+      <point x="1154.0185185185187" y="1164.0" />
+      <point x="822.0000000000001" y="1164.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="com.ducks.tools.MyContactListener" target="com.ducks.sprites.Ship">
+      <point x="-50.25" y="-38.5" />
+      <point x="1912.25" y="797.0" />
+      <point x="1920.8245169082124" y="797.0" />
+      <point x="-66.44444444444446" y="368.5" />
+    </edge>
+    <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.sprites.Ship">
+      <point x="121.81481481481467" y="-280.5" />
+      <point x="1313.314814814815" y="1254.0" />
+      <point x="2092.240740740741" y="1254.0" />
+      <point x="2092.240740740741" y="767.0" />
+      <point x="2053.7134057971016" y="767.0" />
+      <point x="66.44444444444446" y="368.5" />
+    </edge>
+    <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.scenes.Subtitle">
+      <point x="-56.2222222222224" y="-280.5" />
+      <point x="1135.2777777777778" y="1184.0" />
+      <point x="541.7500000000001" y="1184.0" />
+      <point x="-57.75" y="115.5" />
+    </edge>
+    <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.entities.ListOfPirates">
+      <point x="-9.370370370370438" y="-280.5" />
+      <point x="1182.1296296296298" y="1134.0" />
+      <point x="1142.5" y="1134.0" />
+      <point x="-73.5" y="93.5" />
+    </edge>
+    <edge source="com.ducks.sprites.Crosshair" target="com.ducks.screens.MainGameScreen">
+      <point x="83.33333333333337" y="148.5" />
+      <point x="1800.3333333333335" y="1204.0" />
+      <point x="1266.462962962963" y="1204.0" />
+      <point x="74.96296296296282" y="-280.5" />
+    </edge>
+    <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.sprites.Crosshair">
+      <point x="56.22222222222206" y="-280.5" />
+      <point x="1247.7222222222224" y="1184.0" />
+      <point x="1633.6666666666667" y="1184.0" />
+      <point x="-83.33333333333337" y="148.5" />
+    </edge>
+    <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.entities.ListOfMonsters">
+      <point x="-103.07407407407425" y="-280.5" />
+      <point x="1088.425925925926" y="1234.0" />
+      <point x="267.0" y="1234.0" />
+      <point x="-84.0" y="93.5" />
+    </edge>
+    <edge source="com.ducks.entities.ListOfPirates" target="com.ducks.sprites.Pirates">
+      <point x="-65.33333333333337" y="-93.5" />
+      <point x="1150.6666666666667" y="797.0" />
+      <point x="1145.75" y="797.0" />
+      <point x="-93.375" y="104.5" />
+    </edge>
+    <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.scenes.Hud">
+      <point x="-28.1111111111112" y="-280.5" />
+      <point x="1163.3888888888891" y="1154.0" />
+      <point x="971.2500000000001" y="1154.0" />
+      <point x="-42.25" y="148.5" />
+    </edge>
+    <edge source="com.ducks.scenes.Tutorial" target="com.ducks.screens.MainGameScreen">
+      <point x="-92.39999999999998" y="-170.5" />
+      <point x="1183.4333333333336" y="1865.0" />
+      <point x="1107.166666666667" y="1865.0" />
+      <point x="-84.33333333333337" y="280.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.7000000000000001" x="702.4404761904761" y="1521.2857142857142" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
