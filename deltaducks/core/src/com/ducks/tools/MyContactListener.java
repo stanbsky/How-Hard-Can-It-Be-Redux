@@ -48,6 +48,14 @@ public class MyContactListener implements ContactListener {
             subtitle.setSubtitle("Derwent College");
         }
 
+        if(checkCollision(fa, fb, "Pirate", "Bullet Alive")) {
+            if(fa.getUserData() != null && fa.getUserData().equals("Pirate")){
+                fa.setUserData("Pirate Dead");
+            } else {
+                fb.setUserData("Pirate Dead");
+            }
+        }
+
         if(fa.getUserData() != null && fa.getUserData().equals("Bullet Alive")){
             fa.setUserData("Bullet Dead");
         }

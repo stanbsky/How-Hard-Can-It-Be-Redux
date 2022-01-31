@@ -52,9 +52,9 @@ public class Cannon extends Sprite {
         stateTime += deltaTime;
         spawnTimer += deltaTime;
         setPosition(bulletBody.getPosition().x - getWidth()/2, bulletBody.getPosition().y - getHeight()/2);
-//        if(spawnTimer > BULLET_SPAWN_DURATION) {
-////            bulletBody.getFixtureList().get(0).setUserData("Cannon Dead");
-//        }
+        if(spawnTimer > BULLET_SPAWN_DURATION) {
+            bulletBody.getFixtureList().get(0).setUserData("Cannon Dead");
+        }
     }
 
     public void defineCannon() {
@@ -73,5 +73,9 @@ public class Cannon extends Sprite {
         fdef.filter.maskBits = DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
         fdef.restitution = 0.2f;
         bulletBody.createFixture(fdef).setUserData("Cannon Alive");
+    }
+
+    public void dispose() {
+        world.destroyBody(bulletBody);
     }
 }

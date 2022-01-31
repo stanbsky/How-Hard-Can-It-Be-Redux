@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
+import com.ducks.sprites.Cannon;
 import com.ducks.sprites.Pirate;
 
 public class ListOfPirates {
@@ -37,6 +38,14 @@ public class ListOfPirates {
     }
 
     public void update(float deltaTime) {
+        Array<Pirate> piratesBodiesToRemove = new Array<Pirate>();
+        for( Pirate pirate : pirateBodies ) {
+            if(!pirate.pirateBody.getFixtureList().get(0).getUserData().equals("Pirate")) {
+                piratesBodiesToRemove.add(pirate);
+                pirate.dispose();
+            }
+        }
+        pirateBodies.removeAll(piratesBodiesToRemove, true);
         for( Pirate pirate : pirateBodies) {
             pirate.update(deltaTime);
         }

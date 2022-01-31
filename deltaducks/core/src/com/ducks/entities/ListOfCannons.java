@@ -36,14 +36,14 @@ public class ListOfCannons {
 
     public void update(float deltaTime) {
         shootTimer += deltaTime;
-//        Array<Cannon> CannonBodiesToRemove = new Array<Cannon>();
-//        for( Cannon cannon : cannonBodies) {
-//            if(!cannon.bulletBody.getFixtureList().get(0).getUserData().equals("Bullet Alive")) {
-//                CannonBodiesToRemove.add(cannon);
-//                cannon.dispose();
-//            }
-//        }
-//        cannonBodies.removeAll(CannonBodiesToRemove, true);
+        Array<Cannon> CannonBodiesToRemove = new Array<Cannon>();
+        for( Cannon cannon : cannonBodies) {
+            if(!cannon.bulletBody.getFixtureList().get(0).getUserData().equals("Cannon Alive")) {
+                CannonBodiesToRemove.add(cannon);
+                cannon.dispose();
+            }
+        }
+        cannonBodies.removeAll(CannonBodiesToRemove, true);
         for( Cannon cannon : cannonBodies) {
             cannon.update(deltaTime);
         }

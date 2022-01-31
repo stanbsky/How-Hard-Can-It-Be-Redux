@@ -21,7 +21,7 @@ public class Pirate extends Sprite {
     private final float PIRATE_HEIGHT = 32*2f;
 
     private float stateTime;
-    private Body pirateBody;
+    public Body pirateBody;
 
     public Pirate(World world, MainGameScreen screen, float spawn_x, float spawn_y, float radius) {
         super(MainGameScreen.resources.getTexture("pirate"));
@@ -62,6 +62,10 @@ public class Pirate extends Sprite {
         fdef.filter.categoryBits = DeltaDucks.BIT_PIRATES;
         fdef.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
         fdef.restitution = 0.2f;
-        pirateBody.createFixture(fdef).setUserData("Pirates");
+        pirateBody.createFixture(fdef).setUserData("Pirate");
+    }
+
+    public void dispose() {
+        world.destroyBody(pirateBody);
     }
 }
