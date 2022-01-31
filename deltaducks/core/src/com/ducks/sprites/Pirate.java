@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
 
-public class Pirates extends Sprite {
+public class Pirate extends Sprite {
 
     public World world;
 
@@ -23,7 +23,7 @@ public class Pirates extends Sprite {
     private float stateTime;
     private Body pirateBody;
 
-    public Pirates(World world, MainGameScreen screen, float spawn_x, float spawn_y, float radius) {
+    public Pirate(World world, MainGameScreen screen, float spawn_x, float spawn_y, float radius) {
         super(MainGameScreen.resources.getTexture("pirate"));
         this.world = world;
 

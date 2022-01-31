@@ -9,32 +9,38 @@ import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
 
-public class Monsters extends Sprite {
-
+public class College extends Sprite {
     public World world;
-    private Animation <TextureRegion> wormIdle;
 
-    private final int PIXEL_WORM_WIDTH = 90;
-    public static final int PIXEL_WORM_HEIGHT = 90;
+    private Animation<TextureRegion> wormIdle;
 
-    private final float WORM_WIDTH = PIXEL_WORM_WIDTH * 1.5f;
-    private final float WORM_HEIGHT = PIXEL_WORM_HEIGHT * 1.5f;
+    private final int PIXEL_COLLEGE_WIDTH = 1024;
+    public static final int PIXEL_COLLEGE_HEIGHT = 1024;
+
+    private final float COLLEGE_WIDTH = PIXEL_COLLEGE_WIDTH * .1f;
+    public static final float COLLEGE_HEIGHT = PIXEL_COLLEGE_HEIGHT * .1f;
 
     float stateTime;
 
-    public Monsters(World world, MainGameScreen screen, float spawn_x, float spawn_y, float spawn_radius) {
-        super(MainGameScreen.resources.getTexture("worm"));
+
+    public enum CollegeName {DERWENT};
+    private CollegeName collegeName;
+
+
+    public College(World world, MainGameScreen screen, float spawn_x, float spawn_y, float spawn_radius, CollegeName collegeName) {
+        super(MainGameScreen.resources.getTexture("college"));
         this.world = world;
+        this.collegeName = collegeName;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for(int i=0; i<9; i++) {
-            frames.add(new TextureRegion(getTexture(), i * PIXEL_WORM_WIDTH, 0, PIXEL_WORM_WIDTH, PIXEL_WORM_HEIGHT));
+        for(int i=0; i<1; i++) {
+            frames.add(new TextureRegion(getTexture(), i * PIXEL_COLLEGE_WIDTH, 0, PIXEL_COLLEGE_WIDTH, PIXEL_COLLEGE_HEIGHT));
         }
         wormIdle = new Animation(0.1f, frames);
         frames.clear();
 
-        defineMonster(spawn_x, spawn_y, spawn_radius);
-        setBounds((spawn_x - WORM_WIDTH / 2f) / DeltaDucks.PIXEL_PER_METER, (spawn_y - WORM_HEIGHT / 2f) / DeltaDucks.PIXEL_PER_METER, WORM_WIDTH / DeltaDucks.PIXEL_PER_METER, WORM_HEIGHT / DeltaDucks.PIXEL_PER_METER);
+        defineCollege(spawn_x, spawn_y, spawn_radius);
+        setBounds((spawn_x - COLLEGE_WIDTH / 2f) / DeltaDucks.PIXEL_PER_METER, (spawn_y - COLLEGE_HEIGHT / 2f) / DeltaDucks.PIXEL_PER_METER, COLLEGE_WIDTH / DeltaDucks.PIXEL_PER_METER, COLLEGE_HEIGHT / DeltaDucks.PIXEL_PER_METER);
         setRegion(wormIdle.getKeyFrame(stateTime, true));
     }
 
@@ -43,13 +49,13 @@ public class Monsters extends Sprite {
         setRegion(wormIdle.getKeyFrame(stateTime, true));
     }
 
-    public void defineMonster(float x, float y, float radius) {
-        Body monsterBody;
+    public void defineCollege(float x, float y, float radius) {
+        Body collegeBody;
         BodyDef bdef = new BodyDef();
         bdef.position.set(x / DeltaDucks.PIXEL_PER_METER, y / DeltaDucks.PIXEL_PER_METER);
         bdef.type = BodyDef.BodyType.StaticBody;
         bdef.linearDamping = 1f;
-        monsterBody = world.createBody(bdef);
+        collegeBody = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
@@ -59,14 +65,15 @@ public class Monsters extends Sprite {
         fdef.filter.categoryBits = DeltaDucks.BIT_MONSTERS;
         fdef.filter.maskBits = DeltaDucks.BIT_PLAYER;
         fdef.restitution = 0.2f;
-        monsterBody.createFixture(fdef).setUserData("Monster");
+        collegeBody.createFixture(fdef).setUserData("College");
 
         PolygonShape polyShape = new PolygonShape();
-        polyShape.setAsBox(radius * 4 / DeltaDucks.PIXEL_PER_METER, radius * 4 / DeltaDucks.PIXEL_PER_METER, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
+        polyShape.setAsBox(radius * 2 / DeltaDucks.PIXEL_PER_METER, radius * 2 / DeltaDucks.PIXEL_PER_METER, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
         fdef.shape = polyShape;
         fdef.filter.categoryBits = DeltaDucks.BIT_MONSTERS;
         fdef.filter.maskBits = DeltaDucks.BIT_PLAYER;
         fdef.isSensor = true;
-        monsterBody.createFixture(fdef).setUserData("Monster Sensor");
+        collegeBody.createFixture(fdef).setUserData("College Sensor");
     }
+
 }

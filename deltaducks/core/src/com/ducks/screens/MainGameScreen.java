@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.entities.ListOfBullets;
+import com.ducks.entities.ListOfColleges;
 import com.ducks.entities.ListOfMonsters;
 import com.ducks.entities.ListOfPirates;
 import com.ducks.scenes.Hud;
@@ -54,6 +55,7 @@ public class MainGameScreen implements Screen {
     private ListOfPirates bots;
 //    private Monsters creatures;
     private ListOfMonsters creatures;
+    private ListOfColleges colleges;
     private Minimap radar;
     private Crosshair crosshair;
     private Tutorial tutorial;
@@ -81,6 +83,7 @@ public class MainGameScreen implements Screen {
         MainGameScreen.resources.loadTexture("ship_light_SE.png", "pirate");
         MainGameScreen.resources.loadTexture("cannon_ball_and_explosion2.png", "mehnat");
         MainGameScreen.resources.loadTexture("arrow.png", "arrow");
+        MainGameScreen.resources.loadTexture("COLLEGE.png", "college");
     }
 
     public TextureAtlas getAtlas() { return atlas;}
@@ -126,6 +129,7 @@ public class MainGameScreen implements Screen {
 //        bots = new Pirates(world, this, 64, 64, 12);
         bots = new ListOfPirates(world, this, mapPixelWidth, mapPixelHeight);
         creatures = new ListOfMonsters(world, this);
+        colleges = new ListOfColleges(world, this);
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
         crosshair = new Crosshair(world, this, player, gameCam, gamePort);
 //        bullet = new Bullet(world, player);
@@ -173,6 +177,7 @@ public class MainGameScreen implements Screen {
         player.update(deltaTime);
         bots.update(deltaTime);
         creatures.update(deltaTime);
+        colleges.update(deltaTime);
         hud.update(deltaTime);
         radar.update(player.b2body);
         tutorial.update(deltaTime);
@@ -211,6 +216,7 @@ public class MainGameScreen implements Screen {
         game.batch.begin();
         bots.draw(game.batch);
         creatures.draw(game.batch);
+        colleges.draw(game.batch);
         radar.draw(game.batch);
         tutorial.draw(game.batch);
         bullets.draw(game.batch);
