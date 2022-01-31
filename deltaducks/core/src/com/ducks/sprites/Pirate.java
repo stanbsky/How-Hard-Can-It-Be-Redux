@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
+import com.ducks.scenes.Hud;
 import com.ducks.screens.MainGameScreen;
 
 public class Pirate extends Sprite {
@@ -67,5 +68,7 @@ public class Pirate extends Sprite {
 
     public void dispose() {
         world.destroyBody(pirateBody);
+        Hud.addGold(100);
+        Hud.addScore(1000);
     }
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
+import com.ducks.scenes.Hud;
 import com.ducks.screens.MainGameScreen;
 
 public class Cannon extends Sprite {
@@ -77,5 +78,6 @@ public class Cannon extends Sprite {
 
     public void dispose() {
         world.destroyBody(bulletBody);
+        Hud.addScore(10);
     }
 }

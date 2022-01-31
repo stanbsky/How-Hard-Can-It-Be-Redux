@@ -1,6 +1,7 @@
 package com.ducks.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
@@ -54,5 +55,13 @@ public class ListOfColleges {
         for( College college : collegeBodies) {
             college.extendedDraw(batch);
         }
+    }
+
+    public Array<Vector2> getCoordinates() {
+        Array <Vector2> coordinates = new Array <Vector2>();
+        for( College college : collegeBodies) {
+            coordinates.add(college.collegeBody.getPosition());
+        }
+        return coordinates;
     }
 }

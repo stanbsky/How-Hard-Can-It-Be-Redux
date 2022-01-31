@@ -33,7 +33,7 @@ public class MyContactListener implements ContactListener {
         }
 
         if(checkCollision(fa, fb, "Player", "College Sensor")) {
-            if(fa.getUserData() != null && fa.getUserData().equals("College Sensor")){
+            if(checkFixture(fa, "College Sensor")){
                 fa.setUserData("College Sensor Attack");
             } else {
                 fb.setUserData("College Sensor Attack");
@@ -42,19 +42,19 @@ public class MyContactListener implements ContactListener {
         }
 
         if(checkCollision(fa, fb, "Pirate", "Bullet Alive")) {
-            if(fa.getUserData() != null && fa.getUserData().equals("Pirate")){
+            if(checkFixture(fa, "Pirate")){
                 fa.setUserData("Pirate Dead");
             } else {
                 fb.setUserData("Pirate Dead");
             }
         }
         if(checkCollision(fa, fb, "College", "Bullet Alive")) {
-            if(fa.getUserData() != null && fa.getUserData().equals("Bullet Alive")){
+            if(checkFixture(fa, "Bullet Alive")){
                 fa.setUserData("Bullet Dead");
             } else {
                 fb.setUserData("Bullet Dead");
             }
-            if(fa.getUserData() != null && fa.getUserData().equals("College")){
+            if(checkFixture(fa, "College")){
                 fa.setUserData("College Damage");
             } else {
                 fb.setUserData("College Damage");
@@ -74,10 +74,10 @@ public class MyContactListener implements ContactListener {
 //            fb.setUserData("Bullet Dead");
 //        }
 //
-        if(fa.getUserData() != null && fa.getUserData().equals("Cannon Alive")){
+        if(checkFixture(fa, "Cannon Alive")){
             fa.setUserData("Cannon Dead");
         }
-        if(fb.getUserData() != null && fb.getUserData().equals("Cannon Alive")){
+        if(checkFixture(fb, "Cannon Alive")){
             fb.setUserData("Cannon Dead");
         }
 
@@ -89,7 +89,7 @@ public class MyContactListener implements ContactListener {
         Fixture fb = contact.getFixtureB();
 
         if(checkCollision(fa, fb, "Player", "College Sensor Attack")) {
-            if(fa.getUserData() != null && fa.getUserData().equals("College Sensor Attack")){
+            if(checkFixture(fa,"College Sensor Attack")){
                 fa.setUserData("College Sensor");
             } else {
                 fb.setUserData("College Sensor");
@@ -98,11 +98,11 @@ public class MyContactListener implements ContactListener {
         }
 
 //        System.out.println(fa.getUserData()+", "+fb.getUserData());
-        if(fa.getUserData() != null && fa.getUserData().equals("Sensor")){
+        if(checkFixture(fa,"Sensor")){
             System.out.println("Sensor Fa");
             playerHitsGround = false;
         }
-        if(fb.getUserData() != null && fb.getUserData().equals("Sensor")){
+        if(checkFixture(fb,"Sensor")){
             System.out.println("Sensor Fb");
             playerHitsGround = false;
 
@@ -129,6 +129,10 @@ public class MyContactListener implements ContactListener {
                 &&
                 ( (fa.getUserData() != null && fa.getUserData().equals(B))
                 || (fb.getUserData() != null && fb.getUserData().equals(B)) );
+    }
+
+    public boolean checkFixture(Fixture f, String target) {
+        return f.getUserData() != null && f.getUserData().equals(target);
     }
 
 }

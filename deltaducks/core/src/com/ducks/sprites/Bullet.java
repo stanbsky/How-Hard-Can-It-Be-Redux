@@ -63,7 +63,7 @@ public class Bullet extends Sprite {
         BodyDef bdef = new BodyDef();
         bdef.position.set(player.b2body.getPosition().x, player.b2body.getPosition().y);
         bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.linearDamping = 1f;
+        bdef.linearDamping = .5f;
         bulletBody = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();

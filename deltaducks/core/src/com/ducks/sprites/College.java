@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.entities.ListOfCannons;
+import com.ducks.scenes.Hud;
 import com.ducks.screens.MainGameScreen;
 import sun.tools.jar.Main;
 
@@ -71,7 +72,12 @@ public class College extends Sprite {
 
     public void extendedDraw(SpriteBatch batch) {
         this.draw(batch);
-        batch.setColor(Color.GREEN);
+        if (health > .6f)
+            batch.setColor(Color.GREEN);
+        else if (health > .2f)
+            batch.setColor(Color.ORANGE);
+        else
+            batch.setColor(Color.RED);
         batch.draw(healthBar, collegeBody.getPosition().x - .5f * health/2 - .1f/2, collegeBody.getPosition().y + collegeBody.getFixtureList().get(0).getShape().getRadius() + .05f, .5f * health + .1f, .05f);
         batch.setColor(Color.WHITE);
     }
@@ -104,6 +110,8 @@ public class College extends Sprite {
 
     public void dispose() {
         world.destroyBody(collegeBody);
+        Hud.addGold(1000);
+        Hud.addScore(10000);
     }
 
 

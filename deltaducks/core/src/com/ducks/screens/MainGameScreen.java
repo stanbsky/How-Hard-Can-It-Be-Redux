@@ -182,7 +182,7 @@ public class MainGameScreen implements Screen {
         creatures.update(deltaTime);
         colleges.update(deltaTime);
         hud.update(deltaTime);
-        radar.update(player.b2body);
+        radar.update(player.b2body, colleges);
         tutorial.update(deltaTime);
         subtitle.update(deltaTime);
         crosshair.update(deltaTime);

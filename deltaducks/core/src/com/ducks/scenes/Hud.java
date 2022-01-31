@@ -1,9 +1,7 @@
 package com.ducks.scenes;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -24,11 +22,11 @@ public class Hud implements Disposable {
     private static Integer gold;
 
     private Label countdownLabel;
-    private static Label scoreLabel;
+    private static Label expLabel;
     private Label timeLabel;
-    private Label levelLabel;
+    private Label goldTagLabel;
     private static Label goldLabel;
-    private Label playerLabel;
+    private Label expTagLabel;
 
     private static float health;
 
@@ -45,18 +43,21 @@ public class Hud implements Disposable {
         Table table = new Table();
         table.top();
         table.setFillParent(true);
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        scoreLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        levelLabel = new Label("GOLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        goldLabel = new Label(String.format("%05d", gold), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
-        playerLabel = new Label("PLAYER", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
 
-        table.add(playerLabel).expandX().padTop(10);
-        table.add(levelLabel).expandX().padTop(10);
+        expTagLabel = new Label("USER EXP", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        expLabel = new Label(String.format("%06d", score), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+        goldTagLabel = new Label("GOLD", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        goldLabel = new Label(String.format("%05d", gold), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+        timeLabel = new Label("TIME", new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(new BitmapFont(), Color.WHITE));
+
+        table.add(expTagLabel).expandX().padTop(10);
+        table.add(goldTagLabel).expandX().padTop(10);
         table.add(timeLabel).expandX().padTop(10);
         table.row();
-        table.add(scoreLabel).expandX();
+        table.add(expLabel).expandX();
         table.add(goldLabel).expandX();
         table.add(countdownLabel).expandX();
         stage.addActor(table);
@@ -89,11 +90,11 @@ public class Hud implements Disposable {
 
     public static void addScore(int value) {
         score += value;
-        scoreLabel.setText(String.format("%06d", score));
+        expLabel.setText(String.format("%06d", score));
     }
 
-    public static void setGold(int value) {
-        gold = value;
+    public static void addGold(int value) {
+        gold += value;
         goldLabel.setText(String.format("%06d", gold));
     }
 

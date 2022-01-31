@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.ducks.scenes.Hud;
 import com.ducks.screens.MainGameScreen;
 import com.ducks.sprites.*;
 
@@ -30,6 +31,7 @@ public class ListOfCannons {
     public void spawnBullet(College college) {
         if (shootTimer >= SHOOT_WAIT_TIME) {
             shootTimer=0;
+            Hud.addScore(100);
             cannonBodies.add(new Cannon(world, college, player));
         }
 //        cannonBodies.add(new Cannon(world, college, player));
