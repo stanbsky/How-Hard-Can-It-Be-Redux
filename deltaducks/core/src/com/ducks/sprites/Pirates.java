@@ -60,7 +60,7 @@ public class Pirates extends Sprite {
 
         fdef.shape = shape;
         fdef.filter.categoryBits = DeltaDucks.BIT_PIRATES;
-        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND;
+        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
         fdef.restitution = 0.2f;
         pirateBody.createFixture(fdef).setUserData("Pirates");
     }

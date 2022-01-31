@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
+import com.ducks.entities.ListOfBullets;
 import com.ducks.entities.ListOfMonsters;
 import com.ducks.entities.ListOfPirates;
 import com.ducks.scenes.Hud;
@@ -58,6 +59,7 @@ public class MainGameScreen implements Screen {
     private Tutorial tutorial;
     private Subtitle subtitle;
     private Bullet bullet;
+    private ListOfBullets bullets;
 
 //    private Player player;
     private MyContactListener contactListener;
@@ -126,7 +128,8 @@ public class MainGameScreen implements Screen {
         creatures = new ListOfMonsters(world, this);
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
         crosshair = new Crosshair(world, this, player, gameCam, gamePort);
-        bullet = new Bullet(world, player);
+//        bullet = new Bullet(world, player);
+        bullets = new ListOfBullets(world, this, player, crosshair);
         tutorial = new Tutorial(gameCam, player);
     }
 
@@ -141,12 +144,15 @@ public class MainGameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -MAX_VELOCITY)
             player.b2body.applyForce(new Vector2(-ACCELERATION, 0), player.b2body.getWorldCenter(), true);
 
-        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-            bullet.update(deltaTime);
-        }
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)){
-
-            bullet.bulletBody.applyForceToCenter(Crosshair.getCrosshair().scl(100), true);
+//        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+//            bullet.update(deltaTime);
+//        }
+//        if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)){
+//
+//            bullet.bulletBody.applyForceToCenter(Crosshair.getCrosshair().scl(100), true);
+//        }
+        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
+            bullets.spawnBullet();
         }
     }
 
@@ -173,6 +179,7 @@ public class MainGameScreen implements Screen {
         subtitle.update(deltaTime);
         crosshair.update(deltaTime);
 //        bullet.update(deltaTime);
+        bullets.update(deltaTime);
 
         gameCam.position.x = player.b2body.getPosition().x;
         gameCam.position.y = player.b2body.getPosition().y;
@@ -204,11 +211,12 @@ public class MainGameScreen implements Screen {
         game.batch.begin();
         bots.draw(game.batch);
         creatures.draw(game.batch);
-        player.draw(game.batch);
         radar.draw(game.batch);
         tutorial.draw(game.batch);
+        bullets.draw(game.batch);
+        player.draw(game.batch);
         crosshair.draw(game.batch);
-        bullet.draw(game.batch);
+//        bullet.draw(game.batch);
         game.batch.end();
 
         // Set our batch to now draw what the Hud camera sees.

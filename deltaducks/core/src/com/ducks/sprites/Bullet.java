@@ -1,9 +1,9 @@
 package com.ducks.sprites;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
@@ -15,46 +15,47 @@ public class Bullet extends Sprite {
 
     private Animation<TextureRegion> wormIdle;
 
-    private final int PIXEL_WORM_WIDTH = 256;
-    private final int PIXEL_WORM_HEIGHT = 256;
+    private final int PIXEL_BULLET_WIDTH = 256;
+    private final int PIXEL_BULLET_HEIGHT = 256;
 
-    private final float WORM_WIDTH = PIXEL_WORM_WIDTH * .2f;
-    private final float WORM_HEIGHT = PIXEL_WORM_HEIGHT * .2f;
+    private final float BULLET_WIDTH = PIXEL_BULLET_WIDTH * .2f;
+    private final float BULLET_HEIGHT = PIXEL_BULLET_HEIGHT * .2f;
 
     float stateTime;
+    float spawnTimer;
     public Body bulletBody;
 
+    private final float BULLET_SPEED = 500f;
+    private final float BULLET_SPAWN_DURATION = 2f;
 
-    public Bullet(World world, Ship player) {
+    public Bullet(World world, Ship player, Crosshair crosshair) {
         super(MainGameScreen.resources.getTexture("mehnat"));
         this.world = world;
         this.player = player;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        frames.add(new TextureRegion(getTexture(), 0 * PIXEL_WORM_WIDTH, 0 * PIXEL_WORM_HEIGHT, PIXEL_WORM_WIDTH, PIXEL_WORM_HEIGHT));
+        frames.add(new TextureRegion(getTexture(), 0 * PIXEL_BULLET_WIDTH, 0 * PIXEL_BULLET_HEIGHT, PIXEL_BULLET_WIDTH, PIXEL_BULLET_HEIGHT));
         wormIdle = new Animation(0.1f, frames);
         frames.clear();
-        setBounds(player.b2body.getPosition().x, player.b2body.getPosition().y, WORM_WIDTH / DeltaDucks.PIXEL_PER_METER, WORM_HEIGHT / DeltaDucks.PIXEL_PER_METER);
+        setBounds(player.b2body.getPosition().x - player.b2body.getFixtureList().get(0).getShape().getRadius(), player.b2body.getPosition().y - player.b2body.getFixtureList().get(0).getShape().getRadius(), BULLET_WIDTH / DeltaDucks.PIXEL_PER_METER, BULLET_HEIGHT / DeltaDucks.PIXEL_PER_METER);
         setRegion(wormIdle.getKeyFrame(stateTime, true));
 
         defineBullet();
+        bulletBody.applyForceToCenter(crosshair.getCrosshair().scl(BULLET_SPEED), true);
     }
 
     public void update(float deltaTime) {
         stateTime += deltaTime;
-
-//        if (getX() < 9 && getY() < 4.5) {
-//            setPosition(getX() + deltaTime, getY() + deltaTime);
-//        }
-        setPosition(bulletBody.getPosition().x -getWidth()/2, bulletBody.getPosition().y -getHeight()/2);
-//
-//        setPosition(Crosshair.getCrosshairX(), Crosshair.getCrosshairY());
-//        System.out.println(Crosshair.getCrosshairX() + " "+ Crosshair.getCrosshairY());
+        spawnTimer += deltaTime;
+        setPosition(bulletBody.getPosition().x - getWidth()/2, bulletBody.getPosition().y - getHeight()/2);
+        if(spawnTimer > BULLET_SPAWN_DURATION) {
+            bulletBody.getFixtureList().get(0).setUserData("Bullet Dead");
+        }
     }
 
     public void defineBullet() {
         BodyDef bdef = new BodyDef();
-        bdef.position.set(2, 2);
+        bdef.position.set(player.b2body.getPosition().x, player.b2body.getPosition().y);
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.linearDamping = 1f;
         bulletBody = world.createBody(bdef);
@@ -64,9 +65,15 @@ public class Bullet extends Sprite {
         shape.setRadius(10 / DeltaDucks.PIXEL_PER_METER);
 
         fdef.shape = shape;
-        fdef.filter.categoryBits = DeltaDucks.BIT_PIRATES;
-        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND;
+        fdef.filter.categoryBits = DeltaDucks.BIT_BULLETS;
+        fdef.filter.maskBits = DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
         fdef.restitution = 0.2f;
-        bulletBody.createFixture(fdef).setUserData("Bullet");
+        bulletBody.createFixture(fdef).setUserData("Bullet Alive");
     }
+
+
+    public void dispose() {
+        world.destroyBody(bulletBody);
+    }
+
 }

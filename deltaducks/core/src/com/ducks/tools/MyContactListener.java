@@ -37,6 +37,13 @@ public class MyContactListener implements ContactListener {
             ), player.b2body.getWorldCenter(), true);
         }
 
+        if(fa.getUserData() != null && fa.getUserData().equals("Bullet Alive")){
+            fa.setUserData("Bullet Dead");
+        }
+        if(fb.getUserData() != null && fb.getUserData().equals("Bullet Alive")){
+            fb.setUserData("Bullet Dead");
+        }
+
     }
 
     @Override

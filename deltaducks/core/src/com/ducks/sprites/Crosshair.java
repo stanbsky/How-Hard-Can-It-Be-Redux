@@ -58,6 +58,7 @@ public class Crosshair extends Sprite {
         setBounds(player.b2body.getPosition().x, player.b2body.getPosition().y, CROSSHAIR_WIDTH / DeltaDucks.PIXEL_PER_METER, CROSSHAIR_HEIGHT / DeltaDucks.PIXEL_PER_METER);
         setRegion(crosshairIdle.getKeyFrame(stateTime, true));
 
+        points = new Vector2(0, 0);
 //        Gdx.graphics.setCursor(Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("bunny.png")), (int)getWidth()/2, (int)getHeight()/2));
     }
 
@@ -66,11 +67,11 @@ public class Crosshair extends Sprite {
 
         Vector3 loc = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         gameCam.unproject(loc, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        worldCordX = player.b2body.getPosition().x - loc.x  + player.b2body.getFixtureList().get(0).getShape().getRadius();
-        worldCordY = player.b2body.getPosition().y - loc.y  + player.b2body.getFixtureList().get(0).getShape().getRadius();
+        worldCordX = player.b2body.getPosition().x - loc.x - getWidth()/2 + player.b2body.getFixtureList().get(0).getShape().getRadius();
+        worldCordY = player.b2body.getPosition().y - loc.y - getHeight()/2 + player.b2body.getFixtureList().get(0).getShape().getRadius();
         points = new Vector2(worldCordX, worldCordY).nor().scl(-1);
 
-        setPosition(player.b2body.getPosition().x + points.x, player.b2body.getPosition().y + points.y);
+        setPosition(player.b2body.getPosition().x + points.x - getWidth()/2, player.b2body.getPosition().y + points.y - getWidth()/2);
 
     }
 
