@@ -3,15 +3,18 @@ package com.ducks.tools;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
+import com.ducks.scenes.Subtitle;
 import com.ducks.sprites.Ship;
 
 public class MyContactListener implements ContactListener {
 
     private boolean playerHitsGround;
     Ship player;
+    Subtitle subtitle;
 
-    public MyContactListener(Ship player) {
+    public MyContactListener(Ship player, Subtitle subtitle) {
         this.player = player;
+        this.subtitle = subtitle;
     }
 
     @Override
@@ -30,11 +33,19 @@ public class MyContactListener implements ContactListener {
         }
 
         if(checkCollision(fa, fb, "Player", "Monster Sensor")) {
-//            System.out.println(player.b2body.getPosition());
-            // 10 32*4
+
             player.b2body.applyLinearImpulse(new Vector2(
                     player.b2body.getPosition().x - 10 / DeltaDucks.PIXEL_PER_METER, player.b2body.getPosition().y - 32*4 / DeltaDucks.PIXEL_PER_METER
             ), player.b2body.getWorldCenter(), true);
+        }
+
+        if(checkCollision(fa, fb, "Player", "College Sensor")) {
+            if(fa.getUserData() != null && fa.getUserData().equals("College Sensor")){
+                fa.setUserData("College Sensor Attack");
+            } else {
+                fb.setUserData("College Sensor Attack");
+            }
+            subtitle.setSubtitle("Derwent College");
         }
 
         if(fa.getUserData() != null && fa.getUserData().equals("Bullet Alive")){
@@ -50,6 +61,15 @@ public class MyContactListener implements ContactListener {
     public void endContact(Contact contact) {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
+
+        if(checkCollision(fa, fb, "Player", "College Sensor Attack")) {
+            if(fa.getUserData() != null && fa.getUserData().equals("College Sensor Attack")){
+                fa.setUserData("College Sensor");
+            } else {
+                fb.setUserData("College Sensor");
+            }
+            subtitle.removeSubtitle();
+        }
 
 //        System.out.println(fa.getUserData()+", "+fb.getUserData());
         if(fa.getUserData() != null && fa.getUserData().equals("Sensor")){

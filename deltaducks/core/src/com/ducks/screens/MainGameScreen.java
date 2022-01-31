@@ -15,10 +15,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
-import com.ducks.entities.ListOfBullets;
-import com.ducks.entities.ListOfColleges;
-import com.ducks.entities.ListOfMonsters;
-import com.ducks.entities.ListOfPirates;
+import com.ducks.entities.*;
 import com.ducks.scenes.Hud;
 import com.ducks.scenes.Minimap;
 import com.ducks.scenes.Subtitle;
@@ -62,6 +59,7 @@ public class MainGameScreen implements Screen {
     private Subtitle subtitle;
     private Bullet bullet;
     private ListOfBullets bullets;
+    private ListOfCannons cannons;
 
 //    private Player player;
     private MyContactListener contactListener;
@@ -117,7 +115,7 @@ public class MainGameScreen implements Screen {
 
         player = new Ship(world, this);
 
-        contactListener = new MyContactListener(player);
+        contactListener = new MyContactListener(player, subtitle);
         world.setContactListener(contactListener);
         b2dr = new Box2DDebugRenderer();
 
@@ -129,11 +127,12 @@ public class MainGameScreen implements Screen {
 //        bots = new Pirates(world, this, 64, 64, 12);
         bots = new ListOfPirates(world, this, mapPixelWidth, mapPixelHeight);
         creatures = new ListOfMonsters(world, this);
-        colleges = new ListOfColleges(world, this);
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
         crosshair = new Crosshair(world, this, player, gameCam, gamePort);
 //        bullet = new Bullet(world, player);
         bullets = new ListOfBullets(world, this, player, crosshair);
+        cannons = new ListOfCannons(world, this, player, crosshair);
+        colleges = new ListOfColleges(world, this, cannons);
         tutorial = new Tutorial(gameCam, player);
     }
 
@@ -185,6 +184,7 @@ public class MainGameScreen implements Screen {
         crosshair.update(deltaTime);
 //        bullet.update(deltaTime);
         bullets.update(deltaTime);
+        cannons.update(deltaTime);
 
         gameCam.position.x = player.b2body.getPosition().x;
         gameCam.position.y = player.b2body.getPosition().y;
@@ -220,6 +220,7 @@ public class MainGameScreen implements Screen {
         radar.draw(game.batch);
         tutorial.draw(game.batch);
         bullets.draw(game.batch);
+        cannons.draw(game.batch);
         player.draw(game.batch);
         crosshair.draw(game.batch);
 //        bullet.draw(game.batch);

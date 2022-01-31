@@ -20,16 +20,19 @@ public class ListOfColleges {
     private final int SPAWN_Y = 400;
     private final float SPAWN_RADIUS = 10f * 4f * College.COLLEGE_HEIGHT / DeltaDucks.PIXEL_PER_METER;
 
-    public ListOfColleges(World world, MainGameScreen screen) {
+    ListOfCannons cannons;
+
+    public ListOfColleges(World world, MainGameScreen screen, ListOfCannons cannons) {
         this.world = world;
         this.screen = screen;
+        this.cannons = cannons;
         collegeBodies = new Array<College>();
         spawnColleges();
     }
 
     public void spawnColleges() {
         for(int i = 0; i < NUMBER_OF_MONSTERS; i++) {
-            collegeBodies.add(new College(world, screen, SPAWN_X,SPAWN_Y, SPAWN_RADIUS, College.CollegeName.DERWENT));
+            collegeBodies.add(new College(world, screen, SPAWN_X,SPAWN_Y, SPAWN_RADIUS, College.CollegeName.DERWENT, cannons));
         }
     }
 

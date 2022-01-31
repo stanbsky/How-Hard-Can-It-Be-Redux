@@ -77,8 +77,11 @@ public class Subtitle implements Disposable {
                 subtitle = "Good Luck!";
                 subtitleLabel.setText(subtitle);
                 break;
-            default:
+            case 5:
                 subtitle = "";
+                subtitleLabel.setText(subtitle);
+                break;
+            default:
                 subtitleLabel.setText(subtitle);
                 break;
         }
