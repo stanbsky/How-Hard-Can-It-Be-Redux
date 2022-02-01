@@ -17,7 +17,7 @@ public class ListOfCannons {
 
     private Array<Cannon> cannonBodies;
 
-    private final float SHOOT_WAIT_TIME = 2f;
+    private final float SHOOT_WAIT_TIME = 1f;
     float shootTimer ;
 
     public ListOfCannons(World world, MainGameScreen screen, Ship player, Crosshair crosshair) {

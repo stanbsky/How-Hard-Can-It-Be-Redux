@@ -46,12 +46,12 @@ public class Tutorial {
         SPAWN_X = player.b2body.getPosition().x - 2*player.b2body.getFixtureList().get(0).getShape().getRadius() - ARROW_WIDTH /2 / DeltaDucks.PIXEL_PER_METER;
         SPAWN_Y = player.b2body.getPosition().y - player.b2body.getFixtureList().get(0).getShape().getRadius()/2;
 
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/boy.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/futur.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 25;
 //        parameter.color = new Color(.2f, .2f, .2f, 1);
         font = generator.generateFont(parameter);
-        font.getData().setScale(.6f);
+        font.getData().setScale(.7f);
         Layout = new GlyphLayout(font, "Start\nHere");
     }
 

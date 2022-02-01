@@ -28,7 +28,7 @@ public class ListOfMonsters {
 
     public void spawnMonsters() {
         for(int i = 0; i < NUMBER_OF_MONSTERS; i++) {
-            monsterBodies.add(new Monster(world, screen, SPAWN_X,SPAWN_Y, SPAWN_RADIUS));
+//            monsterBodies.add(new Monster(world, screen, SPAWN_X,SPAWN_Y, SPAWN_RADIUS));
         }
     }
 

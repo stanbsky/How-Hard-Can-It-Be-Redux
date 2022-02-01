@@ -27,7 +27,7 @@ public class Cannon extends Sprite {
     float spawnTimer;
     public Body bulletBody;
 
-    private final float BULLET_SPEED = 100f;
+    private final float BULLET_SPEED = 130f;
     private final float BULLET_SPAWN_DURATION = 2f;
 
     public Cannon(World world, College college, Ship player) {
@@ -62,7 +62,7 @@ public class Cannon extends Sprite {
         BodyDef bdef = new BodyDef();
         bdef.position.set(getX() + getWidth(), getY() + getHeight());
         bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.linearDamping = 1f;
+        bdef.linearDamping = .7f;
         bulletBody = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();

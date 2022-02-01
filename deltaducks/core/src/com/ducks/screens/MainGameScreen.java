@@ -64,8 +64,8 @@ public class MainGameScreen implements Screen {
 //    private Player player;
     private MyContactListener contactListener;
 
-    private static float ACCELERATION = 0.5f;
-    private static float MAX_VELOCITY = 2f;
+    private static float ACCELERATION = 1f;
+    private static float MAX_VELOCITY = 4f;
 
     public static Content resources;
     private TextureAtlas atlas;
@@ -78,7 +78,7 @@ public class MainGameScreen implements Screen {
         MainGameScreen.resources.loadTexture("bunny.png", "badlogic");
         MainGameScreen.resources.loadTexture("Idle.png", "worm");
         MainGameScreen.resources.loadTexture("crosshair.png", "crosshair");
-        MainGameScreen.resources.loadTexture("ship_light_SE.png", "pirate");
+        MainGameScreen.resources.loadTexture("ship_dark_SE.png", "pirate");
         MainGameScreen.resources.loadTexture("cannon_ball_and_explosion2.png", "mehnat");
         MainGameScreen.resources.loadTexture("arrow.png", "arrow");
         MainGameScreen.resources.loadTexture("COLLEGE.png", "college");
@@ -96,9 +96,10 @@ public class MainGameScreen implements Screen {
 
         // Create Map
         mapLoader = new TmxMapLoader();
-        map = mapLoader.load("test_map.tmx");
+//        map = mapLoader.load("test_map.tmx");
+        map = mapLoader.load("new map.tmx");
         prop = map.getProperties();
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / DeltaDucks.PIXEL_PER_METER);
+        renderer = new OrthogonalTiledMapRenderer(map, DeltaDucks.TILEED_MAP_SCALE / DeltaDucks.PIXEL_PER_METER);
 
         int mapWidth = prop.get("width", Integer.class);
         int mapHeight = prop.get("height", Integer.class);
@@ -126,14 +127,14 @@ public class MainGameScreen implements Screen {
 
 //        player = new Player(body.b2body);
 //        bots = new Pirates(world, this, 64, 64, 12);
-        bots = new ListOfPirates(world, this, mapPixelWidth, mapPixelHeight);
+        bots = new ListOfPirates(world, this, map);
         creatures = new ListOfMonsters(world, this);
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
         crosshair = new Crosshair(world, this, player, gameCam, gamePort);
 //        bullet = new Bullet(world, player);
         bullets = new ListOfBullets(world, this, player, crosshair, gameCam);
         cannons = new ListOfCannons(world, this, player, crosshair);
-        colleges = new ListOfColleges(world, this, cannons);
+        colleges = new ListOfColleges(world, this, cannons, map);
         tutorial = new Tutorial(gameCam, player);
     }
 
@@ -167,6 +168,9 @@ public class MainGameScreen implements Screen {
             game.setScreen(new FinalStorylineScreen(this.game));
         }
         if(hud.getHealth()<=0f) {
+            game.setScreen(new FinalStorylineScreen(this.game));
+        }
+        if(colleges.getNumbersOfColleges()<=0) {
             game.setScreen(new FinalStorylineScreen(this.game));
         }
     }

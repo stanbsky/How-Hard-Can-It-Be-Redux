@@ -3,6 +3,7 @@ package com.ducks.scenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -35,10 +36,13 @@ public class Subtitle implements Disposable {
         table.top();
         table.setFillParent(true);
 
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/boy.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/OpenSans-Regular.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 20;
-        subtitleLabel = new Label(subtitle, new Label.LabelStyle(generator.generateFont(parameter), Color.BLACK));
+        parameter.size = 40;
+
+        BitmapFont font = generator.generateFont(parameter);
+        font.getData().setScale(.5f);
+        subtitleLabel = new Label(subtitle, new Label.LabelStyle( font , Color.BLACK));
 
 
         table.add(subtitleLabel).expandX().padTop(DeltaDucks.VIRTUAL_HEIGHT * .9f);

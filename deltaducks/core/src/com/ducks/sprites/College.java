@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.entities.ListOfCannons;
 import com.ducks.scenes.Hud;
+import com.ducks.scenes.Subtitle;
 import com.ducks.screens.MainGameScreen;
 import sun.tools.jar.Main;
 
@@ -23,15 +24,17 @@ public class College extends Sprite {
     private final int PIXEL_COLLEGE_WIDTH = 1024;
     public static final int PIXEL_COLLEGE_HEIGHT = 1024;
 
-    private final float COLLEGE_WIDTH = PIXEL_COLLEGE_WIDTH * .1f;
-    public static final float COLLEGE_HEIGHT = PIXEL_COLLEGE_HEIGHT * .1f;
+    private final float COLLEGE_WIDTH = PIXEL_COLLEGE_WIDTH * .2f;
+    public static final float COLLEGE_HEIGHT = PIXEL_COLLEGE_HEIGHT * .2f;
+
+    public final float OUTER_RADIUS = 4f;
 
     float stateTime;
 
     public Body collegeBody;
     ListOfCannons cannons;
 
-    public enum CollegeName {DERWENT};
+    public enum CollegeName {DERWENT, CONSTANTINE, GOODRICK, HALIFAX};
     private CollegeName collegeName;
 
     public float health;
@@ -100,7 +103,7 @@ public class College extends Sprite {
         collegeBody.createFixture(fdef).setUserData("College");
 
         PolygonShape polyShape = new PolygonShape();
-        polyShape.setAsBox(radius * 3 / DeltaDucks.PIXEL_PER_METER, radius * 3 / DeltaDucks.PIXEL_PER_METER, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
+        polyShape.setAsBox(radius * OUTER_RADIUS / DeltaDucks.PIXEL_PER_METER, radius * OUTER_RADIUS / DeltaDucks.PIXEL_PER_METER, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
         fdef.shape = polyShape;
         fdef.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
         fdef.filter.maskBits = DeltaDucks.BIT_PLAYER;

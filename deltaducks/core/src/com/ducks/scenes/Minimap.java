@@ -14,7 +14,7 @@ import com.ducks.entities.ListOfColleges;
 import com.ducks.sprites.College;
 
 public class Minimap implements Disposable {
-    private float ratio = .1f;
+    private float ratio = .045f;
 
     public OrthographicCamera gameCam;
     private Pixmap pixmap;
@@ -29,15 +29,15 @@ public class Minimap implements Disposable {
     }
 
     public void update(Body b2body, ListOfColleges colleges) {
-        int width = Math.round(map_width * ratio * DeltaDucks.PIXEL_PER_METER);
-        int height = Math.round(map_height * ratio * DeltaDucks.PIXEL_PER_METER);
+        int width = Math.round(map_width * ratio * DeltaDucks.PIXEL_PER_METER * .3f);
+        int height = Math.round(map_height * ratio * DeltaDucks.PIXEL_PER_METER * .3f);
 
         int outline_width = Math.round(gameCam.viewportWidth * ratio * DeltaDucks.PIXEL_PER_METER);
         int outline_height = Math.round(gameCam.viewportHeight * ratio * DeltaDucks.PIXEL_PER_METER);
         int outline_x = Math.round((gameCam.position.x - gameCam.viewportWidth/2) * ratio * DeltaDucks.PIXEL_PER_METER);
         int outline_y = height - Math.round((gameCam.position.y) * ratio * DeltaDucks.PIXEL_PER_METER) - outline_height/2;
 
-        int player_radius = 5;
+        int player_radius = 4;
         int player_x = Math.round(b2body.getPosition().x * ratio * DeltaDucks.PIXEL_PER_METER) + player_radius/2;
         int player_y = height - Math.round(b2body.getPosition().y * ratio * DeltaDucks.PIXEL_PER_METER) - player_radius/2;
 

@@ -20,6 +20,7 @@ public class DeltaDucks extends Game {
 
 
 	public static final float PIXEL_PER_METER = 100;
+	public static final float TILEED_MAP_SCALE = .3f;
 
 	public static final short BIT_SEA = 2;
 	public static final short BIT_LAND = 4;

@@ -39,8 +39,8 @@ public class Ship extends Sprite {
     private final int SHIP_WIDTH = Math.round(PIXEL_SHIP_WIDTH * MULTIPLIER);
     private final int SHIP_HEIGHT = Math.round(PIXEL_SHIP_HEIGHT * MULTIPLIER);
 
-    private final int SHIP_SPAWN_X = 200;
-    private final int SHIP_SPAWN_Y = 225;
+    private final int SHIP_SPAWN_X = 370;
+    private final int SHIP_SPAWN_Y = 340;
 
     private final int SPRITE_RADIUS = 1;
 
@@ -294,7 +294,7 @@ public class Ship extends Sprite {
         BodyDef bdef = new BodyDef();
         bdef.position.set(SHIP_SPAWN_X / DeltaDucks.PIXEL_PER_METER, SHIP_SPAWN_Y / DeltaDucks.PIXEL_PER_METER);
         bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.linearDamping = 1f;
+        bdef.linearDamping = 1.2f;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
