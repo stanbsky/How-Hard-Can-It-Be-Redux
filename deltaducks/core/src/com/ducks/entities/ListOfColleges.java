@@ -31,6 +31,8 @@ public class ListOfColleges {
 
     private String collegeName;
 
+    private int collegesAlive = 3;
+
     public ListOfColleges(World world, MainGameScreen screen, ListOfCannons cannons, TiledMap map) {
         this.world = world;
         this.screen = screen;
@@ -65,6 +67,7 @@ public class ListOfColleges {
         for( College college : collegeBodies) {
             if(college.health <= 0 && college.health != -10f){
                 college.dispose();
+                collegesAlive--;
             }
             college.update(deltaTime);
         }
@@ -86,6 +89,6 @@ public class ListOfColleges {
     }
 
     public int getNumbersOfColleges() {
-        return collegeBodies.size;
+        return collegesAlive;
     }
 }

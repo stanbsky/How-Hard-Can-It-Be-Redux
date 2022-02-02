@@ -215,7 +215,7 @@ public class MainGameScreen implements Screen {
         renderer.render();
 
         // Render our Box2DDebugLines
-        b2dr.render(world, gameCam.combined);
+//        b2dr.render(world, gameCam.combined);
 
 
         game.batch.setProjectionMatrix(gameCam.combined);

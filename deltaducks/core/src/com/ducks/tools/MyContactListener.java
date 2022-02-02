@@ -36,7 +36,7 @@ public class MyContactListener implements ContactListener {
             } else {
                 fb.setUserData("College Sensor Attack");
             }
-            subtitle.setSubtitle("Attack The College");
+            subtitle.setSubtitle("Enemy College Nearby");
         }
 
         if(checkCollision(fa, fb, "Pirate", "Bullet Alive")) {
