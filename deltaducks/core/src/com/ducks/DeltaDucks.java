@@ -3,6 +3,7 @@ package com.ducks;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ducks.screens.MainGameScreen;
+import com.ducks.screens.MainMenuScreen;
 
 // Game Class with global constants
 public class DeltaDucks extends Game {
@@ -37,7 +38,7 @@ public class DeltaDucks extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		this.setScreen(new MainGameScreen(this));
+		this.setScreen(new MainMenuScreen(this));
 	}
 
 	@Override
