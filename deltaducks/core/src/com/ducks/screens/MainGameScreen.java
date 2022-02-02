@@ -84,6 +84,16 @@ public class MainGameScreen implements Screen {
         MainGameScreen.resources.loadTexture("COLLEGE.png", "college");
         MainGameScreen.resources.loadTexture("blank.png", "blank");
         MainGameScreen.resources.loadTexture("ALL DUCK BOAT FINAL.png", "boat");
+        MainGameScreen.resources.loadTexture("FORWARD MOVE.png", "boat south");
+        MainGameScreen.resources.loadTexture("BACK MOVE.png", "boat north");
+        MainGameScreen.resources.loadTexture("SIDE MOVE RIGHT.png", "boat east");
+        MainGameScreen.resources.loadTexture("SIDE MOVE LEFT.png", "boat west");
+
+        MainGameScreen.resources.loadTexture("DIAG FORWARD MOVE RIGHT.png", "boat southeast");
+        MainGameScreen.resources.loadTexture("DIAG FORWARD MOVE LEFT.png", "boat southwest");
+        MainGameScreen.resources.loadTexture("DIAG MOVE BACK RIGHT.png", "boat northeast");
+        MainGameScreen.resources.loadTexture("DIAG MOVE BACK LEFT.png", "boat northwest");
+
         MainGameScreen.resources.loadTexture("college destroyed.png", "college destroyed");
         MainGameScreen.resources.loadTexture("college constantine.png", "college constantine");
         MainGameScreen.resources.loadTexture("college goodrick.png", "college goodrick");

@@ -48,6 +48,7 @@ public class Ship extends Sprite {
     private final float VERTICAL_ROLL_TIMER_SWITCH_TIME = 0.25f;
     private final float HORIZONTAL_ROLL_TIMER_SWITCH_TIME = 0.25f;
     private Animation<TextureRegion>[] rolls;
+    private Animation<TextureRegion>[] idleRolls;
 
     int roll;
     float rollVerticalTimer;
@@ -72,7 +73,8 @@ public class Ship extends Sprite {
         movingRight = true;
 
         roll = 4;
-        rolls = new Animation[16];
+        rolls = new Animation[8];
+        idleRolls = new Animation[8];
         rollVerticalTimer = 2f;
         rollHorizontalTimer = 2f;
 
@@ -85,20 +87,67 @@ public class Ship extends Sprite {
         shipMove = new Animation(0.1f, frames);
 
         frames.clear();
-
-        for(int i=0; i<16; i++) {
+        for(int i=0; i<8; i++) {
             frames.add(new TextureRegion(getTexture(), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
         }
+        idleRolls[0] = new Animation(SHIP_FRAME_DURATION, frames.get(0)); // Down
+        idleRolls[1] = new Animation(SHIP_FRAME_DURATION, frames.get(1));
+        idleRolls[2] = new Animation(SHIP_FRAME_DURATION, frames.get(2)); // Left
+        idleRolls[3] = new Animation(SHIP_FRAME_DURATION, frames.get(3));
+        idleRolls[4] = new Animation(SHIP_FRAME_DURATION, frames.get(4)); // Up
+        idleRolls[5] = new Animation(SHIP_FRAME_DURATION, frames.get(5));
+        idleRolls[6] = new Animation(SHIP_FRAME_DURATION, frames.get(6)); // Right
+        idleRolls[7] = new Animation(SHIP_FRAME_DURATION, frames.get(7));
 
-        rolls[0] = new Animation(SHIP_FRAME_DURATION, frames.get(0)); // Down
-        rolls[1] = new Animation(SHIP_FRAME_DURATION, frames.get(1));
-        rolls[2] = new Animation(SHIP_FRAME_DURATION, frames.get(2)); // Left
-        rolls[3] = new Animation(SHIP_FRAME_DURATION, frames.get(3));
-        rolls[4] = new Animation(SHIP_FRAME_DURATION, frames.get(4)); // Up
-        rolls[5] = new Animation(SHIP_FRAME_DURATION, frames.get(5));
-        rolls[6] = new Animation(SHIP_FRAME_DURATION, frames.get(6)); // Right
-        rolls[7] = new Animation(SHIP_FRAME_DURATION, frames.get(7));
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat south"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[0] = new Animation(SHIP_FRAME_DURATION, frames); // Down
 
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat southwest"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[1] = new Animation(SHIP_FRAME_DURATION, frames);
+
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat west"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[2] = new Animation(SHIP_FRAME_DURATION, frames); // Left
+
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat northwest"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[3] = new Animation(SHIP_FRAME_DURATION, frames);
+
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat north"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[4] = new Animation(SHIP_FRAME_DURATION, frames); // Up
+
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat northeast"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[5] = new Animation(SHIP_FRAME_DURATION, frames);
+
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat east"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[6] = new Animation(SHIP_FRAME_DURATION, frames); // Right
+
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat southeast"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[7] = new Animation(SHIP_FRAME_DURATION, frames);
+
+        frames.clear();
 
         shipStand = new TextureRegion(getTexture(), PIXEL_SHIP_WIDTH * 0, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT);
 
@@ -109,6 +158,7 @@ public class Ship extends Sprite {
     }
 
     public void update(float deltaTime) {
+        stateTime += deltaTime;
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(deltaTime));
 //        setRegion(shipStand);
@@ -252,18 +302,9 @@ public class Ship extends Sprite {
                 break;
             default:
                 currentState = previousState;
-                region = rolls[roll].getKeyFrame(stateTime, true);
+                region = idleRolls[roll].getKeyFrame(stateTime, true);
                 break;
         }
-//        System.out.println(roll);
-
-//        if((b2body.getLinearVelocity().x < 0 || !movingRight) && !region.isFlipX()){
-//            region.flip(true, false);
-//            movingRight = false;
-//        } else if ((b2body.getLinearVelocity().x > 0 || movingRight) && region.isFlipX()) {
-//            region.flip(true, false);
-//            movingRight = true;
-//        }
         stateTimer = currentState == previousState ? stateTimer + deltaTime : 0;
         previousState = currentState;
         return region;
