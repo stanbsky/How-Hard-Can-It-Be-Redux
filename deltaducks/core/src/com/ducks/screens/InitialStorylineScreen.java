@@ -47,7 +47,7 @@ public class InitialStorylineScreen implements Screen {
         gamePort = new FitViewport(DeltaDucks.WIDTH, DeltaDucks.HEIGHT, gameCam);
 
         state = 0;
-        Layout = new GlyphLayout(font, "There was once a Pirate \n known as The King Of Yorkshire...");
+        Layout = new GlyphLayout(font, "You have to fight all the colleges\nto be the next King Of Yorkshire");
         escLayout = new GlyphLayout(smallFont, "Press Esc to Continue..");
     }
 
@@ -59,10 +59,10 @@ public class InitialStorylineScreen implements Screen {
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             switch (++state){
                 case 1:
-                    Layout.setText(font, "And Continue...");
+                    Layout.setText(font, "Defeat them to be victorious");
                     break;
                 case 2:
-                    Layout.setText(font, "The End...");
+                    Layout.setText(font, "Dodge the attacks\nand attacks the attackers...");
                     break;
                 default:
                     this.dispose();

@@ -83,6 +83,11 @@ public class MainGameScreen implements Screen {
         MainGameScreen.resources.loadTexture("arrow.png", "arrow");
         MainGameScreen.resources.loadTexture("COLLEGE.png", "college");
         MainGameScreen.resources.loadTexture("blank.png", "blank");
+        MainGameScreen.resources.loadTexture("ALL DUCK BOAT FINAL.png", "boat");
+        MainGameScreen.resources.loadTexture("college destroyed.png", "college destroyed");
+        MainGameScreen.resources.loadTexture("college constantine.png", "college constantine");
+        MainGameScreen.resources.loadTexture("college goodrick.png", "college goodrick");
+        MainGameScreen.resources.loadTexture("college halifax.png", "college halifax");
     }
 
     public TextureAtlas getAtlas() { return atlas;}

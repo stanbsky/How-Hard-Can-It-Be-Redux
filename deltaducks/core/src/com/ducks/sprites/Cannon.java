@@ -41,7 +41,7 @@ public class Cannon extends Sprite {
         cannonIdle = new Animation(0.1f, frames);
         frames.clear();
 //        System.out.println("Yikes");
-        setBounds(college.collegeBody.getPosition().x - college.collegeBody.getFixtureList().get(0).getShape().getRadius(), college.collegeBody.getPosition().y - college.collegeBody.getFixtureList().get(0).getShape().getRadius(), BULLET_WIDTH / DeltaDucks.PIXEL_PER_METER, BULLET_HEIGHT / DeltaDucks.PIXEL_PER_METER);
+        setBounds(college.collegeBody.getPosition().x - college.collegeBody.getFixtureList().get(0).getShape().getRadius() /2, college.collegeBody.getPosition().y - college.collegeBody.getFixtureList().get(0).getShape().getRadius(), BULLET_WIDTH / DeltaDucks.PIXEL_PER_METER, BULLET_HEIGHT / DeltaDucks.PIXEL_PER_METER);
 //        setBounds(2, 2, BULLET_WIDTH / DeltaDucks.PIXEL_PER_METER, BULLET_HEIGHT / DeltaDucks.PIXEL_PER_METER);
         setRegion(cannonIdle.getKeyFrame(stateTime, true));
         defineCannon();

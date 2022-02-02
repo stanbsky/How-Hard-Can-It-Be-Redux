@@ -31,10 +31,10 @@ public class Ship extends Sprite {
     private boolean movingUp;
     private boolean movingRight;
 
-    private final int PIXEL_SHIP_WIDTH = 64;
-    private final int PIXEL_SHIP_HEIGHT = 64;
+    private final int PIXEL_SHIP_WIDTH = 1280;
+    private final int PIXEL_SHIP_HEIGHT = 1280;
 
-    private final float MULTIPLIER = 1.3f;
+    private final float MULTIPLIER = .07f;
 
     private final int SHIP_WIDTH = Math.round(PIXEL_SHIP_WIDTH * MULTIPLIER);
     private final int SHIP_HEIGHT = Math.round(PIXEL_SHIP_HEIGHT * MULTIPLIER);
@@ -54,15 +54,16 @@ public class Ship extends Sprite {
     float rollHorizontalTimer;
     float stateTime;
 
-    private final int UP_INDEX = 8;
+    private final int UP_INDEX = 4;
     private final int DOWN_INDEX = 0;
-    private final int LEFT_INDEX = 4;
-    private final int RIGHT_INDEX = 12;
+    private final int LEFT_INDEX = 2;
+    private final int RIGHT_INDEX = 6;
     private final int FIRST_INDEX = 0;
-    private final int LAST_INDEX = 15;
+    private final int LAST_INDEX = 7;
 
     public Ship(World world, MainGameScreen screen) {
-        super(screen.getAtlas().findRegion("boat"));
+//        super(screen.getAtlas().findRegion("boat"));
+        super(MainGameScreen.resources.getTexture("boat"));
         this.world = world;
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -70,7 +71,7 @@ public class Ship extends Sprite {
         movingUp = true;
         movingRight = true;
 
-        roll = 8;
+        roll = 4;
         rolls = new Animation[16];
         rollVerticalTimer = 2f;
         rollHorizontalTimer = 2f;
@@ -89,22 +90,14 @@ public class Ship extends Sprite {
             frames.add(new TextureRegion(getTexture(), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
         }
 
-        rolls[0] = new Animation(SHIP_FRAME_DURATION, frames.get(8));
-        rolls[1] = new Animation(SHIP_FRAME_DURATION, frames.get(7));
-        rolls[2] = new Animation(SHIP_FRAME_DURATION, frames.get(6));
-        rolls[3] = new Animation(SHIP_FRAME_DURATION, frames.get(5));
-        rolls[4] = new Animation(SHIP_FRAME_DURATION, frames.get(4));
-        rolls[5] = new Animation(SHIP_FRAME_DURATION, frames.get(3));
-        rolls[6] = new Animation(SHIP_FRAME_DURATION, frames.get(2));
-        rolls[7] = new Animation(SHIP_FRAME_DURATION, frames.get(1));
-        rolls[8] = new Animation(SHIP_FRAME_DURATION, frames.get(0));
-        rolls[9] = new Animation(SHIP_FRAME_DURATION, frames.get(15));
-        rolls[10] = new Animation(SHIP_FRAME_DURATION, frames.get(14));
-        rolls[11] = new Animation(SHIP_FRAME_DURATION, frames.get(13));
-        rolls[12] = new Animation(SHIP_FRAME_DURATION, frames.get(12));
-        rolls[13] = new Animation(SHIP_FRAME_DURATION, frames.get(11));
-        rolls[14] = new Animation(SHIP_FRAME_DURATION, frames.get(10));
-        rolls[15] = new Animation(SHIP_FRAME_DURATION, frames.get(9));
+        rolls[0] = new Animation(SHIP_FRAME_DURATION, frames.get(0)); // Down
+        rolls[1] = new Animation(SHIP_FRAME_DURATION, frames.get(1));
+        rolls[2] = new Animation(SHIP_FRAME_DURATION, frames.get(2)); // Left
+        rolls[3] = new Animation(SHIP_FRAME_DURATION, frames.get(3));
+        rolls[4] = new Animation(SHIP_FRAME_DURATION, frames.get(4)); // Up
+        rolls[5] = new Animation(SHIP_FRAME_DURATION, frames.get(5));
+        rolls[6] = new Animation(SHIP_FRAME_DURATION, frames.get(6)); // Right
+        rolls[7] = new Animation(SHIP_FRAME_DURATION, frames.get(7));
 
 
         shipStand = new TextureRegion(getTexture(), PIXEL_SHIP_WIDTH * 0, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT);
@@ -118,6 +111,7 @@ public class Ship extends Sprite {
     public void update(float deltaTime) {
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(deltaTime));
+//        setRegion(shipStand);
     }
 
     public TextureRegion getFrame(float deltaTime) {
@@ -151,10 +145,10 @@ public class Ship extends Sprite {
                     }
                 }
                 if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                    roll = UP_INDEX+2;
+                    roll = UP_INDEX+1;
                 }
                 if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                    roll = UP_INDEX-2;
+                    roll = UP_INDEX-1;
                 }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
@@ -181,10 +175,10 @@ public class Ship extends Sprite {
                     }
                 }
                 if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                    roll = RIGHT_INDEX+2;
+                    roll = RIGHT_INDEX+1;
                 }
                 if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                    roll = LEFT_INDEX-2;
+                    roll = LEFT_INDEX-1;
                 }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
@@ -215,10 +209,10 @@ public class Ship extends Sprite {
                     }
                 }
                 if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                    roll = UP_INDEX+2;
+                    roll = UP_INDEX+1;
                 }
                 if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-                    roll = RIGHT_INDEX+2;
+                    roll = RIGHT_INDEX+1;
                 }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
@@ -249,10 +243,10 @@ public class Ship extends Sprite {
                     }
                 }
                 if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                    roll = LEFT_INDEX+2;
+                    roll = LEFT_INDEX+1;
                 }
                 if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-                    roll = LEFT_INDEX-2;
+                    roll = LEFT_INDEX-1;
                 }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
@@ -299,7 +293,7 @@ public class Ship extends Sprite {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(PIXEL_SHIP_WIDTH/2 / DeltaDucks.PIXEL_PER_METER);
+        shape.setRadius(SHIP_WIDTH/2.5f / DeltaDucks.PIXEL_PER_METER);
 
         fdef.shape = shape;
         fdef.filter.categoryBits = DeltaDucks.BIT_PLAYER;

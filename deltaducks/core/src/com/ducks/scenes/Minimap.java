@@ -52,11 +52,14 @@ public class Minimap implements Disposable {
         pixmap.setColor(new Color(.1f, 0.1f, 1f, .3f));
         pixmap.fillCircle(player_x, player_y, player_radius);
 
+        int counter=0;
         for(Vector2 coordinates : colleges.getCoordinates()) {
-            pixmap.setColor(new Color(1f, 0.1f, 0.1f, .3f));
-            int coord_x = Math.round(coordinates.x * ratio *  DeltaDucks.PIXEL_PER_METER);
-            int coord_y = height - Math.round(coordinates.y * ratio *  DeltaDucks.PIXEL_PER_METER);
-            pixmap.fillCircle(coord_x, coord_y, player_radius);
+            if(colleges.collegeBodies.get(counter++).health>0f) {
+                pixmap.setColor(new Color(1f, 0.1f, 0.1f, .3f));
+                int coord_x = Math.round(coordinates.x * ratio *  DeltaDucks.PIXEL_PER_METER);
+                int coord_y = height - Math.round(coordinates.y * ratio *  DeltaDucks.PIXEL_PER_METER);
+                pixmap.fillCircle(coord_x, coord_y, player_radius);
+            }
         }
     }
     public void draw(SpriteBatch batch) {

@@ -20,7 +20,7 @@ public class ListOfColleges {
     private World world;
     private MainGameScreen screen;
 
-    private Array<College> collegeBodies;
+    public Array<College> collegeBodies;
     private final int NUMBER_OF_MONSTERS = 1;
 
     private final int SPAWN_X = 500;
@@ -29,7 +29,7 @@ public class ListOfColleges {
 
     ListOfCannons cannons;
 
-    private College.CollegeName collegeName;
+    private String collegeName;
 
     public ListOfColleges(World world, MainGameScreen screen, ListOfCannons cannons, TiledMap map) {
         this.world = world;
@@ -41,39 +41,34 @@ public class ListOfColleges {
 
     public void spawnColleges(TiledMap map) {
         BodyDef bdef = new BodyDef();
-//        for(int i = 0; i < NUMBER_OF_MONSTERS; i++) {
-//            collegeBodies.add(new College(world, screen, SPAWN_X,SPAWN_Y, SPAWN_RADIUS, College.CollegeName.DERWENT, cannons));
-//        }
         int colleState = 0;
         for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
             switch (colleState++) {
                 case 0:
-                    collegeName = College.CollegeName.CONSTANTINE;
+                    collegeName = "college constantine";
                     break;
                 case 1:
-                    collegeName = College.CollegeName.GOODRICK;
+                    collegeName = "college goodrick";
                     break;
                 case 2:
-                    collegeName = College.CollegeName.HALIFAX;
+                    collegeName = "college halifax";
                     break;
             }
             collegeBodies.add(new College(world, screen, (rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE, (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE, SPAWN_RADIUS, collegeName, cannons));
         }
-        collegeBodies.add(new College(world, screen, SPAWN_X,SPAWN_Y, SPAWN_RADIUS, College.CollegeName.DERWENT, cannons));
-
+        collegeBodies.add(new College(world, screen, SPAWN_X, SPAWN_Y, SPAWN_RADIUS, "college constantine", cannons));
     }
 
     public void update(float deltaTime) {
         Array<College> collegeBodiesToRemove = new Array<College>();
         for( College college : collegeBodies) {
-            if(college.health <= 0){
-                collegeBodiesToRemove.add(college);
+            if(college.health <= 0 && college.health != -10f){
+//                collegeBodiesToRemove.add(college);
                 college.dispose();
-            } else {
-                college.update(deltaTime);
             }
+            college.update(deltaTime);
         }
         collegeBodies.removeAll(collegeBodiesToRemove, true);
     }
