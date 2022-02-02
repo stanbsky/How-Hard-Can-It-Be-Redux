@@ -58,14 +58,12 @@ public class ListOfColleges {
             }
             collegeBodies.add(new College(world, screen, (rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE, (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE, SPAWN_RADIUS, collegeName, cannons));
         }
-        collegeBodies.add(new College(world, screen, SPAWN_X, SPAWN_Y, SPAWN_RADIUS, "college constantine", cannons));
     }
 
     public void update(float deltaTime) {
         Array<College> collegeBodiesToRemove = new Array<College>();
         for( College college : collegeBodies) {
             if(college.health <= 0 && college.health != -10f){
-//                collegeBodiesToRemove.add(college);
                 college.dispose();
             }
             college.update(deltaTime);

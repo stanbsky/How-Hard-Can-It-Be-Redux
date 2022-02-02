@@ -86,7 +86,6 @@ public class InitialStorylineScreen implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
 
         game.batch.begin();
-//        font.getData().setScale(1f);
         font.draw(game.batch, Layout, -Layout.width/2, -0);
         smallFont.draw(game.batch, escLayout, -escLayout.width/2, -gameCam.viewportHeight/3);
         game.batch.end();

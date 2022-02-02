@@ -46,8 +46,7 @@ public class Subtitle implements Disposable {
 
 
         table.add(subtitleLabel).expandX().padTop(DeltaDucks.VIRTUAL_HEIGHT * .9f);
-//        table.row();
-//        table.add(timeLabel).expandX();
+
 
         stage.addActor(table);
 

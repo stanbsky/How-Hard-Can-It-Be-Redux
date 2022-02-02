@@ -20,7 +20,6 @@ public class ListOfPirates {
     private MainGameScreen screen;
 
     private Array<Pirate> pirateBodies;
-    private final int NUMBER_OF_PIRATES = 10;
 
 
     private final float RADIUS = 4f * Pirate.PIXEL_PIRATE_HEIGHT / DeltaDucks.PIXEL_PER_METER;

@@ -51,9 +51,6 @@ public class B2WorldCreator {
             body = world.createBody(bdef);
             shape.setAsBox(rect.getWidth() * DeltaDucks.TILEED_MAP_SCALE / 2 / DeltaDucks.PIXEL_PER_METER, rect.getHeight() * DeltaDucks.TILEED_MAP_SCALE / 2 / DeltaDucks.PIXEL_PER_METER);
             fdef.shape = shape;
-//            fdef.density = 0.0f;
-//            fdef.restitution = 0.5f;
-//            fdef.friction = 0f;
             fdef.filter.categoryBits = DeltaDucks.BIT_SEA;
             body.createFixture(fdef).setUserData("Sea");
         }

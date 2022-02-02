@@ -40,12 +40,9 @@ public class Cannon extends Sprite {
         frames.add(new TextureRegion(getTexture(), 1 * PIXEL_BULLET_WIDTH, 0 * PIXEL_BULLET_HEIGHT, PIXEL_BULLET_WIDTH, PIXEL_BULLET_HEIGHT));
         cannonIdle = new Animation(0.1f, frames);
         frames.clear();
-//        System.out.println("Yikes");
         setBounds(college.collegeBody.getPosition().x - college.collegeBody.getFixtureList().get(0).getShape().getRadius() /2, college.collegeBody.getPosition().y - college.collegeBody.getFixtureList().get(0).getShape().getRadius(), BULLET_WIDTH / DeltaDucks.PIXEL_PER_METER, BULLET_HEIGHT / DeltaDucks.PIXEL_PER_METER);
-//        setBounds(2, 2, BULLET_WIDTH / DeltaDucks.PIXEL_PER_METER, BULLET_HEIGHT / DeltaDucks.PIXEL_PER_METER);
         setRegion(cannonIdle.getKeyFrame(stateTime, true));
         defineCannon();
-//        System.out.println(college.collegeBody.localVector + " " + college.collegeBody.getPosition());
         bulletBody.applyForceToCenter(Crosshair.getDireciton(college.collegeBody.getPosition(), player.b2body.getPosition()).scl(BULLET_SPEED), true);
     }
 

@@ -66,14 +66,6 @@ public class MyContactListener implements ContactListener {
             Hud.decHealth();
         }
 
-
-//        if(fa.getUserData() != null && fa.getUserData().equals("Bullet Alive")){
-//            fa.setUserData("Bullet Dead");
-//        }
-//        if(fb.getUserData() != null && fb.getUserData().equals("Bullet Alive")){
-//            fb.setUserData("Bullet Dead");
-//        }
-//
         if(checkFixture(fa, "Cannon Alive")){
             fa.setUserData("Cannon Dead");
         }
@@ -97,7 +89,6 @@ public class MyContactListener implements ContactListener {
             subtitle.removeSubtitle();
         }
 
-//        System.out.println(fa.getUserData()+", "+fb.getUserData());
         if(checkFixture(fa,"Sensor")){
             System.out.println("Sensor Fa");
             playerHitsGround = false;

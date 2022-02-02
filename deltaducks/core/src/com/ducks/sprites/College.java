@@ -125,7 +125,6 @@ public class College extends Sprite {
     }
 
     public void dispose() {
-//        world.destroyBody(collegeBody);
         Hud.addGold(1000);
         Hud.addScore(10000);
     }

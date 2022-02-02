@@ -34,7 +34,6 @@ public class ListOfCannons {
             Hud.addScore(100);
             cannonBodies.add(new Cannon(world, college, player));
         }
-//        cannonBodies.add(new Cannon(world, college, player));
     }
 
     public void update(float deltaTime, OrthographicCamera gameCam) {

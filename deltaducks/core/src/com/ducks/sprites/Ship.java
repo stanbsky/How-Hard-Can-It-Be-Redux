@@ -319,8 +319,6 @@ public class Ship extends Sprite {
             return State.SOUTH;
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
             return State.WEST;
-//        else if(b2body.getLinearVelocity().x != 0 || b2body.getLinearVelocity().y != 0)
-//            return State.MOVING;
         else
             return State.STANDING;
     }

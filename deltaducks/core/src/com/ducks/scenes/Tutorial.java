@@ -49,7 +49,6 @@ public class Tutorial {
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/futur.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 25;
-//        parameter.color = new Color(.2f, .2f, .2f, 1);
         font = generator.generateFont(parameter);
         font.getData().setScale(.7f);
         Layout = new GlyphLayout(font, "Start\nHere");

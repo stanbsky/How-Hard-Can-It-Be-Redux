@@ -48,9 +48,7 @@ public class MainGameScreen implements Screen {
     private Box2DDebugRenderer b2dr;
 
     private Ship player;
-//    private Pirates bots;
     private ListOfPirates bots;
-//    private Monsters creatures;
     private ListOfMonsters creatures;
     private ListOfColleges colleges;
     private Minimap radar;
@@ -61,7 +59,6 @@ public class MainGameScreen implements Screen {
     private ListOfBullets bullets;
     private ListOfCannons cannons;
 
-//    private Player player;
     private MyContactListener contactListener;
 
     private static float ACCELERATION = 1f;
@@ -138,15 +135,10 @@ public class MainGameScreen implements Screen {
 
         new B2WorldCreator(world, map);
 
-        // Create Player
-
-//        player = new Player(body.b2body);
-//        bots = new Pirates(world, this, 64, 64, 12);
         bots = new ListOfPirates(world, this, map);
         creatures = new ListOfMonsters(world, this);
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
         crosshair = new Crosshair(world, this, player, gameCam, gamePort);
-//        bullet = new Bullet(world, player);
         bullets = new ListOfBullets(world, this, player, crosshair, gameCam);
         cannons = new ListOfCannons(world, this, player, crosshair);
         colleges = new ListOfColleges(world, this, cannons, map);
@@ -154,7 +146,6 @@ public class MainGameScreen implements Screen {
     }
 
     public void handleInput(float deltaTime) {
-//
         if (Gdx.input.isKeyPressed(Input.Keys.UP) && player.b2body.getLinearVelocity().y <= MAX_VELOCITY)
             player.b2body.applyForce(new Vector2(0, ACCELERATION), player.b2body.getWorldCenter(), true);
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && player.b2body.getLinearVelocity().y >= -MAX_VELOCITY)
@@ -164,13 +155,6 @@ public class MainGameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -MAX_VELOCITY)
             player.b2body.applyForce(new Vector2(-ACCELERATION, 0), player.b2body.getWorldCenter(), true);
 
-//        if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
-//            bullet.update(deltaTime);
-//        }
-//        if(Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)){
-//
-//            bullet.bulletBody.applyForceToCenter(Crosshair.getCrosshair().scl(100), true);
-//        }
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
             bullets.spawnBullet();
         }
@@ -205,7 +189,6 @@ public class MainGameScreen implements Screen {
         tutorial.update(deltaTime);
         subtitle.update(deltaTime);
         crosshair.update(deltaTime);
-//        bullet.update(deltaTime);
         bullets.update(deltaTime);
         cannons.update(deltaTime, gameCam);
 
@@ -246,12 +229,9 @@ public class MainGameScreen implements Screen {
         cannons.draw(game.batch);
         player.draw(game.batch);
         crosshair.draw(game.batch);
-//        bullet.draw(game.batch);
         game.batch.end();
 
         // Set our batch to now draw what the Hud camera sees.
-//        game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
-//        hud.stage.draw();
         hud.draw(game.batch);
 
         game.batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
