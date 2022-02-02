@@ -10,8 +10,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
-import com.ducks.sprites.Cannon;
-import com.ducks.sprites.College;
 import com.ducks.sprites.Pirate;
 
 public class ListOfPirates {

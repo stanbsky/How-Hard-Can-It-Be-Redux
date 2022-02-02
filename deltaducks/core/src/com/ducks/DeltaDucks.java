@@ -2,7 +2,6 @@ package com.ducks;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.ducks.screens.MainGameScreen;
 import com.ducks.screens.MainMenuScreen;
 
 // Game Class with global constants
