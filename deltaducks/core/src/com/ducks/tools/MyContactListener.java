@@ -3,15 +3,18 @@ package com.ducks.tools;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
+import com.ducks.scenes.Hud;
+import com.ducks.scenes.Subtitle;
 import com.ducks.sprites.Ship;
 
 public class MyContactListener implements ContactListener {
 
-    private boolean playerHitsGround;
     Ship player;
+    Subtitle subtitle;
 
-    public MyContactListener(Ship player) {
+    public MyContactListener(Ship player, Subtitle subtitle) {
         this.player = player;
+        this.subtitle = subtitle;
     }
 
     @Override
@@ -19,29 +22,53 @@ public class MyContactListener implements ContactListener {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
 
-        System.out.println(fa.getUserData()+", "+fb.getUserData());
-        if(fa.getUserData() != null && fa.getUserData().equals("Sensor")){
-            System.out.println("Sensor Fa");
-            playerHitsGround = true;
-        }
-        if(fb.getUserData() != null && fb.getUserData().equals("Sensor")){
-            System.out.println("Sensor Fb");
-            playerHitsGround = true;
-        }
+//        System.out.println(fa.getUserData()+", "+fb.getUserData());
 
         if(checkCollision(fa, fb, "Player", "Monster Sensor")) {
-//            System.out.println(player.b2body.getPosition());
-            // 10 32*4
             player.b2body.applyLinearImpulse(new Vector2(
                     player.b2body.getPosition().x - 10 / DeltaDucks.PIXEL_PER_METER, player.b2body.getPosition().y - 32*4 / DeltaDucks.PIXEL_PER_METER
             ), player.b2body.getWorldCenter(), true);
         }
 
-        if(fa.getUserData() != null && fa.getUserData().equals("Bullet Alive")){
-            fa.setUserData("Bullet Dead");
+        if(checkCollision(fa, fb, "Player", "College Sensor")) {
+            if(checkFixture(fa, "College Sensor")){
+                fa.setUserData("College Sensor Attack");
+            } else {
+                fb.setUserData("College Sensor Attack");
+            }
+            subtitle.setSubtitle("Enemy College Nearby");
         }
-        if(fb.getUserData() != null && fb.getUserData().equals("Bullet Alive")){
-            fb.setUserData("Bullet Dead");
+
+        if(checkCollision(fa, fb, "Pirate", "Bullet Alive")) {
+            if(checkFixture(fa, "Pirate")){
+                fa.setUserData("Pirate Dead");
+            } else {
+                fb.setUserData("Pirate Dead");
+            }
+        }
+        if(checkCollision(fa, fb, "College", "Bullet Alive")) {
+            if(checkFixture(fa, "Bullet Alive")){
+                fa.setUserData("Bullet Dead");
+            } else {
+                fb.setUserData("Bullet Dead");
+            }
+            if(checkFixture(fa, "College")){
+                fa.setUserData("College Damage");
+            } else {
+                fb.setUserData("College Damage");
+            }
+        }
+
+
+        if(checkCollision(fa, fb, "Player", "Cannon Alive")) {
+            Hud.decHealth();
+        }
+
+        if(checkFixture(fa, "Cannon Alive")){
+            fa.setUserData("Cannon Dead");
+        }
+        if(checkFixture(fb, "Cannon Alive")){
+            fb.setUserData("Cannon Dead");
         }
 
     }
@@ -51,16 +78,15 @@ public class MyContactListener implements ContactListener {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
 
-//        System.out.println(fa.getUserData()+", "+fb.getUserData());
-        if(fa.getUserData() != null && fa.getUserData().equals("Sensor")){
-            System.out.println("Sensor Fa");
-            playerHitsGround = false;
+        if(checkCollision(fa, fb, "Player", "College Sensor Attack")) {
+            if(checkFixture(fa,"College Sensor Attack")){
+                fa.setUserData("College Sensor");
+            } else {
+                fb.setUserData("College Sensor");
+            }
+            subtitle.removeSubtitle();
         }
-        if(fb.getUserData() != null && fb.getUserData().equals("Sensor")){
-            System.out.println("Sensor Fb");
-            playerHitsGround = false;
 
-        }
     }
 
     @Override
@@ -73,16 +99,16 @@ public class MyContactListener implements ContactListener {
 
     }
 
-    public boolean isPlayerHitsGround() {
-        return playerHitsGround;
-    }
-
     public boolean checkCollision(Fixture fa, Fixture fb, String A, String B) {
         return  ( (fa.getUserData() != null && fa.getUserData().equals(A))
                 || (fb.getUserData() != null && fb.getUserData().equals(A)) )
                 &&
                 ( (fa.getUserData() != null && fa.getUserData().equals(B))
                 || (fb.getUserData() != null && fb.getUserData().equals(B)) );
+    }
+
+    public boolean checkFixture(Fixture f, String target) {
+        return f.getUserData() != null && f.getUserData().equals(target);
     }
 
 }

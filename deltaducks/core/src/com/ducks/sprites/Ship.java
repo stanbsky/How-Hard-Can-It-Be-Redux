@@ -31,16 +31,16 @@ public class Ship extends Sprite {
     private boolean movingUp;
     private boolean movingRight;
 
-    private final int PIXEL_SHIP_WIDTH = 64;
-    private final int PIXEL_SHIP_HEIGHT = 64;
+    private final int PIXEL_SHIP_WIDTH = 1280;
+    private final int PIXEL_SHIP_HEIGHT = 1280;
 
-    private final float MULTIPLIER = 1.3f;
+    private final float MULTIPLIER = .07f;
 
     private final int SHIP_WIDTH = Math.round(PIXEL_SHIP_WIDTH * MULTIPLIER);
     private final int SHIP_HEIGHT = Math.round(PIXEL_SHIP_HEIGHT * MULTIPLIER);
 
-    private final int SHIP_SPAWN_X = 200;
-    private final int SHIP_SPAWN_Y = 225;
+    private final int SHIP_SPAWN_X = 370;
+    private final int SHIP_SPAWN_Y = 340;
 
     private final int SPRITE_RADIUS = 1;
 
@@ -48,21 +48,23 @@ public class Ship extends Sprite {
     private final float VERTICAL_ROLL_TIMER_SWITCH_TIME = 0.25f;
     private final float HORIZONTAL_ROLL_TIMER_SWITCH_TIME = 0.25f;
     private Animation<TextureRegion>[] rolls;
+    private Animation<TextureRegion>[] idleRolls;
 
     int roll;
     float rollVerticalTimer;
     float rollHorizontalTimer;
     float stateTime;
 
-    private final int UP_INDEX = 8;
+    private final int UP_INDEX = 4;
     private final int DOWN_INDEX = 0;
-    private final int LEFT_INDEX = 4;
-    private final int RIGHT_INDEX = 12;
+    private final int LEFT_INDEX = 2;
+    private final int RIGHT_INDEX = 6;
     private final int FIRST_INDEX = 0;
-    private final int LAST_INDEX = 15;
+    private final int LAST_INDEX = 7;
 
     public Ship(World world, MainGameScreen screen) {
-        super(screen.getAtlas().findRegion("boat"));
+//        super(screen.getAtlas().findRegion("boat"));
+        super(MainGameScreen.resources.getTexture("boat"));
         this.world = world;
         currentState = State.STANDING;
         previousState = State.STANDING;
@@ -70,8 +72,9 @@ public class Ship extends Sprite {
         movingUp = true;
         movingRight = true;
 
-        roll = 8;
-        rolls = new Animation[16];
+        roll = 4;
+        rolls = new Animation[8];
+        idleRolls = new Animation[8];
         rollVerticalTimer = 2f;
         rollHorizontalTimer = 2f;
 
@@ -84,28 +87,67 @@ public class Ship extends Sprite {
         shipMove = new Animation(0.1f, frames);
 
         frames.clear();
-
-        for(int i=0; i<16; i++) {
+        for(int i=0; i<8; i++) {
             frames.add(new TextureRegion(getTexture(), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
         }
+        idleRolls[0] = new Animation(SHIP_FRAME_DURATION, frames.get(0)); // Down
+        idleRolls[1] = new Animation(SHIP_FRAME_DURATION, frames.get(1));
+        idleRolls[2] = new Animation(SHIP_FRAME_DURATION, frames.get(2)); // Left
+        idleRolls[3] = new Animation(SHIP_FRAME_DURATION, frames.get(3));
+        idleRolls[4] = new Animation(SHIP_FRAME_DURATION, frames.get(4)); // Up
+        idleRolls[5] = new Animation(SHIP_FRAME_DURATION, frames.get(5));
+        idleRolls[6] = new Animation(SHIP_FRAME_DURATION, frames.get(6)); // Right
+        idleRolls[7] = new Animation(SHIP_FRAME_DURATION, frames.get(7));
 
-        rolls[0] = new Animation(SHIP_FRAME_DURATION, frames.get(8));
-        rolls[1] = new Animation(SHIP_FRAME_DURATION, frames.get(7));
-        rolls[2] = new Animation(SHIP_FRAME_DURATION, frames.get(6));
-        rolls[3] = new Animation(SHIP_FRAME_DURATION, frames.get(5));
-        rolls[4] = new Animation(SHIP_FRAME_DURATION, frames.get(4));
-        rolls[5] = new Animation(SHIP_FRAME_DURATION, frames.get(3));
-        rolls[6] = new Animation(SHIP_FRAME_DURATION, frames.get(2));
-        rolls[7] = new Animation(SHIP_FRAME_DURATION, frames.get(1));
-        rolls[8] = new Animation(SHIP_FRAME_DURATION, frames.get(0));
-        rolls[9] = new Animation(SHIP_FRAME_DURATION, frames.get(15));
-        rolls[10] = new Animation(SHIP_FRAME_DURATION, frames.get(14));
-        rolls[11] = new Animation(SHIP_FRAME_DURATION, frames.get(13));
-        rolls[12] = new Animation(SHIP_FRAME_DURATION, frames.get(12));
-        rolls[13] = new Animation(SHIP_FRAME_DURATION, frames.get(11));
-        rolls[14] = new Animation(SHIP_FRAME_DURATION, frames.get(10));
-        rolls[15] = new Animation(SHIP_FRAME_DURATION, frames.get(9));
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat south"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[0] = new Animation(SHIP_FRAME_DURATION, frames); // Down
 
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat southwest"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[1] = new Animation(SHIP_FRAME_DURATION, frames);
+
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat west"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[2] = new Animation(SHIP_FRAME_DURATION, frames); // Left
+
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat northwest"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[3] = new Animation(SHIP_FRAME_DURATION, frames);
+
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat north"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[4] = new Animation(SHIP_FRAME_DURATION, frames); // Up
+
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat northeast"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[5] = new Animation(SHIP_FRAME_DURATION, frames);
+
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat east"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[6] = new Animation(SHIP_FRAME_DURATION, frames); // Right
+
+        frames.clear();
+        for(int i=0; i<4; i++) {
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat southeast"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        }
+        rolls[7] = new Animation(SHIP_FRAME_DURATION, frames);
+
+        frames.clear();
 
         shipStand = new TextureRegion(getTexture(), PIXEL_SHIP_WIDTH * 0, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT);
 
@@ -116,8 +158,10 @@ public class Ship extends Sprite {
     }
 
     public void update(float deltaTime) {
+        stateTime += deltaTime;
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(deltaTime));
+//        setRegion(shipStand);
     }
 
     public TextureRegion getFrame(float deltaTime) {
@@ -129,7 +173,7 @@ public class Ship extends Sprite {
                 region = shipMove.getKeyFrame(stateTimer, true);
                 break;
             case NORTH:
-                if (Gdx.input.isKeyPressed(Input.Keys.UP) && !Gdx.input.isKeyPressed(Input.Keys.DOWN) && roll != UP_INDEX) {
+                if (Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S) && roll != UP_INDEX) {
                     rollVerticalTimer = 0;
                     if (roll > DOWN_INDEX && roll < UP_INDEX) {
                         roll++;
@@ -150,16 +194,16 @@ public class Ship extends Sprite {
                         roll--;
                     }
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                    roll = UP_INDEX+2;
+                if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                    roll = UP_INDEX+1;
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                    roll = UP_INDEX-2;
+                if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                    roll = UP_INDEX-1;
                 }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
             case SOUTH:
-                if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && !Gdx.input.isKeyPressed(Input.Keys.UP) && roll != DOWN_INDEX) {
+                if (Gdx.input.isKeyPressed(Input.Keys.S) && !Gdx.input.isKeyPressed(Input.Keys.W) && roll != DOWN_INDEX) {
                     rollVerticalTimer = 0;
                     if (roll <= UP_INDEX && roll > FIRST_INDEX) {
                         roll--;
@@ -180,16 +224,16 @@ public class Ship extends Sprite {
                         roll = FIRST_INDEX;
                     }
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                    roll = RIGHT_INDEX+2;
+                if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                    roll = RIGHT_INDEX+1;
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                    roll = LEFT_INDEX-2;
+                if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                    roll = LEFT_INDEX-1;
                 }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
             case EAST:
-                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && roll != RIGHT_INDEX) {
+                if (Gdx.input.isKeyPressed(Input.Keys.D) && !Gdx.input.isKeyPressed(Input.Keys.A) && roll != RIGHT_INDEX) {
                     rollHorizontalTimer = 0;
                     if (roll <= LAST_INDEX && roll > RIGHT_INDEX) {
                         roll--;
@@ -214,16 +258,16 @@ public class Ship extends Sprite {
                         roll++;
                     }
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                    roll = UP_INDEX+2;
+                if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                    roll = UP_INDEX+1;
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-                    roll = RIGHT_INDEX+2;
+                if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+                    roll = RIGHT_INDEX+1;
                 }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
             case WEST:
-                if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT) && roll != LEFT_INDEX) {
+                if (Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D) && roll != LEFT_INDEX) {
                     rollHorizontalTimer = 0;
                     if (roll >= DOWN_INDEX && roll < LEFT_INDEX) {
                         roll++;
@@ -248,44 +292,33 @@ public class Ship extends Sprite {
                         roll++;
                     }
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                    roll = LEFT_INDEX+2;
+                if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                    roll = LEFT_INDEX+1;
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-                    roll = LEFT_INDEX-2;
+                if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+                    roll = LEFT_INDEX-1;
                 }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
             default:
                 currentState = previousState;
-                region = rolls[roll].getKeyFrame(stateTime, true);
+                region = idleRolls[roll].getKeyFrame(stateTime, true);
                 break;
         }
-//        System.out.println(roll);
-
-//        if((b2body.getLinearVelocity().x < 0 || !movingRight) && !region.isFlipX()){
-//            region.flip(true, false);
-//            movingRight = false;
-//        } else if ((b2body.getLinearVelocity().x > 0 || movingRight) && region.isFlipX()) {
-//            region.flip(true, false);
-//            movingRight = true;
-//        }
         stateTimer = currentState == previousState ? stateTimer + deltaTime : 0;
         previousState = currentState;
         return region;
     }
 
     public State getState() {
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+        if (Gdx.input.isKeyPressed(Input.Keys.D))
             return State.EAST;
-        if (Gdx.input.isKeyPressed(Input.Keys.UP))
+        if (Gdx.input.isKeyPressed(Input.Keys.W))
             return State.NORTH;
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
+        if (Gdx.input.isKeyPressed(Input.Keys.S))
             return State.SOUTH;
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+        if (Gdx.input.isKeyPressed(Input.Keys.A))
             return State.WEST;
-//        else if(b2body.getLinearVelocity().x != 0 || b2body.getLinearVelocity().y != 0)
-//            return State.MOVING;
         else
             return State.STANDING;
     }
@@ -294,12 +327,12 @@ public class Ship extends Sprite {
         BodyDef bdef = new BodyDef();
         bdef.position.set(SHIP_SPAWN_X / DeltaDucks.PIXEL_PER_METER, SHIP_SPAWN_Y / DeltaDucks.PIXEL_PER_METER);
         bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.linearDamping = 1f;
+        bdef.linearDamping = 1.2f;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(PIXEL_SHIP_WIDTH/2 / DeltaDucks.PIXEL_PER_METER);
+        shape.setRadius(SHIP_WIDTH/2.5f / DeltaDucks.PIXEL_PER_METER);
 
         fdef.shape = shape;
         fdef.filter.categoryBits = DeltaDucks.BIT_PLAYER;

@@ -3,58 +3,70 @@
   <ID>JAVA</ID>
   <OriginalElement />
   <nodes>
-    <node x="673.5" y="319.5">com.ducks.screens.MainGameScreen</node>
-    <node x="1044.5" y="-17.5">com.ducks.screens.FinalStorylineScreen</node>
-    <node x="-29.5" y="1058.5">com.ducks.screens.MainMenuScreen</node>
-    <node x="317.0" y="473.5">com.ducks.screens.InitialStorylineScreen</node>
-    <node x="1074.5" y="1091.5">com.ducks.DeltaDucks</node>
+    <node x="92.99999999999999" y="347.0">com.ducks.screens.MainGameScreen</node>
+    <node x="0.0" y="0.0">com.ducks.screens.FinalStorylineScreen</node>
+    <node x="179.5653594771242" y="1349.0">com.ducks.screens.MainMenuScreen</node>
+    <node x="267.0653594771242" y="1046.0">com.ducks.screens.InitialStorylineScreen</node>
+    <node x="109.6013071895425" y="1792.0">com.ducks.DeltaDucks</node>
   </nodes>
   <notes />
   <edges>
     <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.DeltaDucks">
-      <point x="0.0" y="280.5" />
-      <point x="800.0" y="1120.0" />
-      <point x="-85.5" y="-120.0" />
+      <point x="0.0" y="324.5" />
+      <point x="219.5" y="1021.0" />
+      <point x="169.0653594771242" y="1021.0" />
+      <point x="169.0653594771242" y="1772.0" />
+      <point x="179.99019607843132" y="1772.0" />
+      <point x="-20.11111111111117" y="-192.5" />
     </edge>
     <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.screens.FinalStorylineScreen">
-      <point x="0.0" y="-280.5" />
-      <point x="800.0" y="120.0" />
-      <point x="-115.5" y="0.0" />
-    </edge>
-    <edge source="com.ducks.DeltaDucks" target="com.ducks.screens.MainGameScreen">
-      <point x="-80.0" y="-148.5" />
-      <point x="1080.0" y="1040.0" />
-      <point x="840.0" y="1040.0" />
-      <point x="40.0" y="280.5" />
+      <point x="0.0" y="-324.5" />
+      <point x="219.5" y="322.0" />
+      <point x="192.5" y="322.0" />
+      <point x="77.0" y="148.5" />
     </edge>
     <edge source="com.ducks.screens.FinalStorylineScreen" target="com.ducks.DeltaDucks">
-      <point x="115.5" y="0.0" />
-      <point x="1320.0" y="120.0" />
-      <point x="1320.0" y="1240.0" />
-      <point x="85.5" y="0.0" />
+      <point x="0.0" y="148.5" />
+      <point x="115.5" y="322.0" />
+      <point x="82.5" y="322.0" />
+      <point x="82.5" y="1762.0" />
+      <point x="139.76797385620912" y="1762.0" />
+      <point x="-60.33333333333337" y="-192.5" />
     </edge>
     <edge source="com.ducks.screens.InitialStorylineScreen" target="com.ducks.screens.MainGameScreen">
-      <point x="123.0" y="0.0" />
-      <point x="-126.5" y="0.0" />
+      <point x="5.6843418860808015E-14" y="-126.5" />
+      <point x="390.0653594771243" y="1021.0" />
+      <point x="303.8333333333333" y="1021.0" />
+      <point x="84.33333333333331" y="324.5" />
+    </edge>
+    <edge source="com.ducks.DeltaDucks" target="com.ducks.screens.MainMenuScreen">
+      <point x="-2.8421709430404007E-14" y="-192.5" />
+      <point x="200.10130718954247" y="1732.0" />
+      <point x="216.0653594771242" y="1732.0" />
+      <point x="-73.0" y="181.5" />
     </edge>
     <edge source="com.ducks.screens.MainMenuScreen" target="com.ducks.screens.InitialStorylineScreen">
       <point x="0.0" y="-181.5" />
-      <point x="80.0" y="600.0" />
-      <point x="-123.0" y="0.0" />
+      <point x="289.06535947712416" y="1324.0" />
+      <point x="308.0653594771242" y="1324.0" />
+      <point x="-82.0" y="126.5" />
     </edge>
     <edge source="com.ducks.screens.InitialStorylineScreen" target="com.ducks.DeltaDucks">
-      <point x="0.0" y="126.5" />
-      <point x="440.0" y="1160.0" />
-      <point x="-85.5" y="-80.0" />
+      <point x="82.0" y="126.5" />
+      <point x="472.0653594771242" y="1324.0" />
+      <point x="420.0653594771242" y="1324.0" />
+      <point x="420.0653594771242" y="1772.0" />
+      <point x="280.5457516339869" y="1772.0" />
+      <point x="80.44444444444443" y="-192.5" />
     </edge>
     <edge source="com.ducks.screens.MainMenuScreen" target="com.ducks.DeltaDucks">
       <point x="0.0" y="181.5" />
-      <point x="80.0" y="1480.0" />
-      <point x="1160.0" y="1480.0" />
-      <point x="0.0" y="148.5" />
+      <point x="289.06535947712416" y="1742.0" />
+      <point x="220.21241830065355" y="1742.0" />
+      <point x="20.111111111111057" y="-192.5" />
     </edge>
   </edges>
-  <settings layout="Orthogonal" zoom="0.9" x="705.3928571428575" y="812.7777777777777" />
+  <settings layout="Hierarchic Group" zoom="0.9" x="705.0" y="1479.7777777777778" />
   <SelectedNodes />
   <Categories>
     <Category>Fields</Category>

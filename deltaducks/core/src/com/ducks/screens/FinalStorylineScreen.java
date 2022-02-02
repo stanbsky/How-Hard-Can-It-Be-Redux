@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
+import com.ducks.scenes.Hud;
 
 public class FinalStorylineScreen implements Screen {
     private DeltaDucks game;
@@ -29,9 +30,11 @@ public class FinalStorylineScreen implements Screen {
 
     private int state;
     private float stateTimer;
+    private String status;
 
-    public FinalStorylineScreen(DeltaDucks game) {
+    public FinalStorylineScreen(DeltaDucks game, String status) {
         this.game = game;
+        this.status = status;
     }
 
     @Override
@@ -42,8 +45,9 @@ public class FinalStorylineScreen implements Screen {
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/boy.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
-        parameter.size = 10;
+        parameter.size = 20;
         smallFont = generator.generateFont(parameter);
+        smallFont.getData().setScale(.5f);
 
         parameter.size = 25;
         font = generator.generateFont(parameter);
@@ -61,13 +65,19 @@ public class FinalStorylineScreen implements Screen {
     public void update(float deltaTime) {
         handleInput(deltaTime);
         stateTimer += deltaTime;
-        if(stateTimer>=1){
+        if(stateTimer>=4){
             state++;
             stateTimer = 0;
         }
         switch (state){
             case 0:
-                Layout.setText(font,"You're The King Of Yorkshire Now..");
+                if(status=="Won")
+                    Layout.setText(font,"You're The King Of Yorkshire Now..");
+                else
+                    Layout.setText(font,"I mean, you tried HAHAHA..");
+                break;
+            case 1:
+                Layout.setText(font,"You gained " + Hud.getGold() + " gold and earned " + Hud.getScore()+" EXP!");
                 break;
             default:
                 Layout.setText(font,"Thanks for Playing!");

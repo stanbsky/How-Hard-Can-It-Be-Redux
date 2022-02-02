@@ -6,9 +6,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
+import com.ducks.scenes.Hud;
 import com.ducks.screens.MainGameScreen;
 
-public class Pirates extends Sprite {
+public class Pirate extends Sprite {
 
     public World world;
 
@@ -21,9 +22,9 @@ public class Pirates extends Sprite {
     private final float PIRATE_HEIGHT = 32*2f;
 
     private float stateTime;
-    private Body pirateBody;
+    public Body pirateBody;
 
-    public Pirates(World world, MainGameScreen screen, float spawn_x, float spawn_y, float radius) {
+    public Pirate(World world, MainGameScreen screen, float spawn_x, float spawn_y, float radius) {
         super(MainGameScreen.resources.getTexture("pirate"));
         this.world = world;
 
@@ -62,6 +63,12 @@ public class Pirates extends Sprite {
         fdef.filter.categoryBits = DeltaDucks.BIT_PIRATES;
         fdef.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
         fdef.restitution = 0.2f;
-        pirateBody.createFixture(fdef).setUserData("Pirates");
+        pirateBody.createFixture(fdef).setUserData("Pirate");
+    }
+
+    public void dispose() {
+        world.destroyBody(pirateBody);
+        Hud.addGold(100);
+        Hud.addScore(1000);
     }
 }

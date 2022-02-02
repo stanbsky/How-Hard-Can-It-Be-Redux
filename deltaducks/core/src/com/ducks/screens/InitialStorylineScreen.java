@@ -37,8 +37,9 @@ public class InitialStorylineScreen implements Screen {
     public void show() {
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/boy.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 10;
+        parameter.size = 20;
         smallFont = generator.generateFont(parameter);
+        smallFont.getData().setScale(.5f);
 
         parameter.size = 25;
         font = generator.generateFont(parameter);
@@ -47,8 +48,8 @@ public class InitialStorylineScreen implements Screen {
         gamePort = new FitViewport(DeltaDucks.WIDTH, DeltaDucks.HEIGHT, gameCam);
 
         state = 0;
-        Layout = new GlyphLayout(font, "There was once a Pirate \n known as The King Of Yorkshire...");
-        escLayout = new GlyphLayout(smallFont, "Press Esc to Continue..");
+        Layout = new GlyphLayout(font, "You have to fight all the colleges\nto be the next King Of Yorkshire");
+        escLayout = new GlyphLayout(smallFont, "Press Left Click to Continue or Esc to Skip..");
     }
 
     public void handleInput(float deltaTime) {
@@ -59,10 +60,10 @@ public class InitialStorylineScreen implements Screen {
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             switch (++state){
                 case 1:
-                    Layout.setText(font, "And Continue...");
+                    Layout.setText(font, "Defeat them to be victorious\nYou have got 5 minutes");
                     break;
                 case 2:
-                    Layout.setText(font, "The End...");
+                    Layout.setText(font, "Dodge the attacks\nand attack the attackers...");
                     break;
                 default:
                     this.dispose();
@@ -86,7 +87,6 @@ public class InitialStorylineScreen implements Screen {
         game.batch.setProjectionMatrix(gameCam.combined);
 
         game.batch.begin();
-//        font.getData().setScale(1f);
         font.draw(game.batch, Layout, -Layout.width/2, -0);
         smallFont.draw(game.batch, escLayout, -escLayout.width/2, -gameCam.viewportHeight/3);
         game.batch.end();

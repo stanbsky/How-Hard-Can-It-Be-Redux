@@ -86,4 +86,8 @@ public class Crosshair extends Sprite {
     public static Vector2 getCrosshair() {
         return points;
     }
+
+    public static Vector2 getDireciton(Vector2 body, Vector2 target) {
+        return new Vector2(body.x - target.x, body.y - target.y).nor().scl(-1);
+    }
 }

@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
 
-public class Monsters extends Sprite {
+public class Monster extends Sprite {
 
     public World world;
     private Animation <TextureRegion> wormIdle;
@@ -22,7 +22,7 @@ public class Monsters extends Sprite {
 
     float stateTime;
 
-    public Monsters(World world, MainGameScreen screen, float spawn_x, float spawn_y, float spawn_radius) {
+    public Monster(World world, MainGameScreen screen, float spawn_x, float spawn_y, float spawn_radius) {
         super(MainGameScreen.resources.getTexture("worm"));
         this.world = world;
 

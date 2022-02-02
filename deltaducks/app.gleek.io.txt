@@ -1,0 +1,105 @@
+// Sample UML Class Diagram
+// ** Check Right-Click Menu for more features **
+
+// Simple classes
+// Use the tab button for attributes
+// Write brackets () to create a method
+
+GdxGame
+	SpriteBatch Batch
+
+Screens 
+
+
+Scenes
+
+Hud
+	worldTimer
+	score
+	gold
+	health
+	draw()
+	update()
+	modifyScore()
+	modifyGold()
+	modifyHealth()
+
+
+GameScreen
+	OrthographicCamera
+	Viewport
+	Hud
+	TiledMap
+	World
+	MyContactListener
+	ACCELERATION
+	MAX_VELOCITY
+	TextureAtlas
+	handleInput()
+	handleTime()
+	update()
+	render()
+
+ListOfBullets
+	spawnBullet()
+	update()
+	draw()
+ListOfColleges
+	spawnColleges()
+	update()
+	draw()
+ListOfPirates
+	spawnPirates()
+	update()
+	draw()
+
+Sprites
+
+Bullet 
+	Box2D DynamicBody
+	linearVelocity
+	linearDamping
+	BULLET_SPEED
+	BULLET_SPAWN_DURATION
+	Animation
+
+College
+	Box2D StaticBody
+	health
+	Animation
+
+Pirate
+	Box2D DynamicBody
+	Animation
+
+Player
+	Box2D DynamicBody
+	State
+	linearVelocity
+	linearDamping
+	Animation
+	update()
+	getFrame()
+
+
+ContactListener
+	beginContact()
+	endContact()
+
+GdxGame --> Scenes
+GdxGame --> Screens
+GdxGame --> Sprites
+
+
+Screens --> GameScreen
+
+Scenes --> Hud
+
+GameScreen --> ListOfBullets 
+GameScreen --> ListOfColleges
+GameScreen --> ListOfPirates
+
+Sprites --> Player --> ContactListener
+Sprites --> Bullet --> ContactListener
+Sprites --> College --> ContactListener
+Sprites --> Pirate --> ContactListener

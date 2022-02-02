@@ -3,6 +3,7 @@ package com.ducks.scenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -35,15 +36,17 @@ public class Subtitle implements Disposable {
         table.top();
         table.setFillParent(true);
 
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/boy.ttf"));
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/OpenSans-Regular.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 20;
-        subtitleLabel = new Label(subtitle, new Label.LabelStyle(generator.generateFont(parameter), Color.BLACK));
+        parameter.size = 40;
+
+        BitmapFont font = generator.generateFont(parameter);
+        font.getData().setScale(.5f);
+        subtitleLabel = new Label(subtitle, new Label.LabelStyle( font , Color.BLACK));
 
 
         table.add(subtitleLabel).expandX().padTop(DeltaDucks.VIRTUAL_HEIGHT * .9f);
-//        table.row();
-//        table.add(timeLabel).expandX();
+
 
         stage.addActor(table);
 
@@ -62,7 +65,7 @@ public class Subtitle implements Disposable {
                 subtitleLabel.setText(subtitle);
                 break;
             case 1:
-                subtitle = "use mouse to move around the cursor";
+                subtitle = "use mouse to move the cursor";
                 subtitleLabel.setText(subtitle);
                 break;
             case 2:
@@ -70,26 +73,43 @@ public class Subtitle implements Disposable {
                 subtitleLabel.setText(subtitle);
                 break;
             case 3:
-                subtitle = "fight the colleges to win";
+                subtitle = "your health and position (blue dot) is visible on bottom left side";
                 subtitleLabel.setText(subtitle);
                 break;
-            case 4:
-                subtitle = "Good Luck!";
+            case 5:
+                subtitle = "fight the colleges (red dot on bottom left mini map) to win";
+                subtitleLabel.setText(subtitle);
+                break;
+            case 6:
+                subtitle = "you earn xp and money by dodging attacks and defeating the attackers";
+                subtitleLabel.setText(subtitle);
+                break;
+            case 7:
+                subtitle = "game ends once you defeat all 3 colleges or your time runs out or you die";
+                subtitleLabel.setText(subtitle);
+                break;
+            case 8:
+                subtitle = "Good Luck! (You Might Need One)";
+                subtitleLabel.setText(subtitle);
+                break;
+            case 9:
+                subtitle = "";
                 subtitleLabel.setText(subtitle);
                 break;
             default:
-                subtitle = "";
                 subtitleLabel.setText(subtitle);
                 break;
         }
     }
 
-    public void setSubtitle(String subtitle) {
+    public void setSubtitle(String sub) {
+        this.subtitle = sub;
         subtitleLabel.setText(subtitle);
     }
 
     public void removeSubtitle() {
-        subtitleLabel.setText("");
+        this.subtitle = "";
+        subtitleLabel.setText(subtitle);
     }
 
     @Override
