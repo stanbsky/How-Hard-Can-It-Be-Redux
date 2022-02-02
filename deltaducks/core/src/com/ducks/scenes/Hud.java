@@ -110,6 +110,14 @@ public class Hud implements Disposable {
         goldLabel.setText(String.format("%06d", gold));
     }
 
+    public static int getGold(){
+        return gold;
+    }
+
+    public static int getScore(){
+        return score;
+    }
+
     public static float getHealth() {
         return health;
     }

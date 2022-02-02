@@ -163,14 +163,14 @@ public class MainGameScreen implements Screen {
     public void handleTime(float deltaTime) {
         if(hud.getTimer()<0.1f){
 //            Gdx.app.exit();
-//            this.dispose();
-            game.setScreen(new FinalStorylineScreen(this.game));
+            this.dispose();
+            game.setScreen(new FinalStorylineScreen(this.game, "Lost"));
         }
         if(hud.getHealth()<=0f) {
-            game.setScreen(new FinalStorylineScreen(this.game));
+            game.setScreen(new FinalStorylineScreen(this.game, "Lost"));
         }
         if(colleges.getNumbersOfColleges()<=0) {
-            game.setScreen(new FinalStorylineScreen(this.game));
+            game.setScreen(new FinalStorylineScreen(this.game, "Won"));
         }
     }
 
@@ -263,9 +263,9 @@ public class MainGameScreen implements Screen {
     public void dispose() {
         map.dispose();
         renderer.dispose();
-        world.dispose();
-        b2dr.dispose();
-        hud.dispose();
+//        world.dispose();
+//        b2dr.dispose();
+//        hud.dispose();
         radar.dispose();
     }
 }

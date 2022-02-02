@@ -85,7 +85,7 @@ public class Subtitle implements Disposable {
                 subtitleLabel.setText(subtitle);
                 break;
             case 7:
-                subtitle = "game ends once you defeat all 3 colleges or your time runs out";
+                subtitle = "game ends once you defeat all 3 colleges or your time runs out or you die";
                 subtitleLabel.setText(subtitle);
                 break;
             case 8:
