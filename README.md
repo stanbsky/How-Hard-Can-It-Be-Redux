@@ -9,25 +9,6 @@
 
 Note: This will change and vary as we add more dependencies or libraries in our project.
 
-## Setting Up Repo
-
--   `git clone https://github.com/harshonyou/eng1-team8.git`
--   Current directory structure looks like this. Where `deltaducks` have got Maven Java Project and `docs` have got static webpages. (It is subject to change)
-
-```
-├─── deltaducks
-│   └── src
-│       ├── main
-│       └── test
-└─── docs
-    ├── scripts
-    └── styles
-```
-
--   Using VS-code you can compile and run the whole project using `Java Projects` tab on the bottom-left using `play` button over `deltaducks`.
-    
-    ![vscode-snipit](https://i.ibb.co/kq8qFfk/Screenshot-2021-11-18-190003.png)
--   It should succesfully compile and print `Hello World!`
 
 ### Contributors
 
