@@ -15,16 +15,16 @@ import com.ducks.sprites.Cannon;
 import com.ducks.sprites.College;
 import com.ducks.sprites.Monster;
 
+/**
+ * Collective Colleges Class for Box2D Bodies and Sprites
+ */
 public class ListOfColleges {
 
     private World world;
     private MainGameScreen screen;
 
     public Array<College> collegeBodies;
-    private final int NUMBER_OF_MONSTERS = 1;
 
-    private final int SPAWN_X = 500;
-    private final int SPAWN_Y = 500;
     private final float SPAWN_RADIUS = 10f * 4f * College.COLLEGE_HEIGHT / DeltaDucks.PIXEL_PER_METER;
 
     ListOfCannons cannons;
@@ -33,6 +33,13 @@ public class ListOfColleges {
 
     private int collegesAlive = 3;
 
+    /**
+     * Constructor
+     * @param world Box2D world
+     * @param screen Game Screen
+     * @param cannons Collective Cannons class to spawn and fire them on player's direction
+     * @param map Tiled Map
+     */
     public ListOfColleges(World world, MainGameScreen screen, ListOfCannons cannons, TiledMap map) {
         this.world = world;
         this.screen = screen;
@@ -41,6 +48,10 @@ public class ListOfColleges {
         spawnColleges(map);
     }
 
+    /**
+     * Spawn every colleges corresponding to Tiled Map locations
+     * @param map
+     */
     public void spawnColleges(TiledMap map) {
         BodyDef bdef = new BodyDef();
         int colleState = 0;
@@ -62,6 +73,10 @@ public class ListOfColleges {
         }
     }
 
+    /**
+     * Update all colleges every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         Array<College> collegeBodiesToRemove = new Array<College>();
         for( College college : collegeBodies) {
@@ -74,12 +89,20 @@ public class ListOfColleges {
         collegeBodies.removeAll(collegeBodiesToRemove, true);
     }
 
+    /**
+     * Draw all colleges every delta time interval
+     * @param batch to draw on the screen
+     */
     public void draw(SpriteBatch batch) {
         for( College college : collegeBodies) {
             college.extendedDraw(batch);
         }
     }
 
+    /**
+     * Get coordinates of every college on the map
+     * @return Array of coordinates
+     */
     public Array<Vector2> getCoordinates() {
         Array <Vector2> coordinates = new Array <Vector2>();
         for( College college : collegeBodies) {
@@ -88,6 +111,10 @@ public class ListOfColleges {
         return coordinates;
     }
 
+    /**
+     * Get numbers of colleges alive (or not destoryed)
+     * @return int
+     */
     public int getNumbersOfColleges() {
         return collegesAlive;
     }

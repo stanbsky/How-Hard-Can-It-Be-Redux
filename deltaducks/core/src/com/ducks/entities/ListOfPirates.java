@@ -12,6 +12,9 @@ import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
 import com.ducks.sprites.Pirate;
 
+/***
+ * Collective Pirates Class for Box2D Bodies and Sprites
+ */
 public class ListOfPirates {
 
     private World world;
@@ -22,6 +25,12 @@ public class ListOfPirates {
 
     private final float RADIUS = 4f * Pirate.PIXEL_PIRATE_HEIGHT / DeltaDucks.PIXEL_PER_METER;
 
+    /**
+     *
+     * @param world Box2D world
+     * @param screen Game Screen
+     * @param map Tiled Map
+     */
     public ListOfPirates(World world, MainGameScreen screen, TiledMap map) {
         this.world = world;
         this.screen = screen;
@@ -29,6 +38,10 @@ public class ListOfPirates {
         spawnPirates(map);
     }
 
+    /**
+     * Spawn pirates ships (30% chance for each) corresponding to Tiled Map locations
+     * @param map
+     */
     public void spawnPirates(TiledMap map) {
         BodyDef bdef = new BodyDef();
 
@@ -41,6 +54,10 @@ public class ListOfPirates {
         }
     }
 
+    /**
+     * Update all pirates ships every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         Array<Pirate> piratesBodiesToRemove = new Array<Pirate>();
         for( Pirate pirate : pirateBodies ) {
@@ -54,6 +71,10 @@ public class ListOfPirates {
         pirateBodies.removeAll(piratesBodiesToRemove, true);
     }
 
+    /**
+     * Draw all pirates ships every delta time interval
+     * @param batch to draw on the screen
+     */
     public void draw(SpriteBatch batch) {
         for( Pirate pirate : pirateBodies) {
             pirate.draw(batch);

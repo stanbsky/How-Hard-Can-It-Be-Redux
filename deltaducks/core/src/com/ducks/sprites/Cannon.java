@@ -3,13 +3,15 @@ package com.ducks.sprites;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.scenes.Hud;
 import com.ducks.screens.MainGameScreen;
 
+/***
+ * Cannon Class for Box2D Body and Sprite
+ */
 public class Cannon extends Sprite {
     private World world;
     private Ship player;
@@ -25,11 +27,17 @@ public class Cannon extends Sprite {
 
     float stateTime;
     float spawnTimer;
-    public Body bulletBody;
+    public Body cannonBody;
 
     private final float BULLET_SPEED = 130f;
     private final float BULLET_SPAWN_DURATION = 2f;
 
+    /**
+     * Constructor
+     * @param world Box2D world
+     * @param college Box2D object of college who is attacking
+     * @param player Box2D object of player
+     */
     public Cannon(World world, College college, Ship player) {
         super(MainGameScreen.resources.getTexture("mehnat"));
         this.world = world;
@@ -43,24 +51,31 @@ public class Cannon extends Sprite {
         setBounds(college.collegeBody.getPosition().x - college.collegeBody.getFixtureList().get(0).getShape().getRadius() /2, college.collegeBody.getPosition().y - college.collegeBody.getFixtureList().get(0).getShape().getRadius(), BULLET_WIDTH / DeltaDucks.PIXEL_PER_METER, BULLET_HEIGHT / DeltaDucks.PIXEL_PER_METER);
         setRegion(cannonIdle.getKeyFrame(stateTime, true));
         defineCannon();
-        bulletBody.applyForceToCenter(Crosshair.getDireciton(college.collegeBody.getPosition(), player.b2body.getPosition()).scl(BULLET_SPEED), true);
+        cannonBody.applyForceToCenter(Crosshair.getDireciton(college.collegeBody.getPosition(), player.b2body.getPosition()).scl(BULLET_SPEED), true);
     }
 
+    /**
+     * Update the cannon every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         stateTime += deltaTime;
         spawnTimer += deltaTime;
-        setPosition(bulletBody.getPosition().x - getWidth()/2, bulletBody.getPosition().y - getHeight()/2);
+        setPosition(cannonBody.getPosition().x - getWidth()/2, cannonBody.getPosition().y - getHeight()/2);
         if(spawnTimer > BULLET_SPAWN_DURATION) {
-            bulletBody.getFixtureList().get(0).setUserData("Cannon Dead");
+            cannonBody.getFixtureList().get(0).setUserData("Cannon Dead");
         }
     }
 
+    /**
+     * Define the Box2D body and fixture and map it onto the Box2D world
+     */
     public void defineCannon() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(getX() + getWidth(), getY() + getHeight());
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.linearDamping = .7f;
-        bulletBody = world.createBody(bdef);
+        cannonBody = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
@@ -70,11 +85,14 @@ public class Cannon extends Sprite {
         fdef.filter.categoryBits = DeltaDucks.BIT_CANNONS;
         fdef.filter.maskBits = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PLAYER; // BIT_BOUNDARIES won't work here
         fdef.restitution = 0.2f;
-        bulletBody.createFixture(fdef).setUserData("Cannon Alive");
+        cannonBody.createFixture(fdef).setUserData("Cannon Alive");
     }
 
+    /**
+     * Dispose the unwanted cannon and gain player 10 EXP
+     */
     public void dispose() {
-        world.destroyBody(bulletBody);
+        world.destroyBody(cannonBody);
         Hud.addScore(10);
     }
 }

@@ -4,7 +4,9 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ducks.screens.MainMenuScreen;
 
-// Game Class with global constants
+/***
+ * Game Class with global constants
+ */
 public class DeltaDucks extends Game {
 
 	// Ratio of Game Screen
@@ -33,7 +35,9 @@ public class DeltaDucks extends Game {
 	// Batch to draw Game
 	public SpriteBatch batch;
 
-	// It decides which screen to run first
+	/***
+	 * Decide which screen to run first
+	 */
 	@Override
 	public void create () {
 		batch = new SpriteBatch();

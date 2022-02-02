@@ -10,6 +10,9 @@ import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
 
+/***
+ * Bullet Class for Box2D Body and Sprite
+ */
 public class Bullet extends Sprite {
     private World world;
     private Ship player;
@@ -30,6 +33,13 @@ public class Bullet extends Sprite {
     private final float BULLET_SPAWN_DURATION = 2f;
     OrthographicCamera gameCam;
 
+    /**
+     * Constructor
+     * @param world Box2D world
+     * @param player Box2D object of player
+     * @param crosshair Sprite of crosshair
+     * @param gameCam OrthographicCamera
+     */
     public Bullet(World world, Ship player, Crosshair crosshair, OrthographicCamera gameCam) {
         super(MainGameScreen.resources.getTexture("mehnat"));
         this.world = world;
@@ -47,6 +57,10 @@ public class Bullet extends Sprite {
         bulletBody.applyForceToCenter(crosshair.getCrosshair().scl(BULLET_SPEED), true);
     }
 
+    /**
+     * Update the bullet every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         stateTime += deltaTime;
         spawnTimer += deltaTime;
@@ -59,6 +73,9 @@ public class Bullet extends Sprite {
         }
     }
 
+    /**
+     * Define the Box2D body and fixture and map it onto the Box2D world
+     */
     public void defineBullet() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(player.b2body.getPosition().x, player.b2body.getPosition().y);
@@ -77,7 +94,9 @@ public class Bullet extends Sprite {
         bulletBody.createFixture(fdef).setUserData("Bullet Alive");
     }
 
-
+    /**
+     * Dispose the unwanted bullet
+     */
     public void dispose() {
         world.destroyBody(bulletBody);
     }

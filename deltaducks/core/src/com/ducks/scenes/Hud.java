@@ -14,6 +14,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
 
+/***
+ * HUD for the game
+ */
 public class Hud implements Disposable {
     public Stage stage;
     public Viewport viewport;
@@ -35,6 +38,10 @@ public class Hud implements Disposable {
     private FreeTypeFontGenerator generator;
     private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
 
+    /**
+     * Constructor
+     * @param batch to draw on the screen
+     */
     public Hud(SpriteBatch batch) {
         worldTimer = 300;
         timeCount = 0;
@@ -75,6 +82,10 @@ public class Hud implements Disposable {
         stage.addActor(table);
     }
 
+    /**
+     * Draw the UI and health bar (HUD) every delta time interval
+     * @param batch to draw on the screen
+     */
     public void draw(SpriteBatch batch) {
         batch.setProjectionMatrix(stage.getCamera().combined);
         stage.draw();
@@ -91,6 +102,10 @@ public class Hud implements Disposable {
         batch.end();
     }
 
+    /**
+     * Update the HUD every delta time interval
+     * @param deltaTime
+     */
     public void update(float deltaTime) {
         timeCount += deltaTime;
         if(timeCount >= 1) {
@@ -100,36 +115,66 @@ public class Hud implements Disposable {
         }
     }
 
+    /**
+     * Increase the score with certain value
+     * @param value to add
+     */
     public static void addScore(int value) {
         score += value;
         expLabel.setText(String.format("%06d", score));
     }
 
+    /**
+     * Increase the gold with certain value
+     * @param value to add
+     */
     public static void addGold(int value) {
         gold += value;
         goldLabel.setText(String.format("%06d", gold));
     }
 
+    /**
+     * Get the value of gold
+     * @return gold
+     */
     public static int getGold(){
         return gold;
     }
 
+    /**
+     * Get the value of score
+     * @return score
+     */
     public static int getScore(){
         return score;
     }
 
+    /**
+     * Get the value of health
+     * @return health
+     */
     public static float getHealth() {
         return health;
     }
 
+    /**
+     * Decrease the health (damage)
+     */
     public static void decHealth() {
         health-=.2f;
     }
 
-
+    /**
+     * Get the world time life (clock)
+     * @return time
+     */
     public float getTimer() {
         return worldTimer;
     }
+
+    /**
+     * Dispose the unwanted object
+     */
     @Override
     public void dispose() {
         stage.dispose();

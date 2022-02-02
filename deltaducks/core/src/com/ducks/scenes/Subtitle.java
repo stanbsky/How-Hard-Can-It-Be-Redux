@@ -14,6 +14,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 
+/***
+ * Subtile (Bottom Text) fot the game
+ */
 public class Subtitle implements Disposable {
     public Stage stage;
     public Viewport viewport;
@@ -27,6 +30,10 @@ public class Subtitle implements Disposable {
     private float tolerateTime;
     private int state;
 
+    /**
+     * Constructor
+     * @param batch to draw on the screen
+     */
     public Subtitle(SpriteBatch batch) {
 
         viewport = new FitViewport(DeltaDucks.VIRTUAL_WIDTH, DeltaDucks.VIRTUAL_HEIGHT, new OrthographicCamera());
@@ -53,6 +60,10 @@ public class Subtitle implements Disposable {
         tolerateTime = 5;
     }
 
+    /**
+     * Update the subtitle text corresponding to the time
+     * @param deltaTime
+     */
     public void update(float deltaTime) {
         stateTimer += deltaTime;
         if(stateTimer >= tolerateTime) {
@@ -102,16 +113,26 @@ public class Subtitle implements Disposable {
         }
     }
 
+    /**
+     * Set the subtitle text
+     * @param sub
+     */
     public void setSubtitle(String sub) {
         this.subtitle = sub;
         subtitleLabel.setText(subtitle);
     }
 
+    /**
+     * Remove the subtitle text
+     */
     public void removeSubtitle() {
         this.subtitle = "";
         subtitleLabel.setText(subtitle);
     }
 
+    /**
+     * Dispose the unwanted object
+     */
     @Override
     public void dispose() {
         stage.dispose();

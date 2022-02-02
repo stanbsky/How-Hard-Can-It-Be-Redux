@@ -9,6 +9,9 @@ import com.ducks.sprites.Bullet;
 import com.ducks.sprites.Crosshair;
 import com.ducks.sprites.Ship;
 
+/***
+ * Collective Bullets Class for Box2D Bodies and Sprites
+ */
 public class ListOfBullets {
     private World world;
     private MainGameScreen screen;
@@ -21,6 +24,14 @@ public class ListOfBullets {
     float shootTimer ;
     OrthographicCamera gameCam;
 
+    /**
+     * Constructor
+     * @param world Box2D world
+     * @param screen Game Screen
+     * @param player Box2D object of player
+     * @param crosshair Sprite of crosshair
+     * @param gameCam OrthographicCamera
+     */
     public ListOfBullets(World world, MainGameScreen screen, Ship player, Crosshair crosshair, OrthographicCamera gameCam) {
         this.world = world;
         this.screen = screen;
@@ -30,6 +41,9 @@ public class ListOfBullets {
         bulletBodies = new Array<Bullet>();
     }
 
+    /**
+     * Spawn a bullet
+     */
     public void spawnBullet() {
         if (shootTimer >= SHOOT_WAIT_TIME) {
             shootTimer=0;
@@ -37,6 +51,10 @@ public class ListOfBullets {
         }
     }
 
+    /**
+     * Update all bullets every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         shootTimer += deltaTime;
         Array<Bullet> bulletBodiesToRemove = new Array<Bullet>();
@@ -51,6 +69,10 @@ public class ListOfBullets {
         bulletBodies.removeAll(bulletBodiesToRemove, true);
     }
 
+    /**
+     * Draw all bullets every delta time interval
+     * @param batch to draw on the screen
+     */
     public void draw(SpriteBatch batch) {
         for( Bullet bullet : bulletBodies) {
             bullet.draw(batch);

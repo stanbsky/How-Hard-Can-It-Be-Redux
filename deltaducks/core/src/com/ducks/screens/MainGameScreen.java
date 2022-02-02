@@ -27,9 +27,10 @@ import com.ducks.tools.MyContactListener;
 import com.ducks.sprites.Crosshair;
 import com.ducks.sprites.Ship;
 
+/***
+ * Game Screen
+ */
 public class MainGameScreen implements Screen {
-
-
     DeltaDucks game;
 
     private OrthographicCamera gameCam;
@@ -67,7 +68,10 @@ public class MainGameScreen implements Screen {
     public static Content resources;
     private TextureAtlas atlas;
 
-
+    /**
+     * Constructor
+     * @param game object of DeltaDucks
+     */
     public MainGameScreen(DeltaDucks game) {
         this.game = game;
         resources = new Content();
@@ -97,8 +101,15 @@ public class MainGameScreen implements Screen {
         MainGameScreen.resources.loadTexture("college halifax.png", "college halifax");
     }
 
+    /**
+     * Method to get the texture atlas
+     * @return texture packs
+     */
     public TextureAtlas getAtlas() { return atlas;}
 
+    /**
+     * Initialize once the screen is visible
+     */
     @Override
     public void show() {
         gameCam = new OrthographicCamera();
@@ -145,6 +156,10 @@ public class MainGameScreen implements Screen {
         tutorial = new Tutorial(gameCam, player);
     }
 
+    /**
+     * Handle any Input
+     * @param deltaTime of the game
+     */
     public void handleInput(float deltaTime) {
         if (Gdx.input.isKeyPressed(Input.Keys.W) && player.b2body.getLinearVelocity().y <= MAX_VELOCITY)
             player.b2body.applyForce(new Vector2(0, ACCELERATION), player.b2body.getWorldCenter(), true);
@@ -160,6 +175,10 @@ public class MainGameScreen implements Screen {
         }
     }
 
+    /**
+     * Handle any changes to the game corresponding to the interval of time
+     * @param deltaTime of the game
+     */
     public void handleTime(float deltaTime) {
         if(hud.getTimer()<0.1f){
 //            Gdx.app.exit();
@@ -174,6 +193,10 @@ public class MainGameScreen implements Screen {
         }
     }
 
+    /**
+     * Update the window every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         handleInput(deltaTime);
         handleTime(deltaTime);
@@ -203,7 +226,10 @@ public class MainGameScreen implements Screen {
         renderer.setView(gameCam);
     }
 
-
+    /**
+     * Render the window
+     * @param delta time of the game
+     */
     @Override
     public void render(float delta) {
         update(delta);
@@ -239,6 +265,11 @@ public class MainGameScreen implements Screen {
 
     }
 
+    /**
+     * Resize the window
+     * @param width of new window
+     * @param height of new window
+     */
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
@@ -259,6 +290,9 @@ public class MainGameScreen implements Screen {
 
     }
 
+    /**
+     * Dispose the unwanted objects
+     */
     @Override
     public void dispose() {
         map.dispose();

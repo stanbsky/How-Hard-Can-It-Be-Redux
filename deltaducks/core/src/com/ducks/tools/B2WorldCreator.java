@@ -7,18 +7,20 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
 
+/***
+ * Extract useful information from the tilemap and render Box2d body on the Box2d world
+ */
 public class B2WorldCreator {
+    /**
+     * Constructor which maps the information onto Box2d world
+     * @param world Box2D world
+     * @param map tiled map of the game
+     */
     public B2WorldCreator(World world, TiledMap map) {
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
-
-        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            bdef.type = BodyDef.BodyType.StaticBody;
-            System.out.println((rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE / DeltaDucks.PIXEL_PER_METER + " " + (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE / DeltaDucks.PIXEL_PER_METER);
-        }
 
         // Ground
         for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {

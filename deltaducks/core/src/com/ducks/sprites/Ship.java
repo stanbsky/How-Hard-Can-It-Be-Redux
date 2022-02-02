@@ -11,6 +11,9 @@ import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
 
+/***
+ * Ship (or Player) Class for Box2D Body and Sprite
+ */
 public class Ship extends Sprite {
     public enum State {STANDING, MOVING, NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST};
     public State currentState;
@@ -62,6 +65,11 @@ public class Ship extends Sprite {
     private final int FIRST_INDEX = 0;
     private final int LAST_INDEX = 7;
 
+    /**
+     * Constructor
+     * @param world Box2D world
+     * @param screen Game Screen
+     */
     public Ship(World world, MainGameScreen screen) {
 //        super(screen.getAtlas().findRegion("boat"));
         super(MainGameScreen.resources.getTexture("boat"));
@@ -157,6 +165,10 @@ public class Ship extends Sprite {
         setRegion(shipStand);
     }
 
+    /**
+     * Update the player ship every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         stateTime += deltaTime;
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
@@ -164,6 +176,11 @@ public class Ship extends Sprite {
 //        setRegion(shipStand);
     }
 
+    /**
+     * Get the current animation of the ship corresponding to the direction of its movement
+     * @param deltaTime of the game
+     * @return the frame animation
+     */
     public TextureRegion getFrame(float deltaTime) {
         currentState = getState();
 //        System.out.println(currentState);
@@ -310,6 +327,10 @@ public class Ship extends Sprite {
         return region;
     }
 
+    /**
+     * Get the direction of the ship corresponding to its movement
+     * @return direction
+     */
     public State getState() {
         if (Gdx.input.isKeyPressed(Input.Keys.D))
             return State.EAST;
@@ -323,6 +344,9 @@ public class Ship extends Sprite {
             return State.STANDING;
     }
 
+    /**
+     * Define the Box2D body and fixture and map it onto the Box2D world
+     */
     public void defineShip() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(SHIP_SPAWN_X / DeltaDucks.PIXEL_PER_METER, SHIP_SPAWN_Y / DeltaDucks.PIXEL_PER_METER);

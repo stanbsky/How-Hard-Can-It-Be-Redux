@@ -11,6 +11,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 
+/***
+ * Main Menu Screen
+ */
 public class MainMenuScreen implements Screen {
 
     private DeltaDucks game;
@@ -32,10 +35,17 @@ public class MainMenuScreen implements Screen {
     private Texture playButtonActive, playButtonInactive;
     private Texture exitButtonActive, exitButtonInactive;
 
+    /**
+     * Constructor
+     * @param game object of DeltaDucks
+     */
     public MainMenuScreen(DeltaDucks game) {
         this.game = game;
     }
 
+    /**
+     * Initialize once the screen is visible
+     */
     @Override
     public void show() {
         playButtonActive = new Texture("main_menu/play_button_active.png");
@@ -48,6 +58,10 @@ public class MainMenuScreen implements Screen {
         gamePort = new FitViewport(DeltaDucks.WIDTH, DeltaDucks.HEIGHT, gameCam);
     }
 
+    /**
+     * Handle any Input
+     * @param deltaTime of the game
+     */
     public void handleInput(float deltaTime) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             this.dispose();
@@ -60,10 +74,18 @@ public class MainMenuScreen implements Screen {
 
     }
 
+    /**
+     * Update the window every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         handleInput(deltaTime);
     }
 
+    /**
+     * Render the window
+     * @param delta time of the game
+     */
     @Override
     public void render(float delta) {
         update(delta);
@@ -106,6 +128,11 @@ public class MainMenuScreen implements Screen {
         game.batch.end();
     }
 
+    /**
+     * Resize the window
+     * @param width
+     * @param height
+     */
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);

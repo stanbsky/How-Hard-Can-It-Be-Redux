@@ -9,6 +9,9 @@ import com.ducks.DeltaDucks;
 import com.ducks.scenes.Hud;
 import com.ducks.screens.MainGameScreen;
 
+/***
+ * Pirate Class for Box2D Body and Sprite
+ */
 public class Pirate extends Sprite {
 
     public World world;
@@ -24,6 +27,14 @@ public class Pirate extends Sprite {
     private float stateTime;
     public Body pirateBody;
 
+    /**
+     * Constructor
+     * @param world Box2D world
+     * @param screen Game Screen
+     * @param spawn_x X coordinate of the pirate
+     * @param spawn_y Y coordinate of the pirate
+     * @param radius Radius of the pirate Box2D body
+     */
     public Pirate(World world, MainGameScreen screen, float spawn_x, float spawn_y, float radius) {
         super(MainGameScreen.resources.getTexture("pirate"));
         this.world = world;
@@ -42,12 +53,22 @@ public class Pirate extends Sprite {
         setRegion(pirateIdle.getKeyFrame(stateTime, true));
     }
 
+    /**
+     * Update the bullet every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         stateTime += deltaTime;
         setPosition(pirateBody.getPosition().x - getWidth() / 2, pirateBody.getPosition().y - getHeight() / 2);
         setRegion(pirateIdle.getKeyFrame(stateTime, true));
     }
 
+    /**
+     * Define the Box2D body and fixture and map it onto the Box2D world
+     * @param x coordinate of Box2D body
+     * @param y coordinate of Box2D body
+     * @param radius radius of Box2D body
+     */
     public void definePirates(float x, float y, float radius) {
         BodyDef bdef = new BodyDef();
         bdef.position.set(x / DeltaDucks.PIXEL_PER_METER, y / DeltaDucks.PIXEL_PER_METER);
@@ -66,6 +87,9 @@ public class Pirate extends Sprite {
         pirateBody.createFixture(fdef).setUserData("Pirate");
     }
 
+    /**
+     * Dispose the destroyed pirate ship and gain gold and EXP
+     */
     public void dispose() {
         world.destroyBody(pirateBody);
         Hud.addGold(100);

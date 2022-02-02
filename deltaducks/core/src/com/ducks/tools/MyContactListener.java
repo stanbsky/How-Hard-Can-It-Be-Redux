@@ -7,16 +7,28 @@ import com.ducks.scenes.Hud;
 import com.ducks.scenes.Subtitle;
 import com.ducks.sprites.Ship;
 
+/***
+ * Listen to any collision in Box2D world among any 2 Box2D Collisive Body
+ */
 public class MyContactListener implements ContactListener {
 
     Ship player;
     Subtitle subtitle;
 
+    /**
+     * Constructor
+     * @param player Box2D body
+     * @param subtitle bottom text
+     */
     public MyContactListener(Ship player, Subtitle subtitle) {
         this.player = player;
         this.subtitle = subtitle;
     }
 
+    /**
+     * Triggers when two Box2D body collides
+     * @param contact Object of bodies in contact
+     */
     @Override
     public void beginContact(Contact contact) {
         Fixture fa = contact.getFixtureA();
@@ -73,6 +85,10 @@ public class MyContactListener implements ContactListener {
 
     }
 
+    /**
+     * Triggers after two Box2D body collides
+     * @param contact Object of bodies who was contact
+     */
     @Override
     public void endContact(Contact contact) {
         Fixture fa = contact.getFixtureA();
@@ -99,6 +115,14 @@ public class MyContactListener implements ContactListener {
 
     }
 
+    /**
+     *  Check for collision
+     * @param fa Fixture of body A
+     * @param fb Fixture of body A
+     * @param A UserData of body A
+     * @param B UserData of body B
+     * @return true if any two body corresponding to UserData collides
+     */
     public boolean checkCollision(Fixture fa, Fixture fb, String A, String B) {
         return  ( (fa.getUserData() != null && fa.getUserData().equals(A))
                 || (fb.getUserData() != null && fb.getUserData().equals(A)) )
@@ -107,6 +131,12 @@ public class MyContactListener implements ContactListener {
                 || (fb.getUserData() != null && fb.getUserData().equals(B)) );
     }
 
+    /**
+     * Check for presence of body
+     * @param f Fixture of a body
+     * @param target UserData of a body
+     * @return true of body Fixture have got same UserData
+     */
     public boolean checkFixture(Fixture f, String target) {
         return f.getUserData() != null && f.getUserData().equals(target);
     }

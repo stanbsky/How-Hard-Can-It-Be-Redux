@@ -12,6 +12,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 
+/***
+ * Initial Story Line
+ */
 public class InitialStorylineScreen implements Screen {
     private DeltaDucks game;
 
@@ -29,10 +32,17 @@ public class InitialStorylineScreen implements Screen {
 
     private int state;
 
+    /**
+     * Constructor
+     * @param game object of DeltaDucks
+     */
     public InitialStorylineScreen(DeltaDucks game) {
         this.game = game;
     }
 
+    /**
+     * Initialize once the screen is visible
+     */
     @Override
     public void show() {
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/boy.ttf"));
@@ -52,6 +62,10 @@ public class InitialStorylineScreen implements Screen {
         escLayout = new GlyphLayout(smallFont, "Press Left Click to Continue or Esc to Skip..");
     }
 
+    /**
+     * Handle any Input
+     * @param deltaTime of the game
+     */
     public void handleInput(float deltaTime) {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             this.dispose();
@@ -74,10 +88,18 @@ public class InitialStorylineScreen implements Screen {
 
     }
 
+    /**
+     * Update the window every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         handleInput(deltaTime);
     }
 
+    /**
+     * Render the window
+     * @param delta time of the game
+     */
     @Override
     public void render(float delta) {
         update(delta);
@@ -92,6 +114,11 @@ public class InitialStorylineScreen implements Screen {
         game.batch.end();
     }
 
+    /**
+     * Resize the window
+     * @param width of new window
+     * @param height of new window
+     */
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);

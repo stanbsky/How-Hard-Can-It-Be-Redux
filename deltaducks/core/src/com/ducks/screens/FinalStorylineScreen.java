@@ -13,6 +13,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.scenes.Hud;
 
+/***
+ * Final Story Line
+ */
 public class FinalStorylineScreen implements Screen {
     private DeltaDucks game;
 
@@ -32,11 +35,19 @@ public class FinalStorylineScreen implements Screen {
     private float stateTimer;
     private String status;
 
+    /**
+     * Constructor
+     * @param game object of DeltaDucks
+     * @param status of Victory (or Defeat)
+     */
     public FinalStorylineScreen(DeltaDucks game, String status) {
         this.game = game;
         this.status = status;
     }
 
+    /**
+     * Initialize once the screen is visible
+     */
     @Override
     public void show() {
         gameCam = new OrthographicCamera();
@@ -57,11 +68,20 @@ public class FinalStorylineScreen implements Screen {
         escLayout = new GlyphLayout(smallFont, "Press Esc to Exit..");
     }
 
+    /**
+     * Handle any Input
+     * @param deltaTime of the game
+     */
     public void handleInput(float deltaTime) {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             Gdx.app.exit();
         }
     }
+
+    /**
+     * Update the window every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         handleInput(deltaTime);
         stateTimer += deltaTime;
@@ -85,6 +105,10 @@ public class FinalStorylineScreen implements Screen {
         }
     }
 
+    /**
+     *  the window
+     * @param delta time of the game
+     */
     @Override
     public void render(float delta) {
         update(delta);
@@ -99,6 +123,11 @@ public class FinalStorylineScreen implements Screen {
         game.batch.end();
     }
 
+    /**
+     * Resize the window
+     * @param width of new window
+     * @param height of new window
+     */
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);

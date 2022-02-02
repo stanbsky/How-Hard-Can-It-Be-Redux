@@ -10,6 +10,9 @@ import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
 import com.ducks.sprites.Ship;
 
+/***
+ * Tutorial class for the game
+ */
 public class Tutorial {
     private OrthographicCamera gameCam;
 
@@ -32,6 +35,11 @@ public class Tutorial {
 
     private GlyphLayout Layout;
 
+    /**
+     * Constructor
+     * @param gameCam OrthographicCamera
+     * @param player Box2d player object
+     */
     public Tutorial(OrthographicCamera gameCam,  Ship player) {
         this.gameCam = gameCam;
         this.player = player;
@@ -54,10 +62,18 @@ public class Tutorial {
         Layout = new GlyphLayout(font, "Start\nHere");
     }
 
+    /**
+     * Update the tutorial every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         stateTime += deltaTime;
     }
 
+    /**
+     * Draw the tutorial every delta time interval
+     * @param batch to draw on the screen
+     */
     public void draw(SpriteBatch batch) {
         batch.draw(arrow.getKeyFrame(stateTime, true), SPAWN_X, SPAWN_Y, ARROW_WIDTH / DeltaDucks.PIXEL_PER_METER, ARROW_HEIGHT / DeltaDucks.PIXEL_PER_METER);
 

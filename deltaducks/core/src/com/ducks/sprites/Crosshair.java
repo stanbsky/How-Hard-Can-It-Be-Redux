@@ -15,6 +15,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
 
+/**
+ * Crosshair Class for Box2D Body and Sprite
+ */
 public class Crosshair extends Sprite {
     private World world;
     private Ship player;
@@ -42,6 +45,15 @@ public class Crosshair extends Sprite {
     private float angle = 45f;
 
     Viewport gamePort;
+
+    /**
+     * Constructor
+     * @param world Box2D world
+     * @param screen Game Screen
+     * @param player Box2D object of player
+     * @param gameCam OrthographicCamera
+     * @param gamePort Viewport
+     */
     public Crosshair(World world, MainGameScreen screen, Ship player, OrthographicCamera gameCam, Viewport gamePort) {
         super(MainGameScreen.resources.getTexture("mehnat"));
         this.world = world;
@@ -62,6 +74,10 @@ public class Crosshair extends Sprite {
 //        Gdx.graphics.setCursor(Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("bunny.png")), (int)getWidth()/2, (int)getHeight()/2));
     }
 
+    /**
+     * Update the crosshair every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         stateTime += deltaTime;
 
@@ -75,18 +91,36 @@ public class Crosshair extends Sprite {
 
     }
 
+    /**
+     * get X coordinates of the crosshair
+     * @return float
+     */
     public static float getCrosshairX() {
         return points.x;
     }
 
+    /**
+     * get Y coordinates of the crosshair
+     * @return float
+     */
     public static float getCrosshairY() {
         return points.y;
     }
 
+    /**
+     * get X and Y coordinates of the crosshair
+     * @return Vector2
+     */
     public static Vector2 getCrosshair() {
         return points;
     }
 
+    /**
+     * get Unit (Directional) Vector between two Vectors (points)
+     * @param body vector (measured from)
+     * @param target vector (measured to)
+     * @return Vector2
+     */
     public static Vector2 getDireciton(Vector2 body, Vector2 target) {
         return new Vector2(body.x - target.x, body.y - target.y).nor().scl(-1);
     }

@@ -12,10 +12,11 @@ import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.entities.ListOfCannons;
 import com.ducks.scenes.Hud;
-import com.ducks.scenes.Subtitle;
 import com.ducks.screens.MainGameScreen;
-import sun.tools.jar.Main;
 
+/***
+ * College Class for Box2D Body and Sprite
+ */
 public class College extends Sprite {
     public World world;
 
@@ -41,6 +42,16 @@ public class College extends Sprite {
     public float health;
     Texture healthBar;
 
+    /**
+     * Constructor
+     * @param world Box2D world
+     * @param screen Game Screen
+     * @param spawn_x X coordinate of the college
+     * @param spawn_y Y coordinate of the college
+     * @param spawn_radius Radius of the college Box2D body
+     * @param collegeName Name of the College
+     * @param cannons Cannons class to spawn and add Cannon round
+     */
     public College(World world, MainGameScreen screen, float spawn_x, float spawn_y, float spawn_radius, String collegeName, ListOfCannons cannons) {
         super(MainGameScreen.resources.getTexture(collegeName));
         this.world = world;
@@ -67,6 +78,10 @@ public class College extends Sprite {
         setRegion(collegeIdle.getKeyFrame(stateTime, true));
     }
 
+    /**
+     * Update the bullet every delta time interval
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         stateTime += deltaTime;
         if(health <= 0f) {
@@ -75,7 +90,7 @@ public class College extends Sprite {
         } else {
             setRegion(collegeIdle.getKeyFrame(stateTime, true));
             if(collegeBody.getFixtureList().get(1).getUserData().toString().contains("Attack")) {
-                cannons.spawnBullet(this);
+                cannons.spawnCannon(this);
             }
             if(collegeBody.getFixtureList().get(0).getUserData().toString().contains("Damage")) {
                 collegeBody.getFixtureList().get(0).setUserData("College");
@@ -84,6 +99,10 @@ public class College extends Sprite {
         }
     }
 
+    /**
+     * draw the sprite of college and health bar on the game screen
+     * @param batch to draw on the screen
+     */
     public void extendedDraw(SpriteBatch batch) {
         this.draw(batch);
         if(health >= 0f) {
@@ -98,6 +117,12 @@ public class College extends Sprite {
         }
     }
 
+    /**
+     * Define the Box2D body and fixture and map it onto the Box2D world
+     * @param x coordinate of Box2D body
+     * @param y coordinate of Box2D body
+     * @param radius radius of Box2D body
+     */
     public void defineCollege(float x, float y, float radius) {
         BodyDef bdef = new BodyDef();
         bdef.position.set(x / DeltaDucks.PIXEL_PER_METER, y / DeltaDucks.PIXEL_PER_METER);
@@ -124,6 +149,9 @@ public class College extends Sprite {
         collegeBody.createFixture(fdef).setUserData("College Sensor");
     }
 
+    /**
+     * Gain gold and EXP if colleges get destroyed
+     */
     public void dispose() {
         Hud.addGold(1000);
         Hud.addScore(10000);
