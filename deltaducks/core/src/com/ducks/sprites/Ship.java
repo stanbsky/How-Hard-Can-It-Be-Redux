@@ -173,7 +173,7 @@ public class Ship extends Sprite {
                 region = shipMove.getKeyFrame(stateTimer, true);
                 break;
             case NORTH:
-                if (Gdx.input.isKeyPressed(Input.Keys.UP) && !Gdx.input.isKeyPressed(Input.Keys.DOWN) && roll != UP_INDEX) {
+                if (Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S) && roll != UP_INDEX) {
                     rollVerticalTimer = 0;
                     if (roll > DOWN_INDEX && roll < UP_INDEX) {
                         roll++;
@@ -194,16 +194,16 @@ public class Ship extends Sprite {
                         roll--;
                     }
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                if (Gdx.input.isKeyPressed(Input.Keys.D)) {
                     roll = UP_INDEX+1;
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                     roll = UP_INDEX-1;
                 }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
             case SOUTH:
-                if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && !Gdx.input.isKeyPressed(Input.Keys.UP) && roll != DOWN_INDEX) {
+                if (Gdx.input.isKeyPressed(Input.Keys.S) && !Gdx.input.isKeyPressed(Input.Keys.W) && roll != DOWN_INDEX) {
                     rollVerticalTimer = 0;
                     if (roll <= UP_INDEX && roll > FIRST_INDEX) {
                         roll--;
@@ -224,16 +224,16 @@ public class Ship extends Sprite {
                         roll = FIRST_INDEX;
                     }
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                if (Gdx.input.isKeyPressed(Input.Keys.D)) {
                     roll = RIGHT_INDEX+1;
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                     roll = LEFT_INDEX-1;
                 }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
             case EAST:
-                if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && !Gdx.input.isKeyPressed(Input.Keys.LEFT) && roll != RIGHT_INDEX) {
+                if (Gdx.input.isKeyPressed(Input.Keys.D) && !Gdx.input.isKeyPressed(Input.Keys.A) && roll != RIGHT_INDEX) {
                     rollHorizontalTimer = 0;
                     if (roll <= LAST_INDEX && roll > RIGHT_INDEX) {
                         roll--;
@@ -258,16 +258,16 @@ public class Ship extends Sprite {
                         roll++;
                     }
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                     roll = UP_INDEX+1;
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+                if (Gdx.input.isKeyPressed(Input.Keys.S)) {
                     roll = RIGHT_INDEX+1;
                 }
                 region = rolls[roll].getKeyFrame(stateTime, true);
                 break;
             case WEST:
-                if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && !Gdx.input.isKeyPressed(Input.Keys.RIGHT) && roll != LEFT_INDEX) {
+                if (Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D) && roll != LEFT_INDEX) {
                     rollHorizontalTimer = 0;
                     if (roll >= DOWN_INDEX && roll < LEFT_INDEX) {
                         roll++;
@@ -292,10 +292,10 @@ public class Ship extends Sprite {
                         roll++;
                     }
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                     roll = LEFT_INDEX+1;
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+                if (Gdx.input.isKeyPressed(Input.Keys.S)) {
                     roll = LEFT_INDEX-1;
                 }
                 region = rolls[roll].getKeyFrame(stateTime, true);
@@ -311,13 +311,13 @@ public class Ship extends Sprite {
     }
 
     public State getState() {
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+        if (Gdx.input.isKeyPressed(Input.Keys.D))
             return State.EAST;
-        if (Gdx.input.isKeyPressed(Input.Keys.UP))
+        if (Gdx.input.isKeyPressed(Input.Keys.W))
             return State.NORTH;
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
+        if (Gdx.input.isKeyPressed(Input.Keys.S))
             return State.SOUTH;
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+        if (Gdx.input.isKeyPressed(Input.Keys.A))
             return State.WEST;
         else
             return State.STANDING;

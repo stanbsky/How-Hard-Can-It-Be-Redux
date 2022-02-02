@@ -65,7 +65,7 @@ public class Subtitle implements Disposable {
                 subtitleLabel.setText(subtitle);
                 break;
             case 1:
-                subtitle = "use mouse to move around the cursor";
+                subtitle = "use mouse to move the cursor";
                 subtitleLabel.setText(subtitle);
                 break;
             case 2:
@@ -73,14 +73,26 @@ public class Subtitle implements Disposable {
                 subtitleLabel.setText(subtitle);
                 break;
             case 3:
-                subtitle = "fight the colleges to win";
-                subtitleLabel.setText(subtitle);
-                break;
-            case 4:
-                subtitle = "Good Luck!";
+                subtitle = "your health and position (blue dot) is visible on bottom left side";
                 subtitleLabel.setText(subtitle);
                 break;
             case 5:
+                subtitle = "fight the colleges (red dot on bottom left mini map) to win";
+                subtitleLabel.setText(subtitle);
+                break;
+            case 6:
+                subtitle = "you earn xp and money by dodging attacks and defeating the attackers";
+                subtitleLabel.setText(subtitle);
+                break;
+            case 7:
+                subtitle = "game ends once you defeat all 3 colleges or your time runs out";
+                subtitleLabel.setText(subtitle);
+                break;
+            case 8:
+                subtitle = "Good Luck! (You Might Need One)";
+                subtitleLabel.setText(subtitle);
+                break;
+            case 9:
                 subtitle = "";
                 subtitleLabel.setText(subtitle);
                 break;

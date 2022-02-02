@@ -146,13 +146,13 @@ public class MainGameScreen implements Screen {
     }
 
     public void handleInput(float deltaTime) {
-        if (Gdx.input.isKeyPressed(Input.Keys.UP) && player.b2body.getLinearVelocity().y <= MAX_VELOCITY)
+        if (Gdx.input.isKeyPressed(Input.Keys.W) && player.b2body.getLinearVelocity().y <= MAX_VELOCITY)
             player.b2body.applyForce(new Vector2(0, ACCELERATION), player.b2body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) && player.b2body.getLinearVelocity().y >= -MAX_VELOCITY)
+        if (Gdx.input.isKeyPressed(Input.Keys.S) && player.b2body.getLinearVelocity().y >= -MAX_VELOCITY)
             player.b2body.applyForce(new Vector2(0, -ACCELERATION), player.b2body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && player.b2body.getLinearVelocity().x <= MAX_VELOCITY)
+        if (Gdx.input.isKeyPressed(Input.Keys.D) && player.b2body.getLinearVelocity().x <= MAX_VELOCITY)
             player.b2body.applyForce(new Vector2(ACCELERATION, 0), player.b2body.getWorldCenter(), true);
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && player.b2body.getLinearVelocity().x >= -MAX_VELOCITY)
+        if (Gdx.input.isKeyPressed(Input.Keys.A) && player.b2body.getLinearVelocity().x >= -MAX_VELOCITY)
             player.b2body.applyForce(new Vector2(-ACCELERATION, 0), player.b2body.getWorldCenter(), true);
 
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){

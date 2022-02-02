@@ -61,7 +61,7 @@ public class FinalStorylineScreen implements Screen {
     public void update(float deltaTime) {
         handleInput(deltaTime);
         stateTimer += deltaTime;
-        if(stateTimer>=1){
+        if(stateTimer>=3){
             state++;
             stateTimer = 0;
         }
