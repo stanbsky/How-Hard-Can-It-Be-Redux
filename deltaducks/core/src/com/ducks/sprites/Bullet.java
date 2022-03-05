@@ -4,17 +4,20 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
+import com.ducks.components.RigidBody;
 import com.ducks.screens.MainGameScreen;
+import com.ducks.components.BodyType;
 
 /***
  * Bullet Class for Box2D Body and Sprite
  */
 public class Bullet extends Sprite {
-    private World world;
+    private int bodyId;
     private Ship player;
 
     private Animation<TextureRegion> bulletIdle;
@@ -27,22 +30,20 @@ public class Bullet extends Sprite {
 
     float stateTime;
     float spawnTimer;
-    public Body bulletBody;
 
     private final float BULLET_SPEED = 200f;
     private final float BULLET_SPAWN_DURATION = 2f;
     OrthographicCamera gameCam;
+    private RigidBody rigidBody;
 
     /**
      * Constructor
-     * @param world Box2D world
      * @param player Box2D object of player
      * @param crosshair Sprite of crosshair
      * @param gameCam OrthographicCamera
      */
-    public Bullet(World world, Ship player, Crosshair crosshair, OrthographicCamera gameCam) {
+    public Bullet(Ship player, Crosshair crosshair, OrthographicCamera gameCam) {
         super(MainGameScreen.resources.getTexture("mehnat"));
-        this.world = world;
         this.player = player;
         this.gameCam = gameCam;
 
@@ -54,7 +55,7 @@ public class Bullet extends Sprite {
         setRegion(bulletIdle.getKeyFrame(stateTime, true));
 
         defineBullet();
-        bulletBody.applyForceToCenter(crosshair.getCrosshair().scl(BULLET_SPEED), true);
+        this.rigidBody.getBody().applyForceToCenter(crosshair.getCrosshair().scl(BULLET_SPEED), true);
     }
 
     /**
@@ -62,6 +63,7 @@ public class Bullet extends Sprite {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
+        Body bulletBody = this.getBody();
         stateTime += deltaTime;
         spawnTimer += deltaTime;
         setPosition(bulletBody.getPosition().x - getWidth()/2, bulletBody.getPosition().y - getHeight()/2);
@@ -77,28 +79,23 @@ public class Bullet extends Sprite {
      * Define the Box2D body and fixture and map it onto the Box2D world
      */
     public void defineBullet() {
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(player.b2body.getPosition().x, player.b2body.getPosition().y);
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.linearDamping = .5f;
-        bulletBody = world.createBody(bdef);
-
-        FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(10 / DeltaDucks.PIXEL_PER_METER);
-
-        fdef.shape = shape;
-        fdef.filter.categoryBits = DeltaDucks.BIT_BULLETS;
-        fdef.filter.maskBits = DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
-        fdef.restitution = 0.2f;
-        bulletBody.createFixture(fdef).setUserData("Bullet Alive");
+        Vector2 position = new Vector2(player.b2body.getPosition());
+        short mask = DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
+        this.rigidBody = new RigidBody(shape, position, DeltaDucks.BIT_BULLETS,
+                mask, BodyType.Dynamic, 0.5f, "Bullet Alive");
     }
 
     /**
      * Dispose the unwanted bullet
      */
     public void dispose() {
-        world.destroyBody(bulletBody);
+        this.rigidBody.dispose();
+    }
+
+    public Body getBody() {
+        return this.rigidBody.getBody();
     }
 
 }

@@ -137,6 +137,7 @@ public class MainGameScreen implements Screen {
 
         // Set Up Box2D
         world = new World(new Vector2(0, 0), true);
+        PhysicsManager.Initialize(world);
 
         player = new Ship(world, this);
 

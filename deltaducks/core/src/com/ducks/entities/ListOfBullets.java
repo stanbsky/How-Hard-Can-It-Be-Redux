@@ -47,7 +47,7 @@ public class ListOfBullets {
     public void spawnBullet() {
         if (shootTimer >= SHOOT_WAIT_TIME) {
             shootTimer=0;
-            bulletBodies.add(new Bullet(world, player, crosshair, gameCam));
+            bulletBodies.add(new Bullet(player, crosshair, gameCam));
         }
     }
 
@@ -59,7 +59,7 @@ public class ListOfBullets {
         shootTimer += deltaTime;
         Array<Bullet> bulletBodiesToRemove = new Array<Bullet>();
         for( Bullet bullet : bulletBodies) {
-            if(!bullet.bulletBody.getFixtureList().get(0).getUserData().equals("Bullet Alive")) {
+            if(!bullet.getBody().getFixtureList().get(0).getUserData().equals("Bullet Alive")) {
                 bulletBodiesToRemove.add(bullet);
                 bullet.dispose();
             } else {
