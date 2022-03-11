@@ -151,7 +151,7 @@ public class MainGameScreen implements Screen {
         creatures = new ListOfMonsters(world, this);
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
         crosshair = new Crosshair(world, this, player, gameCam, gamePort);
-        bullets = new ListOfBullets(world, this, player, crosshair, gameCam);
+        bullets = new ListOfBullets(player);
         cannons = new ListOfCannons(world, this, player, crosshair);
         colleges = new ListOfColleges(world, this, cannons, map);
         tutorial = new Tutorial(gameCam, player);

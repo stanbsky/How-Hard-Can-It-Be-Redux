@@ -23,7 +23,7 @@ public class RigidBody {
     }
 
     public RigidBody(Shape shape, Vector2 position, short category, short mask,
-                     BodyType type, float damping, String data) {
+                     BodyType type, float damping) {
         this.bodyDef = new BodyDef();
         bodyDef.position.set(position);
         bodyDef.type = type.getType();
@@ -34,7 +34,15 @@ public class RigidBody {
         fixtureDef.filter.categoryBits = category;
         fixtureDef.filter.maskBits = mask;
         fixtureDef.restitution = 0.2f;
-        this.bodyId = PhysicsManager.createBody(bodyDef, fixtureDef, data);
+        this.bodyId = PhysicsManager.createBody(bodyDef, fixtureDef);
+    }
+
+    public void setData(String data) {
+        getBody().getFixtureList().get(0).setUserData(data);
+    }
+
+    public void applyForce(Vector2 direction, float speed) {
+        getBody().applyForceToCenter(direction.scl(speed), true);
     }
 
     public void dispose() {

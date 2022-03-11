@@ -13,10 +13,7 @@ import com.ducks.sprites.Ship;
  * Collective Bullets Class for Box2D Bodies and Sprites
  */
 public class ListOfBullets {
-    private World world;
-    private MainGameScreen screen;
     private Ship player;
-    private Crosshair crosshair;
 
     private Array<Bullet> bulletBodies;
 
@@ -26,18 +23,9 @@ public class ListOfBullets {
 
     /**
      * Constructor
-     * @param world Box2D world
-     * @param screen Game Screen
-     * @param player Box2D object of player
-     * @param crosshair Sprite of crosshair
-     * @param gameCam OrthographicCamera
      */
-    public ListOfBullets(World world, MainGameScreen screen, Ship player, Crosshair crosshair, OrthographicCamera gameCam) {
-        this.world = world;
-        this.screen = screen;
+    public ListOfBullets(Ship player) {
         this.player = player;
-        this.crosshair = crosshair;
-        this.gameCam = gameCam;
         bulletBodies = new Array<Bullet>();
     }
 
@@ -47,7 +35,7 @@ public class ListOfBullets {
     public void spawnBullet() {
         if (shootTimer >= SHOOT_WAIT_TIME) {
             shootTimer=0;
-            bulletBodies.add(new Bullet(player, crosshair, gameCam));
+            bulletBodies.add(new Bullet(player.b2body.getPosition(), Crosshair.getCrosshair()));
         }
     }
 

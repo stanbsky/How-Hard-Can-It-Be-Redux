@@ -16,9 +16,9 @@ public final class PhysicsManager {
         box2DBodies = new ArrayList<>();
     }
 
-    public static int createBody(BodyDef bodyDef, FixtureDef fixtureDef, String data) {
+    public static int createBody(BodyDef bodyDef, FixtureDef fixtureDef) {
         Body body = box2DWorld.createBody(bodyDef);
-        body.createFixture(fixtureDef).setUserData(data);
+        body.createFixture(fixtureDef);
         box2DBodies.add(body);
         return box2DBodies.size() - 1;
     }
