@@ -19,7 +19,7 @@ public class DeltaDucks extends Game {
 
 	// Ratio of real world : game
 	public static final float PIXEL_PER_METER = 100;
-	public static final float TILEED_MAP_SCALE = .3f;
+	public static final float TILEED_MAP_SCALE = 0.7f;
 
 	// Bits filtration libgdx
 	public static final short BIT_SEA = 2;

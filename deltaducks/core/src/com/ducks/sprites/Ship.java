@@ -16,10 +16,9 @@ import com.ducks.screens.MainGameScreen;
  */
 public class Ship extends Sprite {
     public enum State {STANDING, MOVING, NORTH, SOUTH, EAST, WEST, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST};
-    public State currentState;
-    public State previousState;
     public World world;
     public Body b2body;
+    public int[] previousState = new int[2];
     private TextureRegion shipStand;
     private Animation <TextureRegion> shipMove;
     private Animation <TextureRegion> shipAttack;
@@ -42,14 +41,13 @@ public class Ship extends Sprite {
     private final int SHIP_WIDTH = Math.round(PIXEL_SHIP_WIDTH * MULTIPLIER);
     private final int SHIP_HEIGHT = Math.round(PIXEL_SHIP_HEIGHT * MULTIPLIER);
 
-    private final int SHIP_SPAWN_X = 370;
-    private final int SHIP_SPAWN_Y = 340;
+    private final int SHIP_SPAWN_X = 1370;
+    private final int SHIP_SPAWN_Y = 1340;
 
     private final int SPRITE_RADIUS = 1;
 
     private final float SHIP_FRAME_DURATION = 0.5f;
-    private final float VERTICAL_ROLL_TIMER_SWITCH_TIME = 0.25f;
-    private final float HORIZONTAL_ROLL_TIMER_SWITCH_TIME = 0.25f;
+    private int ROLL_TIMER_SWITCH_TIME = 0;
     private Animation<TextureRegion>[] rolls;
     private Animation<TextureRegion>[] idleRolls;
 
@@ -58,12 +56,12 @@ public class Ship extends Sprite {
     float rollHorizontalTimer;
     float stateTime;
 
-    private final int UP_INDEX = 4;
-    private final int DOWN_INDEX = 0;
-    private final int LEFT_INDEX = 2;
-    private final int RIGHT_INDEX = 6;
-    private final int FIRST_INDEX = 0;
-    private final int LAST_INDEX = 7;
+//    private final int UP_INDEX = 4;
+//    private final int DOWN_INDEX = 0;
+//    private final int LEFT_INDEX = 2;
+//    private final int RIGHT_INDEX = 6;
+//    private final int FIRST_INDEX = 0;
+//    private final int LAST_INDEX = 7;  *these are all useless, please do delete
 
     /**
      * Constructor
@@ -74,8 +72,8 @@ public class Ship extends Sprite {
 //        super(screen.getAtlas().findRegion("boat"));
         super(MainGameScreen.resources.getTexture("boat"));
         this.world = world;
-        currentState = State.STANDING;
-        previousState = State.STANDING;
+        previousState[0] = 0;
+        previousState[1] = 0;
         stateTimer = 0;
         movingUp = true;
         movingRight = true;
@@ -182,166 +180,76 @@ public class Ship extends Sprite {
      * @return the frame animation
      */
     public TextureRegion getFrame(float deltaTime) {
-        currentState = getState();
+//        currentState = getState();
 //        System.out.println(currentState);
+        int[] currentDirection = getDirection();
         TextureRegion region;
-        switch (currentState) {
-            case MOVING:
-                region = shipMove.getKeyFrame(stateTimer, true);
+
+
+        switch (3*(currentDirection[0] + 1) + (currentDirection[1] + 1)) {
+            case 0:
+                roll = 1;
                 break;
-            case NORTH:
-                if (Gdx.input.isKeyPressed(Input.Keys.W) && !Gdx.input.isKeyPressed(Input.Keys.S) && roll != UP_INDEX) {
-                    rollVerticalTimer = 0;
-                    if (roll > DOWN_INDEX && roll < UP_INDEX) {
-                        roll++;
-                    } else if (roll == FIRST_INDEX) {
-                        roll = LAST_INDEX;
-                    } else if (roll <= LAST_INDEX) {
-                        roll--;
-                    }
-                }
-                rollVerticalTimer += deltaTime;
-                if (Math.abs(rollVerticalTimer) > VERTICAL_ROLL_TIMER_SWITCH_TIME && roll != UP_INDEX) {
-                    rollVerticalTimer -= VERTICAL_ROLL_TIMER_SWITCH_TIME;
-                    if (roll > DOWN_INDEX && roll < UP_INDEX) {
-                        roll++;
-                    } else if (roll == FIRST_INDEX) {
-                        roll = LAST_INDEX;
-                    } else if (roll <= LAST_INDEX) {
-                        roll--;
-                    }
-                }
-                if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                    roll = UP_INDEX+1;
-                }
-                if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                    roll = UP_INDEX-1;
-                }
-                region = rolls[roll].getKeyFrame(stateTime, true);
+            case 1:
+                roll = 2;
                 break;
-            case SOUTH:
-                if (Gdx.input.isKeyPressed(Input.Keys.S) && !Gdx.input.isKeyPressed(Input.Keys.W) && roll != DOWN_INDEX) {
-                    rollVerticalTimer = 0;
-                    if (roll <= UP_INDEX && roll > FIRST_INDEX) {
-                        roll--;
-                    } else if (roll > UP_INDEX && roll < LAST_INDEX) {
-                        roll++;
-                    } else if (roll == LAST_INDEX) {
-                        roll = FIRST_INDEX;
-                    }
-                }
-                rollVerticalTimer -= deltaTime;
-                if (Math.abs(rollVerticalTimer) > VERTICAL_ROLL_TIMER_SWITCH_TIME && roll != DOWN_INDEX) {
-                    rollVerticalTimer -= VERTICAL_ROLL_TIMER_SWITCH_TIME;
-                    if (roll <= UP_INDEX && roll > FIRST_INDEX) {
-                        roll--;
-                    } else if (roll > UP_INDEX && roll < LAST_INDEX) {
-                        roll++;
-                    } else if (roll == LAST_INDEX) {
-                        roll = FIRST_INDEX;
-                    }
-                }
-                if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                    roll = RIGHT_INDEX+1;
-                }
-                if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                    roll = LEFT_INDEX-1;
-                }
-                region = rolls[roll].getKeyFrame(stateTime, true);
+            case 2:
+                roll = 3;
                 break;
-            case EAST:
-                if (Gdx.input.isKeyPressed(Input.Keys.D) && !Gdx.input.isKeyPressed(Input.Keys.A) && roll != RIGHT_INDEX) {
-                    rollHorizontalTimer = 0;
-                    if (roll <= LAST_INDEX && roll > RIGHT_INDEX) {
-                        roll--;
-                    } else if (roll <= LEFT_INDEX && roll > FIRST_INDEX) {
-                        roll--;
-                    } else if (roll == FIRST_INDEX) {
-                        roll = LAST_INDEX;
-                    } else {
-                        roll++;
-                    }
-                }
-                rollHorizontalTimer += deltaTime;
-                if (Math.abs(rollHorizontalTimer) > HORIZONTAL_ROLL_TIMER_SWITCH_TIME && roll != RIGHT_INDEX) {
-                    rollHorizontalTimer -= HORIZONTAL_ROLL_TIMER_SWITCH_TIME;
-                    if (roll <= LAST_INDEX && roll > RIGHT_INDEX) {
-                        roll--;
-                    } else if (roll <= LEFT_INDEX && roll > FIRST_INDEX) {
-                        roll--;
-                    } else if (roll == FIRST_INDEX) {
-                        roll = LAST_INDEX;
-                    } else {
-                        roll++;
-                    }
-                }
-                if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-                    roll = UP_INDEX+1;
-                }
-                if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-                    roll = RIGHT_INDEX+1;
-                }
-                region = rolls[roll].getKeyFrame(stateTime, true);
+            case 3:
+                roll = 0;
                 break;
-            case WEST:
-                if (Gdx.input.isKeyPressed(Input.Keys.A) && !Gdx.input.isKeyPressed(Input.Keys.D) && roll != LEFT_INDEX) {
-                    rollHorizontalTimer = 0;
-                    if (roll >= DOWN_INDEX && roll < LEFT_INDEX) {
-                        roll++;
-                    } else if (roll <= RIGHT_INDEX) {
-                        roll--;
-                    } else if (roll == LAST_INDEX) {
-                        roll = FIRST_INDEX;
-                    } else {
-                        roll++;
-                    }
+            case 4:
+                if (ROLL_TIMER_SWITCH_TIME-- > 1) {
+                    return rolls[roll].getKeyFrame(stateTime, true);
                 }
-                rollHorizontalTimer -= deltaTime;
-                if (Math.abs(rollHorizontalTimer) > HORIZONTAL_ROLL_TIMER_SWITCH_TIME && roll != LEFT_INDEX) {
-                    rollHorizontalTimer -= HORIZONTAL_ROLL_TIMER_SWITCH_TIME;
-                    if (roll >= DOWN_INDEX && roll < LEFT_INDEX) {
-                        roll++;
-                    } else if (roll <= RIGHT_INDEX) {
-                        roll--;
-                    } else if (roll == LAST_INDEX) {
-                        roll = FIRST_INDEX;
-                    } else {
-                        roll++;
-                    }
+                else {
+                    return idleRolls[roll].getKeyFrame(stateTime, true);
                 }
-                if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-                    roll = LEFT_INDEX+1;
-                }
-                if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-                    roll = LEFT_INDEX-1;
-                }
-                region = rolls[roll].getKeyFrame(stateTime, true);
+            case 5:
+                roll = 4;
                 break;
-            default:
-                currentState = previousState;
-                region = idleRolls[roll].getKeyFrame(stateTime, true);
+            case 6:
+                roll = 7;
+                break;
+            case 7:
+                roll = 6;
+                break;
+            case 8:
+                roll = 5;
                 break;
         }
-        stateTimer = currentState == previousState ? stateTimer + deltaTime : 0;
-        previousState = currentState;
-        return region;
+//        region = rolls[roll].getKeyFrame(stateTime, true);
+
+//        currentDirection = previousState;
+//        region = idleRolls[roll].getKeyFrame(stateTime, true);
+
+
+//        stateTimer = currentDirection == previousState ? stateTimer + deltaTime : 0;
+//        previousState = currentDirection;
+//        region = idleRolls[roll].getKeyFrame(stateTime, true);
+        ROLL_TIMER_SWITCH_TIME = 75;
+        return rolls[roll].getKeyFrame(stateTime, true);
     }
 
     /**
      * Get the direction of the ship corresponding to its movement
      * @return direction
      */
-    public State getState() {
-        if (Gdx.input.isKeyPressed(Input.Keys.D))
-            return State.EAST;
+    public int[] getDirection() {
+        int[] direction = new int[2];
+        direction[0] = 0; // x
+        direction[1] = 0; // y
         if (Gdx.input.isKeyPressed(Input.Keys.W))
-            return State.NORTH;
-        if (Gdx.input.isKeyPressed(Input.Keys.S))
-            return State.SOUTH;
+            direction[1] += 1;
         if (Gdx.input.isKeyPressed(Input.Keys.A))
-            return State.WEST;
-        else
-            return State.STANDING;
+            direction[0] -= 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.S))
+            direction[1] -= 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.D))
+            direction[0] += 1;
+
+        return direction;
     }
 
     /**
