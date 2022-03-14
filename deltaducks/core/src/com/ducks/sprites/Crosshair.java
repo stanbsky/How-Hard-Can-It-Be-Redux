@@ -2,11 +2,9 @@ package com.ducks.sprites;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
@@ -121,7 +119,7 @@ public class Crosshair extends Sprite {
      * @param target vector (measured to)
      * @return Vector2
      */
-    public static Vector2 getDireciton(Vector2 body, Vector2 target) {
+    public static Vector2 getDirection(Vector2 body, Vector2 target) {
         return new Vector2(body.x - target.x, body.y - target.y).nor().scl(-1);
     }
 }
