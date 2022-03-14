@@ -152,7 +152,7 @@ public class MainGameScreen implements Screen {
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
         crosshair = new Crosshair(world, this, player, gameCam, gamePort);
         bullets = new ListOfBullets(player);
-        cannons = new ListOfCannons(world, this, player, crosshair);
+        cannons = new ListOfCannons(player);
         colleges = new ListOfColleges(world, this, cannons, map);
         tutorial = new Tutorial(gameCam, player);
     }
@@ -214,7 +214,7 @@ public class MainGameScreen implements Screen {
         subtitle.update(deltaTime);
         crosshair.update(deltaTime);
         bullets.update(deltaTime);
-        cannons.update(deltaTime, gameCam);
+        cannons.update(deltaTime);
 
         gameCam.position.x = player.b2body.getPosition().x;
         gameCam.position.y = player.b2body.getPosition().y;

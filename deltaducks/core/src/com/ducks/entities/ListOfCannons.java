@@ -1,11 +1,9 @@
 package com.ducks.entities;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.scenes.Hud;
-import com.ducks.screens.MainGameScreen;
 import com.ducks.sprites.*;
 
 /***
@@ -13,29 +11,20 @@ import com.ducks.sprites.*;
  */
 public class ListOfCannons {
 
-    private World world;
-    private MainGameScreen screen;
     private Ship player;
-    private Crosshair crosshair;
 
-    private Array<Cannon> cannonBodies;
+    private Array<Bullet> cannonBodies;
 
     private final float SHOOT_WAIT_TIME = 1f;
     float shootTimer ;
 
     /**
      * Constructor
-     * @param world Box2D world
-     * @param screen Game Screen
      * @param player Box2D object of player
-     * @param crosshair Sprite of crosshair
      */
-    public ListOfCannons(World world, MainGameScreen screen, Ship player, Crosshair crosshair) {
-        this.world = world;
-        this.screen = screen;
+    public ListOfCannons(Ship player) {
         this.player = player;
-        this.crosshair = crosshair;
-        cannonBodies = new Array<Cannon>();
+        cannonBodies = new Array<>();
     }
 
     /**
@@ -46,20 +35,21 @@ public class ListOfCannons {
         if (shootTimer >= SHOOT_WAIT_TIME) {
             shootTimer=0;
             Hud.addScore(100);
-            cannonBodies.add(new Cannon(world, college, player));
+            Vector2 pos = college.collegeBody.getPosition();
+            cannonBodies.add(new CollegeBullet(pos,
+                    Crosshair.getDirection(pos, player.b2body.getPosition())));
         }
     }
 
     /**
      * Update all cannons every delta time interval
      * @param deltaTime of the game
-     * @param gameCam OrthographicCamera
      */
-    public void update(float deltaTime, OrthographicCamera gameCam) {
+    public void update(float deltaTime) {
         shootTimer += deltaTime;
-        Array<Cannon> CannonBodiesToRemove = new Array<Cannon>();
-        for( Cannon cannon : cannonBodies) {
-            if(!cannon.cannonBody.getFixtureList().get(0).getUserData().equals("Cannon Alive")) {
+        Array<Bullet> CannonBodiesToRemove = new Array<>();
+        for( Bullet cannon : cannonBodies) {
+            if(!cannon.getBody().getFixtureList().get(0).getUserData().equals("Cannon Alive")) {
                 CannonBodiesToRemove.add(cannon);
                 cannon.dispose();
             } else {
@@ -74,7 +64,7 @@ public class ListOfCannons {
      * @param batch to draw on the screen
      */
     public void draw(SpriteBatch batch) {
-        for( Cannon cannon : cannonBodies) {
+        for( Bullet cannon : cannonBodies) {
             cannon.draw(batch);
         }
     }

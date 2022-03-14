@@ -1,12 +1,10 @@
 package com.ducks.entities;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
-import com.ducks.screens.MainGameScreen;
 import com.ducks.sprites.Bullet;
 import com.ducks.sprites.Crosshair;
+import com.ducks.sprites.PlayerBullet;
 import com.ducks.sprites.Ship;
 
 /***
@@ -18,15 +16,14 @@ public class ListOfBullets {
     private Array<Bullet> bulletBodies;
 
     private final float SHOOT_WAIT_TIME = .3f;
-    float shootTimer ;
-    OrthographicCamera gameCam;
+    float shootTimer;
 
     /**
      * Constructor
      */
     public ListOfBullets(Ship player) {
         this.player = player;
-        bulletBodies = new Array<Bullet>();
+        bulletBodies = new Array<>();
     }
 
     /**
@@ -35,7 +32,7 @@ public class ListOfBullets {
     public void spawnBullet() {
         if (shootTimer >= SHOOT_WAIT_TIME) {
             shootTimer=0;
-            bulletBodies.add(new Bullet(player.b2body.getPosition(), Crosshair.getCrosshair()));
+            bulletBodies.add(new PlayerBullet(player.b2body.getPosition(), Crosshair.getCrosshair()));
         }
     }
 
@@ -45,7 +42,7 @@ public class ListOfBullets {
      */
     public void update(float deltaTime) {
         shootTimer += deltaTime;
-        Array<Bullet> bulletBodiesToRemove = new Array<Bullet>();
+        Array<Bullet> bulletBodiesToRemove = new Array<>();
         for( Bullet bullet : bulletBodies) {
             if(!bullet.getBody().getFixtureList().get(0).getUserData().equals("Bullet Alive")) {
                 bulletBodiesToRemove.add(bullet);

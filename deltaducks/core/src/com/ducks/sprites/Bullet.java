@@ -1,66 +1,37 @@
 package com.ducks.sprites;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.ducks.DeltaDucks;
-import com.ducks.components.RigidBody;
-import com.ducks.screens.MainGameScreen;
 import com.ducks.components.BodyType;
+import com.ducks.components.RigidBody;
 
-/***
- * Bullet Class for Box2D Body and Sprite
- */
 public class Bullet extends Sprite {
-
-    private Animation<TextureRegion> bulletIdle;
-
-    private final int PIXEL_BULLET_WIDTH = 256;
-    private final int PIXEL_BULLET_HEIGHT = 256;
-
-    private final float BULLET_WIDTH = PIXEL_BULLET_WIDTH * .2f;
-    private final float BULLET_HEIGHT = PIXEL_BULLET_HEIGHT * .2f;
-
+    private final float BULLET_SPAWN_DURATION = 2f;
+    protected RigidBody rigidBody;
     float stateTime;
     float spawnTimer;
+    short category;
+    short mask;
 
-    private final float BULLET_SPEED = 200f;
-    private final float BULLET_SPAWN_DURATION = 2f;
-    OrthographicCamera gameCam;
-    private RigidBody rigidBody;
-
-    /**
-     * Constructor
-     */
-    public Bullet(Vector2 position, Vector2 direction) {
-        super(MainGameScreen.resources.getTexture("mehnat"));
-
-        Array<TextureRegion> frames = new Array<TextureRegion>();
-        frames.add(new TextureRegion(getTexture(), 0 * PIXEL_BULLET_WIDTH, 0 * PIXEL_BULLET_HEIGHT, PIXEL_BULLET_WIDTH, PIXEL_BULLET_HEIGHT));
-        bulletIdle = new Animation(0.1f, frames);
-        frames.clear();
-        setBounds(position.x, position.y, BULLET_WIDTH / DeltaDucks.PIXEL_PER_METER, BULLET_HEIGHT / DeltaDucks.PIXEL_PER_METER);
-        setRegion(bulletIdle.getKeyFrame(stateTime, true));
-
-        defineBullet(position);
-        this.rigidBody.setData("Bullet Alive");
-        this.rigidBody.applyForce(direction, BULLET_SPEED);
+    public Bullet(Texture texture) {
+        super(texture);
     }
 
     /**
      * Update the bullet every delta time interval
+     *
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
         Body bulletBody = this.getBody();
         stateTime += deltaTime;
         spawnTimer += deltaTime;
-        setPosition(bulletBody.getPosition().x - getWidth()/2, bulletBody.getPosition().y - getHeight()/2);
-        if(spawnTimer > BULLET_SPAWN_DURATION) {
+        setPosition(bulletBody.getPosition().x - getWidth() / 2, bulletBody.getPosition().y - getHeight() / 2);
+        if (spawnTimer > BULLET_SPAWN_DURATION) {
             this.rigidBody.setData("Bullet Dead");
         }
         /*
@@ -77,9 +48,7 @@ public class Bullet extends Sprite {
     public void defineBullet(Vector2 position) {
         CircleShape shape = new CircleShape();
         shape.setRadius(10 / DeltaDucks.PIXEL_PER_METER);
-        short mask = DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
-        this.rigidBody = new RigidBody(shape, position, DeltaDucks.BIT_BULLETS,
-                mask, BodyType.Dynamic, 0.5f);
+        this.rigidBody = new RigidBody(shape, position, category, mask, BodyType.Dynamic, 0.5f);
     }
 
     /**
@@ -92,5 +61,4 @@ public class Bullet extends Sprite {
     public Body getBody() {
         return this.rigidBody.getBody();
     }
-
 }
