@@ -33,13 +33,11 @@ public class Ship extends Sprite {
     private boolean movingUp;
     private boolean movingRight;
 
-    private final int PIXEL_SHIP_WIDTH = 1280;
-    private final int PIXEL_SHIP_HEIGHT = 1280;
+        private final int PIXEL_SHIP_WIDTH = 64;
+    private final int PIXEL_SHIP_HEIGHT = 64;
 
-    private final float MULTIPLIER = .07f;
-
-    private final int SHIP_WIDTH = Math.round(PIXEL_SHIP_WIDTH * MULTIPLIER);
-    private final int SHIP_HEIGHT = Math.round(PIXEL_SHIP_HEIGHT * MULTIPLIER);
+    private final int SHIP_WIDTH = 128;
+    private final int SHIP_HEIGHT = 128;
 
     private final int SHIP_SPAWN_X = 1370;
     private final int SHIP_SPAWN_Y = 1340;
@@ -85,73 +83,20 @@ public class Ship extends Sprite {
         rollHorizontalTimer = 2f;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for(int i=2; i<4; i++) {
-            frames.add(new TextureRegion(getTexture(), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
-        }
-        frames.add(new TextureRegion(getTexture(), 0, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
 
-        shipMove = new Animation(0.1f, frames);
-
-        frames.clear();
         for(int i=0; i<8; i++) {
             frames.add(new TextureRegion(getTexture(), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+            idleRolls[i] = new Animation(SHIP_FRAME_DURATION, frames.get(i));
         }
-        idleRolls[0] = new Animation(SHIP_FRAME_DURATION, frames.get(0)); // Down
-        idleRolls[1] = new Animation(SHIP_FRAME_DURATION, frames.get(1));
-        idleRolls[2] = new Animation(SHIP_FRAME_DURATION, frames.get(2)); // Left
-        idleRolls[3] = new Animation(SHIP_FRAME_DURATION, frames.get(3));
-        idleRolls[4] = new Animation(SHIP_FRAME_DURATION, frames.get(4)); // Up
-        idleRolls[5] = new Animation(SHIP_FRAME_DURATION, frames.get(5));
-        idleRolls[6] = new Animation(SHIP_FRAME_DURATION, frames.get(6)); // Right
-        idleRolls[7] = new Animation(SHIP_FRAME_DURATION, frames.get(7));
 
-        frames.clear();
-        for(int i=0; i<4; i++) {
-            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat south"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+        String[] directionNames = {"south", "southwest", "west", "northwest", "north", "northeast", "east", "southeast"};
+        for(int a=0; a<8; a++) {
+            frames.clear();
+            for (int i = 0; i < 4; i++) {
+                frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat " + directionNames[a]), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+            }
+            rolls[a] = new Animation(SHIP_FRAME_DURATION, frames);
         }
-        rolls[0] = new Animation(SHIP_FRAME_DURATION, frames); // Down
-
-        frames.clear();
-        for(int i=0; i<4; i++) {
-            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat southwest"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
-        }
-        rolls[1] = new Animation(SHIP_FRAME_DURATION, frames);
-
-        frames.clear();
-        for(int i=0; i<4; i++) {
-            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat west"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
-        }
-        rolls[2] = new Animation(SHIP_FRAME_DURATION, frames); // Left
-
-        frames.clear();
-        for(int i=0; i<4; i++) {
-            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat northwest"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
-        }
-        rolls[3] = new Animation(SHIP_FRAME_DURATION, frames);
-
-        frames.clear();
-        for(int i=0; i<4; i++) {
-            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat north"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
-        }
-        rolls[4] = new Animation(SHIP_FRAME_DURATION, frames); // Up
-
-        frames.clear();
-        for(int i=0; i<4; i++) {
-            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat northeast"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
-        }
-        rolls[5] = new Animation(SHIP_FRAME_DURATION, frames);
-
-        frames.clear();
-        for(int i=0; i<4; i++) {
-            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat east"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
-        }
-        rolls[6] = new Animation(SHIP_FRAME_DURATION, frames); // Right
-
-        frames.clear();
-        for(int i=0; i<4; i++) {
-            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("boat southeast"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
-        }
-        rolls[7] = new Animation(SHIP_FRAME_DURATION, frames);
 
         frames.clear();
 
@@ -240,13 +185,13 @@ public class Ship extends Sprite {
         int[] direction = new int[2];
         direction[0] = 0; // x
         direction[1] = 0; // y
-        if (Gdx.input.isKeyPressed(Input.Keys.W))
+        if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP))
             direction[1] += 1;
-        if (Gdx.input.isKeyPressed(Input.Keys.A))
+        if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT))
             direction[0] -= 1;
-        if (Gdx.input.isKeyPressed(Input.Keys.S))
+        if (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN))
             direction[1] -= 1;
-        if (Gdx.input.isKeyPressed(Input.Keys.D))
+        if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT))
             direction[0] += 1;
 
         return direction;
