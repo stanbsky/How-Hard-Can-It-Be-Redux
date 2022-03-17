@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
+import com.ducks.components.Texture;
 import com.ducks.screens.MainGameScreen;
 
 /***
@@ -26,15 +27,15 @@ public class PlayerBullet extends Bullet {
      * Constructor
      */
     public PlayerBullet(Vector2 position, Vector2 direction) {
-        super(MainGameScreen.resources.getTexture("mehnat"));
+        //super(MainGameScreen.resources.getTexture("mehnat"));
 
-        Array<TextureRegion> frames = new Array<TextureRegion>();
-        frames.add(new TextureRegion(getTexture(), 0 * PIXEL_BULLET_WIDTH, 0 * PIXEL_BULLET_HEIGHT, PIXEL_BULLET_WIDTH, PIXEL_BULLET_HEIGHT));
-        bulletIdle = new Animation(0.1f, frames);
-        frames.clear();
-        setBounds(position.x, position.y, BULLET_WIDTH / DeltaDucks.PIXEL_PER_METER, BULLET_HEIGHT / DeltaDucks.PIXEL_PER_METER);
-        setRegion(bulletIdle.getKeyFrame(stateTime, true));
-
+        //Array<TextureRegion> frames = new Array<TextureRegion>();
+        //frames.add(new TextureRegion(getTexture(), 0 * PIXEL_BULLET_WIDTH, 0 * PIXEL_BULLET_HEIGHT, PIXEL_BULLET_WIDTH, PIXEL_BULLET_HEIGHT));
+        //bulletIdle = new Animation(0.1f, frames);
+        //frames.clear();
+        //setBounds(position.x, position.y, BULLET_WIDTH / DeltaDucks.PIXEL_PER_METER, BULLET_HEIGHT / DeltaDucks.PIXEL_PER_METER);
+        //setRegion(bulletIdle.getKeyFrame(stateTime, true));
+        this.texture = new Texture("mehnat", position, BULLET_WIDTH, BULLET_HEIGHT);
         this.mask = DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
         this.category = DeltaDucks.BIT_BULLETS;
         defineBullet(position);
