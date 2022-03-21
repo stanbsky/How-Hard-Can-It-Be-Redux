@@ -62,8 +62,8 @@ public class MainGameScreen implements Screen {
 
     private MyContactListener contactListener;
 
-    private static float ACCELERATION = 1f;
-    private static float MAX_VELOCITY = 4f;
+    private static float ACCELERATION = 4f;
+    private static float MAX_VELOCITY = 16f;
 
     public static Content resources;
     private TextureAtlas atlas;
@@ -85,6 +85,7 @@ public class MainGameScreen implements Screen {
         MainGameScreen.resources.loadTexture("COLLEGE.png", "college");
         MainGameScreen.resources.loadTexture("blank.png", "blank");
         MainGameScreen.resources.loadTexture("ALL DUCK BOAT FINAL.png", "boat");
+        MainGameScreen.resources.loadTexture("ALL DUCK BOAT FINAL WATER.png", "Wboat");
         MainGameScreen.resources.loadTexture("FORWARD MOVE.png", "boat south");
         MainGameScreen.resources.loadTexture("BACK MOVE.png", "boat north");
         MainGameScreen.resources.loadTexture("SIDE MOVE RIGHT.png", "boat east");

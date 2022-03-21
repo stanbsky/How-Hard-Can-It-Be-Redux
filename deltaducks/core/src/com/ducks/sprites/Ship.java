@@ -86,7 +86,9 @@ public class Ship extends Sprite {
 
         for(int i=0; i<8; i++) {
             frames.add(new TextureRegion(getTexture(), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
-            idleRolls[i] = new Animation(SHIP_FRAME_DURATION, frames.get(i));
+            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("Wboat"), i * PIXEL_SHIP_WIDTH, 0, PIXEL_SHIP_WIDTH, PIXEL_SHIP_HEIGHT));
+            idleRolls[i] = new Animation(SHIP_FRAME_DURATION, frames);
+            frames.clear();
         }
 
         String[] directionNames = {"south", "southwest", "west", "northwest", "north", "northeast", "east", "southeast"};
@@ -132,35 +134,35 @@ public class Ship extends Sprite {
 
 
         switch (3*(currentDirection[0] + 1) + (currentDirection[1] + 1)) {
-            case 0:
+            case 0: // DOWN LEFT
                 roll = 1;
                 break;
-            case 1:
+            case 1: // LEFT
                 roll = 2;
                 break;
-            case 2:
+            case 2: // UP LEFT
                 roll = 3;
                 break;
-            case 3:
+            case 3: // DOWN
                 roll = 0;
                 break;
-            case 4:
+            case 4: // No Direction
                 if (ROLL_TIMER_SWITCH_TIME-- > 1) {
                     return rolls[roll].getKeyFrame(stateTime, true);
                 }
                 else {
                     return idleRolls[roll].getKeyFrame(stateTime, true);
                 }
-            case 5:
+            case 5: // UP
                 roll = 4;
                 break;
-            case 6:
+            case 6: // DOWN RIGHT
                 roll = 7;
                 break;
-            case 7:
+            case 7: // RIGHT
                 roll = 6;
                 break;
-            case 8:
+            case 8: // UP RIGHT
                 roll = 5;
                 break;
         }
@@ -173,7 +175,7 @@ public class Ship extends Sprite {
 //        stateTimer = currentDirection == previousState ? stateTimer + deltaTime : 0;
 //        previousState = currentDirection;
 //        region = idleRolls[roll].getKeyFrame(stateTime, true);
-        ROLL_TIMER_SWITCH_TIME = 75;
+        ROLL_TIMER_SWITCH_TIME = 100;
         return rolls[roll].getKeyFrame(stateTime, true);
     }
 
