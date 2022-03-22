@@ -25,8 +25,9 @@ public class PlayerBullet extends Bullet {
     /**
      * Constructor
      */
-    public PlayerBullet(Vector2 position, Vector2 direction) {
+    public PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
         super(MainGameScreen.resources.getTexture("mehnat"));
+        //this.player = player;
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         frames.add(new TextureRegion(getTexture(), 0 * PIXEL_BULLET_WIDTH, 0 * PIXEL_BULLET_HEIGHT, PIXEL_BULLET_WIDTH, PIXEL_BULLET_HEIGHT));
@@ -39,6 +40,7 @@ public class PlayerBullet extends Bullet {
         this.category = DeltaDucks.BIT_BULLETS;
         defineBullet(position);
         this.rigidBody.setData("Bullet Alive");
+        this.rigidBody.applyForce(shipMomentum, 1f);
         this.rigidBody.applyForce(direction, BULLET_SPEED);
     }
 

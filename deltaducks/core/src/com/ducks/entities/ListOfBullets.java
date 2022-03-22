@@ -32,7 +32,7 @@ public class ListOfBullets {
     public void spawnBullet() {
         if (shootTimer >= SHOOT_WAIT_TIME) {
             shootTimer=0;
-            bulletBodies.add(new PlayerBullet(player.b2body.getPosition(), Crosshair.getCrosshair()));
+            bulletBodies.add(new PlayerBullet(player.b2body.getPosition(), Crosshair.getCrosshair(), player.b2body.getLinearVelocity()));
         }
     }
 

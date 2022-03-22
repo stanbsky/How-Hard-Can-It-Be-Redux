@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.7.2" name="i will recover this shit at any cost" tilewidth="77" tileheight="63" tilecount="45" columns="0">
+<tileset version="1.5" tiledversion="1.7.2" name="content" tilewidth="77" tileheight="63" tilecount="45" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="11" height="6" source="craftpix-net-280167-free-level-map-pixel-art-assets-pack(1)/2 Objects/Bushes/6.png"/>
