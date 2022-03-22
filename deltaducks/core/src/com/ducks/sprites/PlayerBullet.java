@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
+import sun.tools.jconsole.JConsole;
 
 /***
  * Bullet Class for Box2D Body and Sprite
@@ -40,8 +41,10 @@ public class PlayerBullet extends Bullet {
         this.category = DeltaDucks.BIT_BULLETS;
         defineBullet(position);
         this.rigidBody.setData("Bullet Alive");
-        this.rigidBody.applyForce(shipMomentum, 1f);
+        this.rigidBody.applyForce(shipMomentum, 55f);
         this.rigidBody.applyForce(direction, BULLET_SPEED);
+        System.out.println(shipMomentum);
+        System.out.println(direction);
     }
 
 }
