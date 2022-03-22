@@ -36,7 +36,11 @@ public class Texture extends Sprite {
     }
 
     public void render(SpriteBatch batch) {
-        System.out.println(this.getBoundingRectangle());
+//        System.out.println(this.getBoundingRectangle());
         this.draw(batch);
+    }
+
+    public void dispose() {
+        this.dispose();
     }
 }

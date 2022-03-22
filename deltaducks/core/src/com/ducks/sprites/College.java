@@ -1,7 +1,7 @@
 package com.ducks.sprites;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
+//import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
+import com.ducks.components.Texture;
 import com.ducks.entities.ListOfCannons;
 import com.ducks.scenes.Hud;
 import com.ducks.screens.MainGameScreen;
@@ -17,7 +18,7 @@ import com.ducks.screens.MainGameScreen;
 /***
  * College Class for Box2D Body and Sprite
  */
-public class College extends Sprite {
+public class College {
     public World world;
 
     private Animation<TextureRegion> collegeIdle;
@@ -40,7 +41,10 @@ public class College extends Sprite {
     private CollegeName collegeName;
 
     public float health;
-    Texture healthBar;
+//    Texture healthBar;
+    Texture alive;
+    Texture dead;
+    private Vector2 position;
 
     /**
      * Constructor
@@ -53,29 +57,36 @@ public class College extends Sprite {
      * @param cannons Cannons class to spawn and add Cannon round
      */
     public College(World world, MainGameScreen screen, float spawn_x, float spawn_y, float spawn_radius, String collegeName, ListOfCannons cannons) {
-        super(MainGameScreen.resources.getTexture(collegeName));
+//        super(MainGameScreen.resources.getTexture(collegeName));
         this.world = world;
 //        this.collegeName = collegeName;
         this.cannons = cannons;
 
         health = 1f;
-        healthBar = MainGameScreen.resources.getTexture("blank");
+//        healthBar = MainGameScreen.resources.getTexture("blank");
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
-        for(int i=0; i<1; i++) {
-            frames.add(new TextureRegion(getTexture(), i * PIXEL_COLLEGE_WIDTH, 0, PIXEL_COLLEGE_WIDTH, PIXEL_COLLEGE_HEIGHT));
-        }
-        collegeIdle = new Animation(0.1f, frames);
-        frames.clear();
-        for(int i=0; i<1; i++) {
-            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("college destroyed"), i * PIXEL_COLLEGE_WIDTH, 0, PIXEL_COLLEGE_WIDTH, PIXEL_COLLEGE_HEIGHT));
-        }
-        collegeDestroyed = new Animation(0.1f, frames);
-        frames.clear();
+//        for(int i=0; i<1; i++) {
+//            frames.add(new TextureRegion(getTexture(), i * PIXEL_COLLEGE_WIDTH, 0, PIXEL_COLLEGE_WIDTH, PIXEL_COLLEGE_HEIGHT));
+//        }
+
+//        frames.add(new TextureRegion(getTexture(), 0, 0, PIXEL_COLLEGE_WIDTH, PIXEL_COLLEGE_HEIGHT));
+        this.position = new Vector2(spawn_x, spawn_y);
+        this.alive = new Texture(collegeName, this.position, PIXEL_COLLEGE_WIDTH, PIXEL_COLLEGE_HEIGHT);
+        this.dead = null;
+//        collegeIdle = new Animation(0.1f, frames);
+//        frames.clear();
+//        for(int i=0; i<1; i++) {
+//            frames.add(new TextureRegion(MainGameScreen.resources.getTexture("college destroyed"), i * PIXEL_COLLEGE_WIDTH, 0, PIXEL_COLLEGE_WIDTH, PIXEL_COLLEGE_HEIGHT));
+//        }
+//        frames.add(new TextureRegion(MainGameScreen.resources.getTexture("college destroyed"), 0, 0, PIXEL_COLLEGE_WIDTH, PIXEL_COLLEGE_HEIGHT));
+//        collegeDestroyed = new Animation(0.1f, frames);
+//        frames.clear();
+
 
         defineCollege(spawn_x, spawn_y, spawn_radius);
-        setBounds((spawn_x - COLLEGE_WIDTH / 2f) / DeltaDucks.PIXEL_PER_METER, (spawn_y - COLLEGE_HEIGHT / 2f) / DeltaDucks.PIXEL_PER_METER, COLLEGE_WIDTH / DeltaDucks.PIXEL_PER_METER, COLLEGE_HEIGHT / DeltaDucks.PIXEL_PER_METER);
-        setRegion(collegeIdle.getKeyFrame(stateTime, true));
+//        setBounds((spawn_x - COLLEGE_WIDTH / 2f) / DeltaDucks.PIXEL_PER_METER, (spawn_y - COLLEGE_HEIGHT / 2f) / DeltaDucks.PIXEL_PER_METER, COLLEGE_WIDTH / DeltaDucks.PIXEL_PER_METER, COLLEGE_HEIGHT / DeltaDucks.PIXEL_PER_METER);
+//        setRegion(collegeIdle.getKeyFrame(stateTime, true));
     }
 
     /**
@@ -85,10 +96,16 @@ public class College extends Sprite {
     public void update(float deltaTime) {
         stateTime += deltaTime;
         if(health <= 0f) {
-            setRegion(collegeDestroyed.getKeyFrame(stateTime, true));
+//            setRegion(collegeDestroyed.getKeyFrame(stateTime, true));
+            if (this.dead == null) {
+                this.alive.dispose();
+                this.dead = new Texture("college destroyed", this.position, PIXEL_COLLEGE_WIDTH, PIXEL_COLLEGE_HEIGHT);
+            }
+            this.dead.update(deltaTime, collegeBody.getPosition());
             health = -10f;
         } else {
-            setRegion(collegeIdle.getKeyFrame(stateTime, true));
+//            setRegion(collegeIdle.getKeyFrame(stateTime, true));
+            this.alive.update(deltaTime, collegeBody.getPosition());
             if(collegeBody.getFixtureList().get(1).getUserData().toString().contains("Attack")) {
                 cannons.spawnCannon(this);
             }
@@ -104,17 +121,17 @@ public class College extends Sprite {
      * @param batch to draw on the screen
      */
     public void extendedDraw(SpriteBatch batch) {
-        this.draw(batch);
-        if(health >= 0f) {
-            if (health > .6f)
-                batch.setColor(Color.GREEN);
-            else if (health > .2f)
-                batch.setColor(Color.ORANGE);
-            else
-                batch.setColor(Color.RED);
-            batch.draw(healthBar, collegeBody.getPosition().x - .5f * health/2 - .1f/2, collegeBody.getPosition().y + collegeBody.getFixtureList().get(0).getShape().getRadius() + .05f, .5f * health + .1f, .05f);
-            batch.setColor(Color.WHITE);
-        }
+        this.alive.draw(batch);
+//        if(health >= 0f) {
+//            if (health > .6f)
+//                batch.setColor(Color.GREEN);
+//            else if (health > .2f)
+//                batch.setColor(Color.ORANGE);
+//            else
+//                batch.setColor(Color.RED);
+//            batch.draw(healthBar, collegeBody.getPosition().x - .5f * health/2 - .1f/2, collegeBody.getPosition().y + collegeBody.getFixtureList().get(0).getShape().getRadius() + .05f, .5f * health + .1f, .05f);
+//            batch.setColor(Color.WHITE);
+//        }
     }
 
     /**
