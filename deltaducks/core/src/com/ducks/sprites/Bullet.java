@@ -56,6 +56,7 @@ public class Bullet {
         CircleShape shape = new CircleShape();
         shape.setRadius(10 / DeltaDucks.PIXEL_PER_METER);
         this.rigidBody = new RigidBody(shape, position, category, mask, BodyType.Dynamic, 0.5f);
+        //this.rigidBody.getBody().
     }
 
     public void draw(SpriteBatch batch) {

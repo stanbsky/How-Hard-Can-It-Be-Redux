@@ -39,8 +39,12 @@ public class Ship extends Sprite {
     private final int SHIP_WIDTH = 128;
     private final int SHIP_HEIGHT = 128;
 
-    private final int SHIP_SPAWN_X = 1370;
-    private final int SHIP_SPAWN_Y = 1340;
+//    private final int SHIP_SPAWN_X = 29;
+//    private final int SHIP_SPAWN_Y = 52;
+//    private final int SHIP_SPAWN_X = 1370;
+//    private final int SHIP_SPAWN_Y = 1340;
+    private final int SHIP_SPAWN_X = 3358;
+    private final int SHIP_SPAWN_Y = 5563;
 
     private final int SPRITE_RADIUS = 1;
 
@@ -114,6 +118,9 @@ public class Ship extends Sprite {
      */
     public void update(float deltaTime) {
         stateTime += deltaTime;
+//        System.out.printf("%.2f , %.2f",b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+//        System.out.printf("%.2f",b2body.getPosition().x - getWidth() / 2);
+//        System.out.println(b2body.getPosition());
         setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
         setRegion(getFrame(deltaTime));
 //        setRegion(shipStand);

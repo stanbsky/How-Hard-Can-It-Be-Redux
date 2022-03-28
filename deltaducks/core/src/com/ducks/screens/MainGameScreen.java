@@ -59,14 +59,16 @@ public class MainGameScreen implements Screen {
     private Bullet bullet;
     private ListOfBullets bullets;
     private ListOfCannons cannons;
+    private DrawTest drawTest;
 
     private MyContactListener contactListener;
 
-    private static float ACCELERATION = 1f;
-    private static float MAX_VELOCITY = 4f;
+    //TODO: reset to 1 & 4 for production
+    private static float ACCELERATION = 10f;
+    private static float MAX_VELOCITY = 40f;
 
     public static Content resources;
-    private TextureAtlas atlas;
+    private static TextureAtlas atlas;
 
     /**
      * Constructor
@@ -75,7 +77,7 @@ public class MainGameScreen implements Screen {
     public MainGameScreen(DeltaDucks game) {
         this.game = game;
         resources = new Content();
-        atlas = new TextureAtlas("com/ducks/sprites/ship.pack");
+        atlas = new TextureAtlas("all_assets.atlas");
         MainGameScreen.resources.loadTexture("bunny.png", "badlogic");
         MainGameScreen.resources.loadTexture("Idle.png", "worm");
         MainGameScreen.resources.loadTexture("crosshair.png", "crosshair");
@@ -99,13 +101,14 @@ public class MainGameScreen implements Screen {
         MainGameScreen.resources.loadTexture("college constantine.png", "college constantine");
         MainGameScreen.resources.loadTexture("college goodrick.png", "college goodrick");
         MainGameScreen.resources.loadTexture("college halifax.png", "college halifax");
+        MainGameScreen.resources.loadTexture("before_pack/warning256.png", "warning256");
     }
 
     /**
      * Method to get the texture atlas
      * @return texture packs
      */
-    public TextureAtlas getAtlas() { return atlas;}
+    public static TextureAtlas getAtlas() { return atlas;}
 
     /**
      * Initialize once the screen is visible
@@ -143,7 +146,8 @@ public class MainGameScreen implements Screen {
 
         contactListener = new MyContactListener(player, subtitle);
         world.setContactListener(contactListener);
-        b2dr = new Box2DDebugRenderer();
+        //TODO: debug rendering
+        b2dr = new Box2DDebugRenderer(true, false, true, true, false, true);
 
         new B2WorldCreator(world, map);
 
@@ -155,6 +159,7 @@ public class MainGameScreen implements Screen {
         cannons = new ListOfCannons(player);
         colleges = new ListOfColleges(world, this, cannons, map);
         tutorial = new Tutorial(gameCam, player);
+        drawTest = new DrawTest();
     }
 
     /**
@@ -241,12 +246,14 @@ public class MainGameScreen implements Screen {
         // Render our game map
         renderer.render();
 
+        //TODO: debug rendering
         // Render our Box2DDebugLines
-//        b2dr.render(world, gameCam.combined);
+        b2dr.render(world, gameCam.combined);
 
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
+        drawTest.draw(game.batch);
         bots.draw(game.batch);
         creatures.draw(game.batch);
         colleges.draw(game.batch);
@@ -299,7 +306,8 @@ public class MainGameScreen implements Screen {
         map.dispose();
         renderer.dispose();
 //        world.dispose();
-//        b2dr.dispose();
+        //TODO: debug rendering
+        b2dr.dispose();
 //        hud.dispose();
         radar.dispose();
     }
