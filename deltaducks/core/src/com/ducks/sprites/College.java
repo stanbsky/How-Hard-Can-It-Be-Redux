@@ -1,9 +1,7 @@
 package com.ducks.sprites;
 
-import com.badlogic.gdx.graphics.Color;
 //import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -29,6 +27,7 @@ public class College {
 
     private final float COLLEGE_WIDTH = PIXEL_COLLEGE_WIDTH * .1f;
     public static final float COLLEGE_HEIGHT = PIXEL_COLLEGE_HEIGHT * .1f;
+    private final float SCALE = 1f;
 
     public final float OUTER_RADIUS = 4f;
 
@@ -42,8 +41,7 @@ public class College {
 
     public float health;
 //    Texture healthBar;
-    Texture alive;
-    Texture dead;
+    Texture texture;
     private Vector2 position;
 
     /**
@@ -72,8 +70,9 @@ public class College {
 
 //        frames.add(new TextureRegion(getTexture(), 0, 0, PIXEL_COLLEGE_WIDTH, PIXEL_COLLEGE_HEIGHT));
         this.position = new Vector2(spawn_x, spawn_y);
-        this.alive = new Texture(collegeName, this.position, PIXEL_COLLEGE_WIDTH, PIXEL_COLLEGE_HEIGHT);
-        this.dead = null;
+        //TODO: change to AtlasRegion
+        this.texture = new Texture(collegeName, this.position, SCALE);
+        //this.alive = new Texture(collegeName, this.position, PIXEL_COLLEGE_WIDTH, PIXEL_COLLEGE_HEIGHT);
 //        collegeIdle = new Animation(0.1f, frames);
 //        frames.clear();
 //        for(int i=0; i<1; i++) {
@@ -95,17 +94,16 @@ public class College {
      */
     public void update(float deltaTime) {
         stateTime += deltaTime;
-        if(health <= 0f) {
+        if((health <= 0f) && (health > -100f)) {
 //            setRegion(collegeDestroyed.getKeyFrame(stateTime, true));
-            if (this.dead == null) {
-                this.alive.dispose();
-                this.dead = new Texture("college destroyed", this.position, PIXEL_COLLEGE_WIDTH, PIXEL_COLLEGE_HEIGHT);
-            }
-            this.dead.update(deltaTime, collegeBody.getPosition());
-            health = -10f;
+            //TODO: change to AtlasRegion
+            this.texture = new Texture("destroyed", this.position, SCALE);
+            this.texture.update(deltaTime, collegeBody.getPosition());
+            health = -100f;
         } else {
 //            setRegion(collegeIdle.getKeyFrame(stateTime, true));
-            this.alive.update(deltaTime, collegeBody.getPosition());
+            //TODO: change to AtlasRegion
+            this.texture.update(deltaTime, collegeBody.getPosition());
             if(collegeBody.getFixtureList().get(1).getUserData().toString().contains("Attack")) {
                 cannons.spawnCannon(this);
             }
@@ -121,7 +119,9 @@ public class College {
      * @param batch to draw on the screen
      */
     public void extendedDraw(SpriteBatch batch) {
-        this.alive.draw(batch);
+        //TODO: change to AtlasRegion
+        this.texture.render(batch);
+        //TODO: health bar needs drawing
 //        if(health >= 0f) {
 //            if (health > .6f)
 //                batch.setColor(Color.GREEN);
@@ -131,6 +131,7 @@ public class College {
 //                batch.setColor(Color.RED);
 //            batch.draw(healthBar, collegeBody.getPosition().x - .5f * health/2 - .1f/2, collegeBody.getPosition().y + collegeBody.getFixtureList().get(0).getShape().getRadius() + .05f, .5f * health + .1f, .05f);
 //            batch.setColor(Color.WHITE);
+
 //        }
     }
 

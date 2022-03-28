@@ -59,13 +59,13 @@ public class ListOfColleges {
             bdef.type = BodyDef.BodyType.StaticBody;
             switch (colleState++) {
                 case 0:
-                    collegeName = "college constantine";
+                    collegeName = "constantine";
                     break;
                 case 1:
-                    collegeName = "college goodrick";
+                    collegeName = "goodricke";
                     break;
                 case 2:
-                    collegeName = "college halifax";
+                    collegeName = "halifax";
                     break;
             }
             collegeBodies.add(new College(world, screen, (rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE, (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE, SPAWN_RADIUS, collegeName, cannons));

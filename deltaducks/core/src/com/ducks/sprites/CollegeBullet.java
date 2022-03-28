@@ -12,11 +12,12 @@ public class CollegeBullet extends Bullet {
 
     private Animation<TextureRegion> bulletIdle;
 
-    private final int PIXEL_BULLET_WIDTH = 256;
-    private final int PIXEL_BULLET_HEIGHT = 256;
-
-    private final float BULLET_WIDTH = PIXEL_BULLET_WIDTH * .2f;
-    private final float BULLET_HEIGHT = PIXEL_BULLET_HEIGHT * .2f;
+//    private final int PIXEL_BULLET_WIDTH = 256;
+//    private final int PIXEL_BULLET_HEIGHT = 256;
+//
+//    private final float BULLET_WIDTH = PIXEL_BULLET_WIDTH * .2f;
+//    private final float BULLET_HEIGHT = PIXEL_BULLET_HEIGHT * .2f;
+    private final float SCALE = 0.2f;
 
     private final float BULLET_SPEED = 130f;
 
@@ -33,7 +34,8 @@ public class CollegeBullet extends Bullet {
 //        setBounds(position.x, position.y, BULLET_WIDTH / DeltaDucks.PIXEL_PER_METER, BULLET_HEIGHT / DeltaDucks.PIXEL_PER_METER);
 //        setRegion(bulletIdle.getKeyFrame(stateTime, true));
 
-        this.texture = new Texture("mehnat", position, BULLET_WIDTH, BULLET_HEIGHT);
+//        this.texture = new Texture("mehnat", position, BULLET_WIDTH, BULLET_HEIGHT);
+        this.texture = new Texture("bullet_college256", position, SCALE);
         this.category = DeltaDucks.BIT_CANNONS;
         this.mask = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PLAYER;
         defineBullet(position);
