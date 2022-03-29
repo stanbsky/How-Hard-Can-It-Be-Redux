@@ -14,12 +14,12 @@ public class Bullet {
     protected RigidBody rigidBody;
     float stateTime;
     float spawnTimer;
+    float radius = 10 / DeltaDucks.PIXEL_PER_METER;
     short category;
     short mask;
     Texture texture;
 
     public Bullet() {
-
     }
 
     /**
@@ -42,7 +42,7 @@ public class Bullet {
      */
     public void defineBullet(Vector2 position) {
         CircleShape shape = new CircleShape();
-        shape.setRadius(10 / DeltaDucks.PIXEL_PER_METER);
+        shape.setRadius(radius);
         this.rigidBody = new RigidBody(shape, position, category, mask, BodyType.Dynamic, 0.5f);
     }
 

@@ -9,15 +9,13 @@ import com.ducks.components.Texture;
  */
 public class PlayerBullet extends Bullet {
 
-    private final float SCALE = 0.2f;
-
     private final float BULLET_SPEED = 200f;
 
     /**
      * Constructor
      */
     public PlayerBullet(Vector2 position, Vector2 direction) {
-        this.texture = new Texture("bullet_player256", position, SCALE);
+        this.texture = new Texture("bullet_player", position, radius);
         this.mask = DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
         this.category = DeltaDucks.BIT_BULLETS;
         defineBullet(position);
