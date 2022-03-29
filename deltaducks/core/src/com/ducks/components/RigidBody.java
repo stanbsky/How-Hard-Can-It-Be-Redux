@@ -12,10 +12,6 @@ public class RigidBody {
     private BodyDef bodyDef;
     private FixtureDef fixtureDef;
 
-    public int getBodyId() {
-        return bodyId;
-    }
-
     private int bodyId;
 
     public Body getBody() {

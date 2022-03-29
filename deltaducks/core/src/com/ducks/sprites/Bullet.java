@@ -1,7 +1,5 @@
 package com.ducks.sprites;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -20,9 +18,6 @@ public class Bullet {
     short mask;
     Texture texture;
 
-//    public Bullet(Texture texture) {
-//        super(texture);
-//    }
     public Bullet() {
 
     }
@@ -37,16 +32,9 @@ public class Bullet {
         stateTime += deltaTime;
         spawnTimer += deltaTime;
         this.texture.update(deltaTime, bulletBody.getPosition());
-        //setPosition(bulletBody.getPosition().x - getWidth() / 2, bulletBody.getPosition().y - getHeight() / 2);
         if (spawnTimer > BULLET_SPAWN_DURATION) {
             this.rigidBody.setData("Bullet Dead");
         }
-        /*
-         Why is this even a thing? Killing bullet once it's outside FOV
-        if(!gameCam.frustum.pointInFrustum(new Vector3(bulletBody.getPosition().x, bulletBody.getPosition().y, 0))) {
-            bulletBody.getFixtureList().get(0).setUserData("Bullet Dead");
-        }
-        */
     }
 
     /**
@@ -56,7 +44,6 @@ public class Bullet {
         CircleShape shape = new CircleShape();
         shape.setRadius(10 / DeltaDucks.PIXEL_PER_METER);
         this.rigidBody = new RigidBody(shape, position, category, mask, BodyType.Dynamic, 0.5f);
-        //this.rigidBody.getBody().
     }
 
     public void draw(SpriteBatch batch) {
