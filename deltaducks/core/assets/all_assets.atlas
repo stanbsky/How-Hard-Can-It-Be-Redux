@@ -1,0 +1,233 @@
+all_assets.png
+	size: 2048, 512
+	repeat: none
+bullet_college256
+	bounds: 214, 48, 88, 88
+	offsets: 80, 88, 256, 256
+bullet_college
+	bounds: 214, 48, 88, 88
+bullet_player256
+	bounds: 1826, 274, 88, 88
+	offsets: 80, 88, 256, 256
+bullet_player
+	bounds: 1826, 274, 88, 88
+constantine
+	bounds: 2, 138, 454, 370
+	offsets: 31, 87, 512, 512
+crosshair256
+	bounds: 2, 16, 120, 120
+	offsets: 64, 72, 256, 256
+destroyed
+	bounds: 1370, 202, 454, 306
+	offsets: 31, 87, 512, 512
+explosion256
+	index: 2
+	bounds: 1826, 364, 144, 144
+	offsets: 48, 80, 256, 256
+explosion256
+	index: 1
+	bounds: 1826, 224, 56, 48
+	offsets: 96, 104, 256, 256
+goodricke
+	bounds: 458, 138, 454, 370
+	offsets: 31, 87, 512, 512
+halifax
+	bounds: 914, 138, 454, 370
+	offsets: 31, 87, 512, 512
+player01
+	index: 1
+	bounds: 993, 88, 46, 48
+	offsets: 6, 11, 64, 64
+player01
+	index: 2
+	bounds: 1089, 88, 46, 48
+	offsets: 6, 10, 64, 64
+player02
+	index: 1
+	bounds: 1872, 174, 31, 48
+	offsets: 16, 11, 64, 64
+player02
+	index: 2
+	bounds: 349, 31, 31, 48
+	offsets: 16, 10, 64, 64
+player03
+	index: 2
+	bounds: 1041, 88, 46, 48
+	offsets: 12, 10, 64, 64
+player03
+	index: 1
+	bounds: 1916, 259, 46, 48
+	offsets: 12, 11, 64, 64
+player04
+	index: 2
+	bounds: 602, 88, 47, 48
+	offsets: 6, 10, 64, 64
+player04
+	index: 1
+	bounds: 944, 88, 47, 48
+	offsets: 6, 11, 64, 64
+player06
+	index: 2
+	bounds: 553, 88, 47, 48
+	offsets: 11, 10, 64, 64
+player06
+	index: 1
+	bounds: 895, 88, 47, 48
+	offsets: 11, 11, 64, 64
+player07
+	index: 2
+	bounds: 1964, 249, 43, 50
+	offsets: 10, 8, 64, 64
+player07
+	index: 1
+	bounds: 1827, 172, 43, 50
+	offsets: 10, 9, 64, 64
+player08
+	index: 2
+	bounds: 1827, 122, 31, 48
+	offsets: 16, 10, 64, 64
+player08
+	index: 1
+	bounds: 1893, 124, 31, 48
+	offsets: 16, 11, 64, 64
+player09
+	index: 2
+	bounds: 1967, 301, 43, 50
+	offsets: 11, 8, 64, 64
+player09
+	index: 1
+	bounds: 304, 29, 43, 50
+	offsets: 11, 9, 64, 64
+player1
+	index: 3
+	bounds: 1474, 151, 50, 49
+	offsets: 5, 7, 64, 64
+player1
+	index: 2
+	bounds: 1729, 151, 47, 49
+	offsets: 4, 9, 64, 64
+player1
+	index: 4
+	bounds: 700, 88, 47, 48
+	offsets: 6, 10, 64, 64
+player1
+	index: 1
+	bounds: 1137, 87, 46, 49
+	offsets: 6, 10, 64, 64
+player2
+	index: 4
+	bounds: 1972, 353, 44, 44
+	offsets: 10, 12, 64, 64
+player2
+	index: 3
+	bounds: 2009, 245, 37, 48
+	offsets: 14, 9, 64, 64
+player2
+	index: 1
+	bounds: 124, 2, 31, 44
+	offsets: 16, 13, 64, 64
+player2
+	index: 2
+	bounds: 1860, 122, 31, 48
+	offsets: 16, 10, 64, 64
+player3
+	index: 3
+	bounds: 1579, 151, 50, 49
+	offsets: 9, 7, 64, 64
+player3
+	index: 2
+	bounds: 1631, 151, 47, 49
+	offsets: 13, 9, 64, 64
+player3
+	index: 4
+	bounds: 651, 88, 47, 48
+	offsets: 11, 10, 64, 64
+player3
+	index: 1
+	bounds: 847, 87, 46, 49
+	offsets: 12, 10, 64, 64
+player4
+	index: 2
+	bounds: 451, 84, 47, 52
+	offsets: 6, 6, 64, 64
+player4
+	index: 1
+	bounds: 500, 88, 51, 48
+	offsets: 6, 9, 64, 64
+player4
+	index: 4
+	bounds: 1778, 151, 47, 49
+	offsets: 6, 10, 64, 64
+player4
+	index: 3
+	bounds: 798, 87, 47, 49
+	offsets: 6, 11, 64, 64
+player6
+	index: 2
+	bounds: 402, 84, 47, 52
+	offsets: 11, 6, 64, 64
+player6
+	index: 1
+	bounds: 1526, 152, 51, 48
+	offsets: 7, 9, 64, 64
+player6
+	index: 4
+	bounds: 1680, 151, 47, 49
+	offsets: 11, 10, 64, 64
+player6
+	index: 3
+	bounds: 749, 87, 47, 49
+	offsets: 11, 11, 64, 64
+player7
+	index: 4
+	bounds: 1972, 454, 51, 54
+	offsets: 10, 3, 64, 64
+player7
+	index: 2
+	bounds: 304, 81, 46, 55
+	offsets: 10, 2, 64, 64
+player7
+	index: 3
+	bounds: 352, 83, 48, 53
+	offsets: 10, 2, 64, 64
+player7
+	index: 1
+	bounds: 1279, 81, 44, 55
+	offsets: 10, 4, 64, 64
+player8
+	index: 3
+	bounds: 1916, 309, 49, 53
+	offsets: 6, 2, 64, 64
+player8
+	index: 4
+	bounds: 1423, 148, 49, 52
+	offsets: 7, 6, 64, 64
+player8
+	index: 2
+	bounds: 1325, 80, 42, 56
+	offsets: 11, 1, 64, 64
+player8
+	index: 1
+	bounds: 2012, 295, 34, 56
+	offsets: 14, 3, 64, 64
+player9
+	index: 4
+	bounds: 1370, 146, 51, 54
+	offsets: 3, 3, 64, 64
+player9
+	index: 3
+	bounds: 1972, 399, 48, 53
+	offsets: 6, 2, 64, 64
+player9
+	index: 2
+	bounds: 1185, 81, 46, 55
+	offsets: 8, 2, 64, 64
+player9
+	index: 1
+	bounds: 1233, 81, 44, 55
+	offsets: 10, 4, 64, 64
+warning
+	bounds: 124, 48, 88, 88
+warning256
+	bounds: 124, 48, 88, 88
+	offsets: 80, 88, 256, 256

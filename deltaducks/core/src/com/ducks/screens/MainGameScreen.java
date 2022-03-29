@@ -21,11 +21,11 @@ import com.ducks.scenes.Minimap;
 import com.ducks.scenes.Subtitle;
 import com.ducks.scenes.Tutorial;
 import com.ducks.sprites.Bullet;
+import com.ducks.sprites.Ship;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.Content;
 import com.ducks.tools.MyContactListener;
 import com.ducks.sprites.Crosshair;
-import com.ducks.sprites.Ship;
 
 /***
  * Game Screen
@@ -59,7 +59,6 @@ public class MainGameScreen implements Screen {
     private Bullet bullet;
     private ListOfBullets bullets;
     private ListOfCannons cannons;
-    private DrawTest drawTest;
 
     private MyContactListener contactListener;
 
@@ -159,7 +158,6 @@ public class MainGameScreen implements Screen {
         cannons = new ListOfCannons(player);
         colleges = new ListOfColleges(world, this, cannons, map);
         tutorial = new Tutorial(gameCam, player);
-        drawTest = new DrawTest();
     }
 
     /**
@@ -253,7 +251,6 @@ public class MainGameScreen implements Screen {
 
         game.batch.setProjectionMatrix(gameCam.combined);
         game.batch.begin();
-        drawTest.draw(game.batch);
         bots.draw(game.batch);
         creatures.draw(game.batch);
         colleges.draw(game.batch);
