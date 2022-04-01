@@ -35,6 +35,10 @@ public class DeltaDucks extends Game {
 	// Batch to draw Game
 	public SpriteBatch batch;
 
+	public static float scl(float dim) {
+		return dim / PIXEL_PER_METER;
+	}
+
 	/***
 	 * Decide which screen to run first
 	 */

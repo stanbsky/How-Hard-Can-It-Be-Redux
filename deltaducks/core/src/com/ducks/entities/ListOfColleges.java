@@ -56,6 +56,7 @@ public class ListOfColleges {
         int colleState = 0;
         for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
+            System.out.println(rect);
             bdef.type = BodyDef.BodyType.StaticBody;
             switch (colleState++) {
                 case 0:
@@ -68,7 +69,10 @@ public class ListOfColleges {
                     collegeName = "halifax";
                     break;
             }
-            collegeBodies.add(new College(world, screen, (rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE, (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE, SPAWN_RADIUS, collegeName, cannons));
+            collegeBodies.add(new College(world, screen,
+                    (rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE,
+                    (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE,
+                    SPAWN_RADIUS, collegeName, cannons));
         }
     }
 

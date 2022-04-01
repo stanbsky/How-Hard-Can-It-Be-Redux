@@ -24,6 +24,9 @@ public class Texture extends Sprite {
         y = pos.y - this.height/2;
     }
 
+    public Texture() {
+    }
+
     public void update(float deltaTime, Vector2 pos) {
         stateTime += deltaTime;
         x = pos.x - width/2;
