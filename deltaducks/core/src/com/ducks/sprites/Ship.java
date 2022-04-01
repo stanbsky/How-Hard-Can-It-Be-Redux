@@ -24,6 +24,7 @@ public class Ship {
     private float height;
     private float x;
     private float y;
+    private float radius = 128/2.5f / DeltaDucks.PIXEL_PER_METER;
     private AtlasRegion frame;
 
     private final int SHIP_WIDTH = 128;
@@ -40,18 +41,15 @@ public class Ship {
 
     /**
      * Constructor
-     * @param world Box2D world
-     * @param screen Game Screen
      */
-    public Ship(World world, MainGameScreen screen) {
+    public Ship(World world) {
         animation = new ShipAnimation("player", SHIP_FRAME_DURATION);
         this.world = world;
         direction = 6;
         moving = false;
 
         frame = animation.getFrame(0f, direction, false);
-        width = frame.originalWidth / DeltaDucks.PIXEL_PER_METER;
-        height = frame.originalHeight / DeltaDucks.PIXEL_PER_METER;
+        width = height = radius*3f;
 
         x = SHIP_SPAWN_X - width/2;
         y = SHIP_SPAWN_Y - height/2;
@@ -68,11 +66,9 @@ public class Ship {
 //        System.out.printf("%.2f , %.2f",b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
 //        System.out.printf("%.2f",b2body.getPosition().x - getWidth() / 2);
 //        System.out.println(b2body.getPosition());
+        frame = animation.getFrame(stateTime, getDirection(), moving);
         x = b2body.getPosition().x - width/2;
         y = b2body.getPosition().y - height/2;
-        frame = animation.getFrame(stateTime, getDirection(), moving);
-        width = frame.getRegionWidth() / DeltaDucks.PIXEL_PER_METER;
-        height = frame.getRegionHeight() / DeltaDucks.PIXEL_PER_METER;
     }
 
     public void draw(SpriteBatch batch) {
@@ -118,7 +114,7 @@ public class Ship {
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(SHIP_WIDTH/2.5f / DeltaDucks.PIXEL_PER_METER);
+        shape.setRadius(radius);
 
         fdef.shape = shape;
         fdef.filter.categoryBits = DeltaDucks.BIT_PLAYER;

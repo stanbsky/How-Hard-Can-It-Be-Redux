@@ -141,7 +141,7 @@ public class MainGameScreen implements Screen {
         world = new World(new Vector2(0, 0), true);
         PhysicsManager.Initialize(world);
 
-        player = new Ship(world, this);
+        player = new Ship(world);
 
         contactListener = new MyContactListener(player, subtitle);
         world.setContactListener(contactListener);
