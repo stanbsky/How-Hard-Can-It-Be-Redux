@@ -1,18 +1,13 @@
 package com.ducks.sprites;
 
-//import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.components.HealthBar;
 import com.ducks.components.Texture;
 import com.ducks.entities.ListOfCannons;
 import com.ducks.scenes.Hud;
-import com.ducks.screens.MainGameScreen;
 
 import static com.ducks.DeltaDucks.scl;
 
@@ -58,7 +53,7 @@ public class College {
         System.out.println(spawn_x + "," + spawn_y + "," + radius);
         health = 1f;
         hpBar = new HealthBar(spawn_x - radius, spawn_y + radius,
-                radius*2, 10f, true, health);
+                radius*2, 10f, true, health, false);
 
         this.position = new Vector2(spawn_x, spawn_y);
         this.texture = new Texture(collegeName, this.position, scl(radius));

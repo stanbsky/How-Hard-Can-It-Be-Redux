@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
+import com.ducks.components.HealthBar;
 import com.ducks.screens.MainGameScreen;
 
 /***
@@ -34,6 +35,7 @@ public class Hud implements Disposable {
     private Label expTagLabel;
 
     private static float health;
+    private HealthBar hpBar;
 
     private FreeTypeFontGenerator generator;
     private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
@@ -49,6 +51,7 @@ public class Hud implements Disposable {
         gold = 0;
         health = 1f;
 
+        hpBar = new HealthBar(173, 0,5f,172f,false, health, true);
         viewport = new FitViewport(DeltaDucks.VIRTUAL_WIDTH, DeltaDucks.VIRTUAL_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, batch);
 
@@ -90,15 +93,16 @@ public class Hud implements Disposable {
         batch.setProjectionMatrix(stage.getCamera().combined);
         stage.draw();
         batch.begin();
-        Texture healthBar = MainGameScreen.resources.getTexture("blank");
-        if (health > .6f)
-            batch.setColor(Color.GREEN);
-        else if (health > .2f)
-            batch.setColor(Color.ORANGE);
-        else
-            batch.setColor(Color.RED);
-        batch.draw(healthBar, 173, 0, 5f, 160 * health + 12f);
-        batch.setColor(Color.WHITE);
+//        Texture healthBar = MainGameScreen.resources.getTexture("blank");
+//        if (health > .6f)
+//            batch.setColor(Color.GREEN);
+//        else if (health > .2f)
+//            batch.setColor(Color.ORANGE);
+//        else
+//            batch.setColor(Color.RED);
+//        batch.draw(healthBar, 173, 0, 5f, 160 * health + 12f);
+//        batch.setColor(Color.WHITE);
+        this.hpBar.render(batch);
         batch.end();
     }
 
@@ -108,6 +112,7 @@ public class Hud implements Disposable {
      */
     public void update(float deltaTime) {
         timeCount += deltaTime;
+        hpBar.update(health);
         if(timeCount >= 1) {
             worldTimer--;
             countdownLabel.setText(String.format("%03d", worldTimer));
