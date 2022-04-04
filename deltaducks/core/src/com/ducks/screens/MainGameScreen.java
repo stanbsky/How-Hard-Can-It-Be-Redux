@@ -153,7 +153,7 @@ public class MainGameScreen implements Screen {
         bots = new ListOfPirates(world, this, map);
         creatures = new ListOfMonsters(world, this);
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
-        crosshair = new Crosshair(world, this, player, gameCam, gamePort);
+        crosshair = new Crosshair(player, gameCam);
         bullets = new ListOfBullets(player);
         cannons = new ListOfCannons(player);
         colleges = new ListOfColleges(world, this, cannons, map);
