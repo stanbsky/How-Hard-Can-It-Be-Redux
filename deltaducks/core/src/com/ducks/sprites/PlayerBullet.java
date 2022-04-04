@@ -14,12 +14,13 @@ public class PlayerBullet extends Bullet {
     /**
      * Constructor
      */
-    public PlayerBullet(Vector2 position, Vector2 direction) {
+    public PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
         this.texture = new Texture("bullet_player", position, radius);
         this.mask = DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
         this.category = DeltaDucks.BIT_BULLETS;
         defineBullet(position);
         this.rigidBody.setData("Bullet Alive");
+        this.rigidBody.applyForce(shipMomentum, 55f);
         this.rigidBody.applyForce(direction, BULLET_SPEED);
     }
 
