@@ -2,6 +2,7 @@ package com.ducks.components;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.DeltaDucks;
@@ -11,10 +12,10 @@ public class Texture extends Sprite {
 
     float stateTime;
     TextureRegion frame;
-    float x;
-    float y;
-    float width;
-    float height;
+    protected float x;
+    protected float y;
+    protected float width;
+    protected float height;
 
     public Texture(String name, Vector2 pos, float radius) {
         frame = MainGameScreen.getAtlas().findRegion(name);
@@ -37,4 +38,13 @@ public class Texture extends Sprite {
         batch.draw(this.frame, this.x, this.y, width, height);
     }
 
+    @Override
+    public float getWidth() {
+        return width;
+    }
+
+    @Override
+    public float getHeight() {
+        return height;
+    }
 }
