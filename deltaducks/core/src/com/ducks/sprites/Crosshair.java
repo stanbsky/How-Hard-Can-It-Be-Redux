@@ -17,7 +17,8 @@ public class Crosshair {
     private Ship player;
     private OrthographicCamera gameCam;
     private Texture texture;
-    private static Vector2 position;
+    private static Vector2 direction;
+    private Vector2 position;
 
     private float crosshairRadius = 1.2f;
 
@@ -62,19 +63,18 @@ public class Crosshair {
         float y = player.b2body.getPosition().y - loc.y - this.texture.getHeight()/2 +
                 player.b2body.getFixtureList().get(0).getShape().getRadius();
         // Scale coordinates to fit the radius around the ship
-        Vector2 loc2 = new Vector2(x, y).nor().scl(-1f * crosshairRadius);
+        direction = new Vector2(x, y).nor().scl(-1f * crosshairRadius);
         // Offset the radius by the size of the ship body
-        loc2.x = player.b2body.getPosition().x + loc2.x;
-        loc2.y = player.b2body.getPosition().y + loc2.y;
-        position = loc2;
+        position.x = player.b2body.getPosition().x + direction.x;
+        position.y = player.b2body.getPosition().y + direction.y;
     }
 
     /**
-     * get X and Y coordinates of the crosshair
+     * Returns the direction vector for the crosshair
      * @return Vector2
      */
-    public static Vector2 getCrosshair() {
-        return position;
+    public static Vector2 getCrosshairDirection() {
+        return direction;
     }
 
     /**
