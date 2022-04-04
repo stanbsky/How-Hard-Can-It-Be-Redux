@@ -69,10 +69,10 @@ public class ListOfColleges {
                     collegeName = "halifax";
                     break;
             }
-            collegeBodies.add(new College(world, screen,
+            collegeBodies.add(new College(
                     (rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE,
                     (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE,
-                    SPAWN_RADIUS, collegeName, cannons));
+                    collegeName, cannons, world));
         }
     }
 

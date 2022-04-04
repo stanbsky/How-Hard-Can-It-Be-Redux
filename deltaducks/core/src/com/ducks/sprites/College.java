@@ -1,18 +1,13 @@
 package com.ducks.sprites;
 
-//import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.components.HealthBar;
 import com.ducks.components.Texture;
 import com.ducks.entities.ListOfCannons;
 import com.ducks.scenes.Hud;
-import com.ducks.screens.MainGameScreen;
 
 import static com.ducks.DeltaDucks.scl;
 
@@ -35,39 +30,35 @@ public class College {
     float stateTime;
 
     public Body collegeBody;
-    ListOfCannons cannons;
+    private ListOfCannons cannons;
 
     public String name;
 
     public float health;
-    Texture texture;
-    HealthBar hpBar;
+    private Texture texture;
+    private HealthBar hpBar;
     private Vector2 position;
 
     /**
      * Constructor
-     * @param world Box2D world
-     * @param screen Game Screen
      * @param spawn_x X coordinate of the college
      * @param spawn_y Y coordinate of the college
-     * @param spawn_radius Radius of the college Box2D body
      * @param collegeName Name of the College
      * @param cannons Cannons class to spawn and add Cannon round
      */
-    public College(World world, MainGameScreen screen, float spawn_x, float spawn_y, float spawn_radius, String collegeName, ListOfCannons cannons) {
+    public College(float spawn_x, float spawn_y, String collegeName, ListOfCannons cannons, World world) {
         name = collegeName;
         this.world = world;
         this.cannons = cannons;
-        spawn_radius = radius;
-        System.out.println(spawn_x + "," + spawn_y + "," + spawn_radius);
+        System.out.println(spawn_x + "," + spawn_y + "," + radius);
         health = 1f;
-        hpBar = new HealthBar(scl(spawn_x - spawn_radius), scl(spawn_y + spawn_radius),
-                scl(spawn_radius*2), scl(10f), true, health);
+        hpBar = new HealthBar(spawn_x - radius, spawn_y + radius,
+                radius*2, 10f, true, health, false);
 
         this.position = new Vector2(spawn_x, spawn_y);
         this.texture = new Texture(collegeName, this.position, scl(radius));
 
-        defineCollege(spawn_x, spawn_y, spawn_radius);
+        defineCollege(spawn_x, spawn_y, radius);
     }
 
     /**
