@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.screens.MainGameScreen;
 
+import static com.ducks.DeltaDucks.scl;
+
 public class HealthBar extends Texture {
     private final float maxHP;
     private float hp;
@@ -12,15 +14,15 @@ public class HealthBar extends Texture {
     public HealthBar(float x, float y, float width, float height, boolean horizontal, float hp) {
         frame = MainGameScreen.getAtlas().findRegion("blank");
         this.maxHP = this.hp = hp;
-        this.x = x;
-        this.y = y;
+        this.x = scl(x);
+        this.y = scl(y);
         if (!horizontal) {
             float temp = width;
             width = height;
             height = temp;
         }
-        this.width = width;
-        this.height = height;
+        this.width = scl(width);
+        this.height = scl(height);
     }
 
     public void update(float hp) {
