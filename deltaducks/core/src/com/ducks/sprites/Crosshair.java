@@ -56,6 +56,8 @@ public class Crosshair {
     public void updatePosition() {
         // Get mouse coordinates on screen
         Vector3 loc = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        // Lock mouse to screen center
+        Gdx.input.setCursorPosition((Gdx.graphics.getWidth()/2),(Gdx.graphics.getHeight()/2));
         // Transform mouse coordinates into world coordinates
         gameCam.unproject(loc, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         float x = player.b2body.getPosition().x - loc.x - this.texture.getWidth()/2 +
