@@ -69,7 +69,7 @@ public class Crosshair {
         position.x = player.b2body.getPosition().x + direction.x;
         position.y = player.b2body.getPosition().y + direction.y;
         // Lock mouse to crosshair
-        Gdx.input.setCursorPosition(Math.round(midX + (120*direction.x)), Math.round(midY - (120*direction.y)));
+        Gdx.input.setCursorPosition(Math.round(midX + (150*direction.x)), Math.round(midY - (150*direction.y)));
     }
 
     /**
