@@ -54,16 +54,18 @@ public class Crosshair {
      * @return world coordinate Vector2 for drawing the crosshair texture
      */
     public void updatePosition() {
+        int midX = Gdx.graphics.getWidth()/2;
+        int midY = Gdx.graphics.getHeight()/2;
         // Get mouse coordinates on screen
-        Vector3 loc = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        Vector2 loc = new Vector2(Gdx.input.getX(), Gdx.input.getY());
         // Lock mouse to screen center
-        Gdx.input.setCursorPosition((Gdx.graphics.getWidth()/2),(Gdx.graphics.getHeight()/2));
+        Gdx.input.setCursorPosition(midX, midY);
         // Transform mouse coordinates into world coordinates
-        gameCam.unproject(loc, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        float x = player.b2body.getPosition().x - loc.x - this.texture.getWidth()/2 +
-                player.b2body.getFixtureList().get(0).getShape().getRadius();
-        float y = player.b2body.getPosition().y - loc.y - this.texture.getHeight()/2 +
-                player.b2body.getFixtureList().get(0).getShape().getRadius();
+//        gameCam.unproject(loc, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        float x = midX - loc.x/* - this.texture.getWidth()/2 +
+                player.b2body.getFixtureList().get(0).getShape().getRadius()*/;
+        float y = -midY + loc.y/* - this.texture.getHeight()/2 +
+                player.b2body.getFixtureList().get(0).getShape().getRadius()*/;
         // Scale coordinates to fit the radius around the ship
         direction = new Vector2(x, y).nor().scl(-1f * crosshairRadius);
         // Offset the radius by the size of the ship body
