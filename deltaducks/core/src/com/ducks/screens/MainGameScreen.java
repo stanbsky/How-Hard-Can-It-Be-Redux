@@ -44,6 +44,9 @@ public class MainGameScreen implements Screen {
     private int mapPixelWidth;
     private int mapPixelHeight;
 
+    private boolean isPaused;
+    private boolean escPressed;
+
     // Box2d Variables
     private World world;
     private Box2DDebugRenderer b2dr;
@@ -101,6 +104,8 @@ public class MainGameScreen implements Screen {
         MainGameScreen.resources.loadTexture("college goodrick.png", "college goodrick");
         MainGameScreen.resources.loadTexture("college halifax.png", "college halifax");
         MainGameScreen.resources.loadTexture("before_pack/warning256.png", "warning256");
+
+        hideCursor();
     }
 
     /**
@@ -236,8 +241,23 @@ public class MainGameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        update(delta);
-
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            if (!escPressed) {
+                escPressed = true;
+                isPaused = !isPaused;
+                if (isPaused) {
+                    showCursor();
+                } else {
+                    hideCursor();
+                }
+            }
+        }
+        else if (escPressed) {
+            escPressed = false;
+        }
+        if (!isPaused) {
+            update(delta);
+        }
         Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -307,5 +327,15 @@ public class MainGameScreen implements Screen {
         b2dr.dispose();
 //        hud.dispose();
         radar.dispose();
+    }
+
+    public void hideCursor() {
+        Pixmap blank = new Pixmap(1,1, Pixmap.Format.RGBA8888);
+        Cursor hidden = Gdx.graphics.newCursor(blank, 0, 0);
+        Gdx.graphics.setCursor(hidden);
+    }
+
+    public void showCursor() {
+        Gdx.graphics.setSystemCursor(Cursor.SystemCursor.Arrow);
     }
 }
