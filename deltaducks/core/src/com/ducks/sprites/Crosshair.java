@@ -15,22 +15,21 @@ import static com.ducks.DeltaDucks.scl;
 public class Crosshair {
 
     private Ship player;
-    private OrthographicCamera gameCam;
     private Texture texture;
     private static Vector2 direction;
     private Vector2 position;
 
     private float crosshairRadius = 1.2f;
 
+    int midX = Gdx.graphics.getWidth()/2;
+    int midY = Gdx.graphics.getHeight()/2;
 
     /**
      * Constructor
      * @param player Box2D object of player
-     * @param gameCam OrthographicCamera
      */
-    public Crosshair(Ship player, OrthographicCamera gameCam) {
+    public Crosshair(Ship player) {
         this.player = player;
-        this.gameCam = gameCam;
 
         position = new Vector2(0, 0);
         this.texture = new Texture("crosshair256", position, scl(25.6f));
@@ -51,22 +50,23 @@ public class Crosshair {
 
     /**
      * Transforms player's mouse location into the coordinates where the crosshair must be drawn
-     * @return world coordinate Vector2 for drawing the crosshair texture
      */
     public void updatePosition() {
+        midX = Gdx.graphics.getWidth()/2;
+        midY = Gdx.graphics.getHeight()/2;
         // Get mouse coordinates on screen
-        Vector3 loc = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+        Vector2 loc = new Vector2(Gdx.input.getX(), Gdx.input.getY());
         // Transform mouse coordinates into world coordinates
-        gameCam.unproject(loc, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        float x = player.getPosition().x - loc.x - this.texture.getWidth()/2 +
-                player.getRadius();
-        float y = player.getPosition().y - loc.y - this.texture.getHeight()/2 +
-                player.getRadius();
+        float x = midX - loc.x;
+        float y = -midY + loc.y;
         // Scale coordinates to fit the radius around the ship
         direction = new Vector2(x, y).nor().scl(-1f * crosshairRadius);
         // Offset the radius by the size of the ship body
         position.x = player.getPosition().x + direction.x;
         position.y = player.getPosition().y + direction.y;
+        // Lock mouse to crosshair
+        moveMouseToCrosshair();
+        //Gdx.input.setCursorPosition(Math.round(midX + (150*direction.x)), Math.round(midY - (150*direction.y)));
     }
 
     /**
@@ -75,6 +75,13 @@ public class Crosshair {
      */
     public static Vector2 getCrosshairDirection() {
         return direction;
+    }
+
+    /**
+     * Moves the player's mouse location to the coordinates of the crosshair
+     */
+    public void moveMouseToCrosshair() {
+        Gdx.input.setCursorPosition(Math.round(midX + (150*direction.x)), Math.round(midY - (150*direction.y)));
     }
 
     /**
