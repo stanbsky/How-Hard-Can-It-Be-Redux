@@ -27,6 +27,8 @@ import com.ducks.tools.MyContactListener;
 import com.ducks.sprites.Crosshair;
 import com.ducks.sprites.Ship;
 
+import static com.ducks.DeltaDucks.scl;
+
 /***
  * Game Screen
  */
@@ -165,6 +167,7 @@ public class MainGameScreen implements Screen {
      * @param deltaTime of the game
      */
     public void handleInput(float deltaTime) {
+        Body b2body = player.getBody();
         if ((Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) && player.b2body.getLinearVelocity().y <= MAX_VELOCITY)
             player.b2body.applyForce(new Vector2(0, ACCELERATION), player.b2body.getWorldCenter(), true);
         if ((Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) && player.b2body.getLinearVelocity().y >= -MAX_VELOCITY)
@@ -202,7 +205,7 @@ public class MainGameScreen implements Screen {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
-        handleInput(deltaTime);
+        //handleInput(deltaTime);
         handleTime(deltaTime);
 
         world.step(deltaTime, 6, 2);
@@ -212,18 +215,26 @@ public class MainGameScreen implements Screen {
         creatures.update(deltaTime);
         colleges.update(deltaTime);
         hud.update(deltaTime);
-        radar.update(player.b2body, colleges);
+        radar.update(player, colleges);
         tutorial.update(deltaTime);
         subtitle.update(deltaTime);
         crosshair.update(deltaTime);
         bullets.update(deltaTime);
         cannons.update(deltaTime);
 
-        gameCam.position.x = player.b2body.getPosition().x;
-        gameCam.position.y = player.b2body.getPosition().y;
+//        gameCam.position.x = scl(player.getPosition().x);
+//        gameCam.position.y = scl(player.getPosition().y);
+//        gameCam.position.x = player.getBody().getPosition().x;
+//        gameCam.position.y = player.getBody().getPosition().y;
+        gameCam.position.x = player.getPosition().x;
+        gameCam.position.y = player.getPosition().y;
+
+//        System.out.println("Preclamp: "+gameCam.position);
 
         gameCam.position.x = MathUtils.clamp(gameCam.position.x, gameCam.viewportWidth/2, mapPixelWidth/DeltaDucks.PIXEL_PER_METER - gameCam.viewportWidth/2);
         gameCam.position.y = MathUtils.clamp(gameCam.position.y, gameCam.viewportHeight/2, mapPixelHeight/DeltaDucks.PIXEL_PER_METER - gameCam.viewportHeight/2);
+
+//        System.out.println("Postclamp: "+gameCam.position);
 
         gameCam.update();
 

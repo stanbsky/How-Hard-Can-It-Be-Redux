@@ -35,12 +35,12 @@ public class MyContactListener implements ContactListener {
         Fixture fb = contact.getFixtureB();
 
 //        System.out.println(fa.getUserData()+", "+fb.getUserData());
-
-        if(checkCollision(fa, fb, "Player", "Monster Sensor")) {
-            player.b2body.applyLinearImpulse(new Vector2(
-                    player.b2body.getPosition().x - 10 / DeltaDucks.PIXEL_PER_METER, player.b2body.getPosition().y - 32*4 / DeltaDucks.PIXEL_PER_METER
-            ), player.b2body.getWorldCenter(), true);
-        }
+        // TODO: figure out if this Monster thing is totally unimplemented...
+//        if(checkCollision(fa, fb, "Player", "Monster Sensor")) {
+//            player.b2body.applyLinearImpulse(new Vector2(
+//                    player.b2body.getPosition().x - 10 / DeltaDucks.PIXEL_PER_METER, player.b2body.getPosition().y - 32*4 / DeltaDucks.PIXEL_PER_METER
+//            ), player.b2body.getWorldCenter(), true);
+//        }
 
         if(checkCollision(fa, fb, "Player", "College Sensor")) {
             if(checkFixture(fa, "College Sensor")){

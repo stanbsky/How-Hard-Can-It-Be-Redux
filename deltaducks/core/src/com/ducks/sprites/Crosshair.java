@@ -58,15 +58,15 @@ public class Crosshair {
         Vector3 loc = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         // Transform mouse coordinates into world coordinates
         gameCam.unproject(loc, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        float x = player.b2body.getPosition().x - loc.x - this.texture.getWidth()/2 +
-                player.b2body.getFixtureList().get(0).getShape().getRadius();
-        float y = player.b2body.getPosition().y - loc.y - this.texture.getHeight()/2 +
-                player.b2body.getFixtureList().get(0).getShape().getRadius();
+        float x = player.getPosition().x - loc.x - this.texture.getWidth()/2 +
+                player.getRadius();
+        float y = player.getPosition().y - loc.y - this.texture.getHeight()/2 +
+                player.getRadius();
         // Scale coordinates to fit the radius around the ship
         direction = new Vector2(x, y).nor().scl(-1f * crosshairRadius);
         // Offset the radius by the size of the ship body
-        position.x = player.b2body.getPosition().x + direction.x;
-        position.y = player.b2body.getPosition().y + direction.y;
+        position.x = player.getPosition().x + direction.x;
+        position.y = player.getPosition().y + direction.y;
     }
 
     /**

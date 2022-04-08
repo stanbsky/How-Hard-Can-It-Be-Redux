@@ -12,6 +12,7 @@ import com.ducks.DeltaDucks;
 import com.ducks.entities.ListOfCannons;
 import com.ducks.entities.ListOfColleges;
 import com.ducks.sprites.College;
+import com.ducks.sprites.Ship;
 
 /***
  * Minimap for the game
@@ -42,7 +43,7 @@ public class Minimap implements Disposable {
      * @param player Box2d player body
      * @param colleges Box2d colleges body
      */
-    public void update(Body player, ListOfColleges colleges) {
+    public void update(Ship player, ListOfColleges colleges) {
         int width = Math.round(map_width * ratio * DeltaDucks.PIXEL_PER_METER * .3f);
         int height = Math.round(map_height * ratio * DeltaDucks.PIXEL_PER_METER * .3f);
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
@@ -51,8 +52,8 @@ public class Tutorial {
         arrow = new Animation(0.1f, frames);
         frames.clear();
 
-        SPAWN_X = player.b2body.getPosition().x - 2*player.b2body.getFixtureList().get(0).getShape().getRadius() - ARROW_WIDTH /2 / DeltaDucks.PIXEL_PER_METER;
-        SPAWN_Y = player.b2body.getPosition().y - player.b2body.getFixtureList().get(0).getShape().getRadius()/2;
+        SPAWN_X = player.getPosition().x - 2*player.getRadius() - ARROW_WIDTH /2 / DeltaDucks.PIXEL_PER_METER;
+        SPAWN_Y = player.getPosition().y - player.getRadius()/2;
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/futur.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
