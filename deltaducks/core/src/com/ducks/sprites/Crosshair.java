@@ -15,7 +15,6 @@ import static com.ducks.DeltaDucks.scl;
 public class Crosshair {
 
     private Ship player;
-    private OrthographicCamera gameCam;
     private Texture texture;
     private static Vector2 direction;
     private Vector2 position;
@@ -26,11 +25,9 @@ public class Crosshair {
     /**
      * Constructor
      * @param player Box2D object of player
-     * @param gameCam OrthographicCamera
      */
-    public Crosshair(Ship player, OrthographicCamera gameCam) {
+    public Crosshair(Ship player) {
         this.player = player;
-        this.gameCam = gameCam;
 
         position = new Vector2(0, 0);
         this.texture = new Texture("crosshair256", position, scl(25.6f));
@@ -58,8 +55,6 @@ public class Crosshair {
         int midY = Gdx.graphics.getHeight()/2;
         // Get mouse coordinates on screen
         Vector2 loc = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-        // Lock mouse to screen center
-        //Gdx.input.setCursorPosition(midX, midY);
         // Transform mouse coordinates into world coordinates
         float x = midX - loc.x;
         float y = -midY + loc.y;
