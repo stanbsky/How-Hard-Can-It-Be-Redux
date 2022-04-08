@@ -18,6 +18,7 @@ public class RigidBody {
         return PhysicsManager.box2DBodies.get(this.bodyId);
     }
 
+    @Deprecated
     public RigidBody(Shape shape, Vector2 position, short category, short mask,
                      BodyType type, float damping) {
         this.bodyDef = new BodyDef();
@@ -31,6 +32,25 @@ public class RigidBody {
         fixtureDef.filter.maskBits = mask;
         fixtureDef.restitution = 0.2f;
         this.bodyId = PhysicsManager.createBody(bodyDef, fixtureDef);
+    }
+
+    public RigidBody(Vector2 position, BodyType type, float damping) {
+        this.bodyDef = new BodyDef();
+        bodyDef.position.set(position);
+        bodyDef.type = type.getType();
+        bodyDef.linearDamping = damping;
+
+        this.bodyId = PhysicsManager.createBody(bodyDef);
+    }
+
+    public void addFixture(FixtureDef fixture) {
+        fixture.restitution = 0.2f;
+        getBody().createFixture(fixture);
+    }
+
+    public void addSensor(FixtureDef fixture) {
+        fixture.isSensor = true;
+        getBody().createFixture(fixture);
     }
 
     public void setData(String data) {

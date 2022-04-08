@@ -23,6 +23,11 @@ public final class PhysicsManager {
         return box2DBodies.size() - 1;
     }
 
+    public static int createBody(BodyDef bodyDef) {
+        box2DBodies.add(box2DWorld.createBody(bodyDef));
+        return box2DBodies.size() - 1;
+    }
+
     public static void destroyBody(int bodyId) {
         box2DWorld.destroyBody(box2DBodies.get(bodyId));
     }

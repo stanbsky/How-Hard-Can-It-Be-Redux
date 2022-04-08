@@ -84,9 +84,6 @@ public class Ship {
     }
 
     public void draw(SpriteBatch batch) {
-        System.out.println("Direction: " + direction);
-        System.out.println("Tex: " + width + "," + height);
-        System.out.println(frame);
         batch.draw(frame, x, y, width, height);
     }
 
@@ -151,9 +148,13 @@ public class Ship {
      * Define the Box2D body and fixture and map it onto the Box2D world
      */
     public void defineShip() {
+        this.rigidBody = new RigidBody(new Vector2(scl(x), scl(y)), BodyType.Dynamic, 1.2f);
         CircleShape shape = new CircleShape();
         shape.setRadius(radius);
-
-        this.rigidBody = new RigidBody(shape, new Vector2(scl(x), scl(y)), category, mask, BodyType.Dynamic, 1.2f);
+        FixtureDef fixture = new FixtureDef();
+        fixture.shape = shape;
+        fixture.filter.categoryBits = category;
+        fixture.filter.maskBits = mask;
+        rigidBody.addFixture(fixture);
     }
 }
