@@ -124,6 +124,10 @@ public class Ship {
     }
 
     public void applyForce() {
+        if (getVelocity().x > MAX_VELOCITY)
+            force_x = 0;
+        if (getVelocity().y > MAX_VELOCITY)
+            force_y = 0;
         rigidBody.getBody().applyForceToCenter(new Vector2(force_x, force_y), true);
     }
 
