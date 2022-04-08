@@ -21,6 +21,8 @@ public class Crosshair {
 
     private float crosshairRadius = 1.2f;
 
+    int midX = Gdx.graphics.getWidth()/2;
+    int midY = Gdx.graphics.getHeight()/2;
 
     /**
      * Constructor
@@ -48,11 +50,10 @@ public class Crosshair {
 
     /**
      * Transforms player's mouse location into the coordinates where the crosshair must be drawn
-     * @return world coordinate Vector2 for drawing the crosshair texture
      */
     public void updatePosition() {
-        int midX = Gdx.graphics.getWidth()/2;
-        int midY = Gdx.graphics.getHeight()/2;
+        midX = Gdx.graphics.getWidth()/2;
+        midY = Gdx.graphics.getHeight()/2;
         // Get mouse coordinates on screen
         Vector2 loc = new Vector2(Gdx.input.getX(), Gdx.input.getY());
         // Transform mouse coordinates into world coordinates
@@ -64,7 +65,8 @@ public class Crosshair {
         position.x = player.b2body.getPosition().x + direction.x;
         position.y = player.b2body.getPosition().y + direction.y;
         // Lock mouse to crosshair
-        Gdx.input.setCursorPosition(Math.round(midX + (150*direction.x)), Math.round(midY - (150*direction.y)));
+        moveMouseToCrosshair();
+        //Gdx.input.setCursorPosition(Math.round(midX + (150*direction.x)), Math.round(midY - (150*direction.y)));
     }
 
     /**
@@ -73,6 +75,13 @@ public class Crosshair {
      */
     public static Vector2 getCrosshairDirection() {
         return direction;
+    }
+
+    /**
+     * Moves the player's mouse location to the coordinates of the crosshair
+     */
+    public void moveMouseToCrosshair() {
+        Gdx.input.setCursorPosition(Math.round(midX + (150*direction.x)), Math.round(midY - (150*direction.y)));
     }
 
     /**
