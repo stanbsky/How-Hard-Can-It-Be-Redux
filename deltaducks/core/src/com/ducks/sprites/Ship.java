@@ -92,7 +92,7 @@ public class Ship {
         System.out.println("Direction: " + direction);
         System.out.println("Tex: " + width + "," + height);
         System.out.println(frame);
-        batch.draw(frame, x, y, width, height);
+        batch.draw(frame, x/100, y/100, width, height);
     }
 
     /**
