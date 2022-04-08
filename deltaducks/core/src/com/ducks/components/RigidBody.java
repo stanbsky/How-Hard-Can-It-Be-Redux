@@ -48,9 +48,9 @@ public class RigidBody {
         getBody().createFixture(fixture);
     }
 
-    public void addSensor(FixtureDef fixture) {
+    public void addSensor(FixtureDef fixture, String data) {
         fixture.isSensor = true;
-        getBody().createFixture(fixture);
+        getBody().createFixture(fixture).setUserData(data);
     }
 
     public void setData(String data) {

@@ -109,7 +109,7 @@ public class ListOfColleges {
     public Array<Vector2> getCoordinates() {
         Array <Vector2> coordinates = new Array <Vector2>();
         for( College college : collegeBodies) {
-            coordinates.add(college.collegeBody.getPosition());
+            coordinates.add(college.getPosition());
         }
         return coordinates;
     }

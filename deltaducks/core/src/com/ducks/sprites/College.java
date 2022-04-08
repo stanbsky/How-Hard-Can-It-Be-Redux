@@ -4,8 +4,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
+import com.ducks.components.BodyType;
 import com.ducks.components.HealthBar;
+import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
+import com.ducks.components.BodyType;
 import com.ducks.entities.ListOfCannons;
 import com.ducks.scenes.Hud;
 
@@ -38,6 +41,7 @@ public class College {
     private Texture texture;
     private HealthBar hpBar;
     private Vector2 position;
+    private RigidBody rigidBody;
 
     /**
      * Constructor
@@ -70,18 +74,22 @@ public class College {
         hpBar.update(health);
         if((health <= 0f) && (health > -100f)) {
             this.texture = new Texture("destroyed", this.position, SCALE);
-            this.texture.update(deltaTime, collegeBody.getPosition());
+            this.texture.update(deltaTime, rigidBody.getBody().getPosition());
             health = -100f;
         } else {
-            this.texture.update(deltaTime, collegeBody.getPosition());
-            if(collegeBody.getFixtureList().get(1).getUserData().toString().contains("Attack")) {
+            this.texture.update(deltaTime, rigidBody.getBody().getPosition());
+            if(rigidBody.getBody().getFixtureList().get(1).getUserData().toString().contains("Attack")) {
                 cannons.spawnCannon(this);
             }
-            if(collegeBody.getFixtureList().get(0).getUserData().toString().contains("Damage")) {
-                collegeBody.getFixtureList().get(0).setUserData("College");
+            if(rigidBody.getBody().getFixtureList().get(0).getUserData().toString().contains("Damage")) {
+                rigidBody.setData("College");
                 health-=.2f;
             }
         }
+    }
+
+    public Vector2 getPosition() {
+        return rigidBody.getBody().getPosition();
     }
 
     /**
@@ -100,29 +108,48 @@ public class College {
      * @param radius radius of Box2D body
      */
     public void defineCollege(float x, float y, float radius) {
-        BodyDef bdef = new BodyDef();
-        bdef.position.set(x / DeltaDucks.PIXEL_PER_METER, y / DeltaDucks.PIXEL_PER_METER);
-        bdef.type = BodyDef.BodyType.StaticBody;
-        bdef.linearDamping = 1f;
-        collegeBody = world.createBody(bdef);
+        rigidBody = new RigidBody(new Vector2(scl(x), scl(y)), BodyType.Static, 1f);
 
-        FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(radius / DeltaDucks.PIXEL_PER_METER);
-
-        fdef.shape = shape;
-        fdef.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
-        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_BULLETS;
-        fdef.restitution = 0.2f;
-        collegeBody.createFixture(fdef).setUserData("College");
+        shape.setRadius(scl(radius));
+        FixtureDef fixture = new FixtureDef();
+        fixture.shape = shape;
+        fixture.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
+        fixture.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_BULLETS;
+        rigidBody.addFixture(fixture);
+        rigidBody.setData("College");
 
         PolygonShape polyShape = new PolygonShape();
-        polyShape.setAsBox(radius * OUTER_RADIUS / DeltaDucks.PIXEL_PER_METER, radius * OUTER_RADIUS / DeltaDucks.PIXEL_PER_METER, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
-        fdef.shape = polyShape;
-        fdef.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
-        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER;
-        fdef.isSensor = true;
-        collegeBody.createFixture(fdef).setUserData("College Sensor");
+        float side = scl(radius * OUTER_RADIUS);
+        polyShape.setAsBox(side, side, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
+        fixture.shape = polyShape;
+        fixture.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
+        fixture.filter.maskBits = DeltaDucks.BIT_PLAYER;
+        rigidBody.addSensor(fixture, "College Sensor");
+
+//        BodyDef bdef = new BodyDef();
+//        bdef.position.set(x / DeltaDucks.PIXEL_PER_METER, y / DeltaDucks.PIXEL_PER_METER);
+//        bdef.type = BodyDef.BodyType.StaticBody;
+//        bdef.linearDamping = 1f;
+//        collegeBody = world.createBody(bdef);
+//
+//        FixtureDef fdef = new FixtureDef();
+//        CircleShape shape = new CircleShape();
+//        shape.setRadius(radius / DeltaDucks.PIXEL_PER_METER);
+//
+//        fdef.shape = shape;
+//        fdef.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
+//        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_BULLETS;
+//        fdef.restitution = 0.2f;
+//        collegeBody.createFixture(fdef).setUserData("College");
+
+//        PolygonShape polyShape = new PolygonShape();
+//        polyShape.setAsBox(radius * OUTER_RADIUS / DeltaDucks.PIXEL_PER_METER, radius * OUTER_RADIUS / DeltaDucks.PIXEL_PER_METER, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
+//        fdef.shape = polyShape;
+//        fdef.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
+//        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER;
+//        fdef.isSensor = true;
+//        collegeBody.createFixture(fdef).setUserData("College Sensor");
     }
 
     /**
