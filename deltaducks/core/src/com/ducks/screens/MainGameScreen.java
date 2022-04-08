@@ -58,15 +58,10 @@ public class MainGameScreen implements Screen {
     private Crosshair crosshair;
     private Tutorial tutorial;
     private Subtitle subtitle;
-    private Bullet bullet;
     private ListOfBullets bullets;
     private ListOfCannons cannons;
 
     private MyContactListener contactListener;
-
-    //TODO: reset to 1 & 4 for production
-    private static float ACCELERATION = 10f;
-    private static float MAX_VELOCITY = 40f;
 
     public static Content resources;
     private static TextureAtlas atlas;
@@ -164,19 +159,8 @@ public class MainGameScreen implements Screen {
 
     /**
      * Handle any Input
-     * @param deltaTime of the game
      */
-    public void handleInput(float deltaTime) {
-        Body b2body = player.getBody();
-        if ((Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) && player.b2body.getLinearVelocity().y <= MAX_VELOCITY)
-            player.b2body.applyForce(new Vector2(0, ACCELERATION), player.b2body.getWorldCenter(), true);
-        if ((Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) && player.b2body.getLinearVelocity().y >= -MAX_VELOCITY)
-            player.b2body.applyForce(new Vector2(0, -ACCELERATION), player.b2body.getWorldCenter(), true);
-        if ((Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) && player.b2body.getLinearVelocity().x <= MAX_VELOCITY)
-            player.b2body.applyForce(new Vector2(ACCELERATION, 0), player.b2body.getWorldCenter(), true);
-        if ((Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) && player.b2body.getLinearVelocity().x >= -MAX_VELOCITY)
-            player.b2body.applyForce(new Vector2(-ACCELERATION, 0), player.b2body.getWorldCenter(), true);
-
+    public void handleInput() {
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
             bullets.spawnBullet();
         }
@@ -205,7 +189,7 @@ public class MainGameScreen implements Screen {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
-        //handleInput(deltaTime);
+        handleInput();
         handleTime(deltaTime);
 
         world.step(deltaTime, 6, 2);
@@ -222,19 +206,14 @@ public class MainGameScreen implements Screen {
         bullets.update(deltaTime);
         cannons.update(deltaTime);
 
-//        gameCam.position.x = scl(player.getPosition().x);
-//        gameCam.position.y = scl(player.getPosition().y);
-//        gameCam.position.x = player.getBody().getPosition().x;
-//        gameCam.position.y = player.getBody().getPosition().y;
         gameCam.position.x = player.getPosition().x;
         gameCam.position.y = player.getPosition().y;
 
-//        System.out.println("Preclamp: "+gameCam.position);
-
-        gameCam.position.x = MathUtils.clamp(gameCam.position.x, gameCam.viewportWidth/2, mapPixelWidth/DeltaDucks.PIXEL_PER_METER - gameCam.viewportWidth/2);
-        gameCam.position.y = MathUtils.clamp(gameCam.position.y, gameCam.viewportHeight/2, mapPixelHeight/DeltaDucks.PIXEL_PER_METER - gameCam.viewportHeight/2);
-
-//        System.out.println("Postclamp: "+gameCam.position);
+        // Keeps camera centered if the ship reaches the edge of the map
+        gameCam.position.x = MathUtils.clamp(gameCam.position.x,
+                gameCam.viewportWidth/2, scl(mapPixelWidth) - gameCam.viewportWidth/2);
+        gameCam.position.y = MathUtils.clamp(gameCam.position.y,
+                gameCam.viewportHeight/2, scl(mapPixelHeight) - gameCam.viewportHeight/2);
 
         gameCam.update();
 

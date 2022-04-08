@@ -18,7 +18,6 @@ import static com.ducks.DeltaDucks.scl;
  */
 public class Ship {
     public World world;
-    public Body b2body;
     private ShipAnimation animation;
     private float stateTime;
     private int direction;
@@ -30,25 +29,24 @@ public class Ship {
     protected short category;
     protected short mask;
     private RigidBody rigidBody;
-    private float radius = 128/2.5f / DeltaDucks.PIXEL_PER_METER;
+    private float radius = scl(128/2.5f);
     private AtlasRegion frame;
-
-    private final int SHIP_WIDTH = 128;
-    private final int SHIP_HEIGHT = 128;
 
 //    private final int SHIP_SPAWN_X = 29;
 //    private final int SHIP_SPAWN_Y = 52;
 //    private final int SHIP_SPAWN_X = 1370;
 //    private final int SHIP_SPAWN_Y = 1340;
+    //TODO: reset to one of the above (maybe) for production
     private final int SHIP_SPAWN_X = 3358;
     private final int SHIP_SPAWN_Y = 5563;
 
     private final float SHIP_FRAME_DURATION = 0.5f;
 
+    //TODO: reset to 1 & 4 for production
     private static float ACCELERATION = 10f;
+    private static float MAX_VELOCITY = 40f;
     private float force_x;
     private float force_y;
-    private static float MAX_VELOCITY = 40f;
 
     /**
      * Constructor
@@ -78,21 +76,18 @@ public class Ship {
      */
     public void update(float deltaTime) {
         stateTime += deltaTime;
-//        System.out.printf("%.2f , %.2f",b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-//        System.out.printf("%.2f",b2body.getPosition().x - getWidth() / 2);
-//        System.out.println(getBody().getPosition());
         parseInput();
         applyForce();
         frame = animation.getFrame(stateTime, direction, moving);
-        x = (getPosition().x - width/2)*100;
-        y = (getPosition().y - height/2)*100;
+        x = (getPosition().x - width/2);
+        y = (getPosition().y - height/2);
     }
 
     public void draw(SpriteBatch batch) {
         System.out.println("Direction: " + direction);
         System.out.println("Tex: " + width + "," + height);
         System.out.println(frame);
-        batch.draw(frame, x/100, y/100, width, height);
+        batch.draw(frame, x, y, width, height);
     }
 
     /**
@@ -133,7 +128,6 @@ public class Ship {
     }
 
     public Vector2 getPosition() {
-//        return new Vector2(x, y);
         return rigidBody.getBody().getPosition();
     }
 
@@ -157,29 +151,5 @@ public class Ship {
         shape.setRadius(radius);
 
         this.rigidBody = new RigidBody(shape, new Vector2(scl(x), scl(y)), category, mask, BodyType.Dynamic, 1.2f);
-//        BodyDef bdef = new BodyDef();
-//        bdef.position.set(SHIP_SPAWN_X / DeltaDucks.PIXEL_PER_METER, SHIP_SPAWN_Y / DeltaDucks.PIXEL_PER_METER);
-//        bdef.type = BodyDef.BodyType.DynamicBody;
-//        bdef.linearDamping = 1.2f;
-//        b2body = world.createBody(bdef);
-//
-//        FixtureDef fdef = new FixtureDef();
-//        CircleShape shape = new CircleShape();
-//        shape.setRadius(radius);
-//
-//        fdef.shape = shape;
-//        fdef.filter.categoryBits = DeltaDucks.BIT_PLAYER;
-//        fdef.filter.maskBits = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_MONSTERS | DeltaDucks.BIT_BOUNDARY;
-//        fdef.restitution = 0.2f;
-//        b2body.createFixture(fdef).setUserData("Player");
-
-//        PolygonShape polyShape = new PolygonShape();
-//        polyShape.setAsBox(2 / DeltaDucks.PIXEL_PER_METER, 2 / DeltaDucks.PIXEL_PER_METER, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
-//        fdef.shape = polyShape;
-//        fdef.filter.categoryBits = DeltaDucks.BIT_PLAYER;
-//        fdef.filter.maskBits = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_MONSTERS | DeltaDucks.BIT_BOUNDARY;
-//        fdef.isSensor = true;
-//        b2body.createFixture(fdef).setUserData("Sensor");
-
     }
 }
