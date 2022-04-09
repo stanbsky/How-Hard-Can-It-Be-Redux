@@ -30,6 +30,10 @@ public class Texture {
 
     public void update(float deltaTime, Vector2 pos) {
         stateTime += deltaTime;
+        updatePosition(pos);
+    }
+
+    public void updatePosition(Vector2 pos) {
         x = pos.x - width/2;
         y = pos.y - height/2;
     }
@@ -38,11 +42,4 @@ public class Texture {
         batch.draw(this.frame, this.x, this.y, width, height);
     }
 
-    public float getWidth() {
-        return width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
 }

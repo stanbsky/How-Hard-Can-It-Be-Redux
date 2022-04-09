@@ -16,6 +16,7 @@ public class Entity {
     protected float x;
     protected float y;
     protected RigidBody rigidBody;
+    protected Texture texture;
     protected float radius;
 
     public Entity() {

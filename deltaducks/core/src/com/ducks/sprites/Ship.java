@@ -45,17 +45,18 @@ public class Ship extends Entity {
      */
     public Ship(World world) {
         super();
-        animation = new ShipAnimation("player", SHIP_FRAME_DURATION);
         this.world = world;
-        direction = 6;
-        moving = false;
 
         radius = scl(128 / 2.5f);
-        frame = animation.getFrame(0f, direction, false);
+        //frame = animation.getFrame(0f, direction, false);
         width = height = radius*3f;
 
         x = SHIP_SPAWN_X - width/2;
         y = SHIP_SPAWN_Y - height/2;
+
+        direction = 6;
+        moving = false;
+        animation = new ShipAnimation("player", SHIP_FRAME_DURATION, new Vector2(x, y));
 
         // Set up rigid body
         defineShip();
@@ -67,16 +68,18 @@ public class Ship extends Entity {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
-        stateTime += deltaTime;
+        //stateTime += deltaTime;
         parseInput();
         applyForce();
-        frame = animation.getFrame(stateTime, direction, moving);
+        animation.update(deltaTime, getPosition(), direction, moving);
+        //frame = animation.getFrame(stateTime, direction, moving);
         x = (getPosition().x - width/2);
         y = (getPosition().y - height/2);
     }
 
     public void draw(SpriteBatch batch) {
-        super.draw(batch, frame);
+        animation.render(batch);
+        //super.draw(batch, frame);
     }
 
     /**
