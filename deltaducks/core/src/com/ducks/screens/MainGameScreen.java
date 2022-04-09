@@ -158,7 +158,7 @@ public class MainGameScreen implements Screen {
         crosshair = new Crosshair(player);
         bullets = new ListOfBullets(player);
         cannons = new ListOfCannons(player);
-        colleges = new ListOfColleges(world, this, cannons, map);
+        colleges = new ListOfColleges(cannons, map);
         tutorial = new Tutorial(gameCam, player);
     }
 

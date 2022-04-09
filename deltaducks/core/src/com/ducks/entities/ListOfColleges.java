@@ -6,42 +6,25 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
-import com.ducks.screens.MainGameScreen;
 import com.ducks.sprites.College;
-import com.ducks.sprites.Monster;
 
 /**
  * Collective Colleges Class for Box2D Bodies and Sprites
  */
 public class ListOfColleges {
 
-    private World world;
-    private MainGameScreen screen;
-
     public Array<College> collegeBodies;
-
-    private final float SPAWN_RADIUS = 10f * 4f * College.COLLEGE_HEIGHT / DeltaDucks.PIXEL_PER_METER;
-
-    ListOfCannons cannons;
-
-    private String collegeName;
-
+    public ListOfCannons cannons;
     private int collegesAlive = 3;
 
     /**
      * Constructor
-     * @param world Box2D world
-     * @param screen Game Screen
      * @param cannons Collective Cannons class to spawn and fire them on player's direction
      * @param map Tiled Map
      */
-    public ListOfColleges(World world, MainGameScreen screen, ListOfCannons cannons, TiledMap map) {
-        this.world = world;
-        this.screen = screen;
+    public ListOfColleges(ListOfCannons cannons, TiledMap map) {
         this.cannons = cannons;
         collegeBodies = new Array<College>();
         spawnColleges(map);
@@ -52,12 +35,10 @@ public class ListOfColleges {
      * @param map
      */
     public void spawnColleges(TiledMap map) {
-        BodyDef bdef = new BodyDef();
+        String collegeName = "";
         int colleState = 0;
         for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
-            System.out.println(rect);
-            bdef.type = BodyDef.BodyType.StaticBody;
             switch (colleState++) {
                 case 0:
                     collegeName = "constantine";
@@ -72,7 +53,7 @@ public class ListOfColleges {
             collegeBodies.add(new College(
                     (rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE,
                     (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE,
-                    collegeName, cannons, world));
+                    collegeName, cannons));
         }
     }
 

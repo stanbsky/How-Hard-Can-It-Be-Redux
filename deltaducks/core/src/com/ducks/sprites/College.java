@@ -17,13 +17,6 @@ import static com.ducks.DeltaDucks.scl;
  * College Class for Box2D Body and Sprite
  */
 public class College extends Entity {
-    public World world;
-
-    private final int PIXEL_COLLEGE_WIDTH = 2560;
-    public static final int PIXEL_COLLEGE_HEIGHT = 2560;
-
-    private final float COLLEGE_WIDTH = PIXEL_COLLEGE_WIDTH * .1f;
-    public static final float COLLEGE_HEIGHT = PIXEL_COLLEGE_HEIGHT * .1f;
 
     public final float SENSOR_SCALE = 4f;
 
@@ -45,9 +38,8 @@ public class College extends Entity {
      * @param collegeName Name of the College
      * @param cannons Cannons class to spawn and add Cannon round
      */
-    public College(float spawn_x, float spawn_y, String collegeName, ListOfCannons cannons, World world) {
+    public College(float spawn_x, float spawn_y, String collegeName, ListOfCannons cannons) {
         name = collegeName;
-        this.world = world;
         this.cannons = cannons;
         radius = 100f;
         scale = 1.2f;
