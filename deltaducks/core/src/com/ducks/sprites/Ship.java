@@ -3,7 +3,6 @@ package com.ducks.sprites;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
@@ -19,10 +18,8 @@ import static com.ducks.DeltaDucks.scl;
 public class Ship extends Entity {
     public World world;
     private ShipAnimation animation;
-    private float stateTime;
     private int direction;
     private boolean moving;
-    private AtlasRegion frame;
 
 //    private final int SHIP_SPAWN_X = 29;
 //    private final int SHIP_SPAWN_Y = 52;
@@ -48,15 +45,16 @@ public class Ship extends Entity {
         this.world = world;
 
         radius = scl(128 / 2.5f);
-        //frame = animation.getFrame(0f, direction, false);
-        width = height = radius*3f;
+        scale = 1.5f;
+        width = height = radius*2f*scale;
 
         x = SHIP_SPAWN_X - width/2;
         y = SHIP_SPAWN_Y - height/2;
 
+        // Set up ShipAnimation
         direction = 6;
         moving = false;
-        animation = new ShipAnimation("player", SHIP_FRAME_DURATION, new Vector2(x, y));
+        animation = new ShipAnimation("player", new Vector2(x, y), radius*scale, SHIP_FRAME_DURATION);
 
         // Set up rigid body
         defineShip();
@@ -68,18 +66,15 @@ public class Ship extends Entity {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
-        //stateTime += deltaTime;
         parseInput();
         applyForce();
         animation.update(deltaTime, getPosition(), direction, moving);
-        //frame = animation.getFrame(stateTime, direction, moving);
         x = (getPosition().x - width/2);
         y = (getPosition().y - height/2);
     }
 
     public void draw(SpriteBatch batch) {
         animation.render(batch);
-        //super.draw(batch, frame);
     }
 
     /**

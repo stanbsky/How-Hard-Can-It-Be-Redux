@@ -18,6 +18,7 @@ public class Entity {
     protected RigidBody rigidBody;
     protected Texture texture;
     protected float radius;
+    protected float scale = 1f;
 
     public Entity() {
     }

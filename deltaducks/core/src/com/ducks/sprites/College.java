@@ -24,10 +24,8 @@ public class College extends Entity {
 
     private final float COLLEGE_WIDTH = PIXEL_COLLEGE_WIDTH * .1f;
     public static final float COLLEGE_HEIGHT = PIXEL_COLLEGE_HEIGHT * .1f;
-    private final float SCALE = 1f;
-    private final float radius = 100f;
 
-    public final float OUTER_RADIUS = 4f;
+    public final float SENSOR_SCALE = 4f;
 
     float stateTime;
 
@@ -51,12 +49,14 @@ public class College extends Entity {
         name = collegeName;
         this.world = world;
         this.cannons = cannons;
+        radius = 100f;
+        scale = 1.2f;
         health = 1f;
         hpBar = new HealthBar(spawn_x - radius, spawn_y + radius,
                 radius*2, 10f, true, health, false);
 
         this.position = new Vector2(spawn_x, spawn_y);
-        this.texture = new Texture(collegeName, this.position, scl(radius));
+        this.texture = new Texture(collegeName, this.position, scl(radius*scale));
 
         defineCollege(spawn_x, spawn_y, radius);
     }
@@ -69,7 +69,7 @@ public class College extends Entity {
         stateTime += deltaTime;
         hpBar.update(health);
         if((health <= 0f) && (health > -100f)) {
-            this.texture = new Texture("destroyed", this.position, SCALE);
+            this.texture = new Texture("destroyed", this.position, scl(radius*scale));
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
             health = -100f;
         } else {
@@ -90,7 +90,6 @@ public class College extends Entity {
      */
     public void draw(SpriteBatch batch) {
         this.texture.render(batch);
-        //super.draw(batch, texture);
         this.hpBar.render(batch);
     }
 
@@ -113,7 +112,7 @@ public class College extends Entity {
         rigidBody.setData("College");
 
         PolygonShape polyShape = new PolygonShape();
-        float side = scl(radius * OUTER_RADIUS);
+        float side = scl(radius * SENSOR_SCALE);
         polyShape.setAsBox(side, side, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
         fixture.shape = polyShape;
         fixture.filter.categoryBits = DeltaDucks.BIT_COLLEGES;

@@ -11,7 +11,7 @@ public class ShipAnimation extends Texture {
     private Animation[][] animation;
     private static final int DEFAULT_DIRECTION = 6;
 
-    public ShipAnimation(String name, float frameDuration, Vector2 pos) {
+    public ShipAnimation(String name, Vector2 pos, float radius, float frameDuration) {
         animation = new Animation[2][9];
         for (int i = 0; i < 9; i++) {
             // No animation exists for 5
@@ -27,18 +27,18 @@ public class ShipAnimation extends Texture {
                     MainGameScreen.getAtlas().findRegions(name + (i + 1)),
                     Animation.PlayMode.LOOP);
         }
+        width = height = radius * 2;
         update(0f, pos, DEFAULT_DIRECTION, false);
-        System.out.println(width + "," + height);
     }
 
     public void update(float deltaTime, Vector2 pos, int direction, boolean moving) {
         stateTime += deltaTime;
         updateFrame(stateTime, direction, moving);
-        updateDimensions();
         updatePosition(pos);
     }
 
     private void updateDimensions() {
+        // TODO: see https://github.com/stanbsky/How-Hard-Can-It-Be-Redux/issues/11#issue-1198623843
         width = (float)frame.getRegionWidth();
         height = (float)frame.getRegionHeight();
     }
