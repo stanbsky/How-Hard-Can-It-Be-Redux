@@ -16,20 +16,12 @@ import static com.ducks.DeltaDucks.scl;
 /***
  * Ship (or Player) Class for Box2D Body and Sprite
  */
-public class Ship {
+public class Ship extends Entity {
     public World world;
     private ShipAnimation animation;
     private float stateTime;
     private int direction;
     private boolean moving;
-    private float width;
-    private float height;
-    private float x;
-    private float y;
-    protected short category;
-    protected short mask;
-    private RigidBody rigidBody;
-    private float radius = scl(128/2.5f);
     private AtlasRegion frame;
 
 //    private final int SHIP_SPAWN_X = 29;
@@ -52,11 +44,13 @@ public class Ship {
      * Constructor
      */
     public Ship(World world) {
+        super();
         animation = new ShipAnimation("player", SHIP_FRAME_DURATION);
         this.world = world;
         direction = 6;
         moving = false;
 
+        radius = scl(128 / 2.5f);
         frame = animation.getFrame(0f, direction, false);
         width = height = radius*3f;
 
@@ -64,8 +58,6 @@ public class Ship {
         y = SHIP_SPAWN_Y - height/2;
 
         // Set up rigid body
-        this.mask = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_MONSTERS | DeltaDucks.BIT_BOUNDARY;
-        this.category = DeltaDucks.BIT_PLAYER;
         defineShip();
         this.rigidBody.setData("Player");
     }
@@ -84,7 +76,7 @@ public class Ship {
     }
 
     public void draw(SpriteBatch batch) {
-        batch.draw(frame, x, y, width, height);
+        super.draw(batch, frame);
     }
 
     /**
@@ -113,7 +105,7 @@ public class Ship {
         }
 
         if (direction == 5) {
-            moving = !rigidBody.getBody().getLinearVelocity().isZero(0.05f);
+            moving = !getVelocity().isZero(0.05f);
         } else {
             this.direction = direction;
             moving = true;
@@ -128,22 +120,6 @@ public class Ship {
         rigidBody.getBody().applyForceToCenter(new Vector2(force_x, force_y), true);
     }
 
-    public Vector2 getPosition() {
-        return rigidBody.getBody().getPosition();
-    }
-
-    public float getRadius() {
-        return radius;
-    }
-
-    public Vector2 getVelocity() {
-        return rigidBody.getBody().getLinearVelocity();
-    }
-
-    public Body getBody() {
-        return rigidBody.getBody();
-    }
-
     /**
      * Define the Box2D body and fixture and map it onto the Box2D world
      */
@@ -153,8 +129,8 @@ public class Ship {
         shape.setRadius(radius);
         FixtureDef fixture = new FixtureDef();
         fixture.shape = shape;
-        fixture.filter.categoryBits = category;
-        fixture.filter.maskBits = mask;
+        fixture.filter.categoryBits = DeltaDucks.BIT_PLAYER;
+        fixture.filter.maskBits = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_MONSTERS | DeltaDucks.BIT_BOUNDARY;
         rigidBody.addFixture(fixture);
     }
 }

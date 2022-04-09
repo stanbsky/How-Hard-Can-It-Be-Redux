@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
 
-public class Texture extends Sprite {
+public class Texture {
 
     float stateTime;
     TextureRegion frame;
@@ -38,12 +38,10 @@ public class Texture extends Sprite {
         batch.draw(this.frame, this.x, this.y, width, height);
     }
 
-    @Override
     public float getWidth() {
         return width;
     }
 
-    @Override
     public float getHeight() {
         return height;
     }

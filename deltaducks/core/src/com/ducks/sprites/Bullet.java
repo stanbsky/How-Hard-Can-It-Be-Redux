@@ -31,10 +31,9 @@ public class Bullet {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
-        Body bulletBody = this.getBody();
         stateTime += deltaTime;
         spawnTimer += deltaTime;
-        this.texture.update(deltaTime, bulletBody.getPosition());
+        this.texture.update(deltaTime, getPosition());
         if (spawnTimer > BULLET_SPAWN_DURATION) {
             this.rigidBody.setData("Bullet Dead");
         }
@@ -65,7 +64,11 @@ public class Bullet {
         this.rigidBody.dispose();
     }
 
-    public Body getBody() {
-        return this.rigidBody.getBody();
+    public RigidBody getBody() {
+        return this.rigidBody;
+    }
+
+    public Vector2 getPosition() {
+        return rigidBody.getBody().getPosition();
     }
 }

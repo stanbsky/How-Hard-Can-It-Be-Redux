@@ -8,7 +8,6 @@ import com.ducks.components.BodyType;
 import com.ducks.components.HealthBar;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
-import com.ducks.components.BodyType;
 import com.ducks.entities.ListOfCannons;
 import com.ducks.scenes.Hud;
 
@@ -17,7 +16,7 @@ import static com.ducks.DeltaDucks.scl;
 /***
  * College Class for Box2D Body and Sprite
  */
-public class College {
+public class College extends Entity {
     public World world;
 
     private final int PIXEL_COLLEGE_WIDTH = 2560;
@@ -32,7 +31,6 @@ public class College {
 
     float stateTime;
 
-    public Body collegeBody;
     private ListOfCannons cannons;
 
     public String name;
@@ -41,7 +39,6 @@ public class College {
     private Texture texture;
     private HealthBar hpBar;
     private Vector2 position;
-    private RigidBody rigidBody;
 
     /**
      * Constructor
@@ -54,7 +51,6 @@ public class College {
         name = collegeName;
         this.world = world;
         this.cannons = cannons;
-        System.out.println(spawn_x + "," + spawn_y + "," + radius);
         health = 1f;
         hpBar = new HealthBar(spawn_x - radius, spawn_y + radius,
                 radius*2, 10f, true, health, false);
@@ -78,26 +74,23 @@ public class College {
             health = -100f;
         } else {
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
-            if(rigidBody.getBody().getFixtureList().get(1).getUserData().toString().contains("Attack")) {
+            if(rigidBody.getSensorData().contains("Attack")) {
                 cannons.spawnCannon(this);
             }
-            if(rigidBody.getBody().getFixtureList().get(0).getUserData().toString().contains("Damage")) {
+            if(rigidBody.getData().contains("Damage")) {
                 rigidBody.setData("College");
                 health-=.2f;
             }
         }
     }
 
-    public Vector2 getPosition() {
-        return rigidBody.getBody().getPosition();
-    }
-
     /**
      * draw the sprite of college and health bar on the game screen
      * @param batch to draw on the screen
      */
-    public void extendedDraw(SpriteBatch batch) {
+    public void draw(SpriteBatch batch) {
         this.texture.render(batch);
+        //super.draw(batch, texture);
         this.hpBar.render(batch);
     }
 
@@ -126,30 +119,6 @@ public class College {
         fixture.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
         fixture.filter.maskBits = DeltaDucks.BIT_PLAYER;
         rigidBody.addSensor(fixture, "College Sensor");
-
-//        BodyDef bdef = new BodyDef();
-//        bdef.position.set(x / DeltaDucks.PIXEL_PER_METER, y / DeltaDucks.PIXEL_PER_METER);
-//        bdef.type = BodyDef.BodyType.StaticBody;
-//        bdef.linearDamping = 1f;
-//        collegeBody = world.createBody(bdef);
-//
-//        FixtureDef fdef = new FixtureDef();
-//        CircleShape shape = new CircleShape();
-//        shape.setRadius(radius / DeltaDucks.PIXEL_PER_METER);
-//
-//        fdef.shape = shape;
-//        fdef.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
-//        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_BULLETS;
-//        fdef.restitution = 0.2f;
-//        collegeBody.createFixture(fdef).setUserData("College");
-
-//        PolygonShape polyShape = new PolygonShape();
-//        polyShape.setAsBox(radius * OUTER_RADIUS / DeltaDucks.PIXEL_PER_METER, radius * OUTER_RADIUS / DeltaDucks.PIXEL_PER_METER, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
-//        fdef.shape = polyShape;
-//        fdef.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
-//        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER;
-//        fdef.isSensor = true;
-//        collegeBody.createFixture(fdef).setUserData("College Sensor");
     }
 
     /**

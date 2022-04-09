@@ -49,7 +49,7 @@ public class ListOfCannons {
         shootTimer += deltaTime;
         Array<Bullet> CannonBodiesToRemove = new Array<>();
         for( Bullet cannon : cannonBodies) {
-            if(!cannon.getBody().getFixtureList().get(0).getUserData().equals("Cannon Alive")) {
+            if(!cannon.getBody().getData().equals("Cannon Alive")) {
                 CannonBodiesToRemove.add(cannon);
                 cannon.dispose();
             } else {

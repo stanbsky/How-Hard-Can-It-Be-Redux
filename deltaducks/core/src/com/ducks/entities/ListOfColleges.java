@@ -98,7 +98,7 @@ public class ListOfColleges {
      */
     public void draw(SpriteBatch batch) {
         for( College college : collegeBodies) {
-            college.extendedDraw(batch);
+            college.draw(batch);
         }
     }
 

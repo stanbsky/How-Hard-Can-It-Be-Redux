@@ -57,6 +57,10 @@ public class RigidBody {
         getBody().getFixtureList().get(0).setUserData(data);
     }
 
+    public String getData() { return (String) getBody().getFixtureList().get(0).getUserData(); }
+
+    public String getSensorData() { return (String) getBody().getFixtureList().get(1).getUserData(); }
+
     public void applyForce(Vector2 direction, float speed) {
         getBody().applyForceToCenter(direction.scl(speed), true);
     }
