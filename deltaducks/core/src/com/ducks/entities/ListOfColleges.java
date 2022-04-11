@@ -52,12 +52,10 @@ public class ListOfColleges {
      * @param map
      */
     public void spawnColleges(TiledMap map) {
-        BodyDef bdef = new BodyDef();
         int colleState = 0;
-        for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
-            Rectangle rect = ((RectangleMapObject) object).getRectangle();
+        for (RectangleMapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
+            Rectangle rect = (object).getRectangle();
             System.out.println(rect);
-            bdef.type = BodyDef.BodyType.StaticBody;
             switch (colleState++) {
                 case 0:
                     collegeName = "constantine";
@@ -83,8 +81,7 @@ public class ListOfColleges {
     public void update(float deltaTime) {
         Array<College> collegeBodiesToRemove = new Array<College>();
         for( College college : collegeBodies) {
-            if(college.health <= 0 && college.health != -10f){
-                collegeBodiesToRemove.add(college);
+            if(college.health <= 0 && !college.destroyed){
                 college.dispose();
                 collegesAlive--;
             }

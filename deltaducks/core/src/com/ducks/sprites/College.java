@@ -38,6 +38,7 @@ public class College {
     public String name;
 
     public float health;
+    public boolean destroyed;
     private Texture texture;
     private HealthBar hpBar;
     private Vector2 position;
@@ -72,10 +73,9 @@ public class College {
     public void update(float deltaTime) {
         stateTime += deltaTime;
         hpBar.update(health);
-        if((health <= 0f) && (health > -100f)) {
+        if(destroyed) {
             this.texture = new Texture("destroyed", this.position, SCALE);
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
-            health = -100f;
         } else {
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
             if(rigidBody.getBody().getFixtureList().get(1).getUserData().toString().contains("Attack")) {
@@ -156,6 +156,7 @@ public class College {
      * Gain gold and EXP if colleges get destroyed
      */
     public void dispose() {
+        destroyed = true;
         Hud.addGold(1000);
         Hud.addScore(10000);
     }
