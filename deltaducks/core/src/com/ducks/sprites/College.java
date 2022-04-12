@@ -66,7 +66,7 @@ public class College extends Entity {
     public void update(float deltaTime) {
         stateTime += deltaTime;
         hpBar.update(health);
-        if((health <= 0f) && (health > -100f)) {
+        if((health <= 0.001f) && (health > -100f)) {
             this.texture = new Texture("destroyed", this.position, scl(radius*scale), atlas);
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
             health = -100f;
