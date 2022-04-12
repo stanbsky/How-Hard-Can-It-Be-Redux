@@ -44,4 +44,12 @@ public class Entity {
     public Body getBody() {
         return rigidBody.getBody();
     }
+
+    public void setData(String data) {
+        rigidBody.setData(data);
+    }
+
+    public String getData() { return rigidBody.getData(); }
+
+    public String getSensorData() { return rigidBody.getSensorData(); }
 }
