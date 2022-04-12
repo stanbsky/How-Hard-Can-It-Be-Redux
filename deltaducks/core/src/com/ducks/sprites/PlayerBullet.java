@@ -18,9 +18,13 @@ public class PlayerBullet extends Bullet {
         this(position, direction, shipMomentum, MainGameScreen.getAtlas());
     }
 
+    /**
+     * Purely for printing debug info
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         super.update(deltaTime);
-        System.out.println(getPosition());
+        //System.out.println(getPosition());
     }
     /**
      * Constructor
