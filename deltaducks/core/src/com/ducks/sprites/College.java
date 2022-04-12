@@ -1,6 +1,7 @@
 package com.ducks.sprites;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
@@ -10,6 +11,7 @@ import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
 import com.ducks.entities.ListOfCannons;
 import com.ducks.scenes.Hud;
+import com.ducks.screens.MainGameScreen;
 
 import static com.ducks.DeltaDucks.scl;
 
@@ -31,6 +33,9 @@ public class College extends Entity {
     private HealthBar hpBar;
     private Vector2 position;
 
+    public College(float spawn_x, float spawn_y, String collegeName, ListOfCannons cannons) {
+        this(spawn_x, spawn_y, collegeName, cannons, MainGameScreen.getAtlas());
+    }
     /**
      * Constructor
      * @param spawn_x X coordinate of the college
@@ -38,17 +43,18 @@ public class College extends Entity {
      * @param collegeName Name of the College
      * @param cannons Cannons class to spawn and add Cannon round
      */
-    public College(float spawn_x, float spawn_y, String collegeName, ListOfCannons cannons) {
+    public College(float spawn_x, float spawn_y, String collegeName, ListOfCannons cannons, TextureAtlas atlas) {
+        this.atlas = atlas;
         name = collegeName;
         this.cannons = cannons;
         radius = 100f;
         scale = 1.2f;
         health = 1f;
         hpBar = new HealthBar(spawn_x - radius, spawn_y + radius,
-                radius*2, 10f, true, health, false);
+                radius*2, 10f, true, health, false, atlas);
 
         this.position = new Vector2(spawn_x, spawn_y);
-        this.texture = new Texture(collegeName, this.position, scl(radius*scale));
+        this.texture = new Texture(collegeName, this.position, scl(radius*scale), atlas);
 
         defineCollege(spawn_x, spawn_y, radius);
     }
@@ -61,7 +67,7 @@ public class College extends Entity {
         stateTime += deltaTime;
         hpBar.update(health);
         if((health <= 0f) && (health > -100f)) {
-            this.texture = new Texture("destroyed", this.position, scl(radius*scale));
+            this.texture = new Texture("destroyed", this.position, scl(radius*scale), atlas);
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
             health = -100f;
         } else {

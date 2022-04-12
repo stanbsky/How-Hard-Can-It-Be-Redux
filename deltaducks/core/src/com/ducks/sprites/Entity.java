@@ -1,6 +1,7 @@
 package com.ducks.sprites;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -19,6 +20,7 @@ public class Entity {
     protected Texture texture;
     protected float radius;
     protected float scale = 1f;
+    protected TextureAtlas atlas;
 
     public Entity() {
     }
