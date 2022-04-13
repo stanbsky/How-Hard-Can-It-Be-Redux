@@ -3,12 +3,13 @@ package com.ducks.sprites;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.DeltaDucks;
 import com.ducks.components.ShipAnimation;
+import com.ducks.scenes.Hud;
 import com.ducks.tools.InputParser;
 
 public class Pirate extends Ship {
 
-    private float inputStickinessThreshold = 0.03f;
-    private float inputDurationThreshold = 0.7f;
+    private final float inputStickinessThreshold = 0.03f;
+    private final float inputDurationThreshold = 0.7f;
     private float inputDurationRoll = 0f;
 
     public Pirate(String college, float spawn_x, float spawn_y) {
@@ -41,5 +42,10 @@ public class Pirate extends Ship {
             inputDurationRoll = 0f;
         animation.update(deltaTime, getPosition(), direction, false);
         super.update();
+    }
+
+    public void dispose() {
+        Hud.addGold(100);
+        Hud.addScore(1000);
     }
 }
