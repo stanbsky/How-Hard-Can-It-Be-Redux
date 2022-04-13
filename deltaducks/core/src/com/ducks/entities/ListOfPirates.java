@@ -58,9 +58,11 @@ public class ListOfPirates {
                 college = "halifax";
             else
                 college = "constantine";
-            pirateBodies.add(new Pirate(college, rect.getX(), rect.getY()));
+            pirateBodies.add(new Pirate(college, rect.getX()*DeltaDucks.TILEED_MAP_SCALE, rect.getY()*DeltaDucks.TILEED_MAP_SCALE));
 //            pirateBodies.add(new Pirate(world, screen, (rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE, (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE, RADIUS));
         }
+        //TODO: testing spawn near player
+        pirateBodies.add(new Pirate("constantine", 3358,5163));
     }
 
     /**
