@@ -17,48 +17,32 @@ import static com.ducks.DeltaDucks.scl;
  */
 public class Ship extends Entity {
     public World world;
-    private ShipAnimation animation;
-    private int direction;
-    private boolean moving;
+    protected ShipAnimation animation;
+    protected int direction;
+    protected boolean moving;
 
-//    private final int SHIP_SPAWN_X = 29;
-//    private final int SHIP_SPAWN_Y = 52;
-//    private final int SHIP_SPAWN_X = 1370;
-//    private final int SHIP_SPAWN_Y = 1340;
-    //TODO: reset to one of the above (maybe) for production
-    private final int SHIP_SPAWN_X = 3358;
-    private final int SHIP_SPAWN_Y = 5563;
-
-    private final float SHIP_FRAME_DURATION = 0.5f;
-
-    //TODO: reset to 1 & 4 for production
-    private static float ACCELERATION = 10f;
-    private static float MAX_VELOCITY = 40f;
+    protected float acceleration;
+    protected float max_velocity;
     private float force_x;
     private float force_y;
 
+    protected short mask;
+    protected short category;
+    protected String data;
+
+//    public Ship() {
+//
+//    }
     /**
      * Constructor
      */
-    public Ship(World world) {
+    public Ship() {
         super();
-        this.world = world;
+//        this.world = world;
 
         radius = scl(128 / 2.5f);
         scale = 1.5f;
         width = height = radius*2f*scale;
-
-        x = SHIP_SPAWN_X - width/2;
-        y = SHIP_SPAWN_Y - height/2;
-
-        // Set up ShipAnimation
-        direction = 6;
-        moving = false;
-        animation = new ShipAnimation("player", new Vector2(x, y), radius*scale, SHIP_FRAME_DURATION);
-
-        // Set up rigid body
-        defineShip();
-        this.rigidBody.setData("Player");
     }
 
     /**
@@ -87,19 +71,19 @@ public class Ship extends Entity {
         force_x = force_y = 0;
         if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
             direction += 3;
-            force_y += ACCELERATION;
+            force_y += acceleration;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             direction -= 3;
-            force_y -= ACCELERATION;
+            force_y -= acceleration;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             direction -= 1;
-            force_x -= ACCELERATION;
+            force_x -= acceleration;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             direction += 1;
-            force_x += ACCELERATION;
+            force_x += acceleration;
         }
 
         if (direction == 5) {
@@ -111,9 +95,9 @@ public class Ship extends Entity {
     }
 
     public void applyForce() {
-        if (getVelocity().x > MAX_VELOCITY)
+        if (getVelocity().x > max_velocity)
             force_x = 0;
-        if (getVelocity().y > MAX_VELOCITY)
+        if (getVelocity().y > max_velocity)
             force_y = 0;
         rigidBody.getBody().applyForceToCenter(new Vector2(force_x, force_y), true);
     }
@@ -127,8 +111,9 @@ public class Ship extends Entity {
         shape.setRadius(radius);
         FixtureDef fixture = new FixtureDef();
         fixture.shape = shape;
-        fixture.filter.categoryBits = DeltaDucks.BIT_PLAYER;
-        fixture.filter.maskBits = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_MONSTERS | DeltaDucks.BIT_BOUNDARY;
+        fixture.filter.categoryBits = category;
+        fixture.filter.maskBits = mask;
         rigidBody.addFixture(fixture);
+        rigidBody.setData(data);
     }
 }

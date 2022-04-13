@@ -21,6 +21,7 @@ import com.ducks.scenes.Minimap;
 import com.ducks.scenes.Subtitle;
 import com.ducks.scenes.Tutorial;
 import com.ducks.sprites.Bullet;
+import com.ducks.sprites.Player;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.Content;
 import com.ducks.tools.MyContactListener;
@@ -122,7 +123,7 @@ public class MainGameScreen implements Screen {
         world = new World(new Vector2(0, 0), true);
         PhysicsManager.Initialize(world);
 
-        player = new Ship(world);
+        player = new Player();
 
         contactListener = new MyContactListener(player, subtitle);
         world.setContactListener(contactListener);
