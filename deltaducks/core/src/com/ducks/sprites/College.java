@@ -68,7 +68,7 @@ public class College extends Entity {
         stateTime += deltaTime;
         hpBar.update(health);
         if(destroyed) {
-            this.texture = new Texture("destroyed", this.position, SCALE);
+            this.texture = new Texture("destroyed", this.position, scl(radius*scale));
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
         } else {
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
