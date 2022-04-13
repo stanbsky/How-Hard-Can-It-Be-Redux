@@ -65,6 +65,7 @@ public class ListOfColleges {
         Array<College> collegeBodiesToRemove = new Array<College>();
         for( College college : collegeBodies) {
             if(college.health <= 0 && college.health != -10f){
+                collegeBodiesToRemove.add(college);
                 college.dispose();
                 collegesAlive--;
             }
