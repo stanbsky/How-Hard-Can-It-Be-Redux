@@ -47,12 +47,8 @@ public class Ship extends Entity {
 
     /**
      * Update the player ship every delta time interval
-     * @param deltaTime of the game
      */
-    public void update(float deltaTime) {
-
-        applyForce();
-        animation.update(deltaTime, getPosition(), direction, moving);
+    public void update() {
         x = (getPosition().x - width/2);
         y = (getPosition().y - height/2);
     }

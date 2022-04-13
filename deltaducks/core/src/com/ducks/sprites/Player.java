@@ -39,6 +39,8 @@ public class Player extends Ship {
 
     public void update(float deltaTime) {
         parseDirection(InputParser.parseInput());
-        super.update(deltaTime);
+        applyForce();
+        animation.update(deltaTime, getPosition(), direction, moving);
+        super.update();
     }
 }

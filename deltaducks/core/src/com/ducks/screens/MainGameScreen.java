@@ -54,7 +54,7 @@ public class MainGameScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
-    private Ship player;
+    private Player player;
     private ListOfPirates bots;
     private ListOfMonsters creatures;
     private ListOfColleges colleges;

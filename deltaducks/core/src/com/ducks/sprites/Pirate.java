@@ -7,6 +7,10 @@ import com.ducks.tools.InputParser;
 
 public class Pirate extends Ship {
 
+    private float inputStickinessThreshold = 0.03f;
+    private float inputDurationThreshold = 0.7f;
+    private float inputDurationRoll = 0f;
+
     public Pirate(String college, float spawn_x, float spawn_y) {
         super();
         mask = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
@@ -27,8 +31,15 @@ public class Pirate extends Ship {
     }
 
     public void update(float deltaTime) {
-        parseDirection(InputParser.fakeInput(0.3f));
-        moving = false;
-        super.update(deltaTime);
+        // Roll on whether we need to pull a new random input direction
+        if (Math.random() < inputStickinessThreshold)
+            parseDirection(InputParser.fakeInput(0.3f));
+        // Roll on whether we keep applying force in the given direction
+        if (inputDurationRoll + Math.random() * 0.1 < inputDurationThreshold)
+            applyForce();
+        else
+            inputDurationRoll = 0f;
+        animation.update(deltaTime, getPosition(), direction, false);
+        super.update();
     }
 }
