@@ -23,7 +23,7 @@ public class ListOfPirates {
     private Array<Pirate> pirateBodies;
 
 
-    private final float RADIUS = 4f * Pirate.PIXEL_PIRATE_HEIGHT / DeltaDucks.PIXEL_PER_METER;
+//    private final float RADIUS = 4f * Pirate.PIXEL_PIRATE_HEIGHT / DeltaDucks.PIXEL_PER_METER;
 
     /**
      *
@@ -50,7 +50,16 @@ public class ListOfPirates {
                 continue;
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
             bdef.type = BodyDef.BodyType.StaticBody;
-            pirateBodies.add(new Pirate(world, screen, (rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE, (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE, RADIUS));
+            String college;
+            double c = Math.random();
+            if (c < 0.3f)
+                college = "goodricke";
+            else if (c > 0.6f)
+                college = "halifax";
+            else
+                college = "constantine";
+            pirateBodies.add(new Pirate(college, rect.getX(), rect.getY()));
+//            pirateBodies.add(new Pirate(world, screen, (rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE, (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE, RADIUS));
         }
     }
 
@@ -61,9 +70,9 @@ public class ListOfPirates {
     public void update(float deltaTime) {
         Array<Pirate> piratesBodiesToRemove = new Array<Pirate>();
         for( Pirate pirate : pirateBodies ) {
-            if(!pirate.pirateBody.getFixtureList().get(0).getUserData().equals("Pirate")) {
+            if(!pirate.getData().equals("Pirate")) {
                 piratesBodiesToRemove.add(pirate);
-                pirate.dispose();
+//                pirate.dispose();
             } else {
                 pirate.update(deltaTime);
             }
