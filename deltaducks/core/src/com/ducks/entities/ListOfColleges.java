@@ -64,8 +64,7 @@ public class ListOfColleges {
     public void update(float deltaTime) {
         Array<College> collegeBodiesToRemove = new Array<College>();
         for( College college : collegeBodies) {
-            if(college.health <= 0 && college.health != -10f){
-                collegeBodiesToRemove.add(college);
+            if(college.health <= 0 && !college.destroyed){
                 college.dispose();
                 collegesAlive--;
             }
