@@ -33,6 +33,7 @@ public class EntityTests {
     @Mock Contact contact;
 
     private MyContactListener contactListener;
+    private World world;
     private final Vector2 zero = new Vector2(0, 0);
 
     @BeforeAll
@@ -44,19 +45,22 @@ public class EntityTests {
     }
     @BeforeEach
     public void setupWorld() {
-        World world = new World(new Vector2(0,0), true);
+        world = new World(new Vector2(0,0), true);
         contactListener = new MyContactListener(null, null);
         PhysicsManager.Initialize(world);
     }
     @Test
     public void testCreateBullet() {
-        //TODO: not sure if it's possible to get box2dworld to tick ahead and apply velocity
-//        Bullet bullet = new PlayerBullet(zero, new Vector2(1, 0), zero, atlas);
-//        System.out.println(bullet.getBody().isAwake());
-//        System.out.println(bullet.getVelocity());
-//        bullet.getBody().applyForceToCenter(100,0,true);
-//        bullet.update(1f);
-//        System.out.println(bullet.getVelocity());
+        //TODO: test that getVelocity().len() is constant for all directions to within eg. 0.1f
+        Bullet bullet = new PlayerBullet(zero, new Vector2(1, 0), zero, atlas);
+        System.out.println(bullet.getBody().isAwake());
+        System.out.println(bullet.getVelocity());
+        for (int i = 0; i < 15; i++) {
+            world.step(1f, 6, 2);
+            bullet.update(1f);
+            System.out.println(bullet.getVelocity().len());
+        }
+
         assert true;
     }
     @Test
