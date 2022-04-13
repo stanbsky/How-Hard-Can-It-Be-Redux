@@ -2,6 +2,7 @@ package com.ducks.sprites;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.DeltaDucks;
+import com.ducks.tools.InputParser;
 import com.ducks.components.ShipAnimation;
 
 public class Player extends Ship {
@@ -34,5 +35,10 @@ public class Player extends Ship {
         data = "Player";
 
         defineShip();
+    }
+
+    public void update(float deltaTime) {
+        parseDirection(InputParser.parseInput());
+        super.update(deltaTime);
     }
 }

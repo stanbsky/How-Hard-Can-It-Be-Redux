@@ -1,14 +1,14 @@
 package com.ducks.sprites;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.ducks.DeltaDucks;
 import com.ducks.components.BodyType;
+import com.ducks.tools.InputParser;
 import com.ducks.components.RigidBody;
 import com.ducks.components.ShipAnimation;
+
+import java.util.ArrayList;
 
 import static com.ducks.DeltaDucks.scl;
 
@@ -50,7 +50,7 @@ public class Ship extends Entity {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
-        parseInput();
+
         applyForce();
         animation.update(deltaTime, getPosition(), direction, moving);
         x = (getPosition().x - width/2);
@@ -65,25 +65,29 @@ public class Ship extends Entity {
      * Get the direction of the ship corresponding to its movement
      * @return direction represented as the corresponding numerical numpad value
      */
-    public void parseInput() {
+    public void parseDirection(ArrayList<InputParser.Direction> directions) {
         //TODO: change to getting direction via linear velocity
         int direction = 5;
         force_x = force_y = 0;
-        if (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            direction += 3;
-            force_y += acceleration;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            direction -= 3;
-            force_y -= acceleration;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.A) || Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            direction -= 1;
-            force_x -= acceleration;
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            direction += 1;
-            force_x += acceleration;
+        for (InputParser.Direction d : directions) {
+            switch (d) {
+                case NORTH:
+                    direction += 3;
+                    force_y += acceleration;
+                    break;
+                case SOUTH:
+                    direction -= 3;
+                    force_y -= acceleration;
+                    break;
+                case WEST:
+                    direction -= 1;
+                    force_x -= acceleration;
+                    break;
+                case EAST:
+                    direction += 1;
+                    force_x += acceleration;
+                    break;
+            }
         }
 
         if (direction == 5) {
