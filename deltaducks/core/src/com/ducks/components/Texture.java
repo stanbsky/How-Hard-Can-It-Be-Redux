@@ -16,9 +16,15 @@ public class Texture {
     protected float y;
     protected float width;
     protected float height;
+    private TextureAtlas atlas;
 
     public Texture(String name, Vector2 pos, float radius) {
-        frame = MainGameScreen.getAtlas().findRegion(name);
+        this(name, pos, radius, MainGameScreen.getAtlas());
+    }
+
+    public Texture(String name, Vector2 pos, float radius, TextureAtlas atlas) {
+        this.atlas = atlas;
+        frame = this.atlas.findRegion(name);
 
         width = height = radius * 2;
         x = pos.x - this.width/2;

@@ -12,9 +12,8 @@ import com.ducks.components.Texture;
 
 import static com.ducks.DeltaDucks.scl;
 
-public class Bullet {
+public class Bullet extends Entity {
     private final float BULLET_SPAWN_DURATION = 2f;
-    protected RigidBody rigidBody;
     float stateTime;
     float spawnTimer;
     float radius = scl(10);
@@ -35,7 +34,7 @@ public class Bullet {
         spawnTimer += deltaTime;
         this.texture.update(deltaTime, getPosition());
         if (spawnTimer > BULLET_SPAWN_DURATION) {
-            this.rigidBody.setData("Bullet Dead");
+            setData("Bullet Dead");
         }
     }
 
@@ -62,10 +61,6 @@ public class Bullet {
      */
     public void dispose() {
         this.rigidBody.dispose();
-    }
-
-    public RigidBody getBody() {
-        return this.rigidBody;
     }
 
     public Vector2 getPosition() {

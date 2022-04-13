@@ -10,3 +10,7 @@ project.ext.assetsDir = new File("../core/assets")
 eclipse.project {
     name = appName + "-tests"
 }
+
+test {
+    useJUnitPlatform()
+}

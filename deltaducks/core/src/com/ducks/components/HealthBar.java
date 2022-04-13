@@ -2,7 +2,9 @@ package com.ducks.components;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.ducks.screens.MainGameScreen;
+import org.w3c.dom.Text;
 
 import static com.ducks.DeltaDucks.scl;
 
@@ -12,7 +14,11 @@ public class HealthBar extends Texture {
     private float hp;
 
     public HealthBar(float x, float y, float width, float height, boolean horizontal, float hp, boolean ui) {
-        frame = MainGameScreen.getAtlas().findRegion("blank");
+        this(x, y, width, height, horizontal, hp, ui, MainGameScreen.getAtlas());
+    }
+
+    public HealthBar(float x, float y, float width, float height, boolean horizontal, float hp, boolean ui, TextureAtlas atlas) {
+        frame = atlas.findRegion("blank");
         this.maxHP = this.hp = hp;
         this.horizontal = horizontal;
         if (!ui) {

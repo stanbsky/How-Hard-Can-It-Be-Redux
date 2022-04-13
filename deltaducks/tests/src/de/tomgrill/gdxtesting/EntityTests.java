@@ -1,0 +1,106 @@
+package de.tomgrill.gdxtesting;
+
+import com.badlogic.gdx.backends.headless.HeadlessApplication;
+import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.World;
+import com.ducks.entities.ListOfCannons;
+import com.ducks.entities.PhysicsManager;
+import com.ducks.sprites.Bullet;
+import com.ducks.sprites.College;
+import com.ducks.sprites.PlayerBullet;
+import com.ducks.tools.MyContactListener;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class EntityTests {
+    private static DDHeadless game;
+    private static HeadlessApplication app;
+
+    @Mock
+    TextureAtlas atlas;
+    @Mock
+    ListOfCannons cannons;
+    @Mock Contact contact;
+
+    private MyContactListener contactListener;
+    private final Vector2 zero = new Vector2(0, 0);
+
+    @BeforeAll
+    public static void setupApp() {
+        HeadlessApplicationConfiguration conf = new HeadlessApplicationConfiguration();
+        conf.updatesPerSecond = 60;
+        game = new DDHeadless();
+        app = new HeadlessApplication(game, conf);
+    }
+    @BeforeEach
+    public void setupWorld() {
+        World world = new World(new Vector2(0,0), true);
+        contactListener = new MyContactListener(null, null);
+        PhysicsManager.Initialize(world);
+    }
+    @Test
+    public void testCreateBullet() {
+        //TODO: not sure if it's possible to get box2dworld to tick ahead and apply velocity
+//        Bullet bullet = new PlayerBullet(zero, new Vector2(1, 0), zero, atlas);
+//        System.out.println(bullet.getBody().isAwake());
+//        System.out.println(bullet.getVelocity());
+//        bullet.getBody().applyForceToCenter(100,0,true);
+//        bullet.update(1f);
+//        System.out.println(bullet.getVelocity());
+        assert true;
+    }
+    @Test
+    public void testCollegeHit() {
+        College college = new College(500, 0, "test", cannons, atlas);
+        Bullet bullet;
+        float health;
+
+        // Forwards
+        bullet = new PlayerBullet(zero, zero, zero, atlas);
+        when(contact.getFixtureA()).thenReturn(college.getBody().getFixtureList().first());
+        when(contact.getFixtureB()).thenReturn(bullet.getBody().getFixtureList().first());
+        health = college.health;
+        contactListener.beginContact(contact);
+        assert bullet.getData().equals("Bullet Dead");
+        college.update(1f);
+        assert college.health < health;
+
+        // Forwards
+        bullet = new PlayerBullet(zero, zero, zero, atlas);
+        when(contact.getFixtureB()).thenReturn(college.getBody().getFixtureList().first());
+        when(contact.getFixtureA()).thenReturn(bullet.getBody().getFixtureList().first());
+        health = college.health;
+        contactListener.beginContact(contact);
+        assert bullet.getData().equals("Bullet Dead");
+        college.update(1f);
+        assert college.health < health;
+
+        // Destroy
+        for (int i = 0; i < 3; i++) {
+            bullet = new PlayerBullet(zero, zero, zero, atlas);
+            when(contact.getFixtureA()).thenReturn(bullet.getBody().getFixtureList().first());
+            contactListener.beginContact(contact);
+            college.update(1f);
+        }
+        assert college.health <= 0.001f;
+        college.update(1f);
+        assert college.health == -100f;
+
+    }
+    @Test
+    public void testBulletTimeout() {
+        Bullet bullet = new PlayerBullet(zero, zero, zero, atlas);
+        bullet.update(2.5f);
+        assert bullet.getData().equals("Bullet Dead");
+    }
+}

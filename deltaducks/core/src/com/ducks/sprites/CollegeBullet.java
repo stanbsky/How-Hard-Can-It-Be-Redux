@@ -16,7 +16,7 @@ public class CollegeBullet extends Bullet {
         this.category = DeltaDucks.BIT_CANNONS;
         this.mask = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PLAYER;
         defineBullet(position);
-        this.rigidBody.setData("Cannon Alive");
+        setData("Cannon Alive");
         this.rigidBody.applyForce(direction, BULLET_SPEED);
     }
 }
