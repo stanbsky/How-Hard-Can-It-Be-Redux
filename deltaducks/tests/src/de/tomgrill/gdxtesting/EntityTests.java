@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.World;
-import com.ducks.entities.ListOfCannons;
+import com.ducks.entities.ListOfEnemyBullets;
 import com.ducks.entities.PhysicsManager;
 import com.ducks.sprites.Bullet;
 import com.ducks.sprites.College;
@@ -29,7 +29,7 @@ public class EntityTests {
     @Mock
     TextureAtlas atlas;
     @Mock
-    ListOfCannons cannons;
+    ListOfEnemyBullets cannons;
     @Mock Contact contact;
 
     private MyContactListener contactListener;

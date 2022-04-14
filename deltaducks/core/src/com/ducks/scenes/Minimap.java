@@ -6,12 +6,9 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Disposable;
 import com.ducks.DeltaDucks;
-import com.ducks.entities.ListOfCannons;
 import com.ducks.entities.ListOfColleges;
-import com.ducks.sprites.College;
 import com.ducks.sprites.Ship;
 
 /***

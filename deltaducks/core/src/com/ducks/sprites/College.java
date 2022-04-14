@@ -9,7 +9,7 @@ import com.ducks.components.BodyType;
 import com.ducks.components.HealthBar;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
-import com.ducks.entities.ListOfCannons;
+import com.ducks.entities.ListOfEnemyBullets;
 import com.ducks.scenes.Hud;
 import com.ducks.screens.MainGameScreen;
 
@@ -24,7 +24,7 @@ public class College extends Entity {
 
     float stateTime;
 
-    private ListOfCannons cannons;
+    private ListOfEnemyBullets cannons;
 
     public String name;
 
@@ -34,7 +34,7 @@ public class College extends Entity {
     private HealthBar hpBar;
     private Vector2 position;
 
-    public College(float spawn_x, float spawn_y, String collegeName, ListOfCannons cannons) {
+    public College(float spawn_x, float spawn_y, String collegeName, ListOfEnemyBullets cannons) {
         this(spawn_x, spawn_y, collegeName, cannons, MainGameScreen.getAtlas());
     }
     /**
@@ -44,7 +44,7 @@ public class College extends Entity {
      * @param collegeName Name of the College
      * @param cannons Cannons class to spawn and add Cannon round
      */
-    public College(float spawn_x, float spawn_y, String collegeName, ListOfCannons cannons, TextureAtlas atlas) {
+    public College(float spawn_x, float spawn_y, String collegeName, ListOfEnemyBullets cannons, TextureAtlas atlas) {
         this.atlas = atlas;
         name = collegeName;
         this.cannons = cannons;

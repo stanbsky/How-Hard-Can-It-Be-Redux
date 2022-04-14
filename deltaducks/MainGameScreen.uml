@@ -8,7 +8,7 @@
     <node x="570.0" y="1190.0">com.ducks.entities.ListOfBullets</node>
     <node x="916.0" y="804.0">com.ducks.sprites.Bullet</node>
     <node x="642.0" y="0.0">com.ducks.sprites.Crosshair</node>
-    <node x="834.0" y="1190.0">com.ducks.entities.ListOfCannons</node>
+    <node x="834.0" y="1190.0">com.ducks.entities.ListOfEnemyBullets</node>
     <node x="0.0" y="804.0">com.ducks.sprites.College</node>
     <node x="344.0" y="0.0">com.ducks.screens.MainGameScreen</node>
     <node x="236.0" y="1466.0">com.ducks.tools.MyContactListener</node>

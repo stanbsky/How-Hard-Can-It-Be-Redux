@@ -10,7 +10,7 @@
     <node x="1485.9237315078792" y="2466.0">com.ducks.sprites.Bullet</node>
     <node x="2392.6843653616606" y="4759.0">com.ducks.screens.InitialStorylineScreen</node>
     <node x="2032.9497820283277" y="1031.0">com.ducks.sprites.Crosshair</node>
-    <node x="2514.3560320283277" y="2139.0">com.ducks.entities.ListOfCannons</node>
+    <node x="2514.3560320283277" y="2139.0">com.ducks.entities.ListOfEnemyBullets</node>
     <node x="2817.412866161616" y="1064.0">com.ducks.sprites.College</node>
     <node x="2284.564365361661" y="3794.0">com.ducks.screens.MainGameScreen</node>
     <node x="3802.2087198201543" y="2975.0">com.ducks.screens.FinalStorylineScreen</node>
@@ -78,7 +78,7 @@
       <point x="2450.595615361661" y="3614.0" />
       <point x="39.53125" y="-457.5" />
     </edge>
-    <edge source="com.ducks.entities.ListOfCannons" target="com.ducks.sprites.Cannon">
+    <edge source="com.ducks.entities.ListOfEnemyBullets" target="com.ducks.sprites.Cannon">
       <point x="64.18181818181813" y="-138.5" />
       <point x="2755.0378502101457" y="2089.0" />
       <point x="2809.112480122068" y="2089.0" />
@@ -138,7 +138,7 @@
       <point x="1664.6816478922497" y="961.0" />
       <point x="-24.916666666666515" y="435.5" />
     </edge>
-    <edge source="com.ducks.entities.ListOfCannons" target="com.ducks.sprites.College">
+    <edge source="com.ducks.entities.ListOfEnemyBullets" target="com.ducks.sprites.College">
       <point x="96.27272727272725" y="-138.5" />
       <point x="2787.1287593010547" y="2099.0" />
       <point x="2949.112480122068" y="2099.0" />
@@ -198,7 +198,7 @@
       <point x="2498.033115361661" y="3704.0" />
       <point x="86.96875" y="-457.5" />
     </edge>
-    <edge source="com.ducks.entities.ListOfCannons" target="com.ducks.sprites.Ship">
+    <edge source="com.ducks.entities.ListOfEnemyBullets" target="com.ducks.sprites.Ship">
       <point x="-96.27272727272725" y="-138.5" />
       <point x="2594.5833047556002" y="2119.0" />
       <point x="2599.312480122068" y="2119.0" />
@@ -286,7 +286,7 @@
       <point x="2466.5443653616608" y="5899.0" />
       <point x="14.480000000000018" y="-226.0" />
     </edge>
-    <edge source="com.ducks.entities.ListOfColleges" target="com.ducks.entities.ListOfCannons">
+    <edge source="com.ducks.entities.ListOfColleges" target="com.ducks.entities.ListOfEnemyBullets">
       <point x="-81.19999999999982" y="-193.5" />
       <point x="3010.156032028328" y="2436.0" />
       <point x="2837.939365361661" y="2436.0" />
@@ -340,7 +340,7 @@
       <point x="3168.382261486821" y="3674.0" />
       <point x="0.0" y="116.5" />
     </edge>
-    <edge source="com.ducks.entities.ListOfCannons" target="com.ducks.scenes.Hud">
+    <edge source="com.ducks.entities.ListOfEnemyBullets" target="com.ducks.scenes.Hud">
       <point x="-32.09090909090912" y="-138.5" />
       <point x="2658.7651229374187" y="2109.0" />
       <point x="2621.312480122068" y="2109.0" />
@@ -362,7 +362,7 @@
       <point x="3342.0409823078335" y="1011.0" />
       <point x="-34.65000000000009" y="303.5" />
     </edge>
-    <edge source="com.ducks.entities.ListOfCannons" target="com.ducks.sprites.Crosshair">
+    <edge source="com.ducks.entities.ListOfEnemyBullets" target="com.ducks.sprites.Crosshair">
       <point x="-128.3636363636365" y="-138.5" />
       <point x="2562.4923956646912" y="2119.0" />
       <point x="2588.312480122068" y="2119.0" />
@@ -392,7 +392,7 @@
       <point x="1803.5487315078792" y="3584.0" />
       <point x="-57.375" y="149.5" />
     </edge>
-    <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.entities.ListOfCannons">
+    <edge source="com.ducks.screens.MainGameScreen" target="com.ducks.entities.ListOfEnemyBullets">
       <point x="23.71875" y="-457.5" />
       <point x="2434.783115361661" y="3584.0" />
       <point x="2605.8576489745005" y="3584.0" />
@@ -444,7 +444,7 @@
       <point x="3365.140982307834" y="991.0" />
       <point x="-11.549999999999955" y="303.5" />
     </edge>
-    <edge source="com.ducks.sprites.College" target="com.ducks.entities.ListOfCannons">
+    <edge source="com.ducks.sprites.College" target="com.ducks.entities.ListOfEnemyBullets">
       <point x="-22.100000000000023" y="226.5" />
       <point x="3016.3128661616156" y="1630.0" />
       <point x="2973.437480122068" y="1630.0" />
@@ -504,7 +504,7 @@
       <point x="3434.440982307834" y="1011.0" />
       <point x="57.75" y="303.5" />
     </edge>
-    <edge source="com.ducks.entities.ListOfCannons" target="com.ducks.screens.MainGameScreen">
+    <edge source="com.ducks.entities.ListOfEnemyBullets" target="com.ducks.screens.MainGameScreen">
       <point x="-147.08333333333337" y="138.5" />
       <point x="2543.7726986949942" y="2446.0" />
       <point x="2600.5868156411675" y="2446.0" />

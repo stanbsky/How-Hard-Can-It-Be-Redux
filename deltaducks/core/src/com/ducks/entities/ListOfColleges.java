@@ -16,7 +16,7 @@ import com.ducks.sprites.College;
 public class ListOfColleges {
 
     public Array<College> collegeBodies;
-    public ListOfCannons cannons;
+    public ListOfEnemyBullets cannons;
     private int collegesAlive = 3;
 
     /**
@@ -24,7 +24,7 @@ public class ListOfColleges {
      * @param cannons Collective Cannons class to spawn and fire them on player's direction
      * @param map Tiled Map
      */
-    public ListOfColleges(ListOfCannons cannons, TiledMap map) {
+    public ListOfColleges(ListOfEnemyBullets cannons, TiledMap map) {
         this.cannons = cannons;
         collegeBodies = new Array<College>();
         spawnColleges(map);

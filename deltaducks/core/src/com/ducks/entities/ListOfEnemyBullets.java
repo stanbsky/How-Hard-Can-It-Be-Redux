@@ -9,7 +9,7 @@ import com.ducks.sprites.*;
 /***
  * Collective Cannons Class for Box2D Bodies and Sprites
  */
-public class ListOfCannons {
+public class ListOfEnemyBullets {
 
     private Ship player;
 
@@ -22,7 +22,7 @@ public class ListOfCannons {
      * Constructor
      * @param player Box2D object of player
      */
-    public ListOfCannons(Ship player) {
+    public ListOfEnemyBullets(Ship player) {
         this.player = player;
         cannonBodies = new Array<>();
     }

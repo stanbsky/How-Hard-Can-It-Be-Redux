@@ -20,13 +20,11 @@ import com.ducks.scenes.Hud;
 import com.ducks.scenes.Minimap;
 import com.ducks.scenes.Subtitle;
 import com.ducks.scenes.Tutorial;
-import com.ducks.sprites.Bullet;
 import com.ducks.sprites.Player;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.Content;
 import com.ducks.tools.MyContactListener;
 import com.ducks.sprites.Crosshair;
-import com.ducks.sprites.Ship;
 
 import static com.ducks.DeltaDucks.scl;
 
@@ -63,7 +61,7 @@ public class MainGameScreen implements Screen {
     private Tutorial tutorial;
     private Subtitle subtitle;
     private ListOfBullets bullets;
-    private ListOfCannons cannons;
+    private ListOfEnemyBullets cannons;
 
     private MyContactListener contactListener;
 
@@ -137,7 +135,7 @@ public class MainGameScreen implements Screen {
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
         crosshair = new Crosshair(player);
         bullets = new ListOfBullets(player);
-        cannons = new ListOfCannons(player);
+        cannons = new ListOfEnemyBullets(player);
         colleges = new ListOfColleges(cannons, map);
         tutorial = new Tutorial(gameCam, player);
     }
