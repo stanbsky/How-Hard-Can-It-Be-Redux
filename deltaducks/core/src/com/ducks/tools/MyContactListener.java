@@ -111,6 +111,13 @@ public class MyContactListener implements ContactListener {
             subtitle.removeSubtitle();
         }
 
+        if(checkCollision(fa, fb, "Player", "Pirate Ship Sensor Attack")) {
+            if(checkFixture(fa,"Pirate Ship Sensor Attack")){
+                fa.setUserData("Pirate Ship Sensor");
+            } else {
+                fb.setUserData("Pirate Ship Sensor");
+            }
+        }
     }
 
     @Override

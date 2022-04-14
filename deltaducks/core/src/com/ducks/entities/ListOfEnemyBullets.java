@@ -11,9 +11,9 @@ import com.ducks.sprites.*;
  */
 public class ListOfEnemyBullets {
 
-    private Ship player;
+    private final Ship player;
 
-    private Array<Bullet> cannonBodies;
+    private final Array<Bullet> cannonBodies;
 
     /**
      * Constructor
@@ -26,11 +26,11 @@ public class ListOfEnemyBullets {
 
     /**
      * Spawn a cannon
-     * @param college
+     * @param college College shooting at player
      */
     public void spawnBullet(College college) {
         if (college.shootTimer >= college.SHOOT_WAIT_TIME) {
-            college.shootTimer=0;
+            college.shootTimer = 0;
             Hud.addScore(100);
             Vector2 pos = college.getPosition();
             cannonBodies.add(new EnemyBullet(pos,
@@ -40,7 +40,7 @@ public class ListOfEnemyBullets {
 
     /**
      * Spawn a cannon
-     * @param pirate
+     * @param pirate Pirate Ship shooting at player
      */
     public void spawnBullet(Pirate pirate) {
         if (pirate.shootTimer >= pirate.SHOOT_WAIT_TIME) {

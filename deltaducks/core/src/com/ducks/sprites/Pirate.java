@@ -20,7 +20,7 @@ public class Pirate extends Ship {
     private final float inputDurationThreshold = 0.7f;
     private float inputDurationRoll = 0f;
 
-    public final float SENSOR_SCALE = 3f;
+    public final float SENSOR_SCALE = 5f;
 
     private final ListOfEnemyBullets enemyBullets;
 
@@ -66,20 +66,12 @@ public class Pirate extends Ship {
 
     @Override
     public void defineShip() {
-        this.rigidBody = new RigidBody(new Vector2(scl(x), scl(y)), BodyType.Dynamic, 1.2f);
+        super.defineShip();
+
         CircleShape shape = new CircleShape();
-        shape.setRadius(radius);
+        shape.setRadius(radius * SENSOR_SCALE);
         FixtureDef fixture = new FixtureDef();
         fixture.shape = shape;
-        fixture.filter.categoryBits = category;
-        fixture.filter.maskBits = mask;
-        rigidBody.addFixture(fixture);
-        rigidBody.setData(data);
-
-        PolygonShape polyShape = new PolygonShape();
-        float side = scl(radius * SENSOR_SCALE);
-        polyShape.setAsBox(side, side, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
-        fixture.shape = polyShape;
         fixture.filter.categoryBits = category;
         fixture.filter.maskBits = mask;
         rigidBody.addSensor(fixture, "Pirate Ship Sensor");
