@@ -1,11 +1,18 @@
 package com.ducks.sprites;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.ducks.DeltaDucks;
+import com.ducks.components.BodyType;
+import com.ducks.components.RigidBody;
 import com.ducks.components.ShipAnimation;
 import com.ducks.entities.ListOfEnemyBullets;
 import com.ducks.scenes.Hud;
 import com.ducks.tools.InputParser;
+
+import static com.ducks.DeltaDucks.scl;
 
 public class Pirate extends Ship {
 
@@ -13,7 +20,9 @@ public class Pirate extends Ship {
     private final float inputDurationThreshold = 0.7f;
     private float inputDurationRoll = 0f;
 
-    private ListOfEnemyBullets enemyBullets;
+    public final float SENSOR_SCALE = 3f;
+
+    private final ListOfEnemyBullets enemyBullets;
 
     public final float SHOOT_WAIT_TIME = 1f;
     public float shootTimer ;
@@ -39,7 +48,7 @@ public class Pirate extends Ship {
     }
 
     public void update(float deltaTime) {
-        shootTimer += deltaTime;
+        shootTimer += ((Math.random() * 0.5)+0.5) * deltaTime;
         // Roll on whether we need to pull a new random input direction
         if (Math.random() < inputStickinessThreshold)
             parseDirection(InputParser.fakeInput(0.3f));
@@ -48,9 +57,32 @@ public class Pirate extends Ship {
             applyForce();
         else
             inputDurationRoll = 0f;
-        enemyBullets.spawnBullet(this);
+        if(rigidBody.getSensorData().contains("Attack")) {
+            enemyBullets.spawnBullet(this);
+        }
         animation.update(deltaTime, getPosition(), direction, false);
         super.update();
+    }
+
+    @Override
+    public void defineShip() {
+        this.rigidBody = new RigidBody(new Vector2(scl(x), scl(y)), BodyType.Dynamic, 1.2f);
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius);
+        FixtureDef fixture = new FixtureDef();
+        fixture.shape = shape;
+        fixture.filter.categoryBits = category;
+        fixture.filter.maskBits = mask;
+        rigidBody.addFixture(fixture);
+        rigidBody.setData(data);
+
+        PolygonShape polyShape = new PolygonShape();
+        float side = scl(radius * SENSOR_SCALE);
+        polyShape.setAsBox(side, side, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
+        fixture.shape = polyShape;
+        fixture.filter.categoryBits = category;
+        fixture.filter.maskBits = mask;
+        rigidBody.addSensor(fixture, "Pirate Ship Sensor");
     }
 
     public void dispose() {

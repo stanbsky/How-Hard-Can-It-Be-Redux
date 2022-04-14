@@ -51,6 +51,14 @@ public class MyContactListener implements ContactListener {
             subtitle.setSubtitle("Enemy College Nearby");
         }
 
+        if(checkCollision(fa, fb, "Player", "Pirate Ship Sensor")) {
+            if(checkFixture(fa, "Pirate Ship Sensor")){
+                fa.setUserData("Pirate Ship Sensor Attack");
+            } else {
+                fb.setUserData("Pirate Ship Sensor Attack");
+            }
+        }
+
         if(checkCollision(fa, fb, "Pirate", "Bullet Alive")) {
             if(checkFixture(fa, "Pirate")){
                 fa.setUserData("Pirate Dead");
