@@ -43,11 +43,13 @@ public class ListOfEnemyBullets {
      * @param pirate
      */
     public void spawnCannon(Pirate pirate) {
-
-        Hud.addScore(50);
-        Vector2 pos = pirate.getPosition();
-        cannonBodies.add(new EnemyBullet(pos,
-                Crosshair.getDirection(pos, player.getPosition())));
+        if (pirate.shootTimer >= pirate.SHOOT_WAIT_TIME) {
+            pirate.shootTimer = 0;
+            Hud.addScore(50);
+            Vector2 pos = pirate.getPosition();
+            cannonBodies.add(new EnemyBullet(pos,
+                    Crosshair.getDirection(pos, player.getPosition())));
+        }
     }
 
     /**

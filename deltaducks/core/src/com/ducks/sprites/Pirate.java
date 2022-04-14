@@ -15,6 +15,9 @@ public class Pirate extends Ship {
 
     private ListOfEnemyBullets enemyBullets;
 
+    public final float SHOOT_WAIT_TIME = 1f;
+    public float shootTimer ;
+
     public Pirate(String college, float spawn_x, float spawn_y, ListOfEnemyBullets enemyBullets) {
         super();
         mask = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
@@ -36,6 +39,7 @@ public class Pirate extends Ship {
     }
 
     public void update(float deltaTime) {
+        shootTimer += deltaTime;
         // Roll on whether we need to pull a new random input direction
         if (Math.random() < inputStickinessThreshold)
             parseDirection(InputParser.fakeInput(0.3f));
@@ -44,7 +48,7 @@ public class Pirate extends Ship {
             applyForce();
         else
             inputDurationRoll = 0f;
-//        enemyBullets.spawnCannon(this);
+        enemyBullets.spawnCannon(this);
         animation.update(deltaTime, getPosition(), direction, false);
         super.update();
     }
