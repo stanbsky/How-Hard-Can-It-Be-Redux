@@ -36,7 +36,7 @@ public class ListOfCannons {
             shootTimer=0;
             Hud.addScore(100);
             Vector2 pos = college.getPosition();
-            cannonBodies.add(new CollegeBullet(pos,
+            cannonBodies.add(new EnemyBullet(pos,
                     Crosshair.getDirection(pos, player.getPosition())));
         }
     }
