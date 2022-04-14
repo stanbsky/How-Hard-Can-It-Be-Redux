@@ -48,7 +48,7 @@ public class Pirate extends Ship {
             applyForce();
         else
             inputDurationRoll = 0f;
-        enemyBullets.spawnCannon(this);
+        enemyBullets.spawnBullet(this);
         animation.update(deltaTime, getPosition(), direction, false);
         super.update();
     }

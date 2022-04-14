@@ -28,7 +28,7 @@ public class ListOfEnemyBullets {
      * Spawn a cannon
      * @param college
      */
-    public void spawnCannon(College college) {
+    public void spawnBullet(College college) {
         if (college.shootTimer >= college.SHOOT_WAIT_TIME) {
             college.shootTimer=0;
             Hud.addScore(100);
@@ -42,7 +42,7 @@ public class ListOfEnemyBullets {
      * Spawn a cannon
      * @param pirate
      */
-    public void spawnCannon(Pirate pirate) {
+    public void spawnBullet(Pirate pirate) {
         if (pirate.shootTimer >= pirate.SHOOT_WAIT_TIME) {
             pirate.shootTimer = 0;
             Hud.addScore(50);
