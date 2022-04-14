@@ -6,8 +6,6 @@ import com.ducks.components.Texture;
 
 public class EnemyBullet extends Bullet {
 
-    private final float BULLET_SPEED = 130f;
-
     /**
      * Constructor
      */
@@ -17,6 +15,7 @@ public class EnemyBullet extends Bullet {
         this.mask = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PLAYER;
         defineBullet(position);
         setData("Cannon Alive");
+        final float BULLET_SPEED = 130f;
         this.rigidBody.applyForce(direction, BULLET_SPEED);
     }
 }
