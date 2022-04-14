@@ -45,6 +45,7 @@ public class Pirate extends Ship {
     }
 
     public void dispose() {
+        rigidBody.dispose();
         Hud.addGold(100);
         Hud.addScore(1000);
     }

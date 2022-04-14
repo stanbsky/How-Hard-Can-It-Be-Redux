@@ -74,7 +74,7 @@ public class ListOfPirates {
         for( Pirate pirate : pirateBodies ) {
             if(!pirate.getData().equals("Pirate")) {
                 piratesBodiesToRemove.add(pirate);
-//                pirate.dispose();
+                pirate.dispose();
             } else {
                 pirate.update(deltaTime);
             }
