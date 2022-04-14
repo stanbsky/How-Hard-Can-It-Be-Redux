@@ -42,6 +42,20 @@ public class ListOfEnemyBullets {
     }
 
     /**
+     * Spawn a cannon
+     * @param
+     */
+    public void spawnCannon(Pirate pirate) {
+        if (shootTimer >= SHOOT_WAIT_TIME) {
+            shootTimer=0;
+            Hud.addScore(50);
+            Vector2 pos = pirate.getPosition();
+            cannonBodies.add(new EnemyBullet(pos,
+                    Crosshair.getDirection(pos, player.getPosition())));
+        }
+    }
+
+    /**
      * Update all cannons every delta time interval
      * @param deltaTime of the game
      */

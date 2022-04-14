@@ -24,7 +24,7 @@ public class College extends Entity {
 
     float stateTime;
 
-    private ListOfEnemyBullets cannons;
+    private ListOfEnemyBullets enemyBullets;
 
     public String name;
 
@@ -47,7 +47,7 @@ public class College extends Entity {
     public College(float spawn_x, float spawn_y, String collegeName, ListOfEnemyBullets cannons, TextureAtlas atlas) {
         this.atlas = atlas;
         name = collegeName;
-        this.cannons = cannons;
+        this.enemyBullets = cannons;
         radius = 100f;
         scale = 1.2f;
         health = 1f;
@@ -73,7 +73,7 @@ public class College extends Entity {
         } else {
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
             if(rigidBody.getSensorData().contains("Attack")) {
-                cannons.spawnCannon(this);
+                enemyBullets.spawnCannon(this);
             }
             if(rigidBody.getData().contains("Damage")) {
                 rigidBody.setData("College");
