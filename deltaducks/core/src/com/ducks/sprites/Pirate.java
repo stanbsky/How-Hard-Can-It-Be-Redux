@@ -3,6 +3,7 @@ package com.ducks.sprites;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.DeltaDucks;
 import com.ducks.components.ShipAnimation;
+import com.ducks.entities.ListOfEnemyBullets;
 import com.ducks.scenes.Hud;
 import com.ducks.tools.InputParser;
 
@@ -12,10 +13,13 @@ public class Pirate extends Ship {
     private final float inputDurationThreshold = 0.7f;
     private float inputDurationRoll = 0f;
 
-    public Pirate(String college, float spawn_x, float spawn_y) {
+    private ListOfEnemyBullets enemyBullets;
+
+    public Pirate(String college, float spawn_x, float spawn_y, ListOfEnemyBullets enemyBullets) {
         super();
         mask = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
         category = DeltaDucks.BIT_PIRATES;
+        this.enemyBullets = enemyBullets;
 
         x = spawn_x - width / 2;
         y = spawn_y - height / 2;
@@ -40,6 +44,7 @@ public class Pirate extends Ship {
             applyForce();
         else
             inputDurationRoll = 0f;
+//        enemyBullets.spawnCannon(this);
         animation.update(deltaTime, getPosition(), direction, false);
         super.update();
     }

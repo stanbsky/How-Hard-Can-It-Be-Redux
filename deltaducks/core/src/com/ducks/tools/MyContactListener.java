@@ -34,7 +34,7 @@ public class MyContactListener implements ContactListener {
         Fixture fa = contact.getFixtureA();
         Fixture fb = contact.getFixtureB();
 
-//        System.out.println(fa.getUserData()+", "+fb.getUserData());
+
         // TODO: figure out if this Monster thing is totally unimplemented...
 //        if(checkCollision(fa, fb, "Player", "Monster Sensor")) {
 //            player.b2body.applyLinearImpulse(new Vector2(

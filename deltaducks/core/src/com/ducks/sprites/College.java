@@ -34,20 +34,23 @@ public class College extends Entity {
     private HealthBar hpBar;
     private Vector2 position;
 
-    public College(float spawn_x, float spawn_y, String collegeName, ListOfEnemyBullets cannons) {
-        this(spawn_x, spawn_y, collegeName, cannons, MainGameScreen.getAtlas());
+    public final float SHOOT_WAIT_TIME = 1f;
+    public float shootTimer ;
+
+    public College(float spawn_x, float spawn_y, String collegeName, ListOfEnemyBullets enemyBullets) {
+        this(spawn_x, spawn_y, collegeName, enemyBullets, MainGameScreen.getAtlas());
     }
     /**
      * Constructor
      * @param spawn_x X coordinate of the college
      * @param spawn_y Y coordinate of the college
      * @param collegeName Name of the College
-     * @param cannons Cannons class to spawn and add Cannon round
+     * @param enemyBullets Cannons class to spawn and add Cannon round
      */
-    public College(float spawn_x, float spawn_y, String collegeName, ListOfEnemyBullets cannons, TextureAtlas atlas) {
+    public College(float spawn_x, float spawn_y, String collegeName, ListOfEnemyBullets enemyBullets, TextureAtlas atlas) {
         this.atlas = atlas;
         name = collegeName;
-        this.enemyBullets = cannons;
+        this.enemyBullets = enemyBullets;
         radius = 100f;
         scale = 1.2f;
         health = 1f;
@@ -65,6 +68,7 @@ public class College extends Entity {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
+        shootTimer += deltaTime;
         stateTime += deltaTime;
         hpBar.update(health);
         if(destroyed) {

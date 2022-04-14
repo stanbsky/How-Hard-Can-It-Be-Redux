@@ -24,7 +24,6 @@ public class PlayerBullet extends Bullet {
      */
     public void update(float deltaTime) {
         super.update(deltaTime);
-        //System.out.println(getPosition());
     }
     /**
      * Constructor

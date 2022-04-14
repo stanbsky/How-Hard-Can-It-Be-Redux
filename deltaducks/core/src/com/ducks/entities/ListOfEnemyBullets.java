@@ -15,9 +15,6 @@ public class ListOfEnemyBullets {
 
     private Array<Bullet> cannonBodies;
 
-    private final float SHOOT_WAIT_TIME = 1f;
-    float shootTimer ;
-
     /**
      * Constructor
      * @param player Box2D object of player
@@ -32,8 +29,8 @@ public class ListOfEnemyBullets {
      * @param college
      */
     public void spawnCannon(College college) {
-        if (shootTimer >= SHOOT_WAIT_TIME) {
-            shootTimer=0;
+        if (college.shootTimer >= college.SHOOT_WAIT_TIME) {
+            college.shootTimer=0;
             Hud.addScore(100);
             Vector2 pos = college.getPosition();
             cannonBodies.add(new EnemyBullet(pos,
@@ -43,16 +40,14 @@ public class ListOfEnemyBullets {
 
     /**
      * Spawn a cannon
-     * @param
+     * @param pirate
      */
     public void spawnCannon(Pirate pirate) {
-        if (shootTimer >= SHOOT_WAIT_TIME) {
-            shootTimer=0;
-            Hud.addScore(50);
-            Vector2 pos = pirate.getPosition();
-            cannonBodies.add(new EnemyBullet(pos,
-                    Crosshair.getDirection(pos, player.getPosition())));
-        }
+
+        Hud.addScore(50);
+        Vector2 pos = pirate.getPosition();
+        cannonBodies.add(new EnemyBullet(pos,
+                Crosshair.getDirection(pos, player.getPosition())));
     }
 
     /**
@@ -60,7 +55,6 @@ public class ListOfEnemyBullets {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
-        shootTimer += deltaTime;
         Array<Bullet> CannonBodiesToRemove = new Array<>();
         for( Bullet cannon : cannonBodies) {
             if(!cannon.getData().equals("Cannon Alive")) {

@@ -61,7 +61,7 @@ public class MainGameScreen implements Screen {
     private Tutorial tutorial;
     private Subtitle subtitle;
     private ListOfBullets bullets;
-    private ListOfEnemyBullets cannons;
+    private ListOfEnemyBullets enemyBullets;
 
     private MyContactListener contactListener;
 
@@ -130,13 +130,13 @@ public class MainGameScreen implements Screen {
 
         new B2WorldCreator(world, map);
 
-        bots = new ListOfPirates(world, this, map);
         creatures = new ListOfMonsters(world, this);
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
         crosshair = new Crosshair(player);
         bullets = new ListOfBullets(player);
-        cannons = new ListOfEnemyBullets(player);
-        colleges = new ListOfColleges(cannons, map);
+        enemyBullets = new ListOfEnemyBullets(player);
+        colleges = new ListOfColleges(enemyBullets, map);
+        bots = new ListOfPirates(enemyBullets, world, this, map);
         tutorial = new Tutorial(gameCam, player);
     }
 
@@ -187,7 +187,7 @@ public class MainGameScreen implements Screen {
         subtitle.update(deltaTime);
         crosshair.update(deltaTime);
         bullets.update(deltaTime);
-        cannons.update(deltaTime);
+        enemyBullets.update(deltaTime);
 
         gameCam.position.x = player.getPosition().x;
         gameCam.position.y = player.getPosition().y;
@@ -242,7 +242,7 @@ public class MainGameScreen implements Screen {
         radar.draw(game.batch);
         tutorial.draw(game.batch);
         bullets.draw(game.batch);
-        cannons.draw(game.batch);
+        enemyBullets.draw(game.batch);
         player.draw(game.batch);
         crosshair.draw(game.batch);
         game.batch.end();

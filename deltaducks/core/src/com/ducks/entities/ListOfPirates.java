@@ -22,6 +22,8 @@ public class ListOfPirates {
 
     private Array<Pirate> pirateBodies;
 
+    private final ListOfEnemyBullets enemyBullets;
+
 
 //    private final float RADIUS = 4f * Pirate.PIXEL_PIRATE_HEIGHT / DeltaDucks.PIXEL_PER_METER;
 
@@ -31,7 +33,8 @@ public class ListOfPirates {
      * @param screen Game Screen
      * @param map Tiled Map
      */
-    public ListOfPirates(World world, MainGameScreen screen, TiledMap map) {
+    public ListOfPirates(ListOfEnemyBullets enemyBullets, World world, MainGameScreen screen, TiledMap map) {
+        this.enemyBullets = enemyBullets;
         this.world = world;
         this.screen = screen;
         pirateBodies = new Array<Pirate>();
@@ -58,11 +61,11 @@ public class ListOfPirates {
                 college = "halifax";
             else
                 college = "constantine";
-            pirateBodies.add(new Pirate(college, rect.getX()*DeltaDucks.TILEED_MAP_SCALE, rect.getY()*DeltaDucks.TILEED_MAP_SCALE));
+            pirateBodies.add(new Pirate(college, rect.getX()*DeltaDucks.TILEED_MAP_SCALE, rect.getY()*DeltaDucks.TILEED_MAP_SCALE, enemyBullets));
 //            pirateBodies.add(new Pirate(world, screen, (rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE, (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE, RADIUS));
         }
         //TODO: testing spawn near player
-        pirateBodies.add(new Pirate("constantine", 3358,5163));
+        pirateBodies.add(new Pirate("constantine", 3358,5163, enemyBullets));
     }
 
     /**
