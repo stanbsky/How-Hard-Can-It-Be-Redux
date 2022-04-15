@@ -16,10 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.entities.*;
-import com.ducks.scenes.Hud;
-import com.ducks.scenes.Minimap;
-import com.ducks.scenes.Subtitle;
-import com.ducks.scenes.Tutorial;
+import com.ducks.scenes.*;
 import com.ducks.sprites.Player;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.Content;
@@ -37,6 +34,7 @@ public class MainGameScreen implements Screen {
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
+    private PauseMenu pauseMenu;
 
     private TmxMapLoader mapLoader;
     private TiledMap map;
@@ -97,6 +95,7 @@ public class MainGameScreen implements Screen {
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
         hud = new Hud(game.batch);
+        pauseMenu = new PauseMenu();
         subtitle = new Subtitle(game.batch);
 
         // Create Map
@@ -218,7 +217,6 @@ public class MainGameScreen implements Screen {
         }
         else if (escPressed) {
             escPressed = false;
-            escPressed = false;
         }
         if (!isPaused) {
             update(delta);
@@ -249,6 +247,11 @@ public class MainGameScreen implements Screen {
 
         // Set our batch to now draw what the Hud camera sees.
         hud.draw(game.batch);
+
+        // Display the pause menu, only when necessary
+        if (isPaused) {
+            pauseMenu.draw();
+        }
 
         game.batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
         subtitle.stage.draw();

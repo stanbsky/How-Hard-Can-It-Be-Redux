@@ -53,7 +53,6 @@ public class MainMenuScreen implements Screen {
         exitButtonActive = new Texture("main_menu/exit_button_active.png");
         exitButtonInactive = new Texture("main_menu/exit_button_inactive.png");
 
-
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(DeltaDucks.WIDTH, DeltaDucks.HEIGHT, gameCam);
     }
