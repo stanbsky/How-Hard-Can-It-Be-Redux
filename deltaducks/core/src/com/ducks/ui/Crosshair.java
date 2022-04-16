@@ -1,9 +1,10 @@
-package com.ducks.entities;
+package com.ducks.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.components.Texture;
+import com.ducks.entities.Ship;
 
 import static com.ducks.DeltaDucks.scl;
 

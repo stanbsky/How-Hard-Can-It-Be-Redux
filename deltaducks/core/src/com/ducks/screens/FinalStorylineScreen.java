@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
-import com.ducks.scenes.Hud;
+import com.ducks.ui.Hud;
 
 /***
  * Final Story Line

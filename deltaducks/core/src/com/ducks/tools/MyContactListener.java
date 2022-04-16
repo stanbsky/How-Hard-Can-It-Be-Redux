@@ -1,8 +1,8 @@
 package com.ducks.tools;
 
 import com.badlogic.gdx.physics.box2d.*;
-import com.ducks.scenes.Hud;
-import com.ducks.scenes.Subtitle;
+import com.ducks.ui.Hud;
+import com.ducks.ui.Subtitle;
 import com.ducks.entities.Ship;
 
 /***

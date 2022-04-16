@@ -16,15 +16,15 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.managers.*;
-import com.ducks.scenes.Hud;
-import com.ducks.scenes.Minimap;
-import com.ducks.scenes.Subtitle;
-import com.ducks.scenes.Tutorial;
+import com.ducks.ui.Hud;
+import com.ducks.ui.Minimap;
+import com.ducks.ui.Subtitle;
+import com.ducks.ui.Tutorial;
 import com.ducks.entities.Player;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.Content;
 import com.ducks.tools.MyContactListener;
-import com.ducks.entities.Crosshair;
+import com.ducks.ui.Crosshair;
 
 import static com.ducks.DeltaDucks.scl;
 

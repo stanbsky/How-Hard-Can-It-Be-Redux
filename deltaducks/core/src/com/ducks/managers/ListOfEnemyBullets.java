@@ -3,7 +3,8 @@ package com.ducks.managers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.ducks.scenes.Hud;
+import com.ducks.ui.Crosshair;
+import com.ducks.ui.Hud;
 import com.ducks.entities.*;
 
 /***

@@ -5,7 +5,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ducks.components.ShipAnimation;
 import com.ducks.managers.ListOfEnemyBullets;
-import com.ducks.scenes.Hud;
+import com.ducks.ui.Hud;
 import com.ducks.tools.InputParser;
 import static com.ducks.tools.FixtureFilter.*;
 

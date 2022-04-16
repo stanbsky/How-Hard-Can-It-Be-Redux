@@ -10,7 +10,7 @@ import com.ducks.components.HealthBar;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
 import com.ducks.managers.ListOfEnemyBullets;
-import com.ducks.scenes.Hud;
+import com.ducks.ui.Hud;
 import com.ducks.screens.MainGameScreen;
 
 import static com.ducks.DeltaDucks.scl;

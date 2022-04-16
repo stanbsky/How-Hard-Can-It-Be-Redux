@@ -1,4 +1,4 @@
-package com.ducks.scenes;
+package com.ducks.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;

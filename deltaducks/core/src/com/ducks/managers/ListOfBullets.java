@@ -3,7 +3,7 @@ package com.ducks.managers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.entities.Bullet;
-import com.ducks.entities.Crosshair;
+import com.ducks.ui.Crosshair;
 import com.ducks.entities.PlayerBullet;
 import com.ducks.entities.Ship;
 

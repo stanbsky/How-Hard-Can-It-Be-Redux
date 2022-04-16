@@ -1,4 +1,4 @@
-package com.ducks.scenes;
+package com.ducks.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
@@ -13,7 +13,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.components.HealthBar;
-import com.ducks.screens.MainGameScreen;
 
 /***
  * HUD for the game
