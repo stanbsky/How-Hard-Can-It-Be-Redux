@@ -43,6 +43,6 @@ public class B2WorldCreator {
         fdef.shape = shape;
         fdef.filter.categoryBits = SCENERY;
         fdef.filter.maskBits = MASK_ALL - PLAYER_BULLET - ENEMY_BULLET;
-//        body.createFixture(fdef).setUserData("Land");
+        body.createFixture(fdef);
     }
 }
