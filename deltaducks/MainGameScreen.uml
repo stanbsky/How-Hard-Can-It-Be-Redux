@@ -4,21 +4,21 @@
   <OriginalElement />
   <nodes>
     <node x="1092.0" y="1190.0">com.ducks.scenes.Minimap</node>
-    <node x="1210.0" y="804.0">com.ducks.entities.ListOfColleges</node>
-    <node x="570.0" y="1190.0">com.ducks.entities.ListOfBullets</node>
-    <node x="916.0" y="804.0">com.ducks.sprites.Bullet</node>
-    <node x="642.0" y="0.0">com.ducks.sprites.Crosshair</node>
-    <node x="834.0" y="1190.0">com.ducks.entities.ListOfEnemyBullets</node>
-    <node x="0.0" y="804.0">com.ducks.sprites.College</node>
+    <node x="1210.0" y="804.0">com.ducks.managers.ListOfColleges</node>
+    <node x="570.0" y="1190.0">com.ducks.managers.ListOfBullets</node>
+    <node x="916.0" y="804.0">com.ducks.entities.Bullet</node>
+    <node x="642.0" y="0.0">com.ducks.entities.Crosshair</node>
+    <node x="834.0" y="1190.0">com.ducks.managers.ListOfEnemyBullets</node>
+    <node x="0.0" y="804.0">com.ducks.entities.College</node>
     <node x="344.0" y="0.0">com.ducks.screens.MainGameScreen</node>
     <node x="236.0" y="1466.0">com.ducks.tools.MyContactListener</node>
     <node x="953.0" y="0.0">com.ducks.scenes.Hud</node>
-    <node x="0.0" y="0.0">com.ducks.sprites.Ship</node>
-    <node x="612.0" y="804.0">com.ducks.sprites.Cannon</node>
-    <node x="0.0" y="1466.0">com.ducks.entities.ListOfPirates</node>
+    <node x="0.0" y="0.0">com.ducks.entities.Ship</node>
+    <node x="612.0" y="804.0">com.ducks.entities.Cannon</node>
+    <node x="0.0" y="1466.0">com.ducks.managers.ListOfPirates</node>
     <node x="0.0" y="1190.0">com.ducks.scenes.Subtitle</node>
     <node x="336.0" y="804.0">com.ducks.scenes.Tutorial</node>
-    <node x="276.0" y="1190.0">com.ducks.sprites.Pirate</node>
+    <node x="276.0" y="1190.0">com.ducks.entities.Pirate</node>
     <node x="482.0" y="1466.0">com.ducks.tools.Content</node>
   </nodes>
   <notes />

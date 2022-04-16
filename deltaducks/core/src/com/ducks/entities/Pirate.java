@@ -1,11 +1,10 @@
-package com.ducks.sprites;
+package com.ducks.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.ducks.DeltaDucks;
 import com.ducks.components.ShipAnimation;
-import com.ducks.entities.ListOfEnemyBullets;
+import com.ducks.managers.ListOfEnemyBullets;
 import com.ducks.scenes.Hud;
 import com.ducks.tools.InputParser;
 import static com.ducks.tools.FixtureFilter.*;

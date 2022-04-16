@@ -1,10 +1,8 @@
-package com.ducks.sprites;
+package com.ducks.entities;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.ducks.components.Texture;
 
 import static com.ducks.DeltaDucks.scl;

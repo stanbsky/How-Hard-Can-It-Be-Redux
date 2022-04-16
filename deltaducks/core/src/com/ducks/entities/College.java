@@ -1,4 +1,4 @@
-package com.ducks.sprites;
+package com.ducks.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -9,7 +9,7 @@ import com.ducks.tools.BodyType;
 import com.ducks.components.HealthBar;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
-import com.ducks.entities.ListOfEnemyBullets;
+import com.ducks.managers.ListOfEnemyBullets;
 import com.ducks.scenes.Hud;
 import com.ducks.screens.MainGameScreen;
 

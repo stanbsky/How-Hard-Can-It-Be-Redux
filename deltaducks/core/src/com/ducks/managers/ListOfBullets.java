@@ -1,11 +1,11 @@
-package com.ducks.entities;
+package com.ducks.managers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import com.ducks.sprites.Bullet;
-import com.ducks.sprites.Crosshair;
-import com.ducks.sprites.PlayerBullet;
-import com.ducks.sprites.Ship;
+import com.ducks.entities.Bullet;
+import com.ducks.entities.Crosshair;
+import com.ducks.entities.PlayerBullet;
+import com.ducks.entities.Ship;
 
 /***
  * Collective Bullets Class for Box2D Bodies and Sprites

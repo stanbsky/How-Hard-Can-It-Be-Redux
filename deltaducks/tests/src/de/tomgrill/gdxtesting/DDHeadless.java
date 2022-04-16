@@ -1,15 +1,6 @@
 package de.tomgrill.gdxtesting;
 
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.backends.headless.HeadlessApplication;
-import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
-import com.ducks.entities.PhysicsManager;
-import com.ducks.sprites.Bullet;
-import com.ducks.sprites.PlayerBullet;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.mock;
 

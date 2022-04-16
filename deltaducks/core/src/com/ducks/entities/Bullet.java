@@ -1,4 +1,4 @@
-package com.ducks.sprites;
+package com.ducks.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -9,7 +9,6 @@ import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
 
 import static com.ducks.DeltaDucks.scl;
-import static com.ducks.tools.FixtureFilter.PLAYER;
 
 public class Bullet extends Entity {
     private final float BULLET_SPAWN_DURATION = 2f;

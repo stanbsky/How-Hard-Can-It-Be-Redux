@@ -1,11 +1,9 @@
 package com.ducks.tools;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.ducks.DeltaDucks;
 import com.ducks.scenes.Hud;
 import com.ducks.scenes.Subtitle;
-import com.ducks.sprites.Ship;
+import com.ducks.entities.Ship;
 
 /***
  * Listen to any collision in Box2D world among any 2 Box2D Collisive Body

@@ -1,4 +1,4 @@
-package com.ducks.sprites;
+package com.ducks.entities;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;

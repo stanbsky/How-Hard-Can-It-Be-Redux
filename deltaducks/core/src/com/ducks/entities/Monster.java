@@ -1,4 +1,4 @@
-package com.ducks.sprites;
+package com.ducks.entities;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;

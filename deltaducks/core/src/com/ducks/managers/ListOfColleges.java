@@ -1,4 +1,4 @@
-package com.ducks.entities;
+package com.ducks.managers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
-import com.ducks.sprites.College;
+import com.ducks.entities.College;
 
 /**
  * Collective Colleges Class for Box2D Bodies and Sprites

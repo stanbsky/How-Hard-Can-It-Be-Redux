@@ -1,11 +1,11 @@
-package com.ducks.entities;
+package com.ducks.managers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
-import com.ducks.sprites.Monster;
+import com.ducks.entities.Monster;
 
 public class ListOfMonsters {
 

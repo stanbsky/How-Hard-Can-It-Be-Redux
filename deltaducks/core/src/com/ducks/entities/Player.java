@@ -1,4 +1,4 @@
-package com.ducks.sprites;
+package com.ducks.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.tools.InputParser;

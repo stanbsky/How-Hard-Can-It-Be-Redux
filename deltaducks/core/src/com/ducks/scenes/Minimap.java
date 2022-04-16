@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.ducks.DeltaDucks;
-import com.ducks.entities.ListOfColleges;
-import com.ducks.sprites.Ship;
+import com.ducks.managers.ListOfColleges;
+import com.ducks.entities.Ship;
 
 /***
  * Minimap for the game

@@ -1,4 +1,4 @@
-package com.ducks.entities;
+package com.ducks.managers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
-import com.ducks.sprites.Pirate;
+import com.ducks.entities.Pirate;
 
 /***
  * Collective Pirates Class for Box2D Bodies and Sprites

@@ -1,15 +1,12 @@
-package com.ducks.sprites;
+package com.ducks.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.ducks.DeltaDucks;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
-
-import static com.ducks.DeltaDucks.scl;
 
 public class Entity {
     protected float width;

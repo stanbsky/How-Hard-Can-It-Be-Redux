@@ -1,4 +1,4 @@
-package com.ducks.sprites;
+package com.ducks.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -11,7 +11,6 @@ import com.ducks.components.ShipAnimation;
 import java.util.ArrayList;
 
 import static com.ducks.DeltaDucks.scl;
-import static com.ducks.tools.FixtureFilter.MASK_ALL;
 
 /***
  * Ship (or Player) Class for Box2D Body and Sprite

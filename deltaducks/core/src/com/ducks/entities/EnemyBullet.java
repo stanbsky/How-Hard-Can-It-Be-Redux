@@ -1,7 +1,6 @@
-package com.ducks.sprites;
+package com.ducks.entities;
 
 import com.badlogic.gdx.math.Vector2;
-import com.ducks.DeltaDucks;
 import com.ducks.components.Texture;
 import static com.ducks.tools.FixtureFilter.*;
 public class EnemyBullet extends Bullet {
