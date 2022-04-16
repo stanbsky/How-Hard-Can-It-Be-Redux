@@ -245,12 +245,14 @@ public class MainGameScreen implements Screen {
         crosshair.draw(game.batch);
         game.batch.end();
 
+
         // Set our batch to now draw what the Hud camera sees.
         hud.draw(game.batch);
 
+
         // Display the pause menu, only when necessary
         if (isPaused) {
-            pauseMenu.draw();
+            pauseMenu.draw(game.batch);
         }
 
         game.batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
