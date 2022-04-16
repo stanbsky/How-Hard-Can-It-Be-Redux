@@ -5,8 +5,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
+import com.ducks.intangibles.EntityData;
 
 public class Entity {
     protected float width;
@@ -18,6 +20,7 @@ public class Entity {
     protected float radius;
     protected float scale = 1f;
     protected TextureAtlas atlas;
+    protected EntityData data;
 
     public Entity() {
     }
@@ -42,11 +45,15 @@ public class Entity {
         return rigidBody.getBody();
     }
 
-    public void setData(String data) {
+    public void setData(EntityData data) {
         rigidBody.setData(data);
     }
 
-    public String getData() { return rigidBody.getData(); }
+//    public String getData() { return rigidBody.getData(); }
 
-    public String getSensorData() { return rigidBody.getSensorData(); }
+    public boolean isAlive() { return rigidBody.getData().isAlive; }
+
+    public boolean isHit() { return rigidBody.getData().isHit(); }
+
+    public EntityData getSensorData() { return rigidBody.getSensorData(); }
 }

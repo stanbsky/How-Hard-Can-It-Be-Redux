@@ -1,6 +1,8 @@
 package com.ducks.tools;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.ducks.entities.Entity;
+import com.ducks.intangibles.EntityData;
 import com.ducks.ui.Hud;
 import com.ducks.ui.Subtitle;
 import com.ducks.entities.Ship;
@@ -57,40 +59,63 @@ public class MyContactListener implements ContactListener {
             }
         }
 
-        if(checkCollision(fa, fb, "Pirate", "Bullet Alive")) {
+        wasPirateAttacked(fa, fb);
+        if(checkCollision(fa, fb, "Pirate", "Bullet")) {
             if(checkFixture(fa, "Pirate")){
-                fa.setUserData("Pirate Dead");
+                ((EntityData) fa.getUserData()).isAlive = false;
             } else {
-                fb.setUserData("Pirate Dead");
+                ((EntityData) fb.getUserData()).isAlive = false;
             }
         }
-        if(checkCollision(fa, fb, "College", "Bullet Alive")) {
-            if(checkFixture(fa, "Bullet Alive")){
-                fa.setUserData("Bullet Dead");
+        if(checkCollision(fa, fb, "College", "Bullet")) {
+            if(checkFixture(fa, "Bullet")){
+                ((EntityData) fa.getUserData()).isAlive = false;
             } else {
-                fb.setUserData("Bullet Dead");
+                ((EntityData) fb.getUserData()).isAlive = false;
             }
             if(checkFixture(fa, "College")){
-                fa.setUserData("College Damage");
+                ((EntityData) fa.getUserData()).hit();
             } else {
-                fb.setUserData("College Damage");
+                ((EntityData) fb.getUserData()).hit();
             }
         }
 
 
-        if(checkCollision(fa, fb, "Player", "Cannon Alive")) {
+        if(checkCollision(fa, fb, "Player", "Cannon")) {
             Hud.decHealth();
         }
 
-        if(checkFixture(fa, "Cannon Alive")){
-            fa.setUserData("Cannon Dead");
+        if(checkFixture(fa, "Cannon")){
+            ((EntityData) fb.getUserData()).isAlive = false;
         }
-        if(checkFixture(fb, "Cannon Alive")){
-            fb.setUserData("Cannon Dead");
+        if(checkFixture(fb, "Cannon ")){
+            ((EntityData) fb.getUserData()).isAlive = false;
         }
 
     }
 
+    private void wasPirateAttacked(Fixture fa, Fixture fb) {
+        Fixture pirate = null;
+        Fixture bullet = null;
+        if (match(fa, "Pirate"))
+            pirate = fa;
+        else if (match(fb, "Pirate"))
+            pirate = fb;
+        else
+            return;
+        if (match(fa, "Bullet"))
+            pirate = fa;
+        else if (match(fb, "Bullet"))
+            pirate = fb;
+        else
+            return;
+        ((EntityData) pirate.getUserData()).isAlive = false;
+        ((EntityData) bullet.getUserData()).isAlive = false;
+    }
+
+    private boolean match(Fixture fa, String name) {
+        return ((EntityData) fa.getUserData()).equals(name);
+    }
     /**
      * Triggers after two Box2D body collides
      * @param contact Object of bodies who was contact

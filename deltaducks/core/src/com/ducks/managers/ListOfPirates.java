@@ -75,7 +75,7 @@ public class ListOfPirates {
     public void update(float deltaTime) {
         Array<Pirate> piratesBodiesToRemove = new Array<Pirate>();
         for( Pirate pirate : pirateBodies ) {
-            if(!pirate.getData().equals("Pirate")) {
+            if(!pirate.isAlive()) {
                 piratesBodiesToRemove.add(pirate);
                 pirate.dispose();
             } else {

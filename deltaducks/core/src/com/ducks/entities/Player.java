@@ -1,6 +1,7 @@
 package com.ducks.entities;
 
 import com.badlogic.gdx.math.Vector2;
+import com.ducks.intangibles.EntityData;
 import com.ducks.tools.InputParser;
 import com.ducks.components.ShipAnimation;
 import static com.ducks.tools.FixtureFilter.*;
@@ -32,7 +33,7 @@ public class Player extends Ship {
         direction = 6;
         moving = false;
         animation = new ShipAnimation("player", new Vector2(x, y), radius*scale, SHIP_FRAME_DURATION);
-        data = "Player";
+        data = new EntityData("Player");
 
         defineShip();
     }

@@ -2,6 +2,8 @@ package com.ducks.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.components.Texture;
+import com.ducks.intangibles.EntityData;
+
 import static com.ducks.tools.FixtureFilter.*;
 public class EnemyBullet extends Bullet {
 
@@ -12,8 +14,9 @@ public class EnemyBullet extends Bullet {
         this.texture = new Texture("bullet_college", position, radius);
         this.category = ENEMY_BULLET;
         this.mask = MASK_ALL - ENEMY;
+        data = new EntityData("Cannon");
         defineBullet(position);
-        setData("Cannon Alive");
+        setData(data);
         final float BULLET_SPEED = 130f;
         this.rigidBody.applyForce(direction, BULLET_SPEED);
     }

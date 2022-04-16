@@ -60,7 +60,7 @@ public class ListOfEnemyBullets {
     public void update(float deltaTime) {
         Array<Bullet> CannonBodiesToRemove = new Array<>();
         for( Bullet cannon : cannonBodies) {
-            if(!cannon.getData().equals("Cannon Alive")) {
+            if(!cannon.isAlive()) {
                 CannonBodiesToRemove.add(cannon);
                 cannon.dispose();
             } else {

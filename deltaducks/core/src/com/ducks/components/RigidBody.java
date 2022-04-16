@@ -1,10 +1,8 @@
 package com.ducks.components;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.physics.box2d.*;
+import com.ducks.intangibles.EntityData;
 import com.ducks.managers.PhysicsManager;
 import com.ducks.tools.BodyType;
 
@@ -51,16 +49,16 @@ public class RigidBody {
 
     public void addSensor(FixtureDef fixture, String data) {
         fixture.isSensor = true;
-        getBody().createFixture(fixture).setUserData(data);
+        getBody().createFixture(fixture).setUserData(new EntityData(data));
     }
 
-    public void setData(String data) {
+    public void setData(EntityData data) {
         getBody().getFixtureList().get(0).setUserData(data);
     }
 
-    public String getData() { return (String) getBody().getFixtureList().get(0).getUserData(); }
+    public EntityData getData() { return (EntityData) getBody().getFixtureList().get(0).getUserData(); }
 
-    public String getSensorData() { return (String) getBody().getFixtureList().get(1).getUserData(); }
+    public EntityData getSensorData() { return (EntityData) getBody().getFixtureList().get(1).getUserData(); }
 
     public void applyForce(Vector2 direction, float speed) {
         getBody().applyForceToCenter(direction.scl(speed), true);

@@ -3,6 +3,7 @@ package com.ducks.entities;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.components.Texture;
+import com.ducks.intangibles.EntityData;
 import com.ducks.screens.MainGameScreen;
 import static com.ducks.tools.FixtureFilter.*;
 /***
@@ -11,7 +12,6 @@ import static com.ducks.tools.FixtureFilter.*;
 public class PlayerBullet extends Bullet {
 
     private final float BULLET_SPEED = 200f;
-    private final String data = "Bullet Alive";
 
     public PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
         this(position, direction, shipMomentum, MainGameScreen.getAtlas());
@@ -31,6 +31,7 @@ public class PlayerBullet extends Bullet {
         this.texture = new Texture("bullet_player", position, radius, atlas);
         this.mask = MASK_ALL - PLAYER - PLAYER_BULLET;
         this.category = PLAYER_BULLET;
+        data = new EntityData("Bullet");
         defineBullet(position);
         setData(data);
         this.rigidBody.applyForce(shipMomentum, 55f);

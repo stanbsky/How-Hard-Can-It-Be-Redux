@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
+import com.ducks.intangibles.EntityData;
 import com.ducks.tools.BodyType;
 import com.ducks.components.HealthBar;
 import com.ducks.components.RigidBody;
@@ -60,6 +61,7 @@ public class College extends Entity {
 
         this.position = new Vector2(spawn_x, spawn_y);
         this.texture = new Texture(collegeName, this.position, scl(radius*scale), atlas);
+        data = new EntityData("College");
 
         defineCollege(spawn_x, spawn_y, radius);
     }
@@ -80,8 +82,7 @@ public class College extends Entity {
             if(rigidBody.getSensorData().contains("Attack")) {
                 enemyBullets.spawnBullet(this);
             }
-            if(rigidBody.getData().contains("Damage")) {
-                rigidBody.setData("College");
+            if(isHit()) {
                 health-=.2f;
             }
         }
@@ -112,7 +113,7 @@ public class College extends Entity {
         fixture.filter.categoryBits = ENEMY;
         fixture.filter.maskBits = MASK_ALL - ENEMY_BULLET;
         rigidBody.addFixture(fixture);
-        rigidBody.setData("College");
+        rigidBody.setData(data);
 
         PolygonShape polyShape = new PolygonShape();
         float side = scl(radius * SENSOR_SCALE);

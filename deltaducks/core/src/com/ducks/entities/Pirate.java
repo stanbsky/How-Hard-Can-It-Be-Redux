@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ducks.components.ShipAnimation;
+import com.ducks.intangibles.EntityData;
 import com.ducks.managers.ListOfEnemyBullets;
 import com.ducks.ui.Hud;
 import com.ducks.tools.InputParser;
@@ -37,7 +38,7 @@ public class Pirate extends Ship {
         direction = 6;
         moving = false;
         animation = new ShipAnimation(college, new Vector2(x, y), radius*scale, 0.5f);
-        data = "Pirate";
+        data = new EntityData("Pirate");
 
         defineShip();
     }

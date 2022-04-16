@@ -44,7 +44,7 @@ public class ListOfBullets {
         shootTimer += deltaTime;
         Array<Bullet> bulletBodiesToRemove = new Array<>();
         for( Bullet bullet : bulletBodies) {
-            if(!bullet.getData().equals("Bullet Alive")) {
+            if(!bullet.isAlive()) {
                 bulletBodiesToRemove.add(bullet);
                 bullet.dispose();
             } else {

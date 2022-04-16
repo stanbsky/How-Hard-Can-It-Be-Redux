@@ -32,7 +32,7 @@ public class Bullet extends Entity {
         spawnTimer += deltaTime;
         this.texture.update(deltaTime, getPosition());
         if (spawnTimer > BULLET_SPAWN_DURATION) {
-            setData("Bullet Dead");
+            rigidBody.getData().isAlive = false;
         }
     }
 

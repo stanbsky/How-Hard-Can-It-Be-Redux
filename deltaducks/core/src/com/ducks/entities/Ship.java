@@ -3,6 +3,7 @@ package com.ducks.entities;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.ducks.intangibles.EntityData;
 import com.ducks.tools.BodyType;
 import com.ducks.tools.InputParser;
 import com.ducks.components.RigidBody;
@@ -28,7 +29,7 @@ public class Ship extends Entity {
 
     protected short mask;
     protected short category;
-    protected String data;
+    protected EntityData data;
 
 //    public Ship() {
 //
