@@ -14,7 +14,7 @@ public class EnemyBullet extends Bullet {
         this.texture = new Texture("bullet_college", position, radius);
         this.category = ENEMY_BULLET;
         this.mask = MASK_ALL - ENEMY;
-        data = new EntityData("Cannon");
+        data = new EntityData(category);
         defineBullet(position);
         setData(data);
         final float BULLET_SPEED = 130f;

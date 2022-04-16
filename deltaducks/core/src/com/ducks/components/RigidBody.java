@@ -10,6 +10,7 @@ public class RigidBody {
 
     private BodyDef bodyDef;
     private FixtureDef fixtureDef;
+    private boolean hasSensor = false;
 
     private int bodyId;
 
@@ -47,9 +48,10 @@ public class RigidBody {
         getBody().createFixture(fixture);
     }
 
-    public void addSensor(FixtureDef fixture, String data) {
+    public void addSensor(FixtureDef fixture, short category, String name) {
+        hasSensor = true;
         fixture.isSensor = true;
-        getBody().createFixture(fixture).setUserData(new EntityData(data));
+        getBody().createFixture(fixture).setUserData(new EntityData(category, name));
     }
 
     public void setData(EntityData data) {
@@ -59,6 +61,14 @@ public class RigidBody {
     public EntityData getData() { return (EntityData) getBody().getFixtureList().get(0).getUserData(); }
 
     public EntityData getSensorData() { return (EntityData) getBody().getFixtureList().get(1).getUserData(); }
+
+    public boolean hasContacts() { return getData().hasContacts(); }
+
+    public Fixture getContact() { return getData().getContact(); }
+
+    public boolean hasSensorContacts() { return hasSensor && getSensorData().hasContacts(); }
+
+    public Fixture getSensorContact() { return getSensorData().getContact(); }
 
     public void applyForce(Vector2 direction, float speed) {
         getBody().applyForceToCenter(direction.scl(speed), true);

@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.managers.*;
+import com.ducks.tools.EntityContactListener;
 import com.ducks.ui.Hud;
 import com.ducks.ui.Minimap;
 import com.ducks.ui.Subtitle;
@@ -23,7 +24,6 @@ import com.ducks.ui.Tutorial;
 import com.ducks.entities.Player;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.Content;
-import com.ducks.tools.MyContactListener;
 import com.ducks.ui.Crosshair;
 
 import static com.ducks.DeltaDucks.scl;
@@ -63,7 +63,7 @@ public class MainGameScreen implements Screen {
     private ListOfBullets bullets;
     private ListOfEnemyBullets enemyBullets;
 
-    private MyContactListener contactListener;
+    private EntityContactListener contactListener;
 
     public static Content resources;
     private static TextureAtlas atlas;
@@ -123,7 +123,8 @@ public class MainGameScreen implements Screen {
 
         player = new Player();
 
-        contactListener = new MyContactListener(player, subtitle);
+//        contactListener = new MyContactListener(player, subtitle);
+        contactListener = new EntityContactListener();
         world.setContactListener(contactListener);
         //TODO: debug rendering
         b2dr = new Box2DDebugRenderer(true, false, true, true, false, true);

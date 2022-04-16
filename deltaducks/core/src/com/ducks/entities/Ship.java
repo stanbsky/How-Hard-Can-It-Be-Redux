@@ -27,10 +27,6 @@ public class Ship extends Entity {
     private float force_x;
     private float force_y;
 
-    protected short mask;
-    protected short category;
-    protected EntityData data;
-
 //    public Ship() {
 //
 //    }
@@ -49,7 +45,9 @@ public class Ship extends Entity {
     /**
      * Update the player ship every delta time interval
      */
-    public void update() {
+    @Override
+    public void update(float deltaTime) {
+        super.update(deltaTime);
         x = (getPosition().x - width/2);
         y = (getPosition().y - height/2);
     }

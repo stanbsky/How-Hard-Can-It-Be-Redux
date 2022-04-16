@@ -37,7 +37,8 @@ public class College extends Entity {
     private Vector2 position;
 
     public final float SHOOT_WAIT_TIME = 1f;
-    public float shootTimer ;
+    public float shootTimer;
+    private boolean playerInRange = false;
 
     public College(float spawn_x, float spawn_y, String collegeName, ListOfEnemyBullets enemyBullets) {
         this(spawn_x, spawn_y, collegeName, enemyBullets, MainGameScreen.getAtlas());
@@ -61,7 +62,9 @@ public class College extends Entity {
 
         this.position = new Vector2(spawn_x, spawn_y);
         this.texture = new Texture(collegeName, this.position, scl(radius*scale), atlas);
-        data = new EntityData("College");
+        category = ENEMY;
+        mask = MASK_ALL - ENEMY_BULLET;
+        data = new EntityData(category);
 
         defineCollege(spawn_x, spawn_y, radius);
     }
@@ -70,7 +73,9 @@ public class College extends Entity {
      * Update the bullet every delta time interval
      * @param deltaTime of the game
      */
+    @Override
     public void update(float deltaTime) {
+        super.update(deltaTime);
         shootTimer += deltaTime;
         stateTime += deltaTime;
         hpBar.update(health);
@@ -79,13 +84,27 @@ public class College extends Entity {
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
         } else {
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
-            if(rigidBody.getSensorData().contains("Attack")) {
+            if (playerInRange)
                 enemyBullets.spawnBullet(this);
-            }
-            if(isHit()) {
-                health-=.2f;
-            }
+//            if(rigidBody.getSensorData().contains("Attack")) {
+//                enemyBullets.spawnBullet(this);
+//            }
+//            if(isHit()) {
+//                health-=.2f;
+//            }
         }
+    }
+
+    @Override
+    protected void handleContact(Fixture contactor) {
+        if (EntityData.equals(contactor, PLAYER_BULLET))
+            health -= 0.2f;
+    }
+
+    @Override
+    protected void handleSensorContact(Fixture contactor) {
+        if (EntityData.equals(contactor, PLAYER))
+            playerInRange = !playerInRange;
     }
 
     /**
@@ -110,8 +129,8 @@ public class College extends Entity {
         shape.setRadius(scl(radius));
         FixtureDef fixture = new FixtureDef();
         fixture.shape = shape;
-        fixture.filter.categoryBits = ENEMY;
-        fixture.filter.maskBits = MASK_ALL - ENEMY_BULLET;
+        fixture.filter.categoryBits = category;
+        fixture.filter.maskBits = mask;
         rigidBody.addFixture(fixture);
         rigidBody.setData(data);
 
@@ -121,7 +140,7 @@ public class College extends Entity {
         fixture.shape = polyShape;
         fixture.filter.categoryBits = ENEMY;
         fixture.filter.maskBits = PLAYER;
-        rigidBody.addSensor(fixture, "College Sensor");
+        rigidBody.addSensor(fixture, ENEMY, "College Sensor");
     }
 
     /**

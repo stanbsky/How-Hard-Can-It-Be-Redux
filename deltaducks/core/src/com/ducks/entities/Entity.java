@@ -16,13 +16,28 @@ public class Entity {
     protected float x;
     protected float y;
     protected RigidBody rigidBody;
+    protected short mask;
+    protected short category;
     protected Texture texture;
     protected float radius;
     protected float scale = 1f;
     protected TextureAtlas atlas;
     protected EntityData data;
+    protected boolean isAlive = true;
+    protected boolean isHit = false;
 
     public Entity() {
+    }
+
+    protected void handleContact(Fixture contactor) { }
+
+    protected void handleSensorContact(Fixture contactor) { }
+
+    public void update(float deltaTime) {
+        while (rigidBody.hasContacts())
+            handleContact(rigidBody.getContact());
+        while (rigidBody.hasSensorContacts())
+            handleSensorContact(rigidBody.getSensorContact());
     }
 
     public void draw(SpriteBatch batch, TextureRegion texture) {
@@ -49,11 +64,9 @@ public class Entity {
         rigidBody.setData(data);
     }
 
-//    public String getData() { return rigidBody.getData(); }
-
-    public boolean isAlive() { return rigidBody.getData().isAlive; }
-
-    public boolean isHit() { return rigidBody.getData().isHit(); }
-
     public EntityData getSensorData() { return rigidBody.getSensorData(); }
+
+    public boolean isAlive() {
+        return isAlive;
+    }
 }

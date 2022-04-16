@@ -1,9 +1,12 @@
 package com.ducks.entities;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ducks.intangibles.EntityData;
 import com.ducks.tools.InputParser;
 import com.ducks.components.ShipAnimation;
+import com.ducks.ui.Hud;
+
 import static com.ducks.tools.FixtureFilter.*;
 
 public class Player extends Ship {
@@ -33,15 +36,26 @@ public class Player extends Ship {
         direction = 6;
         moving = false;
         animation = new ShipAnimation("player", new Vector2(x, y), radius*scale, SHIP_FRAME_DURATION);
-        data = new EntityData("Player");
+        data = new EntityData(category);
 
         defineShip();
     }
 
+    @Override
     public void update(float deltaTime) {
+        super.update(deltaTime);
         parseDirection(InputParser.parseInput());
         applyForce();
         animation.update(deltaTime, getPosition(), direction, moving);
-        super.update();
+    }
+
+    @Override
+    protected void handleContact(Fixture contactor) {
+        if (EntityData.equals(contactor, ENEMY_BULLET))
+            sufferHit();
+    }
+
+    private void sufferHit() {
+        Hud.decHealth();
     }
 }

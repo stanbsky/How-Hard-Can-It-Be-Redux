@@ -21,6 +21,7 @@ public class PlayerBullet extends Bullet {
      * Purely for printing debug info
      * @param deltaTime of the game
      */
+    @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
     }
@@ -28,14 +29,14 @@ public class PlayerBullet extends Bullet {
      * Constructor
      */
     public PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum, TextureAtlas atlas) {
-        this.texture = new Texture("bullet_player", position, radius, atlas);
-        this.mask = MASK_ALL - PLAYER - PLAYER_BULLET;
-        this.category = PLAYER_BULLET;
-        data = new EntityData("Bullet");
+        texture = new Texture("bullet_player", position, radius, atlas);
+        mask = MASK_ALL - PLAYER - PLAYER_BULLET;
+        category = PLAYER_BULLET;
+        data = new EntityData(category);
         defineBullet(position);
         setData(data);
-        this.rigidBody.applyForce(shipMomentum, 55f);
-        this.rigidBody.applyForce(direction, BULLET_SPEED);
+        rigidBody.applyForce(shipMomentum, 55f);
+        rigidBody.applyForce(direction, BULLET_SPEED);
     }
 
 }

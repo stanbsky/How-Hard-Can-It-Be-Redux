@@ -2,6 +2,7 @@ package com.ducks.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ducks.components.ShipAnimation;
 import com.ducks.intangibles.EntityData;
@@ -22,6 +23,7 @@ public class Pirate extends Ship {
 
     public final float SHOOT_WAIT_TIME = 1f;
     public float shootTimer ;
+    private boolean playerInRange = false;
 
     public Pirate(String college, float spawn_x, float spawn_y, ListOfEnemyBullets enemyBullets) {
         super();
@@ -38,12 +40,14 @@ public class Pirate extends Ship {
         direction = 6;
         moving = false;
         animation = new ShipAnimation(college, new Vector2(x, y), radius*scale, 0.5f);
-        data = new EntityData("Pirate");
+        data = new EntityData(category);
 
         defineShip();
     }
 
+    @Override
     public void update(float deltaTime) {
+        super.update(deltaTime);
         shootTimer += ((Math.random() * 0.5)+0.5) * deltaTime;
         // Roll on whether we need to pull a new random input direction
         if (Math.random() < inputStickinessThreshold)
@@ -53,11 +57,24 @@ public class Pirate extends Ship {
             applyForce();
         else
             inputDurationRoll = 0f;
-        if(rigidBody.getSensorData().contains("Attack")) {
+        if (playerInRange)
             enemyBullets.spawnBullet(this);
-        }
+//        if(rigidBody.getSensorData().contains("Attack")) {
+//            enemyBullets.spawnBullet(this);
+//        }
         animation.update(deltaTime, getPosition(), direction, false);
-        super.update();
+    }
+
+    @Override
+    protected void handleContact(Fixture contactor) {
+        if (EntityData.equals(contactor, PLAYER_BULLET))
+            isAlive = false;
+    }
+
+    @Override
+    protected void handleSensorContact(Fixture contactor) {
+        if (EntityData.equals(contactor, PLAYER))
+            playerInRange = !playerInRange;
     }
 
     @Override
@@ -70,7 +87,7 @@ public class Pirate extends Ship {
         fixture.shape = shape;
         fixture.filter.categoryBits = category;
         fixture.filter.maskBits = PLAYER;
-        rigidBody.addSensor(fixture, "Pirate Ship Sensor");
+        rigidBody.addSensor(fixture, category,"Pirate Ship Sensor");
     }
 
     public void dispose() {

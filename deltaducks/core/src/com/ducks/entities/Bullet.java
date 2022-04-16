@@ -3,6 +3,7 @@ package com.ducks.entities;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ducks.tools.BodyType;
 import com.ducks.components.RigidBody;
@@ -27,13 +28,22 @@ public class Bullet extends Entity {
      *
      * @param deltaTime of the game
      */
+    @Override
     public void update(float deltaTime) {
+        super.update(deltaTime);
         stateTime += deltaTime;
         spawnTimer += deltaTime;
         this.texture.update(deltaTime, getPosition());
-        if (spawnTimer > BULLET_SPAWN_DURATION) {
-            rigidBody.getData().isAlive = false;
+        if (spawnTimer > BULLET_SPAWN_DURATION)
+            isAlive = false;
+    }
+
+    @Override
+    protected void handleContact(Fixture contactor) {
+        if (!contactor.isSensor()) {
+            isAlive = false;
         }
+
     }
 
     /**
