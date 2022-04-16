@@ -1,4 +1,4 @@
-package com.ducks.components;
+package com.ducks.tools;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;

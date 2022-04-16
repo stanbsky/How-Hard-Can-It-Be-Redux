@@ -1,9 +1,9 @@
 package com.ducks.sprites;
 
 import com.badlogic.gdx.math.Vector2;
-import com.ducks.DeltaDucks;
 import com.ducks.tools.InputParser;
 import com.ducks.components.ShipAnimation;
+import static com.ducks.tools.FixtureFilter.*;
 
 public class Player extends Ship {
 
@@ -19,8 +19,8 @@ public class Player extends Ship {
 
     public Player() {
         super();
-        mask = DeltaDucks.BIT_LAND | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_MONSTERS | DeltaDucks.BIT_BOUNDARY;
-        category = DeltaDucks.BIT_PLAYER;
+        category = PLAYER;
+        mask = MASK_ALL - PLAYER_BULLET;
 
         x = SHIP_SPAWN_X - width/2;
         y = SHIP_SPAWN_Y - height/2;

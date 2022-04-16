@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
-import com.ducks.components.BodyType;
+import com.ducks.tools.BodyType;
 import com.ducks.components.HealthBar;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
@@ -14,6 +14,7 @@ import com.ducks.scenes.Hud;
 import com.ducks.screens.MainGameScreen;
 
 import static com.ducks.DeltaDucks.scl;
+import static com.ducks.tools.FixtureFilter.*;
 
 /***
  * College Class for Box2D Body and Sprite
@@ -108,8 +109,8 @@ public class College extends Entity {
         shape.setRadius(scl(radius));
         FixtureDef fixture = new FixtureDef();
         fixture.shape = shape;
-        fixture.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
-        fixture.filter.maskBits = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_BULLETS;
+        fixture.filter.categoryBits = ENEMY;
+        fixture.filter.maskBits = MASK_ALL - ENEMY_BULLET;
         rigidBody.addFixture(fixture);
         rigidBody.setData("College");
 
@@ -117,8 +118,8 @@ public class College extends Entity {
         float side = scl(radius * SENSOR_SCALE);
         polyShape.setAsBox(side, side, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
         fixture.shape = polyShape;
-        fixture.filter.categoryBits = DeltaDucks.BIT_COLLEGES;
-        fixture.filter.maskBits = DeltaDucks.BIT_PLAYER;
+        fixture.filter.categoryBits = ENEMY;
+        fixture.filter.maskBits = PLAYER;
         rigidBody.addSensor(fixture, "College Sensor");
     }
 

@@ -56,16 +56,16 @@ public class Monster extends Sprite {
         shape.setRadius(radius / DeltaDucks.PIXEL_PER_METER);
 
         fdef.shape = shape;
-        fdef.filter.categoryBits = DeltaDucks.BIT_MONSTERS;
-        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER;
+//        fdef.filter.categoryBits = DeltaDucks.BIT_MONSTERS;
+//        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER;
         fdef.restitution = 0.2f;
         monsterBody.createFixture(fdef).setUserData("Monster");
 
         PolygonShape polyShape = new PolygonShape();
         polyShape.setAsBox(radius * 4 / DeltaDucks.PIXEL_PER_METER, radius * 4 / DeltaDucks.PIXEL_PER_METER, new Vector2(0, -5 / DeltaDucks.PIXEL_PER_METER), 0);
         fdef.shape = polyShape;
-        fdef.filter.categoryBits = DeltaDucks.BIT_MONSTERS;
-        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER;
+//        fdef.filter.categoryBits = DeltaDucks.BIT_MONSTERS;
+//        fdef.filter.maskBits = DeltaDucks.BIT_PLAYER;
         fdef.isSensor = true;
         monsterBody.createFixture(fdef).setUserData("Monster Sensor");
     }

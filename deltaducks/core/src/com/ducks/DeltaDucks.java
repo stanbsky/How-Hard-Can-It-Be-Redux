@@ -21,17 +21,6 @@ public class DeltaDucks extends Game {
 	public static final float PIXEL_PER_METER = 100;
 	public static final float TILEED_MAP_SCALE = 0.7f;
 
-	// Bits filtration libgdx
-	public static final short BIT_SEA = 2;
-	public static final short BIT_LAND = 4;
-	public static final short BIT_PLAYER = 8;
-	public static final short BIT_PIRATES = 16;
-	public static final short BIT_MONSTERS = 32;
-	public static final short BIT_BOUNDARY = 64;
-	public static final short BIT_BULLETS = 124;
-	public static final short BIT_CANNONS = 248;
-	public static final short BIT_COLLEGES = 496;
-
 	// Batch to draw Game
 	public SpriteBatch batch;
 

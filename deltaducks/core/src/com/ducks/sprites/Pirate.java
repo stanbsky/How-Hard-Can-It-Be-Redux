@@ -3,16 +3,12 @@ package com.ducks.sprites;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.ducks.DeltaDucks;
-import com.ducks.components.BodyType;
-import com.ducks.components.RigidBody;
 import com.ducks.components.ShipAnimation;
 import com.ducks.entities.ListOfEnemyBullets;
 import com.ducks.scenes.Hud;
 import com.ducks.tools.InputParser;
-
-import static com.ducks.DeltaDucks.scl;
+import static com.ducks.tools.FixtureFilter.*;
 
 public class Pirate extends Ship {
 
@@ -29,8 +25,8 @@ public class Pirate extends Ship {
 
     public Pirate(String college, float spawn_x, float spawn_y, ListOfEnemyBullets enemyBullets) {
         super();
-        mask = DeltaDucks.BIT_PLAYER | DeltaDucks.BIT_PIRATES | DeltaDucks.BIT_LAND | DeltaDucks.BIT_BOUNDARY;
-        category = DeltaDucks.BIT_PIRATES;
+        mask = MASK_ALL - ENEMY_BULLET;
+        category = ENEMY;
         this.enemyBullets = enemyBullets;
 
         x = spawn_x - width / 2;
@@ -73,7 +69,7 @@ public class Pirate extends Ship {
         FixtureDef fixture = new FixtureDef();
         fixture.shape = shape;
         fixture.filter.categoryBits = category;
-        fixture.filter.maskBits = mask;
+        fixture.filter.maskBits = PLAYER;
         rigidBody.addSensor(fixture, "Pirate Ship Sensor");
     }
 

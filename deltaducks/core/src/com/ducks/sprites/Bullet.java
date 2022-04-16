@@ -2,15 +2,14 @@ package com.ducks.sprites;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.ducks.DeltaDucks;
-import com.ducks.components.BodyType;
+import com.ducks.tools.BodyType;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
 
 import static com.ducks.DeltaDucks.scl;
+import static com.ducks.tools.FixtureFilter.PLAYER;
 
 public class Bullet extends Entity {
     private final float BULLET_SPAWN_DURATION = 2f;

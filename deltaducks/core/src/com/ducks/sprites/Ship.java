@@ -3,7 +3,7 @@ package com.ducks.sprites;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.ducks.components.BodyType;
+import com.ducks.tools.BodyType;
 import com.ducks.tools.InputParser;
 import com.ducks.components.RigidBody;
 import com.ducks.components.ShipAnimation;
@@ -11,6 +11,7 @@ import com.ducks.components.ShipAnimation;
 import java.util.ArrayList;
 
 import static com.ducks.DeltaDucks.scl;
+import static com.ducks.tools.FixtureFilter.MASK_ALL;
 
 /***
  * Ship (or Player) Class for Box2D Body and Sprite
