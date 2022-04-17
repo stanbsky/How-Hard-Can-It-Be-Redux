@@ -2,7 +2,6 @@ package com.ducks.entities;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -40,8 +39,8 @@ public class Entity {
             handleSensorContact(rigidBody.getSensorContact());
     }
 
-    public void draw(SpriteBatch batch, TextureRegion texture) {
-        batch.draw(texture, x, y, width, height);
+    public void draw(SpriteBatch batch) {
+        texture.render(batch);
     }
 
     public Vector2 getPosition() {
