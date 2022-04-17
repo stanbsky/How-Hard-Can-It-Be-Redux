@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.managers.*;
+import com.ducks.tools.Debug;
 import com.ducks.tools.EntityContactListener;
 import com.ducks.ui.Hud;
 import com.ducks.ui.Minimap;
@@ -67,6 +68,7 @@ public class MainGameScreen implements Screen {
 
     public static Content resources;
     private static TextureAtlas atlas;
+    private QuestManager questManager;
 
     /**
      * Constructor
@@ -121,6 +123,9 @@ public class MainGameScreen implements Screen {
         world = new World(new Vector2(0, 0), true);
         PhysicsManager.Initialize(world);
 
+        RenderingManager.Initialize(game.batch);
+        Debug.Initialize();
+
         player = new Player();
 
 //        contactListener = new MyContactListener(player, subtitle);
@@ -139,6 +144,7 @@ public class MainGameScreen implements Screen {
         colleges = new ListOfColleges(enemyBullets, map);
         bots = new ListOfPirates(enemyBullets, world, this, map);
         tutorial = new Tutorial(gameCam, player);
+        questManager = new QuestManager(map, getAtlas(), subtitle);
     }
 
     /**
@@ -189,6 +195,8 @@ public class MainGameScreen implements Screen {
         crosshair.update(deltaTime);
         bullets.update(deltaTime);
         enemyBullets.update(deltaTime);
+        questManager.update(deltaTime, player.getPosition());
+        Debug.update();
 
         gameCam.position.x = player.getPosition().x;
         gameCam.position.y = player.getPosition().y;
@@ -246,6 +254,7 @@ public class MainGameScreen implements Screen {
         enemyBullets.draw(game.batch);
         player.draw(game.batch);
         crosshair.draw(game.batch);
+        RenderingManager.render();
         game.batch.end();
 
         // Set our batch to now draw what the Hud camera sees.

@@ -3,9 +3,12 @@ package com.ducks.entities;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ducks.intangibles.EntityData;
+import com.ducks.tools.Debug;
 import com.ducks.tools.InputParser;
 import com.ducks.components.ShipAnimation;
 import com.ducks.ui.Hud;
+
+import javax.crypto.spec.PSource;
 
 import static com.ducks.tools.FixtureFilter.*;
 
@@ -47,6 +50,7 @@ public class Player extends Ship {
         parseDirection(InputParser.parseInput());
         applyForce();
         animation.update(deltaTime, getPosition(), direction, moving);
+//        Debug.debug(getPosition());
     }
 
     @Override
