@@ -70,6 +70,10 @@ public class Subtitle implements Disposable {
             stateTimer = 0;
             state++;
         }
+//        showIntro();
+    }
+
+    private void showIntro() {
         switch (state) {
             case 0:
                 subtitle = "use W A S D to move around";
