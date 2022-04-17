@@ -86,12 +86,6 @@ public class College extends Entity {
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
             if (playerInRange)
                 enemyBullets.spawnBullet(this);
-//            if(rigidBody.getSensorData().contains("Attack")) {
-//                enemyBullets.spawnBullet(this);
-//            }
-//            if(isHit()) {
-//                health-=.2f;
-//            }
         }
     }
 
