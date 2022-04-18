@@ -14,3 +14,7 @@ eclipse.project {
 test {
     useJUnitPlatform()
 }
+
+dependencies {
+    implementation 'org.mockito:mockito-inline:4.4.0'
+}

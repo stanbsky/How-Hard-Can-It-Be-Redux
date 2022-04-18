@@ -33,6 +33,10 @@ task dist(type: Jar) {
     with jar
 }
 
+dependencies {
+    implementation 'org.mockito:mockito-inline:4.4.0'
+}
+
 
 dist.dependsOn classes
 
