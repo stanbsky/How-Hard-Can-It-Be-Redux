@@ -16,16 +16,13 @@ import com.ducks.entities.College;
 public class ListOfColleges {
 
     public Array<College> collegeBodies;
-    public ListOfEnemyBullets cannons;
     private int collegesAlive = 3;
 
     /**
      * Constructor
-     * @param cannons Collective Cannons class to spawn and fire them on player's direction
      * @param map Tiled Map
      */
-    public ListOfColleges(ListOfEnemyBullets cannons, TiledMap map) {
-        this.cannons = cannons;
+    public ListOfColleges(TiledMap map) {
         collegeBodies = new Array<College>();
         spawnColleges(map);
     }
@@ -53,7 +50,7 @@ public class ListOfColleges {
             collegeBodies.add(new College(
                     (rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE,
                     (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE,
-                    collegeName, cannons));
+                    collegeName));
         }
     }
 

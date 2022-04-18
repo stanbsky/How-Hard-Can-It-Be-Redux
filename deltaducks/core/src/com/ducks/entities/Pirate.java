@@ -5,8 +5,9 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ducks.components.ShipAnimation;
+import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
-import com.ducks.managers.ListOfEnemyBullets;
+import com.ducks.managers.BulletManager;
 import com.ducks.ui.Hud;
 import com.ducks.tools.InputParser;
 import static com.ducks.tools.FixtureFilter.*;
@@ -19,17 +20,15 @@ public class Pirate extends Ship {
 
     public final float SENSOR_SCALE = 5f;
 
-    private final ListOfEnemyBullets enemyBullets;
-
-    public final float SHOOT_WAIT_TIME = 1f;
-    public float shootTimer ;
     private boolean playerInRange = false;
 
-    public Pirate(String college, float spawn_x, float spawn_y, ListOfEnemyBullets enemyBullets) {
+    public Pirate(String college, float spawn_x, float spawn_y) {
         super();
         mask = MASK_ALL - ENEMY_BULLET;
         category = ENEMY;
-        this.enemyBullets = enemyBullets;
+        shootWaitTime = 1f;
+        shooter = new Shooter(shootWaitTime);
+        shooter.setRandomizeWait();
 
         x = spawn_x - width / 2;
         y = spawn_y - height / 2;
@@ -48,7 +47,7 @@ public class Pirate extends Ship {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        shootTimer += ((Math.random() * 0.5)+0.5) * deltaTime;
+        shooter.update(deltaTime);
         // Roll on whether we need to pull a new random input direction
         if (Math.random() < inputStickinessThreshold)
             parseDirection(InputParser.fakeInput(0.3f));
@@ -57,8 +56,10 @@ public class Pirate extends Ship {
             applyForce();
         else
             inputDurationRoll = 0f;
-        if (playerInRange)
-            enemyBullets.spawnBullet(this);
+        if (playerInRange) {
+            BulletManager.spawnBullet((IShooter) this);
+        }
+//            enemyBullets.spawnBullet(this);
 //        if(rigidBody.getSensorData().contains("Attack")) {
 //            enemyBullets.spawnBullet(this);
 //        }

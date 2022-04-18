@@ -11,6 +11,7 @@ public class EnemyBullet extends Bullet {
      * Constructor
      */
     public EnemyBullet(Vector2 position, Vector2 direction) {
+//        System.out.println(position);
         this.texture = new Texture("bullet_college", position, radius);
         this.category = ENEMY_BULLET;
         this.mask = MASK_ALL - ENEMY;

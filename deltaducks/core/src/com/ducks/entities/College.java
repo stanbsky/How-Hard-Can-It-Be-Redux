@@ -5,12 +5,13 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
+import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
 import com.ducks.tools.BodyType;
 import com.ducks.components.HealthBar;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
-import com.ducks.managers.ListOfEnemyBullets;
+import com.ducks.managers.BulletManager;
 import com.ducks.ui.Hud;
 import com.ducks.screens.MainGameScreen;
 
@@ -20,13 +21,11 @@ import static com.ducks.tools.FixtureFilter.*;
 /***
  * College Class for Box2D Body and Sprite
  */
-public class College extends Entity {
+public class College extends Entity implements IShooter {
 
     public final float SENSOR_SCALE = 4f;
 
     float stateTime;
-
-    private ListOfEnemyBullets enemyBullets;
 
     public String name;
 
@@ -34,26 +33,24 @@ public class College extends Entity {
     public boolean destroyed;
     private Texture texture;
     private HealthBar hpBar;
+    private Shooter shooter;
     private Vector2 position;
 
-    public final float SHOOT_WAIT_TIME = 1f;
-    public float shootTimer;
     private boolean playerInRange = false;
 
-    public College(float spawn_x, float spawn_y, String collegeName, ListOfEnemyBullets enemyBullets) {
-        this(spawn_x, spawn_y, collegeName, enemyBullets, MainGameScreen.getAtlas());
+    public College(float spawn_x, float spawn_y, String collegeName) {
+        this(spawn_x, spawn_y, collegeName, MainGameScreen.getAtlas());
     }
     /**
      * Constructor
      * @param spawn_x X coordinate of the college
      * @param spawn_y Y coordinate of the college
      * @param collegeName Name of the College
-     * @param enemyBullets Cannons class to spawn and add Cannon round
      */
-    public College(float spawn_x, float spawn_y, String collegeName, ListOfEnemyBullets enemyBullets, TextureAtlas atlas) {
+    public College(float spawn_x, float spawn_y, String collegeName, TextureAtlas atlas) {
         this.atlas = atlas;
         name = collegeName;
-        this.enemyBullets = enemyBullets;
+        shooter = new Shooter(1f);
         radius = 100f;
         scale = 1.2f;
         health = 1f;
@@ -76,7 +73,7 @@ public class College extends Entity {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        shootTimer += deltaTime;
+        shooter.update(deltaTime);
         stateTime += deltaTime;
         hpBar.update(health);
         if(destroyed) {
@@ -85,8 +82,16 @@ public class College extends Entity {
         } else {
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
             if (playerInRange)
-                enemyBullets.spawnBullet(this);
+                BulletManager.spawnBullet((IShooter) this);
         }
+    }
+
+    public boolean ready() {
+        return shooter.ready();
+    }
+
+    public void resetShootTimer() {
+        shooter.resetShootTimer();
     }
 
     @Override
