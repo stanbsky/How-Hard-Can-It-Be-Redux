@@ -62,7 +62,6 @@ public class MainGameScreen implements Screen {
     private Tutorial tutorial;
     private Subtitle subtitle;
     private ListOfBullets bullets;
-    private ListOfEnemyBullets enemyBullets;
 
     private EntityContactListener contactListener;
 
@@ -140,9 +139,9 @@ public class MainGameScreen implements Screen {
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
         crosshair = new Crosshair(player);
         bullets = new ListOfBullets(player);
-        enemyBullets = new ListOfEnemyBullets(player);
-        colleges = new ListOfColleges(enemyBullets, map);
-        bots = new ListOfPirates(enemyBullets, world, this, map);
+        BulletManager.Initialize(player);
+        colleges = new ListOfColleges(map);
+        bots = new ListOfPirates(this, map);
         tutorial = new Tutorial(gameCam, player);
         questManager = new QuestManager(map, getAtlas(), subtitle);
     }
@@ -194,7 +193,7 @@ public class MainGameScreen implements Screen {
         subtitle.update(deltaTime);
         crosshair.update(deltaTime);
         bullets.update(deltaTime);
-        enemyBullets.update(deltaTime);
+        BulletManager.update(deltaTime);
         questManager.update(deltaTime, player.getPosition());
         Debug.update();
 
@@ -251,7 +250,7 @@ public class MainGameScreen implements Screen {
         radar.draw(game.batch);
         tutorial.draw(game.batch);
         bullets.draw(game.batch);
-        enemyBullets.draw(game.batch);
+        BulletManager.draw(game.batch);
         player.draw(game.batch);
         crosshair.draw(game.batch);
         RenderingManager.render();

@@ -2,6 +2,7 @@ package com.ducks.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
 import com.ducks.tools.Debug;
 import com.ducks.tools.InputParser;
@@ -26,6 +27,7 @@ public class Player extends Ship {
 
     public Player() {
         super();
+        shooter = new Shooter(shootWaitTime);
         category = PLAYER;
         mask = MASK_ALL - PLAYER_BULLET;
 

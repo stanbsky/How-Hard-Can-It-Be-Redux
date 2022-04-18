@@ -83,14 +83,4 @@ public class Crosshair {
         Gdx.input.setCursorPosition(Math.round(midX + (150*direction.x)), Math.round(midY - (150*direction.y)));
     }
 
-    /**
-     * get Unit (Directional) Vector between two Vectors (points)
-     * @param body vector (measured from)
-     * @param target vector (measured to)
-     * @return Vector2
-     */
-    public static Vector2 getDirection(Vector2 body, Vector2 target) {
-        //TODO: this does not belong in the Crosshair class
-        return new Vector2(body.x - target.x, body.y - target.y).nor().scl(-1);
-    }
 }

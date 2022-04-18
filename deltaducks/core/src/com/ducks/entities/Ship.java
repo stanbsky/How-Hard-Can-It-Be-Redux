@@ -3,6 +3,7 @@ package com.ducks.entities;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
 import com.ducks.tools.BodyType;
 import com.ducks.tools.InputParser;
@@ -16,7 +17,7 @@ import static com.ducks.DeltaDucks.scl;
 /***
  * Ship (or Player) Class for Box2D Body and Sprite
  */
-public class Ship extends Entity {
+public class Ship extends Entity implements IShooter {
     public World world;
     protected ShipAnimation animation;
     protected int direction;
@@ -27,6 +28,9 @@ public class Ship extends Entity {
     private float force_x;
     private float force_y;
 
+    protected Shooter shooter;
+    protected float shootWaitTime;
+
 //    public Ship() {
 //
 //    }
@@ -36,7 +40,6 @@ public class Ship extends Entity {
     public Ship() {
         super();
 //        this.world = world;
-
         radius = scl(128 / 2.5f);
         scale = 1.5f;
         width = height = radius*2f*scale;
@@ -48,8 +51,17 @@ public class Ship extends Entity {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+        shooter.update(deltaTime);
         x = (getPosition().x - width/2);
         y = (getPosition().y - height/2);
+    }
+
+    public boolean ready() {
+        return shooter.ready();
+    }
+
+    public void resetShootTimer() {
+        shooter.resetShootTimer();
     }
 
     public void draw(SpriteBatch batch) {
