@@ -50,7 +50,7 @@ public class QuestManager {
     }
 
     private void spawnQuest() {
-        currentQuest = new Quest("chest", pickSpawn(), subtitle, atlas);
+        currentQuest = new Quest("pirate", pickSpawn(), subtitle, atlas);
     }
 
     private void checkQuestCompletion() {

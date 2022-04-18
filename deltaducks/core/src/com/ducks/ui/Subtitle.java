@@ -29,6 +29,8 @@ public class Subtitle implements Disposable {
     private float stateTimer;
     private float tolerateTime;
     private int state;
+    private static int ticks = 0;
+    private final static int tickFrequency = 60;
 
     /**
      * Constructor
@@ -123,7 +125,12 @@ public class Subtitle implements Disposable {
      */
     public void setSubtitle(String sub) {
         this.subtitle = sub;
-        subtitleLabel.setText(subtitle);
+        ticks++;
+        if (ticks == tickFrequency) {
+            ticks = 0;
+            subtitleLabel.setText(subtitle);
+        }
+
     }
 
     /**

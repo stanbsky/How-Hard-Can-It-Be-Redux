@@ -3,21 +3,31 @@ package com.ducks.intangibles;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.entities.Chest;
+import com.ducks.entities.Entity;
+import com.ducks.managers.ListOfPirates;
 import com.ducks.managers.RenderingManager;
 import com.ducks.ui.Hud;
 import com.ducks.ui.Subtitle;
+
+import java.util.Objects;
 
 public class Quest {
 
     private boolean isCompleted = false;
     private Subtitle subtitle;
-    private Chest objective;
+    private Entity objective;
+    private String description;
 
     public Quest (String type, Vector2 location, Subtitle subtitle, TextureAtlas atlas) {
         this.subtitle = subtitle;
-        objective = new Chest(location, atlas);
-        RenderingManager.registerEntity(objective);
-        subtitle.setSubtitle("Find the chest at " + location);
+        if (Objects.equals(type, "chest")) {
+            objective = new Chest(location, atlas);
+            RenderingManager.registerEntity(objective);
+            description = "Find the chest at ";
+        } else if (Objects.equals(type, "pirate")) {
+            objective = ListOfPirates.getRandomPirate();
+            description = "Kill pirate at ";
+        }
     }
 
     public boolean isCompleted() {
@@ -25,8 +35,9 @@ public class Quest {
     }
 
     public void update(float deltaTime) {
+        subtitle.setSubtitle(description + objective.getPosition().scl(100f));
         objective.update(deltaTime);
-        if (objective.isCompleted())
+        if (!objective.isAlive())
             isCompleted = true;
     }
 

@@ -68,8 +68,8 @@ public class Chest extends Entity {
         if (EntityData.equals(contactor, PLAYER))
             playerInRange = !playerInRange;
     }
-
-    public boolean isCompleted() { return timeToCollect < 0; }
+    @Override
+    public boolean isAlive() { return timeToCollect > 0; }
 
     public void dispose() {
         rigidBody.dispose();
