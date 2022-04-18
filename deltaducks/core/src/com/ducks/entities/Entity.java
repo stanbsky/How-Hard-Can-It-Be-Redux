@@ -9,7 +9,7 @@ import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
 import com.ducks.intangibles.EntityData;
 
-public class Entity {
+public class Entity implements com.ducks.tools.IDrawable {
     protected float width;
     protected float height;
     protected float x;

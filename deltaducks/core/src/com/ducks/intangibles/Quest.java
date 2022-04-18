@@ -7,6 +7,7 @@ import com.ducks.entities.Entity;
 import com.ducks.managers.ListOfPirates;
 import com.ducks.managers.RenderingManager;
 import com.ducks.ui.Hud;
+import com.ducks.ui.Indicator;
 import com.ducks.ui.Subtitle;
 
 import java.util.Objects;
@@ -17,6 +18,7 @@ public class Quest {
     private Subtitle subtitle;
     private Entity objective;
     private String description;
+    private Indicator indicator;
 
     public Quest (String type, Vector2 location, Subtitle subtitle, TextureAtlas atlas) {
         this.subtitle = subtitle;
@@ -28,6 +30,8 @@ public class Quest {
             objective = ListOfPirates.getRandomPirate();
             description = "Kill pirate at ";
         }
+        indicator = new Indicator(objective, "warning256", atlas);
+        RenderingManager.registerEntity(indicator);
     }
 
     public boolean isCompleted() {

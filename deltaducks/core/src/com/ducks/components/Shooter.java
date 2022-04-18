@@ -2,7 +2,7 @@ package com.ducks.components;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.entities.Entity;
-import com.ducks.entities.IShooter;
+import com.ducks.tools.IShooter;
 
 public class Shooter {
 

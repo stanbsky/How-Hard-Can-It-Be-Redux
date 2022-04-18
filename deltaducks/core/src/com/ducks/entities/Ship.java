@@ -4,8 +4,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.components.Shooter;
-import com.ducks.intangibles.EntityData;
 import com.ducks.tools.BodyType;
+import com.ducks.tools.Debug;
+import com.ducks.tools.IShooter;
 import com.ducks.tools.InputParser;
 import com.ducks.components.RigidBody;
 import com.ducks.components.ShipAnimation;
@@ -31,15 +32,11 @@ public class Ship extends Entity implements IShooter {
     protected Shooter shooter;
     protected float shootWaitTime;
 
-//    public Ship() {
-//
-//    }
     /**
      * Constructor
      */
     public Ship() {
         super();
-//        this.world = world;
         radius = scl(128 / 2.5f);
         scale = 1.5f;
         width = height = radius*2f*scale;
@@ -51,6 +48,7 @@ public class Ship extends Entity implements IShooter {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
+        Debug.debug(getPosition().scl(100f));
         shooter.update(deltaTime);
         x = (getPosition().x - width/2);
         y = (getPosition().y - height/2);

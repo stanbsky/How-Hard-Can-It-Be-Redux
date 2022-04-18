@@ -1,4 +1,4 @@
-package com.ducks.entities;
+package com.ducks.tools;
 
 import com.badlogic.gdx.math.Vector2;
 

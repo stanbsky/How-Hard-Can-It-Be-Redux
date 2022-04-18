@@ -12,12 +12,13 @@ import com.ducks.ui.Subtitle;
 
 import java.util.ArrayList;
 
+import static com.ducks.screens.MainGameScreen.getPlayerPosition;
+
 public class QuestManager {
 
     private final TextureAtlas atlas;
     private final Subtitle subtitle;
     private ArrayList<Vector2> spawnLocations;
-    private Vector2 playerLocation;
     private Quest currentQuest = null;
     private float stateTime;
     private float spawnTime = 4;
@@ -36,11 +37,11 @@ public class QuestManager {
 
     private Vector2 pickSpawn() {
         if (debug)
-            return playerLocation.add(300,-300);
+            return getPlayerPosition().scl(100f).add(300,-300);
         Vector2 spawn = null;
         for (Vector2 pos : spawnLocations) {
             // Check if too close to player
-            if (pos.dst2(playerLocation) < 500)
+            if (pos.dst2(getPlayerPosition().scl(100f)) < 500)
                 continue;
             if(Math.random() > .3f)
                 continue;
@@ -61,7 +62,7 @@ public class QuestManager {
     }
 
     public void update(float deltaTime, Vector2 playerLocation) {
-        this.playerLocation = playerLocation.scl(100f);
+//        this.playerLocation = playerLocation.scl(100f);
         if (currentQuest == null) {
             stateTime += deltaTime;
         } else {

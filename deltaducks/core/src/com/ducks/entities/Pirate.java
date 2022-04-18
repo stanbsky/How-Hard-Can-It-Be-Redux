@@ -8,6 +8,7 @@ import com.ducks.components.ShipAnimation;
 import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.BulletManager;
+import com.ducks.tools.IShooter;
 import com.ducks.ui.Hud;
 import com.ducks.tools.InputParser;
 import static com.ducks.tools.FixtureFilter.*;

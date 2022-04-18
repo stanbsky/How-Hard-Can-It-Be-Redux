@@ -53,7 +53,7 @@ public class MainGameScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
-    private Player player;
+    private static Player player;
     private ListOfPirates bots;
     private ListOfMonsters creatures;
     private ListOfColleges colleges;
@@ -89,6 +89,10 @@ public class MainGameScreen implements Screen {
      * @return texture packs
      */
     public static TextureAtlas getAtlas() { return atlas;}
+
+    public static Player getPlayer() { return player; }
+
+    public static Vector2 getPlayerPosition() { return player.getPosition(); }
 
     /**
      * Initialize once the screen is visible
@@ -194,6 +198,7 @@ public class MainGameScreen implements Screen {
         crosshair.update(deltaTime);
         bullets.update(deltaTime);
         BulletManager.update(deltaTime);
+        RenderingManager.update(deltaTime);
         questManager.update(deltaTime, player.getPosition());
         Debug.update();
 

@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public final class Debug {
     private static int ticks = 0;
-    private final static int tickFrequency = 60;
+    private final static int tickFrequency = 240;
     private static StackWalker walker;
     private static ArrayList<String> messages;
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.components.Shooter;
 import com.ducks.entities.*;
+import com.ducks.tools.IShooter;
 
 /***
  * Collective Cannons Class for Box2D Bodies and Sprites
