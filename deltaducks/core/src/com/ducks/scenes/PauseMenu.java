@@ -57,8 +57,9 @@ public class PauseMenu {
     }
 
     public void draw(SpriteBatch batch) {
-        Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        // Dark Grey background for pause menu
+//        Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 0);
+//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         viewport = new FitViewport(DeltaDucks.WIDTH, DeltaDucks.HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, batch);
@@ -85,7 +86,7 @@ public class PauseMenu {
 
     public void draw() {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.DARK_GRAY);
+        shapeRenderer.setColor(new Color(25, 25, 25, 155));
         shapeRenderer.rect(100, 100, DeltaDucks.VIRTUAL_WIDTH, DeltaDucks.VIRTUAL_HEIGHT);
         shapeRenderer.end();
     }
