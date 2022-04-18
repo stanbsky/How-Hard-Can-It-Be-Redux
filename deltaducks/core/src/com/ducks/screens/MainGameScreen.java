@@ -199,7 +199,7 @@ public class MainGameScreen implements Screen {
         bullets.update(deltaTime);
         BulletManager.update(deltaTime);
         RenderingManager.update(deltaTime);
-        questManager.update(deltaTime, player.getPosition());
+        questManager.update(deltaTime);
         Debug.update();
 
         gameCam.position.x = player.getPosition().x;

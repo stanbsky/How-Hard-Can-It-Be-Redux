@@ -51,7 +51,7 @@ public class QuestManager {
     }
 
     private void spawnQuest() {
-        currentQuest = new Quest("pirate", pickSpawn(), subtitle, atlas);
+        currentQuest = new Quest("chest", pickSpawn(), subtitle, atlas);
     }
 
     private void checkQuestCompletion() {
@@ -61,8 +61,7 @@ public class QuestManager {
         }
     }
 
-    public void update(float deltaTime, Vector2 playerLocation) {
-//        this.playerLocation = playerLocation.scl(100f);
+    public void update(float deltaTime) {
         if (currentQuest == null) {
             stateTime += deltaTime;
         } else {
