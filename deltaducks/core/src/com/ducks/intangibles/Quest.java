@@ -41,6 +41,7 @@ public class Quest {
     public void update(float deltaTime) {
         subtitle.setSubtitle(description + objective.getPosition().scl(100f));
         objective.update(deltaTime);
+        System.out.println(objective.isAlive());
         if (!objective.isAlive())
             isCompleted = true;
     }

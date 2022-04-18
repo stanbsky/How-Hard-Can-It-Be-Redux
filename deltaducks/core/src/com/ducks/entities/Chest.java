@@ -30,7 +30,6 @@ public class Chest extends Entity {
         texture = new Texture("warning256", position, scl(radius*scale), atlas);
         data = new EntityData(category);
         defineChest(position.scl(0.01f));
-        System.out.println(position.scl(0.01f));
     }
 
     public void defineChest(Vector2 position) {
@@ -56,8 +55,8 @@ public class Chest extends Entity {
 
     @Override
     public void update(float deltaTime) {
-        Debug.debug(playerInRange);
-        Debug.debug(timeToCollect);
+//        Debug.debug(playerInRange);
+//        Debug.debug(timeToCollect <= 0);
         texture.update(deltaTime, rigidBody.getBody().getPosition());
         if (playerInRange)
             timeToCollect--;

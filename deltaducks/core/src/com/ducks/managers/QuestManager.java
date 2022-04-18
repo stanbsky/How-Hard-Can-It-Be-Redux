@@ -19,7 +19,7 @@ public class QuestManager {
     private final TextureAtlas atlas;
     private final Subtitle subtitle;
     private ArrayList<Vector2> spawnLocations;
-    private Quest currentQuest = null;
+    private Quest currentQuest;
     private float stateTime;
     private float spawnTime = 4;
     private int finalQuestCounter = 5;
@@ -28,6 +28,7 @@ public class QuestManager {
     public QuestManager(TiledMap map, TextureAtlas atlas, Subtitle subtitle) {
         this.atlas = atlas;
         this.subtitle = subtitle;
+        this.currentQuest = null;
         spawnLocations = new ArrayList<>();
         for (MapObject object : map.getLayers().get(7).getObjects().getByType(RectangleMapObject.class)) {
             Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -65,6 +66,7 @@ public class QuestManager {
         if (currentQuest == null) {
             stateTime += deltaTime;
         } else {
+            System.out.println("UPDATING");
             currentQuest.update(deltaTime);
             checkQuestCompletion();
         }
