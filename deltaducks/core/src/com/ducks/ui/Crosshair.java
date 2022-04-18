@@ -60,14 +60,11 @@ public class Crosshair {
         float y = -midY + loc.y;
         // Scale coordinates to fit the radius around the ship
         direction = new Vector2(x, y).nor().scl(-1f * crosshairRadius);
-//        Debug.debug(direction);
         // Offset the radius by the size of the ship body
         position.x = getPlayerPosition().x + direction.x;
         position.y = getPlayerPosition().y + direction.y;
-//        Debug.debug(position);
         // Lock mouse to crosshair
         moveMouseToCrosshair();
-        //Gdx.input.setCursorPosition(Math.round(midX + (150*direction.x)), Math.round(midY - (150*direction.y)));
     }
 
     /**

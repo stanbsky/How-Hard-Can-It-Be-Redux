@@ -48,7 +48,6 @@ public class Ship extends Entity implements IShooter {
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
-        Debug.debug(getPosition().scl(100f));
         shooter.update(deltaTime);
         x = (getPosition().x - width/2);
         y = (getPosition().y - height/2);

@@ -4,13 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
+import com.ducks.components.Shooter;
 import com.ducks.components.Texture;
 import com.ducks.entities.Entity;
 import com.ducks.screens.MainGameScreen;
-import com.ducks.tools.Debug;
 import com.ducks.tools.IDrawable;
 
 import static com.ducks.DeltaDucks.scl;
+import static com.ducks.screens.MainGameScreen.getPlayer;
 import static com.ducks.screens.MainGameScreen.getPlayerPosition;
 
 public class Indicator implements IDrawable {
@@ -49,18 +50,12 @@ public class Indicator implements IDrawable {
      * Transforms player's mouse location into the coordinates where the crosshair must be drawn
      */
     public void updatePosition() {
-        midX = Gdx.graphics.getWidth()/2;
-        midY = Gdx.graphics.getHeight()/2;
-        Debug.debug(target.getPosition().scl(100f));
-        // Transform mouse coordinates into world coordinates
-        float x = midX - target.getPosition().scl(100f).x;
-        float y = -midY + target.getPosition().scl(100f).y;
-        // Scale coordinates to fit the radius around the ship
-        direction = new Vector2(x, y).nor().scl(1f * crosshairRadius);
-        Debug.debug(direction);
+        // Get unit vector pointing to target
+        direction = Shooter.getDirection(getPlayer(), target);
+        // Scale to fit the indicator distance from player
+        direction = direction.scl(1f * crosshairRadius);
         // Offset the radius by the size of the ship body
         position.x = getPlayerPosition().x + direction.x;
         position.y = getPlayerPosition().y + direction.y;
-        Debug.debug(position);
     }
 }
