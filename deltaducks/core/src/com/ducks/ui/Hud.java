@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.components.HealthBar;
 
+import static com.ducks.DeltaDucks.batch;
+
 /***
  * HUD for the game
  */
@@ -41,9 +43,8 @@ public class Hud implements Disposable {
 
     /**
      * Constructor
-     * @param batch to draw on the screen
      */
-    public Hud(SpriteBatch batch) {
+    public Hud() {
         worldTimer = 300;
         timeCount = 0;
         score = 0;
@@ -88,7 +89,7 @@ public class Hud implements Disposable {
      * Draw the UI and health bar (HUD) every delta time interval
      * @param batch to draw on the screen
      */
-    public void draw(SpriteBatch batch) {
+    public void draw() {
         batch.setProjectionMatrix(stage.getCamera().combined);
         stage.draw();
         batch.begin();
@@ -101,7 +102,7 @@ public class Hud implements Disposable {
 //            batch.setColor(Color.RED);
 //        batch.draw(healthBar, 173, 0, 5f, 160 * health + 12f);
 //        batch.setColor(Color.WHITE);
-        this.hpBar.render(batch);
+        this.hpBar.render();
         batch.end();
     }
 

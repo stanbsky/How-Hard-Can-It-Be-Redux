@@ -29,6 +29,7 @@ import com.ducks.tools.Content;
 import com.ducks.ui.Crosshair;
 import com.ducks.ui.TablePauseMenu;
 
+import static com.ducks.DeltaDucks.batch;
 import static com.ducks.DeltaDucks.scl;
 
 /***
@@ -43,7 +44,7 @@ public class MainGameScreen implements Screen {
     private static TablePauseMenu pauseMenu;
 
     private TmxMapLoader mapLoader;
-    private TiledMap map;
+    public static TiledMap map;
     private MapProperties prop;
     private OrthogonalTiledMapRenderer renderer;
     private int mapPixelWidth;
@@ -56,9 +57,8 @@ public class MainGameScreen implements Screen {
     private World world;
     private Box2DDebugRenderer b2dr;
 
-    private static Player player;
+    public static Player player;
     private ListOfPirates bots;
-    private ListOfMonsters creatures;
     private ListOfColleges colleges;
     private Minimap radar;
     private Crosshair crosshair;
@@ -69,7 +69,7 @@ public class MainGameScreen implements Screen {
     private EntityContactListener contactListener;
 
     public static Content resources;
-    private static TextureAtlas atlas;
+    public static TextureAtlas atlas;
     public static Skin ui;
     private QuestManager questManager;
 
@@ -90,25 +90,15 @@ public class MainGameScreen implements Screen {
     }
 
     /**
-     * Method to get the texture atlas
-     * @return texture packs
-     */
-    public static TextureAtlas getAtlas() { return atlas;}
-
-    public static Player getPlayer() { return player; }
-
-    public static Vector2 getPlayerPosition() { return player.getPosition(); }
-
-    /**
      * Initialize once the screen is visible
      */
     @Override
     public void show() {
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
-        hud = new Hud(game.batch);
+        hud = new Hud();
         pauseMenu = new TablePauseMenu(gamePort);
-        subtitle = new Subtitle(game.batch);
+        subtitle = new Subtitle();
 
         // Create Map
         mapLoader = new TmxMapLoader();
@@ -132,7 +122,7 @@ public class MainGameScreen implements Screen {
         world = new World(new Vector2(0, 0), true);
         PhysicsManager.Initialize(world);
 
-        RenderingManager.Initialize(game.batch);
+        RenderingManager.Initialize();
         Debug.Initialize();
 
         player = new Player();
@@ -143,17 +133,16 @@ public class MainGameScreen implements Screen {
         //TODO: debug rendering
         b2dr = new Box2DDebugRenderer(true, false, true, true, false, true);
 
-        new B2WorldCreator(world, map);
+        new B2WorldCreator(world);
 
-        creatures = new ListOfMonsters(world, this);
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
-        crosshair = new Crosshair(player);
-        bullets = new ListOfBullets(player);
-        BulletManager.Initialize(player);
-        colleges = new ListOfColleges(map);
-        bots = new ListOfPirates(this, map);
-        tutorial = new Tutorial(gameCam, player);
-        questManager = new QuestManager(map, getAtlas(), subtitle);
+        crosshair = new Crosshair();
+        bullets = new ListOfBullets();
+        BulletManager.Initialize();
+        colleges = new ListOfColleges();
+        bots = new ListOfPirates();
+        tutorial = new Tutorial();
+        questManager = new QuestManager(subtitle);
     }
 
     /**
@@ -201,7 +190,6 @@ public class MainGameScreen implements Screen {
 
         player.update(deltaTime);
         bots.update(deltaTime);
-        creatures.update(deltaTime);
         colleges.update(deltaTime);
         hud.update(deltaTime);
         radar.update(player, colleges);
@@ -257,22 +245,21 @@ public class MainGameScreen implements Screen {
         b2dr.render(world, gameCam.combined);
 
 
-        game.batch.setProjectionMatrix(gameCam.combined);
-        game.batch.begin();
-        bots.draw(game.batch);
-        creatures.draw(game.batch);
-        colleges.draw(game.batch);
-        radar.draw(game.batch);
-        tutorial.draw(game.batch);
-        bullets.draw(game.batch);
-        BulletManager.draw(game.batch);
-        player.draw(game.batch);
-        crosshair.draw(game.batch);
+        batch.setProjectionMatrix(gameCam.combined);
+        batch.begin();
+        bots.draw();
+        colleges.draw();
+        radar.draw();
+        tutorial.draw();
+        bullets.draw();
+        BulletManager.draw();
+        player.draw();
+        crosshair.draw();
         RenderingManager.render();
-        game.batch.end();
+        batch.end();
 
         // Set our batch to now draw what the Hud camera sees.
-        hud.draw(game.batch);
+        hud.draw();
 
 
         // Display the pause menu, only when necessary
@@ -282,7 +269,7 @@ public class MainGameScreen implements Screen {
             Gdx.input.setInputProcessor(pauseMenu);
         }
 
-        game.batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
+        batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
         subtitle.stage.draw();
 
     }

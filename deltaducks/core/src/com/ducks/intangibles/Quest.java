@@ -20,17 +20,17 @@ public class Quest {
     private String description;
     private Indicator indicator;
 
-    public Quest (String type, Vector2 location, Subtitle subtitle, TextureAtlas atlas) {
+    public Quest (String type, Vector2 location, Subtitle subtitle) {
         this.subtitle = subtitle;
         if (Objects.equals(type, "chest")) {
-            objective = new Chest(location, atlas);
+            objective = new Chest(location);
             RenderingManager.registerEntity(objective);
             description = "Find the chest at ";
         } else if (Objects.equals(type, "pirate")) {
             objective = ListOfPirates.getRandomPirate();
             description = "Kill pirate at ";
         }
-        indicator = new Indicator(objective, "warning256", atlas);
+        indicator = new Indicator(objective, "warning256");
         RenderingManager.registerEntity(indicator);
     }
 

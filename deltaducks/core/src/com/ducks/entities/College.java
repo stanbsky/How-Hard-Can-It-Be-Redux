@@ -1,6 +1,5 @@
 package com.ducks.entities;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -17,6 +16,7 @@ import com.ducks.ui.Hud;
 import com.ducks.screens.MainGameScreen;
 
 import static com.ducks.DeltaDucks.scl;
+import static com.ducks.screens.MainGameScreen.atlas;
 import static com.ducks.tools.FixtureFilter.*;
 
 /***
@@ -39,27 +39,23 @@ public class College extends Entity implements IShooter {
 
     private boolean playerInRange = false;
 
-    public College(float spawn_x, float spawn_y, String collegeName) {
-        this(spawn_x, spawn_y, collegeName, MainGameScreen.getAtlas());
-    }
     /**
      * Constructor
      * @param spawn_x X coordinate of the college
      * @param spawn_y Y coordinate of the college
      * @param collegeName Name of the College
      */
-    public College(float spawn_x, float spawn_y, String collegeName, TextureAtlas atlas) {
-        this.atlas = atlas;
+    public College(float spawn_x, float spawn_y, String collegeName) {
         name = collegeName;
         shooter = new Shooter(1f);
         radius = 100f;
         scale = 1.2f;
         health = 1f;
         hpBar = new HealthBar(spawn_x - radius, spawn_y + radius,
-                radius*2, 10f, true, health, false, atlas);
+                radius*2, 10f, true, health, false);
 
         this.position = new Vector2(spawn_x, spawn_y);
-        this.texture = new Texture(collegeName, this.position, scl(radius*scale), atlas);
+        this.texture = new Texture(collegeName, this.position, scl(radius*scale));
         category = ENEMY;
         mask = MASK_ALL - ENEMY_BULLET;
         data = new EntityData(category);
@@ -109,11 +105,10 @@ public class College extends Entity implements IShooter {
 
     /**
      * draw the sprite of college and health bar on the game screen
-     * @param batch to draw on the screen
      */
-    public void draw(SpriteBatch batch) {
-        this.texture.render(batch);
-        this.hpBar.render(batch);
+    public void draw() {
+        this.texture.render();
+        this.hpBar.render();
     }
 
     /**

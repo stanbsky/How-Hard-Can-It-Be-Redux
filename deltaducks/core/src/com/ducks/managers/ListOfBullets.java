@@ -7,12 +7,12 @@ import com.ducks.ui.Crosshair;
 import com.ducks.entities.PlayerBullet;
 import com.ducks.entities.Ship;
 
+import static com.ducks.screens.MainGameScreen.player;
+
 /***
  * Collective Bullets Class for Box2D Bodies and Sprites
  */
 public class ListOfBullets {
-    private Ship player;
-
     private Array<Bullet> bulletBodies;
 
     private final float SHOOT_WAIT_TIME = .3f;
@@ -21,8 +21,7 @@ public class ListOfBullets {
     /**
      * Constructor
      */
-    public ListOfBullets(Ship player) {
-        this.player = player;
+    public ListOfBullets() {
         bulletBodies = new Array<>();
     }
 
@@ -56,11 +55,10 @@ public class ListOfBullets {
 
     /**
      * Draw all bullets every delta time interval
-     * @param batch to draw on the screen
      */
-    public void draw(SpriteBatch batch) {
+    public void draw() {
         for( Bullet bullet : bulletBodies) {
-            bullet.draw(batch);
+            bullet.draw();
         }
     }
 

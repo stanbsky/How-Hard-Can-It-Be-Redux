@@ -6,32 +6,18 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
-import com.ducks.screens.MainGameScreen;
 import com.ducks.entities.Pirate;
-
+import static com.ducks.screens.MainGameScreen.map;
 /***
  * Collective Pirates Class for Box2D Bodies and Sprites
  */
 public class ListOfPirates {
 
-    private World world;
-    private MainGameScreen screen;
-
     private static Array<Pirate> pirateBodies;
 
-
-//    private final float RADIUS = 4f * Pirate.PIXEL_PIRATE_HEIGHT / DeltaDucks.PIXEL_PER_METER;
-
-    /**
-     *
-     * @param screen Game Screen
-     * @param map Tiled Map
-     */
-    public ListOfPirates(MainGameScreen screen, TiledMap map) {
-        this.screen = screen;
+    public ListOfPirates() {
         pirateBodies = new Array<Pirate>();
         spawnPirates(map);
     }
@@ -57,7 +43,6 @@ public class ListOfPirates {
             else
                 college = "constantine";
             pirateBodies.add(new Pirate(college, rect.getX()*DeltaDucks.TILEED_MAP_SCALE, rect.getY()*DeltaDucks.TILEED_MAP_SCALE));
-//            pirateBodies.add(new Pirate(world, screen, (rect.getX() + rect.getWidth() / 2) * DeltaDucks.TILEED_MAP_SCALE, (rect.getY() + rect.getHeight() / 2) * DeltaDucks.TILEED_MAP_SCALE, RADIUS));
         }
         //TODO: testing spawn near player
         pirateBodies.add(new Pirate("constantine", 3358,5163));
@@ -82,11 +67,10 @@ public class ListOfPirates {
 
     /**
      * Draw all pirates ships every delta time interval
-     * @param batch to draw on the screen
      */
-    public void draw(SpriteBatch batch) {
+    public void draw() {
         for( Pirate pirate : pirateBodies) {
-            pirate.draw(batch);
+            pirate.draw();
         }
     }
 

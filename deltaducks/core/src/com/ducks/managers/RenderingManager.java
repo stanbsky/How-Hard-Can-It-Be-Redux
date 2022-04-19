@@ -2,15 +2,13 @@ package com.ducks.managers;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ducks.tools.IDrawable;
-
 import java.util.ArrayList;
 
 public final class RenderingManager {
     public static SpriteBatch batch;
     public static ArrayList<IDrawable> entities;
 
-    public static void Initialize(SpriteBatch spriteBatch) {
-        batch = spriteBatch;
+    public static void Initialize() {
         entities = new ArrayList<>();
     }
 
@@ -25,7 +23,7 @@ public final class RenderingManager {
 
     public static void render() {
         for (IDrawable Entity : entities) {
-            Entity.draw(batch);
+            Entity.draw();
         }
     }
 

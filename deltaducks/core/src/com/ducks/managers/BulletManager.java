@@ -6,19 +6,19 @@ import com.ducks.components.Shooter;
 import com.ducks.entities.*;
 import com.ducks.tools.IShooter;
 
+import static com.ducks.screens.MainGameScreen.player;
+
 /***
  * Collective Cannons Class for Box2D Bodies and Sprites
  */
 public final class BulletManager {
 
-    private static Ship player;
     private static Array<Bullet> bullets;
 
     /**
      * Constructor
      */
-    public static void Initialize(Ship thePlayer) {
-        player = thePlayer;
+    public static void Initialize() {
         bullets = new Array<>();
     }
 
@@ -82,9 +82,9 @@ public final class BulletManager {
      * Draw all cannons every delta time interval
      * @param batch to draw on the screen
      */
-    public static void draw(SpriteBatch batch) {
+    public static void draw() {
         for( Bullet cannon : bullets) {
-            cannon.draw(batch);
+            cannon.draw();
         }
     }
 }

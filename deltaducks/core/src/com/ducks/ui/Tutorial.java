@@ -10,11 +10,13 @@ import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
 import com.ducks.entities.Ship;
 
+import static com.ducks.DeltaDucks.batch;
+import static com.ducks.screens.MainGameScreen.player;
+
 /***
  * Tutorial class for the game
  */
 public class Tutorial {
-    private OrthographicCamera gameCam;
 
     private final int PIXEL_ARROW_WIDTH = 212;
     private final int PIXEL_ARROW_HEIGHT = 128;
@@ -27,7 +29,6 @@ public class Tutorial {
     private float stateTime;
     private float SPAWN_X;
     private float SPAWN_Y;
-    private Ship player;
     private BitmapFont font;
 
     private FreeTypeFontGenerator generator;
@@ -37,12 +38,8 @@ public class Tutorial {
 
     /**
      * Constructor
-     * @param gameCam OrthographicCamera
-     * @param player Box2d player object
      */
-    public Tutorial(OrthographicCamera gameCam,  Ship player) {
-        this.gameCam = gameCam;
-        this.player = player;
+    public Tutorial() {
 
         Array<TextureRegion> frames = new Array<TextureRegion>();
         for(int i=0; i<6; i++) {
@@ -72,9 +69,8 @@ public class Tutorial {
 
     /**
      * Draw the tutorial every delta time interval
-     * @param batch to draw on the screen
      */
-    public void draw(SpriteBatch batch) {
+    public void draw() {
         batch.draw(arrow.getKeyFrame(stateTime, true), SPAWN_X, SPAWN_Y, ARROW_WIDTH / DeltaDucks.PIXEL_PER_METER, ARROW_HEIGHT / DeltaDucks.PIXEL_PER_METER);
 
         Matrix4 originalMatrix = batch.getProjectionMatrix().cpy();

@@ -1,12 +1,11 @@
 package com.ducks.components;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.ducks.screens.MainGameScreen;
-import org.w3c.dom.Text;
 
 import static com.ducks.DeltaDucks.scl;
+import static com.ducks.DeltaDucks.batch;
+import static com.ducks.screens.MainGameScreen.atlas;
 
 public class HealthBar extends Texture {
     private final float maxHP;
@@ -14,10 +13,6 @@ public class HealthBar extends Texture {
     private float hp;
 
     public HealthBar(float x, float y, float width, float height, boolean horizontal, float hp, boolean ui) {
-        this(x, y, width, height, horizontal, hp, ui, MainGameScreen.getAtlas());
-    }
-
-    public HealthBar(float x, float y, float width, float height, boolean horizontal, float hp, boolean ui, TextureAtlas atlas) {
         frame = atlas.findRegion("blank");
         this.maxHP = this.hp = hp;
         this.horizontal = horizontal;
@@ -37,7 +32,7 @@ public class HealthBar extends Texture {
         this.hp = hp;
     }
 
-    public void render(SpriteBatch batch) {
+    public void render() {
         if (this.hp <= 0f)
             return;
 

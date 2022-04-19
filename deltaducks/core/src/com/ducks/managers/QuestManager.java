@@ -12,11 +12,11 @@ import com.ducks.ui.Subtitle;
 
 import java.util.ArrayList;
 
-import static com.ducks.screens.MainGameScreen.getPlayerPosition;
+import static com.ducks.screens.MainGameScreen.map;
+import static com.ducks.screens.MainGameScreen.player;
 
 public class QuestManager {
 
-    private final TextureAtlas atlas;
     private final Subtitle subtitle;
     private ArrayList<Vector2> spawnLocations;
     private Quest currentQuest;
@@ -25,8 +25,7 @@ public class QuestManager {
     private int finalQuestCounter = 5;
     private boolean debug = true;
 
-    public QuestManager(TiledMap map, TextureAtlas atlas, Subtitle subtitle) {
-        this.atlas = atlas;
+    public QuestManager(Subtitle subtitle) {
         this.subtitle = subtitle;
         this.currentQuest = null;
         spawnLocations = new ArrayList<>();
@@ -38,11 +37,11 @@ public class QuestManager {
 
     private Vector2 pickSpawn() {
         if (debug)
-            return getPlayerPosition().scl(100f).add(300,-300);
+            return player.getPosition().scl(100f).add(300,-300);
         Vector2 spawn = null;
         for (Vector2 pos : spawnLocations) {
             // Check if too close to player
-            if (pos.dst2(getPlayerPosition().scl(100f)) < 500)
+            if (pos.dst2(player.getPosition().scl(100f)) < 500)
                 continue;
             if(Math.random() > .3f)
                 continue;
@@ -52,7 +51,7 @@ public class QuestManager {
     }
 
     private void spawnQuest() {
-        currentQuest = new Quest("chest", pickSpawn(), subtitle, atlas);
+        currentQuest = new Quest("chest", pickSpawn(), subtitle);
     }
 
     private void checkQuestCompletion() {

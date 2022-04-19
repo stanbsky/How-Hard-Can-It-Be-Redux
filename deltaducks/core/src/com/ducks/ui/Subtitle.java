@@ -14,6 +14,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 
+import static com.ducks.DeltaDucks.batch;
+
 /***
  * Subtile (Bottom Text) fot the game
  */
@@ -34,9 +36,8 @@ public class Subtitle implements Disposable {
 
     /**
      * Constructor
-     * @param batch to draw on the screen
      */
-    public Subtitle(SpriteBatch batch) {
+    public Subtitle() {
 
         viewport = new FitViewport(DeltaDucks.VIRTUAL_WIDTH, DeltaDucks.VIRTUAL_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, batch);

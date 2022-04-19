@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.entities.College;
-
+import static com.ducks.screens.MainGameScreen.map;
 /**
  * Collective Colleges Class for Box2D Bodies and Sprites
  */
@@ -20,18 +20,16 @@ public class ListOfColleges {
 
     /**
      * Constructor
-     * @param map Tiled Map
      */
-    public ListOfColleges(TiledMap map) {
+    public ListOfColleges() {
         collegeBodies = new Array<College>();
-        spawnColleges(map);
+        spawnColleges();
     }
 
     /**
      * Spawn every colleges corresponding to Tiled Map locations
-     * @param map
      */
-    public void spawnColleges(TiledMap map) {
+    public void spawnColleges() {
         String collegeName = "";
         int colleState = 0;
         for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class)) {
@@ -72,11 +70,10 @@ public class ListOfColleges {
 
     /**
      * Draw all colleges every delta time interval
-     * @param batch to draw on the screen
      */
-    public void draw(SpriteBatch batch) {
+    public void draw() {
         for( College college : collegeBodies) {
-            college.draw(batch);
+            college.draw();
         }
     }
 

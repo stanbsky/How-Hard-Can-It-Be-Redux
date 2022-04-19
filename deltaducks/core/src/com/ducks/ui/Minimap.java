@@ -11,6 +11,8 @@ import com.ducks.DeltaDucks;
 import com.ducks.managers.ListOfColleges;
 import com.ducks.entities.Ship;
 
+import static com.ducks.DeltaDucks.batch;
+
 /***
  * Minimap for the game
  */
@@ -77,9 +79,8 @@ public class Minimap implements Disposable {
 
     /**
      * Draw the minimap on the screen
-     * @param batch to draw on the screen
      */
-    public void draw(SpriteBatch batch) {
+    public void draw() {
         batch.draw(new Texture(pixmap), gameCam.position.x - gameCam.viewportWidth/2, gameCam.position.y  - gameCam.viewportHeight/2, pixmap.getWidth() / DeltaDucks.PIXEL_PER_METER, pixmap.getHeight() / DeltaDucks.PIXEL_PER_METER);
     }
 

@@ -13,10 +13,6 @@ public class PlayerBullet extends Bullet {
 
     private final float BULLET_SPEED = 200f;
 
-    public PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
-        this(position, direction, shipMomentum, MainGameScreen.getAtlas());
-    }
-
     /**
      * Purely for printing debug info
      * @param deltaTime of the game
@@ -28,8 +24,8 @@ public class PlayerBullet extends Bullet {
     /**
      * Constructor
      */
-    public PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum, TextureAtlas atlas) {
-        texture = new Texture("bullet_player", position, radius, atlas);
+    public PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
+        texture = new Texture("bullet_player", position, radius);
         mask = MASK_ALL - PLAYER - PLAYER_BULLET;
         category = PLAYER_BULLET;
         data = new EntityData(category);

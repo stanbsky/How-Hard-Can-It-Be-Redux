@@ -1,6 +1,5 @@
 package com.ducks.entities;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -60,8 +59,8 @@ public class Bullet extends Entity {
         rigidBody.addFixture(fixture);
     }
 
-    public void draw(SpriteBatch batch) {
-        this.texture.render(batch);
+    public void draw() {
+        this.texture.render();
     }
 
     /**
