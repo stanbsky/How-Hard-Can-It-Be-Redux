@@ -65,7 +65,6 @@ public class QuestManager {
         if (currentQuest == null) {
             stateTime += deltaTime;
         } else {
-            System.out.println("UPDATING");
             currentQuest.update(deltaTime);
             checkQuestCompletion();
         }
