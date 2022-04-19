@@ -16,9 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
-import com.ducks.entities.*;
-import com.ducks.scenes.*;
-import com.ducks.sprites.Player;
 import com.ducks.managers.*;
 import com.ducks.tools.Debug;
 import com.ducks.tools.EntityContactListener;
@@ -30,6 +27,7 @@ import com.ducks.entities.Player;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.Content;
 import com.ducks.ui.Crosshair;
+import com.ducks.ui.TablePauseMenu;
 
 import static com.ducks.DeltaDucks.scl;
 
