@@ -62,7 +62,6 @@ public class MainGameScreen implements Screen {
     private Crosshair crosshair;
     private Tutorial tutorial;
     private Subtitle subtitle;
-    private ListOfBullets bullets;
 
     private EntityContactListener contactListener;
 
@@ -135,8 +134,6 @@ public class MainGameScreen implements Screen {
 
         radar = new Minimap(gameCam, mapPixelWidth, mapPixelHeight);
         crosshair = new Crosshair();
-        bullets = new ListOfBullets();
-        BulletManager.Initialize();
         tutorial = new Tutorial();
         questManager = new QuestManager(subtitle);
     }
@@ -146,7 +143,7 @@ public class MainGameScreen implements Screen {
      */
     public void handleInput() {
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-            bullets.spawnBullet();
+            EntityManager.spawnBullet();
         }
     }
 
@@ -190,8 +187,6 @@ public class MainGameScreen implements Screen {
         tutorial.update(deltaTime);
         subtitle.update(deltaTime);
         crosshair.update(deltaTime);
-        bullets.update(deltaTime);
-        BulletManager.update(deltaTime);
         EntityManager.update(deltaTime);
         questManager.update(deltaTime);
         Debug.update();
@@ -243,8 +238,6 @@ public class MainGameScreen implements Screen {
         batch.begin();
         radar.draw();
         tutorial.draw();
-        bullets.draw();
-        BulletManager.draw();
         player.draw();
         crosshair.draw();
         EntityManager.render();

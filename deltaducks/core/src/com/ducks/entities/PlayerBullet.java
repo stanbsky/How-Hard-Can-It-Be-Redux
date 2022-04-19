@@ -5,6 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.ducks.components.Texture;
 import com.ducks.intangibles.EntityData;
 import com.ducks.screens.MainGameScreen;
+import com.ducks.ui.Crosshair;
+
+import static com.ducks.screens.MainGameScreen.player;
 import static com.ducks.tools.FixtureFilter.*;
 /***
  * Bullet Class for Box2D Body and Sprite
@@ -21,9 +24,15 @@ public class PlayerBullet extends Bullet {
     public void update(float deltaTime) {
         super.update(deltaTime);
     }
+
+    public PlayerBullet() {
+        this(player.getPosition(), Crosshair.getCrosshairDirection(), player.getVelocity());
+    }
+
     /**
      * Constructor
      */
+    @Deprecated
     public PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
         texture = new Texture("bullet_player", position, radius);
         mask = MASK_ALL - PLAYER - PLAYER_BULLET;

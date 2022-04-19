@@ -7,7 +7,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ducks.components.ShipAnimation;
 import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
-import com.ducks.managers.BulletManager;
+import com.ducks.managers.EntityManager;
 import com.ducks.tools.IShooter;
 import com.ducks.ui.Hud;
 import com.ducks.tools.InputParser;
@@ -63,7 +63,7 @@ public class Pirate extends Ship {
         else
             inputDurationRoll = 0f;
         if (playerInRange) {
-            BulletManager.spawnBullet((IShooter) this);
+            EntityManager.spawnBullet((IShooter) this);
         }
 //            enemyBullets.spawnBullet(this);
 //        if(rigidBody.getSensorData().contains("Attack")) {
