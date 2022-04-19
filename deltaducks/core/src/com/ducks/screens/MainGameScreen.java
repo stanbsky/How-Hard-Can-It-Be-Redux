@@ -40,7 +40,7 @@ public class MainGameScreen implements Screen {
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
-    private TablePauseMenu pauseMenu;
+    private static TablePauseMenu pauseMenu;
 
     private TmxMapLoader mapLoader;
     private TiledMap map;
@@ -185,6 +185,8 @@ public class MainGameScreen implements Screen {
 
     public static void togglePause() {
         isPaused = !isPaused;
+        Gdx.input.setInputProcessor(isPaused ? pauseMenu : null);
+        Gdx.input.setCursorCatched(!isPaused);
     }
 
     /**
@@ -235,7 +237,6 @@ public class MainGameScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             if (!escPressed) {
                 escPressed = true;
-                Gdx.input.setCursorCatched(isPaused);
                 togglePause();
             }
         }
@@ -276,9 +277,9 @@ public class MainGameScreen implements Screen {
 
         // Display the pause menu, only when necessary
         if (isPaused) {
-            Gdx.input.setInputProcessor(pauseMenu);
             pauseMenu.act();
             pauseMenu.draw();
+            Gdx.input.setInputProcessor(pauseMenu);
         }
 
         game.batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
