@@ -44,7 +44,7 @@ public class MainGameScreen implements Screen {
     private int mapPixelWidth;
     private int mapPixelHeight;
 
-    private boolean isPaused;
+    private static boolean isPaused = false;
     private boolean escPressed;
 
     // Box2d Variables
@@ -169,6 +169,10 @@ public class MainGameScreen implements Screen {
         }
     }
 
+    public static void togglePause() {
+        isPaused = !isPaused;
+    }
+
     /**
      * Update the window every delta time interval
      * @param deltaTime of the game
@@ -215,7 +219,7 @@ public class MainGameScreen implements Screen {
             if (!escPressed) {
                 escPressed = true;
                 Gdx.input.setCursorCatched(isPaused);
-                isPaused = !isPaused;
+                togglePause();
             }
         }
         else if (escPressed) {
@@ -302,5 +306,6 @@ public class MainGameScreen implements Screen {
         b2dr.dispose();
 //        hud.dispose();
         radar.dispose();
+        pauseMenu.dispose();
     }
 }
