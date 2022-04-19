@@ -12,9 +12,13 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
+import com.ducks.entities.*;
+import com.ducks.scenes.*;
+import com.ducks.sprites.Player;
 import com.ducks.managers.*;
 import com.ducks.tools.Debug;
 import com.ducks.tools.EntityContactListener;
@@ -38,6 +42,7 @@ public class MainGameScreen implements Screen {
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
+    private TablePauseMenu pauseMenu;
 
     private TmxMapLoader mapLoader;
     private TiledMap map;
@@ -46,7 +51,7 @@ public class MainGameScreen implements Screen {
     private int mapPixelWidth;
     private int mapPixelHeight;
 
-    private boolean isPaused;
+    private static boolean isPaused = false;
     private boolean escPressed;
 
     // Box2d Variables
@@ -67,6 +72,7 @@ public class MainGameScreen implements Screen {
 
     public static Content resources;
     private static TextureAtlas atlas;
+    public static Skin ui;
     private QuestManager questManager;
 
     /**
@@ -77,6 +83,7 @@ public class MainGameScreen implements Screen {
         this.game = game;
         resources = new Content();
         atlas = new TextureAtlas("all_assets.atlas");
+        ui = new Skin(new TextureAtlas("ui_assets.atlas"));
         //TODO: delete after pirate refactor
         MainGameScreen.resources.loadTexture("ship_dark_SE.png", "pirate");
         MainGameScreen.resources.loadTexture("arrow.png", "arrow");
@@ -102,6 +109,7 @@ public class MainGameScreen implements Screen {
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
         hud = new Hud(game.batch);
+        pauseMenu = new TablePauseMenu(gamePort);
         subtitle = new Subtitle(game.batch);
 
         // Create Map
@@ -177,6 +185,10 @@ public class MainGameScreen implements Screen {
         }
     }
 
+    public static void togglePause() {
+        isPaused = !isPaused;
+    }
+
     /**
      * Update the window every delta time interval
      * @param deltaTime of the game
@@ -226,11 +238,10 @@ public class MainGameScreen implements Screen {
             if (!escPressed) {
                 escPressed = true;
                 Gdx.input.setCursorCatched(isPaused);
-                isPaused = !isPaused;
+                togglePause();
             }
         }
         else if (escPressed) {
-            escPressed = false;
             escPressed = false;
         }
         if (!isPaused) {
@@ -263,6 +274,14 @@ public class MainGameScreen implements Screen {
 
         // Set our batch to now draw what the Hud camera sees.
         hud.draw(game.batch);
+
+
+        // Display the pause menu, only when necessary
+        if (isPaused) {
+            Gdx.input.setInputProcessor(pauseMenu);
+            pauseMenu.act();
+            pauseMenu.draw();
+        }
 
         game.batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
         subtitle.stage.draw();
@@ -306,5 +325,6 @@ public class MainGameScreen implements Screen {
         b2dr.dispose();
 //        hud.dispose();
         radar.dispose();
+        pauseMenu.dispose();
     }
 }
