@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
@@ -34,7 +35,7 @@ public class MainGameScreen implements Screen {
     private OrthographicCamera gameCam;
     private Viewport gamePort;
     private Hud hud;
-    private PauseMenu pauseMenu;
+    private TablePauseMenu pauseMenu;
 
     private TmxMapLoader mapLoader;
     private TiledMap map;
@@ -65,6 +66,7 @@ public class MainGameScreen implements Screen {
 
     public static Content resources;
     private static TextureAtlas atlas;
+    public static Skin ui;
 
     /**
      * Constructor
@@ -74,6 +76,7 @@ public class MainGameScreen implements Screen {
         this.game = game;
         resources = new Content();
         atlas = new TextureAtlas("all_assets.atlas");
+        ui = new Skin(new TextureAtlas("ui_assets.atlas"));
         //TODO: delete after pirate refactor
         MainGameScreen.resources.loadTexture("ship_dark_SE.png", "pirate");
         MainGameScreen.resources.loadTexture("arrow.png", "arrow");
@@ -95,7 +98,7 @@ public class MainGameScreen implements Screen {
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
         hud = new Hud(game.batch);
-        pauseMenu = new PauseMenu();
+        pauseMenu = new TablePauseMenu(gamePort);
         subtitle = new Subtitle(game.batch);
 
         // Create Map
@@ -252,7 +255,9 @@ public class MainGameScreen implements Screen {
 
         // Display the pause menu, only when necessary
         if (isPaused) {
-            pauseMenu.draw(game.batch);
+            Gdx.input.setInputProcessor(pauseMenu);
+            pauseMenu.act();
+            pauseMenu.draw();
         }
 
         game.batch.setProjectionMatrix(subtitle.stage.getCamera().combined);

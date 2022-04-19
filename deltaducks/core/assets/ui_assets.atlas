@@ -1,0 +1,34 @@
+
+ui_assets.png
+size: 2048, 512
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+exit_down
+  rotate: false
+  xy: 2, 204
+  size: 600, 200
+  orig: 600, 200
+  offset: 0, 0
+  index: -1
+exit_up
+  rotate: false
+  xy: 604, 204
+  size: 600, 200
+  orig: 600, 200
+  offset: 0, 0
+  index: -1
+play_down
+  rotate: false
+  xy: 604, 2
+  size: 600, 200
+  orig: 600, 200
+  offset: 0, 0
+  index: -1
+play_up
+  rotate: false
+  xy: 2, 2
+  size: 600, 200
+  orig: 600, 200
+  offset: 0, 0
+  index: -1

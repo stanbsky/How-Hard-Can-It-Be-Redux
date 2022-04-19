@@ -1,225 +1,608 @@
+
 all_assets.png
-	size: 2048, 2048
-	repeat: none
+size: 2048, 2048
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
 blank
-	bounds: 840, 1417, 1, 1
+  rotate: false
+  xy: 840, 1417
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
 bullet_college
-	bounds: 2, 134, 88, 88
+  rotate: false
+  xy: 2, 134
+  size: 88, 88
+  orig: 88, 88
+  offset: 0, 0
+  index: -1
 bullet_college256
-	bounds: 2, 224, 256, 256
+  rotate: false
+  xy: 2, 224
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
 bullet_player
-	bounds: 774, 1420, 88, 88
+  rotate: false
+  xy: 774, 1420
+  size: 88, 88
+  orig: 88, 88
+  offset: 0, 0
+  index: -1
 bullet_player256
-	bounds: 516, 1252, 256, 256
+  rotate: false
+  xy: 516, 1252
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
 constantine
-	bounds: 2, 1510, 512, 512
+  rotate: false
+  xy: 2, 1510
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 constantine01
-	bounds: 1678, 1958, 64, 64
+  rotate: false
+  xy: 1678, 1958
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 constantine02
-	bounds: 260, 416, 64, 64
+  rotate: false
+  xy: 260, 416
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 constantine03
-	bounds: 648, 538, 64, 64
+  rotate: false
+  xy: 648, 538
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 constantine04
-	bounds: 774, 1288, 64, 64
+  rotate: false
+  xy: 774, 1288
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 constantine06
-	bounds: 1612, 1826, 64, 64
+  rotate: false
+  xy: 1612, 1826
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 constantine07
-	bounds: 2, 68, 64, 64
+  rotate: false
+  xy: 2, 68
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 constantine08
-	bounds: 1876, 1892, 64, 64
+  rotate: false
+  xy: 1876, 1892
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 constantine09
-	bounds: 392, 416, 64, 64
+  rotate: false
+  xy: 392, 416
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 crosshair256
-	bounds: 516, 994, 256, 256
+  rotate: false
+  xy: 516, 994
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
 destroyed
-	bounds: 516, 1510, 512, 512
+  rotate: false
+  xy: 516, 1510
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 explosion256
-	index: 2
-	bounds: 1030, 1766, 256, 256
+  rotate: false
+  xy: 1030, 1766
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 2
 explosion256
-	index: 1
-	bounds: 1288, 1766, 256, 256
+  rotate: false
+  xy: 1288, 1766
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: 1
 goodricke
-	bounds: 2, 996, 512, 512
+  rotate: false
+  xy: 2, 996
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 goodricke01
-	bounds: 326, 284, 64, 64
+  rotate: false
+  xy: 326, 284
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 goodricke02
-	bounds: 864, 1444, 64, 64
+  rotate: false
+  xy: 864, 1444
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 goodricke03
-	bounds: 1876, 1958, 64, 64
+  rotate: false
+  xy: 1876, 1958
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 goodricke04
-	bounds: 2, 2, 64, 64
+  rotate: false
+  xy: 2, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 goodricke06
-	bounds: 582, 538, 64, 64
+  rotate: false
+  xy: 582, 538
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 goodricke07
-	bounds: 326, 416, 64, 64
+  rotate: false
+  xy: 326, 416
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 goodricke08
-	bounds: 774, 826, 64, 64
+  rotate: false
+  xy: 774, 826
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 goodricke09
-	bounds: 1252, 1700, 64, 64
+  rotate: false
+  xy: 1252, 1700
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 halifax
-	bounds: 2, 482, 512, 512
+  rotate: false
+  xy: 2, 482
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 halifax01
-	bounds: 1810, 1760, 64, 64
+  rotate: false
+  xy: 1810, 1760
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 halifax02
-	bounds: 1744, 1892, 64, 64
+  rotate: false
+  xy: 1744, 1892
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 halifax03
-	bounds: 582, 670, 64, 64
+  rotate: false
+  xy: 582, 670
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 halifax04
-	bounds: 260, 218, 64, 64
+  rotate: false
+  xy: 260, 218
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 halifax06
-	bounds: 1030, 1610, 64, 64
+  rotate: false
+  xy: 1030, 1610
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 halifax07
-	bounds: 774, 1024, 64, 64
+  rotate: false
+  xy: 774, 1024
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 halifax08
-	bounds: 158, 158, 64, 64
+  rotate: false
+  xy: 158, 158
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 halifax09
-	bounds: 1612, 1760, 64, 64
+  rotate: false
+  xy: 1612, 1760
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 player01
-	index: 1
-	bounds: 260, 350, 64, 64
+  rotate: false
+  xy: 260, 350
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player01
-	index: 2
-	bounds: 1942, 1892, 64, 64
+  rotate: false
+  xy: 1942, 1892
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player02
-	index: 1
-	bounds: 774, 1354, 64, 64
+  rotate: false
+  xy: 774, 1354
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player02
-	index: 2
-	bounds: 1810, 1826, 64, 64
+  rotate: false
+  xy: 1810, 1826
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player03
-	index: 2
-	bounds: 1810, 1958, 64, 64
+  rotate: false
+  xy: 1810, 1958
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player03
-	index: 1
-	bounds: 1876, 1760, 64, 64
+  rotate: false
+  xy: 1876, 1760
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player04
-	index: 2
-	bounds: 774, 1156, 64, 64
+  rotate: false
+  xy: 774, 1156
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player04
-	index: 1
-	bounds: 1546, 1760, 64, 64
+  rotate: false
+  xy: 1546, 1760
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player06
-	index: 2
-	bounds: 582, 604, 64, 64
+  rotate: false
+  xy: 582, 604
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player06
-	index: 1
-	bounds: 1942, 1826, 64, 64
+  rotate: false
+  xy: 1942, 1826
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player07
-	index: 2
-	bounds: 1546, 1826, 64, 64
+  rotate: false
+  xy: 1546, 1826
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player07
-	index: 1
-	bounds: 1942, 1958, 64, 64
+  rotate: false
+  xy: 1942, 1958
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player08
-	index: 2
-	bounds: 930, 1444, 64, 64
+  rotate: false
+  xy: 930, 1444
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player08
-	index: 1
-	bounds: 1384, 1700, 64, 64
+  rotate: false
+  xy: 1384, 1700
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player09
-	index: 2
-	bounds: 516, 604, 64, 64
+  rotate: false
+  xy: 516, 604
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player09
-	index: 1
-	bounds: 392, 284, 64, 64
+  rotate: false
+  xy: 392, 284
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player1
-	index: 3
-	bounds: 92, 158, 64, 64
+  rotate: false
+  xy: 92, 158
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
 player1
-	index: 2
-	bounds: 1678, 1892, 64, 64
+  rotate: false
+  xy: 1678, 1892
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player1
-	index: 4
-	bounds: 774, 958, 64, 64
+  rotate: false
+  xy: 774, 958
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
 player1
-	index: 1
-	bounds: 326, 218, 64, 64
+  rotate: false
+  xy: 326, 218
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player2
-	index: 3
-	bounds: 516, 670, 64, 64
+  rotate: false
+  xy: 516, 670
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
 player2
-	index: 2
-	bounds: 648, 670, 64, 64
+  rotate: false
+  xy: 648, 670
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player2
-	index: 4
-	bounds: 1744, 1826, 64, 64
+  rotate: false
+  xy: 1744, 1826
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
 player2
-	index: 1
-	bounds: 774, 760, 64, 64
+  rotate: false
+  xy: 774, 760
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player3
-	index: 2
-	bounds: 1612, 1892, 64, 64
+  rotate: false
+  xy: 1612, 1892
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player3
-	index: 4
-	bounds: 1678, 1826, 64, 64
+  rotate: false
+  xy: 1678, 1826
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
 player3
-	index: 1
-	bounds: 1876, 1826, 64, 64
+  rotate: false
+  xy: 1876, 1826
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player3
-	index: 3
-	bounds: 1744, 1760, 64, 64
+  rotate: false
+  xy: 1744, 1760
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
 player4
-	index: 2
-	bounds: 1186, 1700, 64, 64
+  rotate: false
+  xy: 1186, 1700
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player4
-	index: 4
-	bounds: 1744, 1958, 64, 64
+  rotate: false
+  xy: 1744, 1958
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
 player4
-	index: 1
-	bounds: 1810, 1892, 64, 64
+  rotate: false
+  xy: 1810, 1892
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player4
-	index: 3
-	bounds: 392, 218, 64, 64
+  rotate: false
+  xy: 392, 218
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
 player6
-	index: 2
-	bounds: 1546, 1892, 64, 64
+  rotate: false
+  xy: 1546, 1892
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player6
-	index: 4
-	bounds: 516, 538, 64, 64
+  rotate: false
+  xy: 516, 538
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
 player6
-	index: 1
-	bounds: 648, 604, 64, 64
+  rotate: false
+  xy: 648, 604
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player6
-	index: 3
-	bounds: 774, 892, 64, 64
+  rotate: false
+  xy: 774, 892
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
 player7
-	index: 2
-	bounds: 1120, 1700, 64, 64
+  rotate: false
+  xy: 1120, 1700
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player7
-	index: 4
-	bounds: 260, 284, 64, 64
+  rotate: false
+  xy: 260, 284
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
 player7
-	index: 1
-	bounds: 392, 350, 64, 64
+  rotate: false
+  xy: 392, 350
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player7
-	index: 3
-	bounds: 1450, 1700, 64, 64
+  rotate: false
+  xy: 1450, 1700
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
 player8
-	index: 2
-	bounds: 1546, 1958, 64, 64
+  rotate: false
+  xy: 1546, 1958
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 player8
-	index: 4
-	bounds: 1030, 1544, 64, 64
+  rotate: false
+  xy: 1030, 1544
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
 player8
-	index: 1
-	bounds: 774, 1222, 64, 64
+  rotate: false
+  xy: 774, 1222
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player8
-	index: 3
-	bounds: 774, 1090, 64, 64
+  rotate: false
+  xy: 774, 1090
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
 player9
-	index: 4
-	bounds: 1612, 1958, 64, 64
+  rotate: false
+  xy: 1612, 1958
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
 player9
-	index: 1
-	bounds: 326, 350, 64, 64
+  rotate: false
+  xy: 326, 350
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
 player9
-	index: 3
-	bounds: 1318, 1700, 64, 64
+  rotate: false
+  xy: 1318, 1700
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
 player9
-	index: 2
-	bounds: 1678, 1760, 64, 64
+  rotate: false
+  xy: 1678, 1760
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
 warning
-	bounds: 1030, 1676, 88, 88
+  rotate: false
+  xy: 1030, 1676
+  size: 88, 88
+  orig: 88, 88
+  offset: 0, 0
+  index: -1
 warning256
-	bounds: 516, 736, 256, 256
+  rotate: false
+  xy: 516, 736
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
