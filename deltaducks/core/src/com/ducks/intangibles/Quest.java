@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.ducks.entities.Chest;
 import com.ducks.entities.Entity;
 import com.ducks.managers.EntityManager;
-import com.ducks.managers.ListOfPirates;
 import com.ducks.ui.Hud;
 import com.ducks.ui.Indicator;
 import com.ducks.ui.Subtitle;
@@ -26,7 +25,7 @@ public class Quest {
             EntityManager.registerEntity(objective);
             description = "Find the chest at ";
         } else if (Objects.equals(type, "pirate")) {
-            objective = ListOfPirates.getRandomPirate();
+            objective = EntityManager.pirates.random();
             description = "Kill pirate at ";
         }
         indicator = new Indicator(objective, "warning256");

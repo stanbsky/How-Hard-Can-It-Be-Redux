@@ -31,7 +31,6 @@ public class College extends Entity implements IShooter {
     public String name;
 
     public int health;
-    public boolean destroyed;
     private Texture texture;
     private HealthBar hpBar;
     private Shooter shooter;
@@ -113,11 +112,15 @@ public class College extends Entity implements IShooter {
         return health > 0;
     }
 
+    @Override
+    public boolean cleanup() {
+        return false;
+    }
+
     /**
      * draw the sprite of college and health bar on the game screen
      */
     public void draw() {
-        System.out.println("DRAWN");
         this.texture.render();
         this.hpBar.render();
     }
@@ -153,7 +156,6 @@ public class College extends Entity implements IShooter {
      * Gain gold and EXP if colleges get destroyed
      */
     public void dispose() {
-        destroyed = true;
         Hud.addGold(1000);
         Hud.addScore(10000);
     }

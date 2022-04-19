@@ -68,5 +68,7 @@ public class Entity implements IDrawable {
         return isAlive;
     }
 
-    public boolean cleanup() { return false; }
+    public boolean cleanup() { return !isAlive(); }
+
+    public void dispose() {}
 }

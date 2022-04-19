@@ -58,7 +58,6 @@ public class MainGameScreen implements Screen {
     private Box2DDebugRenderer b2dr;
 
     public static Player player;
-    private ListOfPirates bots;
     private Minimap radar;
     private Crosshair crosshair;
     private Tutorial tutorial;
@@ -138,7 +137,6 @@ public class MainGameScreen implements Screen {
         crosshair = new Crosshair();
         bullets = new ListOfBullets();
         BulletManager.Initialize();
-        bots = new ListOfPirates();
         tutorial = new Tutorial();
         questManager = new QuestManager(subtitle);
     }
@@ -187,7 +185,6 @@ public class MainGameScreen implements Screen {
         world.step(deltaTime, 6, 2);
 
         player.update(deltaTime);
-        bots.update(deltaTime);
         hud.update(deltaTime);
         radar.update(player);
         tutorial.update(deltaTime);
@@ -244,7 +241,6 @@ public class MainGameScreen implements Screen {
 
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
-        bots.draw();
         radar.draw();
         tutorial.draw();
         bullets.draw();

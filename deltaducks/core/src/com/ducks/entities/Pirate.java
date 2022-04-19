@@ -23,6 +23,11 @@ public class Pirate extends Ship {
 
     private boolean playerInRange = false;
 
+    public Pirate(String college, Vector2 spawn) {
+        this(college, spawn.x, spawn.y);
+    }
+
+    @Deprecated
     public Pirate(String college, float spawn_x, float spawn_y) {
         super();
         mask = MASK_ALL - ENEMY_BULLET;
