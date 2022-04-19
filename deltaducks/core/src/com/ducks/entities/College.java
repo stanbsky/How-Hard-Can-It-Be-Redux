@@ -30,7 +30,7 @@ public class College extends Entity implements IShooter {
 
     public String name;
 
-    public float health;
+    public int health;
     public boolean destroyed;
     private Texture texture;
     private HealthBar hpBar;
@@ -39,18 +39,23 @@ public class College extends Entity implements IShooter {
 
     private boolean playerInRange = false;
 
+    public College(Vector2 spawn, String collegeName) {
+        this(spawn.x, spawn.y, collegeName);
+    }
+
     /**
      * Constructor
      * @param spawn_x X coordinate of the college
      * @param spawn_y Y coordinate of the college
      * @param collegeName Name of the College
      */
+    @Deprecated
     public College(float spawn_x, float spawn_y, String collegeName) {
         name = collegeName;
         shooter = new Shooter(1f);
         radius = 100f;
         scale = 1.2f;
-        health = 1f;
+        health = 10;
         hpBar = new HealthBar(spawn_x - radius, spawn_y + radius,
                 radius*2, 10f, true, health, false);
 
@@ -73,7 +78,7 @@ public class College extends Entity implements IShooter {
         shooter.update(deltaTime);
         stateTime += deltaTime;
         hpBar.update(health);
-        if(destroyed) {
+        if(!isAlive()) {
             this.texture = new Texture("destroyed", this.position, scl(radius*scale));
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
         } else {
@@ -94,7 +99,7 @@ public class College extends Entity implements IShooter {
     @Override
     protected void handleContact(Fixture contactor) {
         if (EntityData.equals(contactor, PLAYER_BULLET))
-            health -= 0.2f;
+            health -= 2;
     }
 
     @Override
@@ -103,10 +108,16 @@ public class College extends Entity implements IShooter {
             playerInRange = !playerInRange;
     }
 
+    @Override
+    public boolean isAlive() {
+        return health > 0;
+    }
+
     /**
      * draw the sprite of college and health bar on the game screen
      */
     public void draw() {
+        System.out.println("DRAWN");
         this.texture.render();
         this.hpBar.render();
     }

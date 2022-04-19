@@ -4,11 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.ducks.DeltaDucks;
-import com.ducks.managers.ListOfColleges;
+import com.ducks.managers.EntityManager;
 import com.ducks.entities.Ship;
 
 import static com.ducks.DeltaDucks.batch;
@@ -40,9 +39,8 @@ public class Minimap implements Disposable {
     /**
      * Update the Minimap with corresponding to the location of Box2d colleges and Box2d player on the Box2d world
      * @param player Box2d player body
-     * @param colleges Box2d colleges body
      */
-    public void update(Ship player, ListOfColleges colleges) {
+    public void update(Ship player) {
         int width = Math.round(map_width * ratio * DeltaDucks.PIXEL_PER_METER * .3f);
         int height = Math.round(map_height * ratio * DeltaDucks.PIXEL_PER_METER * .3f);
 
@@ -67,8 +65,8 @@ public class Minimap implements Disposable {
         pixmap.fillCircle(player_x, player_y, player_radius);
 
         int counter=0;
-        for(Vector2 coordinates : colleges.getCoordinates()) {
-            if(colleges.collegeBodies.get(counter++).health>0f) {
+        for(Vector2 coordinates : EntityManager.getCollegeCoordinates()) {
+            if (EntityManager.colleges.get(counter++).isAlive()) {
                 pixmap.setColor(new Color(1f, 0.1f, 0.1f, .3f));
                 int coord_x = Math.round(coordinates.x * ratio *  DeltaDucks.PIXEL_PER_METER);
                 int coord_y = height - Math.round(coordinates.y * ratio *  DeltaDucks.PIXEL_PER_METER);

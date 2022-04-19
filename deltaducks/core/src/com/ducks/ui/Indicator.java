@@ -19,6 +19,7 @@ public class Indicator implements IDrawable {
     private Vector2 position;
     protected Entity target;
     private static Vector2 direction;
+    private boolean cleanup = false;
 
     private final float crosshairRadius = 1.6f;
     private int midX = Gdx.graphics.getWidth()/2;
@@ -38,6 +39,12 @@ public class Indicator implements IDrawable {
     public void draw() {
         this.texture.render();
     }
+
+    public void dispose() {
+        cleanup = true;
+    }
+
+    public boolean cleanup() { return cleanup; }
 
     /**
      * Transforms player's mouse location into the coordinates where the crosshair must be drawn

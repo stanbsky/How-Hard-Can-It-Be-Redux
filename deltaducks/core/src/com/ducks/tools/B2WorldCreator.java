@@ -20,11 +20,11 @@ public class B2WorldCreator {
     public B2WorldCreator(World world) {
 
         // Ground
-        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get("ground").getObjects().getByType(RectangleMapObject.class)) {
             defineLand(world, object);
         }
         // Boundaries
-        for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get("boundaries").getObjects().getByType(RectangleMapObject.class)) {
             defineLand(world, object);
         }
 

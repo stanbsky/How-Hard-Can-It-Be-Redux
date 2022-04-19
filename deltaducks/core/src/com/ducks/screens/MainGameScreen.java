@@ -59,7 +59,6 @@ public class MainGameScreen implements Screen {
 
     public static Player player;
     private ListOfPirates bots;
-    private ListOfColleges colleges;
     private Minimap radar;
     private Crosshair crosshair;
     private Tutorial tutorial;
@@ -122,7 +121,7 @@ public class MainGameScreen implements Screen {
         world = new World(new Vector2(0, 0), true);
         PhysicsManager.Initialize(world);
 
-        RenderingManager.Initialize();
+        EntityManager.Initialize();
         Debug.Initialize();
 
         player = new Player();
@@ -139,7 +138,6 @@ public class MainGameScreen implements Screen {
         crosshair = new Crosshair();
         bullets = new ListOfBullets();
         BulletManager.Initialize();
-        colleges = new ListOfColleges();
         bots = new ListOfPirates();
         tutorial = new Tutorial();
         questManager = new QuestManager(subtitle);
@@ -167,7 +165,7 @@ public class MainGameScreen implements Screen {
         if(hud.getHealth()<=0f) {
             game.setScreen(new FinalStorylineScreen(this.game, "Lost"));
         }
-        if(colleges.getNumbersOfColleges()<=0) {
+        if(EntityManager.getNumbersOfColleges()<=0) {
             game.setScreen(new FinalStorylineScreen(this.game, "Won"));
         }
     }
@@ -190,15 +188,14 @@ public class MainGameScreen implements Screen {
 
         player.update(deltaTime);
         bots.update(deltaTime);
-        colleges.update(deltaTime);
         hud.update(deltaTime);
-        radar.update(player, colleges);
+        radar.update(player);
         tutorial.update(deltaTime);
         subtitle.update(deltaTime);
         crosshair.update(deltaTime);
         bullets.update(deltaTime);
         BulletManager.update(deltaTime);
-        RenderingManager.update(deltaTime);
+        EntityManager.update(deltaTime);
         questManager.update(deltaTime);
         Debug.update();
 
@@ -248,14 +245,13 @@ public class MainGameScreen implements Screen {
         batch.setProjectionMatrix(gameCam.combined);
         batch.begin();
         bots.draw();
-        colleges.draw();
         radar.draw();
         tutorial.draw();
         bullets.draw();
         BulletManager.draw();
         player.draw();
         crosshair.draw();
-        RenderingManager.render();
+        EntityManager.render();
         batch.end();
 
         // Set our batch to now draw what the Hud camera sees.
