@@ -25,15 +25,14 @@ public class PlayerBullet extends Bullet {
         super.update(deltaTime);
     }
 
+    /**
+     * Constructor
+     */
     public PlayerBullet() {
         this(player.getPosition(), Crosshair.getCrosshairDirection(), player.getVelocity());
     }
 
-    /**
-     * Constructor
-     */
-    @Deprecated
-    public PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
+    private PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
         texture = new Texture("bullet_player", position, radius);
         mask = MASK_ALL - PLAYER - PLAYER_BULLET;
         category = PLAYER_BULLET;
