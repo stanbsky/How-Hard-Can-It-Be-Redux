@@ -13,18 +13,19 @@ public class EnemyBullet extends Bullet {
      */
     public EnemyBullet(Vector2 position, Vector2 direction) {
 //        System.out.println(position);
-        this.texture = new Texture("bullet_college", position, radius);
-        this.category = ENEMY_BULLET;
-        this.mask = MASK_ALL - ENEMY;
+        texture = new Texture("bullet_college", position, radius);
+        category = ENEMY_BULLET;
+        mask = MASK_ALL - ENEMY;
         data = new EntityData(category);
         defineBullet(position);
         setData(data);
         final float BULLET_SPEED = 130f;
-        this.rigidBody.applyForce(direction, BULLET_SPEED);
+        rigidBody.applyForce(direction, BULLET_SPEED);
     }
 
     @Override
     public void dispose() {
+        super.dispose();
         Hud.addScore(50);
     }
 }
