@@ -1,12 +1,13 @@
 package com.ducks.ui;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.Viewport;
+import com.ducks.DeltaDucks;
 import com.ducks.ui.Hud;
 
 import static com.ducks.screens.MainGameScreen.*;
@@ -15,7 +16,7 @@ public class TablePauseMenu extends Stage {
 
     private static final int BUTTON_WIDTH = 400;
 
-    public TablePauseMenu (Viewport viewport) {
+    public TablePauseMenu () {
 
         Table table = new Table();
         addActor(table);

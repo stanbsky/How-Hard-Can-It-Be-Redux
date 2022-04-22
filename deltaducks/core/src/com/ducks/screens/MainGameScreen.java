@@ -90,7 +90,7 @@ public class MainGameScreen implements Screen {
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
         hud = new Hud();
-        pauseMenu = new TablePauseMenu(gamePort);
+        pauseMenu = new TablePauseMenu();
         subtitle = new Subtitle();
 
         // Create Map
@@ -241,7 +241,6 @@ public class MainGameScreen implements Screen {
         if (isPaused) {
             pauseMenu.act();
             pauseMenu.draw();
-            Gdx.input.setInputProcessor(pauseMenu);
         }
 
         batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
