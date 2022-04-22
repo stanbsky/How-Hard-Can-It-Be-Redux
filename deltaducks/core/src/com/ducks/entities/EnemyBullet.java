@@ -3,6 +3,7 @@ package com.ducks.entities;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.components.Texture;
 import com.ducks.intangibles.EntityData;
+import com.ducks.ui.Hud;
 
 import static com.ducks.tools.FixtureFilter.*;
 public class EnemyBullet extends Bullet {
@@ -20,5 +21,10 @@ public class EnemyBullet extends Bullet {
         setData(data);
         final float BULLET_SPEED = 130f;
         this.rigidBody.applyForce(direction, BULLET_SPEED);
+    }
+
+    @Override
+    public void dispose() {
+        Hud.addScore(50);
     }
 }
