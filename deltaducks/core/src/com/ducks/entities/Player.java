@@ -27,6 +27,7 @@ public class Player extends Ship {
 
     public Player() {
         super();
+        shootWaitTime = 0.3f;
         shooter = new Shooter(shootWaitTime);
         category = PLAYER;
         mask = MASK_ALL - PLAYER_BULLET;

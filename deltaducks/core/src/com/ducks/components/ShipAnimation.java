@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.screens.MainGameScreen;
 
+import static com.ducks.screens.MainGameScreen.atlas;
+
 
 public class ShipAnimation extends Texture {
 
@@ -20,11 +22,11 @@ public class ShipAnimation extends Texture {
 
             // Idle
             animation[0][i] = new Animation<>(frameDuration,
-                    MainGameScreen.getAtlas().findRegions(name + "0" + (i + 1)),
+                    atlas.findRegions(name + "0" + (i + 1)),
                     Animation.PlayMode.LOOP);
             // Moving
             animation[1][i] = new Animation<>(frameDuration,
-                    MainGameScreen.getAtlas().findRegions(name + (i + 1)),
+                    atlas.findRegions(name + (i + 1)),
                     Animation.PlayMode.LOOP);
         }
         width = height = radius * 2;

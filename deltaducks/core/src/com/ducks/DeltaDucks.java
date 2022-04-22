@@ -22,7 +22,7 @@ public class DeltaDucks extends Game {
 	public static final float TILEED_MAP_SCALE = 0.7f;
 
 	// Batch to draw Game
-	public SpriteBatch batch;
+	public static SpriteBatch batch;
 
 	public static float scl(float dim) {
 		return dim / PIXEL_PER_METER;

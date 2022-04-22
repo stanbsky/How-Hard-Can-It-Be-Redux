@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
 import static com.ducks.tools.FixtureFilter.*;
+import static com.ducks.screens.MainGameScreen.map;
+
 /***
  * Extract useful information from the tilemap and render Box2d body on the Box2d world
  */
@@ -14,16 +16,15 @@ public class B2WorldCreator {
     /**
      * Constructor which maps the information onto Box2d world
      * @param world Box2D world
-     * @param map tiled map of the game
      */
-    public B2WorldCreator(World world, TiledMap map) {
+    public B2WorldCreator(World world) {
 
         // Ground
-        for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get("ground").getObjects().getByType(RectangleMapObject.class)) {
             defineLand(world, object);
         }
         // Boundaries
-        for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class)) {
+        for (MapObject object : map.getLayers().get("boundaries").getObjects().getByType(RectangleMapObject.class)) {
             defineLand(world, object);
         }
 

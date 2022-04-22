@@ -1,6 +1,5 @@
 package com.ducks.entities;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -8,8 +7,9 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
 import com.ducks.intangibles.EntityData;
+import com.ducks.tools.IDrawable;
 
-public class Entity implements com.ducks.tools.IDrawable {
+public class Entity implements IDrawable {
     protected float width;
     protected float height;
     protected float x;
@@ -20,7 +20,6 @@ public class Entity implements com.ducks.tools.IDrawable {
     protected Texture texture;
     protected float radius;
     protected float scale = 1f;
-    protected TextureAtlas atlas;
     protected EntityData data;
     protected boolean isAlive = true;
     protected boolean isHit = false;
@@ -39,8 +38,8 @@ public class Entity implements com.ducks.tools.IDrawable {
             handleSensorContact(rigidBody.getSensorContact());
     }
 
-    public void draw(SpriteBatch batch) {
-        texture.render(batch);
+    public void draw() {
+        texture.render();
     }
 
     public Vector2 getPosition() {
@@ -68,4 +67,8 @@ public class Entity implements com.ducks.tools.IDrawable {
     public boolean isAlive() {
         return isAlive;
     }
+
+    public boolean cleanup() { return !isAlive(); }
+
+    public void dispose() {}
 }

@@ -1,20 +1,17 @@
 package com.ducks.entities;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
 import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
+import com.ducks.managers.EntityManager;
 import com.ducks.tools.BodyType;
 import com.ducks.components.HealthBar;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
-import com.ducks.managers.BulletManager;
 import com.ducks.tools.IShooter;
 import com.ducks.ui.Hud;
-import com.ducks.screens.MainGameScreen;
 
 import static com.ducks.DeltaDucks.scl;
 import static com.ducks.tools.FixtureFilter.*;
@@ -30,8 +27,7 @@ public class College extends Entity implements IShooter {
 
     public String name;
 
-    public float health;
-    public boolean destroyed;
+    public int health;
     private Texture texture;
     private HealthBar hpBar;
     private Shooter shooter;
@@ -39,27 +35,28 @@ public class College extends Entity implements IShooter {
 
     private boolean playerInRange = false;
 
-    public College(float spawn_x, float spawn_y, String collegeName) {
-        this(spawn_x, spawn_y, collegeName, MainGameScreen.getAtlas());
+    public College(Vector2 spawn, String collegeName) {
+        this(spawn.x, spawn.y, collegeName);
     }
+
     /**
      * Constructor
      * @param spawn_x X coordinate of the college
      * @param spawn_y Y coordinate of the college
      * @param collegeName Name of the College
      */
-    public College(float spawn_x, float spawn_y, String collegeName, TextureAtlas atlas) {
-        this.atlas = atlas;
+    @Deprecated
+    public College(float spawn_x, float spawn_y, String collegeName) {
         name = collegeName;
         shooter = new Shooter(1f);
         radius = 100f;
         scale = 1.2f;
-        health = 1f;
+        health = 10;
         hpBar = new HealthBar(spawn_x - radius, spawn_y + radius,
-                radius*2, 10f, true, health, false, atlas);
+                radius*2, 10f, true, health, false);
 
         this.position = new Vector2(spawn_x, spawn_y);
-        this.texture = new Texture(collegeName, this.position, scl(radius*scale), atlas);
+        this.texture = new Texture(collegeName, this.position, scl(radius*scale));
         category = ENEMY;
         mask = MASK_ALL - ENEMY_BULLET;
         data = new EntityData(category);
@@ -77,13 +74,13 @@ public class College extends Entity implements IShooter {
         shooter.update(deltaTime);
         stateTime += deltaTime;
         hpBar.update(health);
-        if(destroyed) {
+        if(!isAlive()) {
             this.texture = new Texture("destroyed", this.position, scl(radius*scale));
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
         } else {
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
             if (playerInRange)
-                BulletManager.spawnBullet((IShooter) this);
+                EntityManager.spawnBullet(this);
         }
     }
 
@@ -98,7 +95,7 @@ public class College extends Entity implements IShooter {
     @Override
     protected void handleContact(Fixture contactor) {
         if (EntityData.equals(contactor, PLAYER_BULLET))
-            health -= 0.2f;
+            health -= 2;
     }
 
     @Override
@@ -107,13 +104,22 @@ public class College extends Entity implements IShooter {
             playerInRange = !playerInRange;
     }
 
+    @Override
+    public boolean isAlive() {
+        return health > 0;
+    }
+
+    @Override
+    public boolean cleanup() {
+        return false;
+    }
+
     /**
      * draw the sprite of college and health bar on the game screen
-     * @param batch to draw on the screen
      */
-    public void draw(SpriteBatch batch) {
-        this.texture.render(batch);
-        this.hpBar.render(batch);
+    public void draw() {
+        this.texture.render();
+        this.hpBar.render();
     }
 
     /**
@@ -147,7 +153,6 @@ public class College extends Entity implements IShooter {
      * Gain gold and EXP if colleges get destroyed
      */
     public void dispose() {
-        destroyed = true;
         Hud.addGold(1000);
         Hud.addScore(10000);
     }

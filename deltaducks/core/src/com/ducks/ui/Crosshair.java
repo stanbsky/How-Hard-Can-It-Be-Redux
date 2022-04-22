@@ -7,13 +7,13 @@ import com.ducks.components.Texture;
 import com.ducks.entities.Ship;
 
 import static com.ducks.DeltaDucks.scl;
-import static com.ducks.screens.MainGameScreen.getPlayerPosition;
+import static com.ducks.screens.MainGameScreen.player;
+
 /**
  * Crosshair Class for Box2D Body and Sprite
  */
 public class Crosshair {
 
-    private Ship player;
     private Texture texture;
     private static Vector2 direction;
     private Vector2 position;
@@ -25,10 +25,8 @@ public class Crosshair {
 
     /**
      * Constructor
-     * @param player Box2D object of player
      */
-    public Crosshair(Ship player) {
-        this.player = player;
+    public Crosshair() {
 
         position = new Vector2(0, 0);
         this.texture = new Texture("crosshair256", position, scl(25.6f));
@@ -43,8 +41,8 @@ public class Crosshair {
         this.texture.update(deltaTime, position);
     }
 
-    public void draw(SpriteBatch batch) {
-        this.texture.render(batch);
+    public void draw() {
+        this.texture.render();
     }
 
     /**
@@ -61,8 +59,8 @@ public class Crosshair {
         // Scale coordinates to fit the radius around the ship
         direction = new Vector2(x, y).nor().scl(-1f * crosshairRadius);
         // Offset the radius by the size of the ship body
-        position.x = getPlayerPosition().x + direction.x;
-        position.y = getPlayerPosition().y + direction.y;
+        position.x = player.getPosition().x + direction.x;
+        position.y = player.getPosition().y + direction.y;
         // Lock mouse to crosshair
         moveMouseToCrosshair();
     }

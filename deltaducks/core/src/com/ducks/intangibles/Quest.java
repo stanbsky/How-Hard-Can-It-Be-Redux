@@ -1,11 +1,9 @@
 package com.ducks.intangibles;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.entities.Chest;
 import com.ducks.entities.Entity;
-import com.ducks.managers.ListOfPirates;
-import com.ducks.managers.RenderingManager;
+import com.ducks.managers.EntityManager;
 import com.ducks.ui.Hud;
 import com.ducks.ui.Indicator;
 import com.ducks.ui.Subtitle;
@@ -20,18 +18,18 @@ public class Quest {
     private String description;
     private Indicator indicator;
 
-    public Quest (String type, Vector2 location, Subtitle subtitle, TextureAtlas atlas) {
+    public Quest (String type, Vector2 location, Subtitle subtitle) {
         this.subtitle = subtitle;
         if (Objects.equals(type, "chest")) {
-            objective = new Chest(location, atlas);
-            RenderingManager.registerEntity(objective);
+            objective = new Chest(location);
+            EntityManager.registerEntity(objective);
             description = "Find the chest at ";
         } else if (Objects.equals(type, "pirate")) {
-            objective = ListOfPirates.getRandomPirate();
+            objective = EntityManager.pirates.random();
             description = "Kill pirate at ";
         }
-        indicator = new Indicator(objective, "warning256", atlas);
-        RenderingManager.registerEntity(indicator);
+        indicator = new Indicator(objective, "warning256");
+        EntityManager.registerEntity(indicator);
     }
 
     public boolean isCompleted() {
@@ -41,7 +39,6 @@ public class Quest {
     public void update(float deltaTime) {
         subtitle.setSubtitle(description + objective.getPosition().scl(100f));
         objective.update(deltaTime);
-        System.out.println(objective.isAlive());
         if (!objective.isAlive())
             isCompleted = true;
     }

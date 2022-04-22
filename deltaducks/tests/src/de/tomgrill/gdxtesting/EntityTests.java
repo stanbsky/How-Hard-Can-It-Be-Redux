@@ -1,28 +1,13 @@
 package de.tomgrill.gdxtesting;
 
-import com.badlogic.gdx.backends.headless.HeadlessApplication;
-import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.World;
-import com.ducks.managers.BulletManager;
-import com.ducks.managers.PhysicsManager;
-import com.ducks.entities.Bullet;
-import com.ducks.entities.College;
-import com.ducks.entities.PlayerBullet;
 import com.ducks.screens.MainGameScreen;
-import jdk.tools.jmod.Main;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class EntityTests {

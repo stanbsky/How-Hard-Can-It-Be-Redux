@@ -14,6 +14,7 @@ import com.ducks.components.Texture;
 import com.ducks.tools.Debug;
 
 import static com.ducks.DeltaDucks.scl;
+import static com.ducks.screens.MainGameScreen.atlas;
 import static com.ducks.tools.FixtureFilter.*;
 
 public class Chest extends Entity {
@@ -21,13 +22,12 @@ public class Chest extends Entity {
     private int timeToCollect = 180;
     private boolean playerInRange = false;
 
-    public Chest(Vector2 position, TextureAtlas atlas) {
-        this.atlas = atlas;
+    public Chest(Vector2 position) {
         radius = 50f;
         scale = 2f;
         category = SCENERY;
         mask = MASK_ALL - PLAYER_BULLET - ENEMY_BULLET;
-        texture = new Texture("warning256", position, scl(radius*scale), atlas);
+        texture = new Texture("warning256", position, scl(radius*scale));
         data = new EntityData(category);
         defineChest(position.scl(0.01f));
     }

@@ -1,12 +1,12 @@
 package com.ducks.components;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.ducks.DeltaDucks;
 import com.ducks.screens.MainGameScreen;
+
+import static com.ducks.DeltaDucks.batch;
+import static com.ducks.screens.MainGameScreen.atlas;
 
 public class Texture {
 
@@ -16,15 +16,9 @@ public class Texture {
     protected float y;
     protected float width;
     protected float height;
-    private TextureAtlas atlas;
 
     public Texture(String name, Vector2 pos, float radius) {
-        this(name, pos, radius, MainGameScreen.getAtlas());
-    }
-
-    public Texture(String name, Vector2 pos, float radius, TextureAtlas atlas) {
-        this.atlas = atlas;
-        frame = this.atlas.findRegion(name);
+        frame = atlas.findRegion(name);
 
         width = height = radius * 2;
         x = pos.x - this.width/2;
@@ -44,7 +38,7 @@ public class Texture {
         y = pos.y - height/2;
     }
 
-    public void render(SpriteBatch batch) {
+    public void render() {
         batch.draw(this.frame, this.x, this.y, width, height);
     }
 
