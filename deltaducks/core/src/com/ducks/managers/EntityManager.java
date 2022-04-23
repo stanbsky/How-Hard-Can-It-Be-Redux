@@ -29,7 +29,7 @@ public final class EntityManager {
     // TODO: these belong in some kind of constants class - maybe play difficulty related?
     private static final Array<String> collegeNames =
             new Array<>(new String[]{"goodricke", "constantine", "halifax"});
-    private static final float pirateSpawnChance = 0.6f;
+    private static final float pirateSpawnChance = 0.3f;
 
     public static void Initialize() {
         spawns = getListOfSpawns("pirates");

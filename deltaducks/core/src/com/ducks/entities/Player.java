@@ -21,7 +21,7 @@ public class Player extends Ship {
 //    private final int SHIP_SPAWN_Y = 1340;
     //TODO: reset to one of the above (maybe) for production
     private final int SHIP_SPAWN_X = 1358;
-    private final int SHIP_SPAWN_Y = 1063;
+    private final int SHIP_SPAWN_Y = 1563;
 
     private final float SHIP_FRAME_DURATION = 0.5f;
 
@@ -35,8 +35,8 @@ public class Player extends Ship {
         x = SHIP_SPAWN_X - width/2;
         y = SHIP_SPAWN_Y - height/2;
         //TODO: reset to 1 & 4 for production
-        acceleration = 10f;
-        max_velocity = 40f;
+        acceleration = 4f;
+        max_velocity = 16f;
 
         // Set up ShipAnimation
         direction = 6;
