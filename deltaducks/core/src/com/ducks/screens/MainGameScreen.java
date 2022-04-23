@@ -96,7 +96,7 @@ public class MainGameScreen implements Screen {
         // Create Map
         mapLoader = new TmxMapLoader();
 //        map = mapLoader.load("test_map.tmx");
-        map = mapLoader.load("new map.tmx");
+        map = mapLoader.load("abi_map.tmx");
         prop = map.getProperties();
         renderer = new OrthogonalTiledMapRenderer(map, DeltaDucks.TILEED_MAP_SCALE / DeltaDucks.PIXEL_PER_METER);
 

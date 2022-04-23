@@ -20,8 +20,8 @@ public class Player extends Ship {
 //    private final int SHIP_SPAWN_X = 1370;
 //    private final int SHIP_SPAWN_Y = 1340;
     //TODO: reset to one of the above (maybe) for production
-    private final int SHIP_SPAWN_X = 3358;
-    private final int SHIP_SPAWN_Y = 5563;
+    private final int SHIP_SPAWN_X = 1358;
+    private final int SHIP_SPAWN_Y = 1063;
 
     private final float SHIP_FRAME_DURATION = 0.5f;
 

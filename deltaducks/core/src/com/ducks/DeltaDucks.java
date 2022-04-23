@@ -19,7 +19,7 @@ public class DeltaDucks extends Game {
 
 	// Ratio of real world : game
 	public static final float PIXEL_PER_METER = 100;
-	public static final float TILEED_MAP_SCALE = 0.7f;
+	public static final float TILEED_MAP_SCALE = 1f;
 
 	// Batch to draw Game
 	public static SpriteBatch batch;
