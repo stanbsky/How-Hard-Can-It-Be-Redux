@@ -108,7 +108,6 @@ public final class EntityManager {
     }
 
     private static void spawnColleges() {
-        int index;
         String name;
         College college;
         colleges = new Array<>(3);
