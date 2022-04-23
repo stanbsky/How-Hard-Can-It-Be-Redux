@@ -44,6 +44,7 @@ public class Quest {
     }
 
     public void dispose() {
+        indicator.dispose();
         subtitle.setSubtitle("Well done!");
         Hud.addGold(500);
         Hud.addScore(1000);

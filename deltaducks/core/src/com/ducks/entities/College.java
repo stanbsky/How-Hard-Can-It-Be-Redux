@@ -12,6 +12,7 @@ import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
 import com.ducks.tools.IShooter;
 import com.ducks.ui.Hud;
+import com.ducks.ui.Indicator;
 
 import static com.ducks.DeltaDucks.scl;
 import static com.ducks.tools.FixtureFilter.*;
@@ -32,9 +33,15 @@ public class College extends Entity implements IShooter {
     private HealthBar hpBar;
     private Shooter shooter;
     private Vector2 position;
+    private Indicator indicator;
 
     private boolean playerInRange = false;
 
+    /**
+     * Constructor
+     * @param spawn coordinates of the college
+     * @param collegeName Name of the College
+     */
     public College(Vector2 spawn, String collegeName) {
         this(spawn.x, spawn.y, collegeName);
     }
@@ -45,8 +52,7 @@ public class College extends Entity implements IShooter {
      * @param spawn_y Y coordinate of the college
      * @param collegeName Name of the College
      */
-    @Deprecated
-    public College(float spawn_x, float spawn_y, String collegeName) {
+    private College(float spawn_x, float spawn_y, String collegeName) {
         name = collegeName;
         shooter = new Shooter(1f);
         radius = 100f;
@@ -62,6 +68,9 @@ public class College extends Entity implements IShooter {
         data = new EntityData(category);
 
         defineCollege(spawn_x, spawn_y, radius);
+
+        indicator = new Indicator(this, collegeName);
+        EntityManager.registerEntity(indicator);
     }
 
     /**
@@ -75,6 +84,11 @@ public class College extends Entity implements IShooter {
         stateTime += deltaTime;
         hpBar.update(health);
         if(!isAlive()) {
+            System.out.println("oops");
+            indicator.dispose();
+            Hud.addGold(1000);
+            Hud.addScore(10000);
+
             this.texture = new Texture("destroyed", this.position, scl(radius*scale));
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
         } else {
@@ -153,8 +167,6 @@ public class College extends Entity implements IShooter {
      * Gain gold and EXP if colleges get destroyed
      */
     public void dispose() {
-        Hud.addGold(1000);
-        Hud.addScore(10000);
     }
 
 

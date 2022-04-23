@@ -57,24 +57,20 @@ public class Chest extends Entity {
     public void update(float deltaTime) {
         super.update(deltaTime);
 //        Debug.debug(playerInRange);
-//        Debug.debug(timeToCollect <= 0);
         texture.update(deltaTime, rigidBody.getBody().getPosition());
         if (playerInRange) {
             timeToCollect -= 1;
-            System.out.println(timeToCollect);
         }
     }
 
     @Override
     protected void handleSensorContact(Fixture contactor) {
-        System.out.println("helpme");
         if (EntityData.equals(contactor, PLAYER))
             playerInRange = !playerInRange;
     }
 
     @Override
     protected void handleContact(Fixture contactor) {
-        System.out.println("helpm2e");
         if (EntityData.equals(contactor, PLAYER))
             playerInRange = !playerInRange;
     }
