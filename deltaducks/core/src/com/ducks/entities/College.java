@@ -84,7 +84,6 @@ public class College extends Entity implements IShooter {
         stateTime += deltaTime;
         hpBar.update(health);
         if(!isAlive()) {
-            System.out.println("oops");
             indicator.dispose();
             Hud.addGold(1000);
             Hud.addScore(10000);
