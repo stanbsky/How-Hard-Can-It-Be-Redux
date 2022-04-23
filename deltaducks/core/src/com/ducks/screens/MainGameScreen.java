@@ -256,6 +256,7 @@ public class MainGameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
+        pauseMenu.getViewport().update(width, height);
     }
 
     @Override
