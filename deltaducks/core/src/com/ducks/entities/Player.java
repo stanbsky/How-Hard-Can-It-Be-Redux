@@ -58,8 +58,9 @@ public class Player extends Ship {
 
     @Override
     protected void handleContact(Fixture contactor) {
-        if (EntityData.equals(contactor, ENEMY_BULLET))
+        if (EntityData.equals(contactor, ENEMY_BULLET)) {
             sufferHit();
+        }
     }
 
     private void sufferHit() {
