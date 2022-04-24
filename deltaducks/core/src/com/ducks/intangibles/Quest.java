@@ -3,6 +3,7 @@ package com.ducks.intangibles;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.entities.Chest;
 import com.ducks.entities.Entity;
+import com.ducks.entities.Pirate;
 import com.ducks.managers.EntityManager;
 import com.ducks.ui.Hud;
 import com.ducks.ui.Indicator;
@@ -27,6 +28,7 @@ public class Quest {
         } else if (Objects.equals(type, "pirate")) {
             type = "warning"; // to spawn an Indicator with warning sign
             objective = EntityManager.pirates.random();
+            ((Pirate) objective).setAngry(true);
             description = "Defeat the angry pirate!";
         }
         indicator = new Indicator(objective, type, 15f);
