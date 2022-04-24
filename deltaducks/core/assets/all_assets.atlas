@@ -27,14 +27,14 @@ bullet_college256
   index: -1
 bullet_hotshot
   rotate: false
-  xy: 550, 504
+  xy: 714, 668
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 bullet_player
   rotate: false
-  xy: 2008, 1990
+  xy: 224, 190
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -69,21 +69,21 @@ chest
   index: 3
 chest
   rotate: false
-  xy: 714, 668
+  xy: 2008, 1956
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 chest
   rotate: false
-  xy: 2008, 1956
+  xy: 458, 380
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 chest
   rotate: false
-  xy: 2008, 1922
+  xy: 618, 504
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -91,6 +91,13 @@ chest
 coin
   rotate: false
   xy: 714, 702
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+coin2
+  rotate: false
+  xy: 458, 346
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -160,7 +167,7 @@ constantine09
   index: -1
 constantine_icon
   rotate: false
-  xy: 458, 380
+  xy: 584, 504
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -258,7 +265,7 @@ goodricke09
   index: -1
 goodricke_icon
   rotate: false
-  xy: 458, 414
+  xy: 550, 504
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -328,14 +335,14 @@ halifax09
   index: -1
 halifax_icon
   rotate: false
-  xy: 1942, 1792
+  xy: 1030, 1476
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mine
   rotate: false
-  xy: 224, 190
+  xy: 1942, 1792
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -685,21 +692,21 @@ quickfire
   index: -1
 shield
   rotate: false
-  xy: 1030, 1476
+  xy: 458, 414
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 spray
   rotate: false
-  xy: 584, 504
+  xy: 714, 634
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 supersize
   rotate: false
-  xy: 714, 634
+  xy: 2008, 1922
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -707,6 +714,13 @@ supersize
 time
   rotate: false
   xy: 1030, 1510
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+trophy
+  rotate: false
+  xy: 2008, 1990
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
