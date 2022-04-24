@@ -63,7 +63,7 @@ public class Quest {
 
     public void dispose() {
         indicator.dispose();
-        objective.dispose();
+//        objective.dispose(); This stalls the game indefinitely
         subtitle.setSubtitle("Well done!");
         Hud.addGold(500);
         Hud.addScore(1000);
