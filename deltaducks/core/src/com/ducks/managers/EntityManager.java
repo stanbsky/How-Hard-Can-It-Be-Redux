@@ -11,14 +11,11 @@ import com.ducks.entities.*;
 import com.ducks.tools.IDrawable;
 import com.ducks.tools.IShooter;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import static com.ducks.screens.MainGameScreen.map;
 import static com.ducks.screens.MainGameScreen.player;
 
 public final class EntityManager {
-    public static Array<Vector2> spawns;
+    public static Array<Vector2> pirateSpawns;
     public static Array<Vector2> collegeSpawns;
     public static Array<Vector2> chestSpawns;
     public static Array<IDrawable> entities;
@@ -33,7 +30,7 @@ public final class EntityManager {
     private static final float pirateSpawnChance = 0.1f;
 
     public static void Initialize() {
-        spawns = getListOfSpawns("pirates");
+        pirateSpawns = getListOfSpawns("pirates");
         collegeSpawns = getListOfSpawns("colleges");
         collegeSpawns.shuffle();
         chestSpawns = getListOfSpawns("chests");
@@ -90,7 +87,7 @@ public final class EntityManager {
         Pirate pirate;
         pirates = new Array<>();
 
-        for (Vector2 spawn : spawns) {
+        for (Vector2 spawn : pirateSpawns) {
             if (Math.random() > pirateSpawnChance)
                 continue;
             pirate = new Pirate(collegeNames.random(), spawn);

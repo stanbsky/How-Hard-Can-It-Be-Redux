@@ -43,7 +43,10 @@ public class QuestManager {
     }
 
     private void spawnQuest() {
-        currentQuest = new Quest("chest", pickSpawn(EntityManager.chestSpawns), subtitle);
+        if (Math.random() > 0.5f)
+            currentQuest = new Quest("chest", pickSpawn(EntityManager.chestSpawns), subtitle);
+        else
+            currentQuest = new Quest("pirate", null, subtitle);
     }
 
 

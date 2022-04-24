@@ -25,9 +25,9 @@ public class Quest {
             EntityManager.registerEntity(objective);
             description = "Open the chest";
         } else if (Objects.equals(type, "pirate")) {
-            type = "pirate";
+            type = "warning"; // to spawn an Indicator with warning sign
             objective = EntityManager.pirates.random();
-            description = "Kill the marked pirate";
+            description = "Defeat the angry pirate!";
         }
         indicator = new Indicator(objective, type, 15f);
         EntityManager.registerEntity(indicator);
@@ -39,9 +39,13 @@ public class Quest {
 
     public void update(float deltaTime) {
         subtitle.setSubtitle(description);
-        objective.update(deltaTime);
-        if (!objective.isAlive())
+        if (!objective.isAlive()) {
             isCompleted = true;
+            return;
+        }
+        // TODO: if a pirate quest is spawned, the pirate will have
+        // TODO: twice the update rolls. This is a feature?
+        objective.update(deltaTime);
     }
 
     public void dispose() {
