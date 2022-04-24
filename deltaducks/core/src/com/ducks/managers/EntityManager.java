@@ -10,9 +10,7 @@ import com.ducks.components.Shooter;
 import com.ducks.entities.*;
 import com.ducks.tools.IDrawable;
 import com.ducks.tools.IShooter;
-
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 
 import static com.ducks.screens.MainGameScreen.map;
 import static com.ducks.screens.MainGameScreen.player;
@@ -34,6 +32,8 @@ public final class EntityManager {
     public static void Initialize() {
         spawns = getListOfSpawns("pirates");
         collegeSpawns = getListOfSpawns("colleges");
+        collegeSpawns.shuffle();
+
         entities = new Array<>();
 
         spawnColleges();
