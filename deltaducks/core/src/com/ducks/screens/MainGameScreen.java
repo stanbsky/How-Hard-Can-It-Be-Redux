@@ -181,6 +181,7 @@ public class MainGameScreen implements Screen {
         crosshair.update(deltaTime);
         EntityManager.update(deltaTime);
         questManager.update(deltaTime);
+        PowerupManager.update(deltaTime);
         Debug.update();
 
         gameCam.position.x = player.getPosition().x;

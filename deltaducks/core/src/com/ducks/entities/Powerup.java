@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
 import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
+import com.ducks.managers.PowerupManager;
 import com.ducks.tools.BodyType;
 import com.ducks.components.HealthBar;
 import com.ducks.components.RigidBody;
@@ -120,8 +121,8 @@ public class Powerup extends Entity {
      *
      */
     public void dispose() {
-        Hud.addScore(100000);
-        System.out.println(name);
+        Hud.addScore(1000);
+        PowerupManager.newPowerup(name);
         rigidBody.dispose();
     }
 
