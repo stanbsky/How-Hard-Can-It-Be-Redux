@@ -30,7 +30,7 @@ public final class EntityManager {
     private static final Array<String> collegeNames =
             new Array<>(new String[]{"goodricke", "constantine", "halifax"});
     private static final Array<String> powerupNames =
-            new Array<>(new String[]{"quickfire", "shield", "spray", "supersize", "time", "trophy", "bullet_hotshot"});
+            new Array<>(new String[]{"quickfire", "shield", "spray", "supersize", "bullet_hotshot"});
     private static final float pirateSpawnChance = 0.1f;
     private static final float powerupSpawnChance = 0.5f;
 

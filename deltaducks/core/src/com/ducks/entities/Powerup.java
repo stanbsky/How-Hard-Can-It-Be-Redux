@@ -109,8 +109,10 @@ public class Powerup extends Entity {
         FixtureDef fixture = new FixtureDef();
         fixture.shape = shape;
         fixture.filter.categoryBits = category;
-        fixture.filter.maskBits = mask;
+        fixture.filter.maskBits = 0;
         rigidBody.addFixture(fixture);
+        fixture.filter.maskBits = mask;
+        rigidBody.addSensor(fixture, category,"Powerup Sensor");
         rigidBody.setData(data);
     }
 
