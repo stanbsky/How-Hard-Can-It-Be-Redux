@@ -45,16 +45,20 @@ public final class PowerupManager {
                 supersizeTime += 500;
                 break;
             case "bullet_hotshot":
-                hotshots += 5;
+                hotshots += 10;
                 break;
         }
     }
 
     public static boolean shieldAcitve () { return shields > 0; }
 
-    public static boolean multishotAcitve () { return multishotTime > 0; }
+    public static void shieldUsed () { shields -= 1; }
 
     public static boolean hotshotAcitve () { return hotshots > 0; }
+
+    public static void hotshotUsed () { hotshots -= 1; }
+
+    public static boolean multishotAcitve () { return multishotTime > 0; }
 
     public static boolean quickshotAcitve () { return quickshotTime > 0; }
 
