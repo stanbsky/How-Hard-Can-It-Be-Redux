@@ -27,14 +27,14 @@ bullet_college256
   index: -1
 bullet_hotshot
   rotate: false
-  xy: 458, 414
+  xy: 550, 504
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 bullet_player
   rotate: false
-  xy: 516, 504
+  xy: 2008, 1990
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -62,25 +62,39 @@ bullet_redhot
   index: -1
 chest
   rotate: false
-  xy: 1030, 1476
+  xy: 516, 504
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+chest
+  rotate: false
+  xy: 714, 668
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 2
 chest
   rotate: false
-  xy: 550, 504
+  xy: 2008, 1956
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
-  index: -1
+  index: 4
 chest
   rotate: false
-  xy: 584, 504
+  xy: 2008, 1922
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 1
+coin
+  rotate: false
+  xy: 714, 702
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 constantine
   rotate: false
   xy: 2, 1510
@@ -90,7 +104,7 @@ constantine
   index: -1
 constantine01
   rotate: false
-  xy: 1678, 1958
+  xy: 516, 538
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -132,21 +146,21 @@ constantine07
   index: -1
 constantine08
   rotate: false
-  xy: 1876, 1892
+  xy: 1942, 1958
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 constantine09
   rotate: false
-  xy: 392, 416
+  xy: 1546, 1826
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 constantine_icon
   rotate: false
-  xy: 714, 668
+  xy: 458, 380
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -188,7 +202,7 @@ goodricke
   index: -1
 goodricke01
   rotate: false
-  xy: 1252, 1700
+  xy: 326, 284
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -202,7 +216,7 @@ goodricke02
   index: -1
 goodricke03
   rotate: false
-  xy: 1876, 1958
+  xy: 774, 1024
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -216,35 +230,35 @@ goodricke04
   index: -1
 goodricke06
   rotate: false
-  xy: 582, 538
+  xy: 648, 604
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 goodricke07
   rotate: false
-  xy: 326, 416
+  xy: 1546, 1892
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 goodricke08
   rotate: false
-  xy: 774, 826
+  xy: 1942, 1826
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 goodricke09
   rotate: false
-  xy: 326, 284
+  xy: 774, 1222
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 goodricke_icon
   rotate: false
-  xy: 1942, 1792
+  xy: 458, 414
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -293,7 +307,7 @@ halifax06
   index: -1
 halifax07
   rotate: false
-  xy: 774, 1024
+  xy: 1450, 1700
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -314,14 +328,14 @@ halifax09
   index: -1
 halifax_icon
   rotate: false
-  xy: 2008, 1990
+  xy: 1942, 1792
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 mine
   rotate: false
-  xy: 714, 702
+  xy: 224, 190
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -349,7 +363,7 @@ player02
   index: 1
 player02
   rotate: false
-  xy: 1810, 1826
+  xy: 1876, 1958
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -370,7 +384,7 @@ player03
   index: 1
 player04
   rotate: false
-  xy: 1318, 1700
+  xy: 774, 1156
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -391,21 +405,21 @@ player06
   index: 2
 player06
   rotate: false
-  xy: 1942, 1826
+  xy: 774, 826
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 1
 player07
   rotate: false
-  xy: 1612, 1892
+  xy: 392, 416
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 2
 player07
   rotate: false
-  xy: 1942, 1958
+  xy: 1876, 1892
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -433,7 +447,7 @@ player09
   index: 2
 player09
   rotate: false
-  xy: 774, 1156
+  xy: 1318, 1700
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -475,7 +489,7 @@ player2
   index: 3
 player2
   rotate: false
-  xy: 648, 670
+  xy: 1252, 1700
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -496,7 +510,7 @@ player2
   index: 1
 player3
   rotate: false
-  xy: 1546, 1826
+  xy: 1612, 1892
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -552,21 +566,21 @@ player4
   index: 3
 player6
   rotate: false
-  xy: 1546, 1892
+  xy: 326, 416
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 2
 player6
   rotate: false
-  xy: 516, 538
+  xy: 1678, 1958
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: 4
 player6
   rotate: false
-  xy: 648, 604
+  xy: 582, 538
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -601,7 +615,7 @@ player7
   index: 1
 player7
   rotate: false
-  xy: 1450, 1700
+  xy: 1810, 1826
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -622,7 +636,7 @@ player8
   index: 4
 player8
   rotate: false
-  xy: 774, 1222
+  xy: 648, 670
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -671,21 +685,21 @@ quickfire
   index: -1
 shield
   rotate: false
-  xy: 224, 190
+  xy: 1030, 1476
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 spray
   rotate: false
-  xy: 458, 380
+  xy: 584, 504
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 supersize
   rotate: false
-  xy: 2008, 1956
+  xy: 714, 634
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

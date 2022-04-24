@@ -4,30 +4,37 @@ size: 2048, 512
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+coin
+  rotate: false
+  xy: 2, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 exit_down
   rotate: false
-  xy: 2, 204
+  xy: 2, 238
   size: 600, 200
   orig: 600, 200
   offset: 0, 0
   index: -1
 exit_up
   rotate: false
-  xy: 604, 204
+  xy: 604, 238
   size: 600, 200
   orig: 600, 200
   offset: 0, 0
   index: -1
 play_down
   rotate: false
-  xy: 604, 2
+  xy: 604, 36
   size: 600, 200
   orig: 600, 200
   offset: 0, 0
   index: -1
 play_up
   rotate: false
-  xy: 2, 2
+  xy: 2, 36
   size: 600, 200
   orig: 600, 200
   offset: 0, 0
