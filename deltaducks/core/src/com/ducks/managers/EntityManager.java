@@ -151,14 +151,6 @@ public final class EntityManager {
 
     // POWERUP FUNCTIONS
 
-    public static Array<Vector2> getPowerupCoordinates() {
-        Array <Vector2> coordinates = new Array <>();
-        for (int i = 0; i < getNumbersOfColleges(); i++) {
-            coordinates.add(((Entity)entities.get(i)).getPosition());
-        }
-        return coordinates;
-    }
-
     private static void spawnPowerup() {
         Powerup powerup;
 

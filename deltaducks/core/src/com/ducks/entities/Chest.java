@@ -55,6 +55,8 @@ public class Chest extends Entity {
 
     @Override
     public void update(float deltaTime) {
+        if (!isAlive())
+            return;
         super.update(deltaTime);
         if (playerInRange) {
             animation.update(deltaTime);
