@@ -2,6 +2,7 @@ package com.ducks.components;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.entities.Entity;
+import com.ducks.managers.PowerupManager;
 import com.ducks.tools.IShooter;
 
 public class Shooter {
@@ -21,8 +22,13 @@ public class Shooter {
     public boolean ready() {
         return shootTimer >= shootWaitTime;
     }
+
     public void resetShootTimer() {
-        shootTimer = 0;
+        if (PowerupManager.quickshotAcitve()) {
+            shootTimer = shootWaitTime;
+        } else {
+            shootTimer = 0;
+        }
     }
 
     public void update(float deltaTime) {

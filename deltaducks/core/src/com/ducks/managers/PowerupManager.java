@@ -33,19 +33,19 @@ public final class PowerupManager {
     public static void newPowerup (String powerup) {
         switch (powerup) {
             case "quickfire":
-                quickshotTime += 500;
+                quickshotTime += 800;
                 break;
             case "shield":
                 shields += 1;
                 break;
             case "spray":
-                multishotTime += 500;
+                multishotTime += 1200;
                 break;
             case "supersize":
-                supersizeTime += 500;
+                supersizeTime += 600;
                 break;
             case "bullet_hotshot":
-                hotshots += 10;
+                hotshots += 15;
                 break;
         }
     }

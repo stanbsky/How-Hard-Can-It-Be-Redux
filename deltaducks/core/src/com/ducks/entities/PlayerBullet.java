@@ -29,11 +29,9 @@ public class PlayerBullet extends Bullet {
     /**
      * Constructor
      */
-    public PlayerBullet() {
-        this(player.getPosition(), Crosshair.getCrosshairDirection(), player.getVelocity());
-    }
+    public PlayerBullet() { this(player.getPosition(), Crosshair.getCrosshairDirection(), player.getVelocity());  }
 
-    private PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
+    public PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
         if (PowerupManager.hotshotAcitve()) {
             this.BULLET_SPEED = 600f;
             texture = new Texture("bullet_redhot", position, radius * 1.5f);
