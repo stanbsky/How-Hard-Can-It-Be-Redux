@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="130" height="130" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="366">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="130" height="130" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="369">
  <tileset firstgid="1" source="ocean.tsx"/>
  <tileset firstgid="145" source="content.tsx"/>
  <tileset firstgid="190" source="boundaries.tsx"/>
@@ -422,7 +422,7 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="12" name="chests">
+ <objectgroup id="12" name="chests" visible="0">
   <object id="314" x="1472" y="416">
    <point/>
   </object>
@@ -659,7 +659,7 @@
   <object id="198" x="2592" y="32" width="128" height="64"/>
   <object id="199" x="2528" y="32" width="64" height="32"/>
  </objectgroup>
- <objectgroup id="3" name="colleges" visible="0">
+ <objectgroup id="3" name="colleges" offsetx="-66.8333" offsety="139.833">
   <object id="355" x="2892" y="660">
    <point/>
   </object>
@@ -667,6 +667,15 @@
    <point/>
   </object>
   <object id="357" x="3188" y="1792">
+   <point/>
+  </object>
+  <object id="366" x="764" y="642.667">
+   <point/>
+  </object>
+  <object id="367" x="628" y="3415.33">
+   <point/>
+  </object>
+  <object id="368" x="1665.83" y="1457.5">
    <point/>
   </object>
  </objectgroup>
