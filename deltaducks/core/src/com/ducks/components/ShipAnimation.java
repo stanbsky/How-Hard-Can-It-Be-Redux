@@ -3,7 +3,6 @@ package com.ducks.components;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.ducks.screens.MainGameScreen;
 
 import static com.ducks.screens.MainGameScreen.atlas;
 
@@ -37,6 +36,7 @@ public class ShipAnimation extends Texture {
         stateTime += deltaTime;
         updateFrame(stateTime, direction, moving);
         updatePosition(pos);
+        updateRenderColor();
     }
 
     private void updateDimensions() {

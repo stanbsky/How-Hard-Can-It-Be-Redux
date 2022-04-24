@@ -2,7 +2,9 @@ package com.ducks.intangibles;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.entities.Chest;
+import com.ducks.entities.College;
 import com.ducks.entities.Entity;
+import com.ducks.entities.Pirate;
 import com.ducks.managers.EntityManager;
 import com.ducks.ui.Hud;
 import com.ducks.ui.Indicator;
@@ -24,13 +26,19 @@ public class Quest {
             objective = new Chest(location);
             EntityManager.registerEntity(objective);
             description = "Open the chest";
+            registerIndicator(type);
         } else if (Objects.equals(type, "pirate")) {
-            type = "warning"; // to spawn an Indicator with warning sign
             objective = EntityManager.pirates.random();
+            ((Pirate) objective).setAngry(true);
             description = "Defeat the angry pirate!";
+            registerIndicator("warning");
+
+        } else if (Objects.equals(type, "college")) {
+            objective = EntityManager.colleges.random();
+            description = "Destroy the marked college!";
+            indicator = ((College) objective).getIndicator();
+            indicator.setAngry(true);
         }
-        indicator = new Indicator(objective, type, 15f);
-        EntityManager.registerEntity(indicator);
     }
 
     public boolean isCompleted() {
@@ -46,6 +54,11 @@ public class Quest {
         // TODO: if a pirate quest is spawned, the pirate will have
         // TODO: twice the update rolls. This is a feature?
         objective.update(deltaTime);
+    }
+
+    private void registerIndicator(String texture) {
+        indicator = new Indicator(objective, texture, 15f);
+        EntityManager.registerEntity(indicator);
     }
 
     public void dispose() {

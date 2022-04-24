@@ -7,6 +7,7 @@ import com.ducks.ui.Subtitle;
 
 import java.util.Random;
 
+import static com.ducks.managers.EntityManager.livingCollegesExist;
 import static com.ducks.screens.MainGameScreen.player;
 
 public class QuestManager {
@@ -15,7 +16,7 @@ public class QuestManager {
     private Quest currentQuest;
     private float stateTime;
     private float spawnTime = 4;
-    private int finalQuestCounter = 5;
+    private int finalQuestCounter = 8;
     private int finishedQuests = 0;
     private boolean debug = false;
 
@@ -43,10 +44,18 @@ public class QuestManager {
     }
 
     private void spawnQuest() {
-        if (Math.random() > 0.5f)
+        //TODO: this is disgusting...
+        float spawnChance = livingCollegesExist() ? 0.3f : 0.5f;
+        float spawnRoll = (float) Math.random();
+        if (spawnRoll < spawnChance) {
             currentQuest = new Quest("chest", pickSpawn(EntityManager.chestSpawns), subtitle);
-        else
+        } else {
+            if (livingCollegesExist() && spawnRoll < (spawnChance * 2)) {
+                currentQuest = new Quest("college", EntityManager.colleges.random().getPosition(), subtitle);
+                return;
+            }
             currentQuest = new Quest("pirate", null, subtitle);
+        }
     }
 
 

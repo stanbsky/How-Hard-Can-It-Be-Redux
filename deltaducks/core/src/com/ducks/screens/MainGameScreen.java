@@ -154,7 +154,7 @@ public class MainGameScreen implements Screen {
         if(hud.getHealth()<=0f) {
             game.setScreen(new FinalStorylineScreen(this.game, "Lost"));
         }
-        if(EntityManager.getNumbersOfColleges()<=0) {
+        if(!EntityManager.livingCollegesExist()) {
             game.setScreen(new FinalStorylineScreen(this.game, "Won"));
         }
     }

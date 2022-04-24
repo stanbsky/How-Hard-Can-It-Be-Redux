@@ -132,6 +132,14 @@ public class College extends Entity implements IShooter {
         return false;
     }
 
+    public void markIndicator() {
+        indicator.setAngry(true);
+    }
+
+    public Indicator getIndicator() {
+        return indicator;
+    }
+
     /**
      * draw the sprite of college and health bar on the game screen
      */

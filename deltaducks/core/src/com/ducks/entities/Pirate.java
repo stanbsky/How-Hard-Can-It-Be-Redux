@@ -1,5 +1,6 @@
 package com.ducks.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -11,6 +12,8 @@ import com.ducks.managers.EntityManager;
 import com.ducks.tools.IShooter;
 import com.ducks.ui.Hud;
 import com.ducks.tools.InputParser;
+
+import static com.ducks.DeltaDucks.batch;
 import static com.ducks.tools.FixtureFilter.*;
 
 public class Pirate extends Ship {
@@ -22,6 +25,9 @@ public class Pirate extends Ship {
     public final float SENSOR_SCALE = 5f;
 
     private boolean playerInRange = false;
+    private boolean isAngry = false;
+
+
 
     public Pirate(String college, Vector2 spawn) {
         this(college, spawn.x, spawn.y);
@@ -82,6 +88,11 @@ public class Pirate extends Ship {
     protected void handleSensorContact(Fixture contactor) {
         if (EntityData.equals(contactor, PLAYER))
             playerInRange = !playerInRange;
+    }
+
+    public void setAngry(boolean status) {
+        isAngry = status;
+        animation.setFlashingColor(Color.CORAL);
     }
 
     @Override
