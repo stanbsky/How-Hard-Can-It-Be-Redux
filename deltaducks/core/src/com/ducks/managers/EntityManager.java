@@ -68,7 +68,7 @@ public final class EntityManager {
         entities.removeAll(cleanup, true);
     }
 
-    private static Array<Vector2> getListOfSpawns(String type) {
+    public static Array<Vector2> getListOfSpawns(String type) {
         Array<Vector2> spawns = new Array<>();
         Rectangle rectangle;
         Vector2 location;

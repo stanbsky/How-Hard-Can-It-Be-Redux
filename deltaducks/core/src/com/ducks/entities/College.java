@@ -35,6 +35,8 @@ public class College extends Entity implements IShooter {
     private Vector2 position;
     private Indicator indicator;
 
+    private boolean isDestroyed;
+
     private boolean playerInRange = false;
 
     /**
@@ -60,6 +62,7 @@ public class College extends Entity implements IShooter {
         health = 10;
         hpBar = new HealthBar(spawn_x - radius, spawn_y + radius,
                 radius*2, 10f, true, health, false);
+        isDestroyed = false;
 
         this.position = new Vector2(spawn_x, spawn_y);
         this.texture = new Texture(collegeName, this.position, scl(radius*scale));
@@ -84,12 +87,14 @@ public class College extends Entity implements IShooter {
         stateTime += deltaTime;
         hpBar.update(health);
         if(!isAlive()) {
-            indicator.dispose();
-            Hud.addGold(1000);
-            Hud.addScore(10000);
-
-            this.texture = new Texture("destroyed", this.position, scl(radius*scale));
-            this.texture.update(deltaTime, rigidBody.getBody().getPosition());
+            if(!isDestroyed) {
+                isDestroyed = true;
+                indicator.dispose();
+                Hud.addGold(1000);
+                Hud.addScore(10000);
+                this.texture = new Texture("destroyed", this.position, scl(radius * scale));
+                this.texture.update(deltaTime, rigidBody.getBody().getPosition());
+            }
         } else {
             this.texture.update(deltaTime, rigidBody.getBody().getPosition());
             if (playerInRange)

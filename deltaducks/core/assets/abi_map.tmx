@@ -422,7 +422,7 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="12" name="chests" visible="0">
+ <objectgroup id="12" name="chests">
   <object id="314" x="1472" y="416">
    <point/>
   </object>
@@ -670,7 +670,7 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="2" name="pirates">
+ <objectgroup id="2" name="pirates" visible="0">
   <object id="200" x="2528" y="480">
    <point/>
   </object>

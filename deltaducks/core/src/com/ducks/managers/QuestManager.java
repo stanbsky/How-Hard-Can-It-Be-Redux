@@ -6,11 +6,14 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
+import com.ducks.entities.Pirate;
 import com.ducks.intangibles.Quest;
 import com.ducks.ui.Subtitle;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static com.ducks.screens.MainGameScreen.map;
 import static com.ducks.screens.MainGameScreen.player;
@@ -50,9 +53,17 @@ public class QuestManager {
         return spawn;
     }
 
-    private void spawnQuest() {
-        currentQuest = new Quest("chest", pickSpawn(), subtitle);
+    private Vector2 pickChestSpawn() {
+        Array<Vector2> spawns = EntityManager.getListOfSpawns("chests");
+        Random generator = new Random();
+        int randomIndex = generator.nextInt(spawns.size);
+        return spawns.get(randomIndex);
     }
+
+    private void spawnQuest() {
+        currentQuest = new Quest("chest", pickChestSpawn(), subtitle);
+    }
+
 
     private void checkQuestCompletion() {
         if (currentQuest.isCompleted()) {
