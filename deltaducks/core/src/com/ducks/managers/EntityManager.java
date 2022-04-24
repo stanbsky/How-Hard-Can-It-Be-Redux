@@ -98,11 +98,12 @@ public final class EntityManager {
 
     // COLLEGE FUNCTIONS
 
-    public static int getNumbersOfColleges() { return colleges.size; }
+    // TODO: possibly broken...
+    public static boolean livingCollegesExist() { return colleges.size > 0; }
 
     public static Array<Vector2> getCollegeCoordinates() {
         Array <Vector2> coordinates = new Array <Vector2>();
-        for (int i = 0; i < getNumbersOfColleges(); i++) {
+        for (int i = 0; i < colleges.size; i++) {
             coordinates.add(((Entity)entities.get(i)).getPosition());
         }
         return coordinates;
