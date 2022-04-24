@@ -79,6 +79,11 @@ public class Chest extends Entity {
     }
 
     @Override
+    public boolean cleanup() {
+        return false;
+    }
+
+    @Override
     public boolean isAlive() { return timeToCollect > 0; }
 
     public void dispose() {

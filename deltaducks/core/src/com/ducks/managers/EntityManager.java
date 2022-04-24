@@ -20,6 +20,7 @@ import static com.ducks.screens.MainGameScreen.player;
 public final class EntityManager {
     public static Array<Vector2> spawns;
     public static Array<Vector2> collegeSpawns;
+    public static Array<Vector2> chestSpawns;
     public static Array<IDrawable> entities;
     private static int entitiesCount = 0;
     public static Array<College> colleges;
@@ -34,6 +35,7 @@ public final class EntityManager {
     public static void Initialize() {
         spawns = getListOfSpawns("pirates");
         collegeSpawns = getListOfSpawns("colleges");
+        chestSpawns = getListOfSpawns("chests");
         entities = new Array<>();
 
         spawnColleges();
