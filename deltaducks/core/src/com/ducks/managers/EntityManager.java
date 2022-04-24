@@ -15,6 +15,7 @@ import static com.ducks.screens.MainGameScreen.map;
 import static com.ducks.screens.MainGameScreen.player;
 
 public final class EntityManager {
+    public static Array<Vector2> powerupSpawns;
     public static Array<Vector2> pirateSpawns;
     public static Array<Vector2> collegeSpawns;
     public static Array<Vector2> chestSpawns;
@@ -22,14 +23,19 @@ public final class EntityManager {
     private static int entitiesCount = 0;
     public static Array<College> colleges;
     public static Array<Pirate> pirates;
+    public static Array<Powerup> powerups;
     private static Array<IDrawable> cleanup;
 
     // TODO: these belong in some kind of constants class - maybe play difficulty related?
     private static final Array<String> collegeNames =
             new Array<>(new String[]{"goodricke", "constantine", "halifax"});
+    private static final Array<String> powerupNames =
+            new Array<>(new String[]{"quickfire", "shield", "spray", "supersize", "time", "trophy", "bullet_hotshot"});
     private static final float pirateSpawnChance = 0.1f;
+    private static final float powerupSpawnChance = 0.5f;
 
     public static void Initialize() {
+        powerupSpawns = getListOfSpawns("powerups");
         pirateSpawns = getListOfSpawns("pirates");
         collegeSpawns = getListOfSpawns("colleges");
         collegeSpawns.shuffle();
@@ -39,6 +45,7 @@ public final class EntityManager {
 
         spawnColleges();
         spawnPirates();
+        spawnPowerup();
     }
 
     public static int registerEntity(IDrawable entity) {
@@ -138,6 +145,31 @@ public final class EntityManager {
         if (player.ready()) {
             player.resetShootTimer();
             registerEntity(new PlayerBullet());
+        }
+    }
+
+    // POWERUP FUNCTIONS
+
+    public static Array<Vector2> getPowerupCoordinates() {
+        Array <Vector2> coordinates = new Array <>();
+        for (int i = 0; i < getNumbersOfColleges(); i++) {
+            coordinates.add(((Entity)entities.get(i)).getPosition());
+        }
+        return coordinates;
+    }
+
+    private static void spawnPowerup() {
+        Powerup powerup;
+
+        powerups = new Array<>();
+
+        for (Vector2 spawn : powerupSpawns) {
+
+            if (Math.random() > powerupSpawnChance)
+                continue;
+            powerup = new Powerup(spawn, powerupNames.random());
+            registerEntity(powerup);
+            powerups.add(powerup);
         }
     }
 }
