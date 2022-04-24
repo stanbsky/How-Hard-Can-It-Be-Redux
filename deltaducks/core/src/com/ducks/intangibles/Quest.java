@@ -23,12 +23,13 @@ public class Quest {
         if (Objects.equals(type, "chest")) {
             objective = new Chest(location);
             EntityManager.registerEntity(objective);
-            description = "Find the chest at ";
+            description = "Open the chest";
         } else if (Objects.equals(type, "pirate")) {
+            type = "pirate";
             objective = EntityManager.pirates.random();
-            description = "Kill pirate at ";
+            description = "Kill the marked pirate";
         }
-        indicator = new Indicator(objective, "warning256");
+        indicator = new Indicator(objective, type, 15f);
         EntityManager.registerEntity(indicator);
     }
 
@@ -37,7 +38,7 @@ public class Quest {
     }
 
     public void update(float deltaTime) {
-        subtitle.setSubtitle(description + objective.getPosition().scl(100f));
+        subtitle.setSubtitle(description);
         objective.update(deltaTime);
         if (!objective.isAlive())
             isCompleted = true;

@@ -33,7 +33,7 @@ public class PlayerBullet extends Bullet {
     }
 
     private PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
-        texture = new Texture("bullet_player", position, radius);
+        texture = new Texture("bullet_player", position, radius*1.5f);
         mask = MASK_ALL - PLAYER - PLAYER_BULLET;
         category = PLAYER_BULLET;
         data = new EntityData(category);

@@ -72,7 +72,7 @@ public class College extends Entity implements IShooter {
 
         defineCollege(spawn_x, spawn_y, radius);
 
-        indicator = new Indicator(this, collegeName);
+        indicator = new Indicator(this, collegeName + "_icon", 15f);
         EntityManager.registerEntity(indicator);
     }
 

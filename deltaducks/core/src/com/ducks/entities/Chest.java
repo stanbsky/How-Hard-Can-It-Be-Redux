@@ -24,10 +24,10 @@ public class Chest extends Entity {
 
     public Chest(Vector2 position) {
         radius = 50f;
-        scale = 2f;
+        scale = 1.2f;
         category = SCENERY;
         mask = MASK_ALL - PLAYER_BULLET - ENEMY_BULLET;
-        texture = new Texture("warning256", position, scl(radius*scale));
+        texture = new Texture("chest", position, scl(radius*scale));
         data = new EntityData(category);
         defineChest(position.scl(0.01f));
     }
@@ -36,7 +36,7 @@ public class Chest extends Entity {
         rigidBody = new RigidBody(position, BodyType.Static, 1f);
 
         CircleShape shape = new CircleShape();
-        shape.setRadius(scl(radius));
+        shape.setRadius(scl(radius*0.7f));
         FixtureDef fixture = new FixtureDef();
         fixture.shape = shape;
         fixture.filter.categoryBits = category;

@@ -25,10 +25,14 @@ public class Indicator implements IDrawable {
     private int midX = Gdx.graphics.getWidth()/2;
     private int midY = Gdx.graphics.getHeight()/2;
 
-    public Indicator(Entity target, String texture) {
+    public Indicator(Entity target, String texture, float scale) {
         this.target = target;
         position = new Vector2(0, 0);
-        this.texture = new Texture(texture, position, scl(25.6f));
+        this.texture = new Texture(texture, position, scl(scale));
+    }
+
+    public Indicator(Entity target, String texture) {
+        this(target, texture, 25.6f);
     }
 
     public void update(float deltaTime) {

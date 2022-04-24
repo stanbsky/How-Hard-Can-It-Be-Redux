@@ -126,12 +126,20 @@ public class Subtitle implements Disposable {
      */
     public void setSubtitle(String sub) {
         this.subtitle = sub;
+        subtitleLabel.setText(subtitle);
+    }
+
+    /**
+     * Mainly for using subtitle as a debugging printout
+     * @param sub
+     */
+    public void setSubtitleOnTick(String sub) {
+        this.subtitle = sub;
         ticks++;
         if (ticks == tickFrequency) {
             ticks = 0;
             subtitleLabel.setText(subtitle);
         }
-
     }
 
     /**
