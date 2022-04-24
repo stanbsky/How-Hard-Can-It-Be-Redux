@@ -92,7 +92,7 @@ public class Pirate extends Ship {
 
     public void setAngry(boolean status) {
         isAngry = status;
-        animation.setFlashingColor(Color.CORAL);
+        animation.setFlashingColor(Color.RED);
     }
 
     @Override

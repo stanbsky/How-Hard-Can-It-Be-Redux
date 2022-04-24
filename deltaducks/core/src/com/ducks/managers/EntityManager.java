@@ -31,7 +31,7 @@ public final class EntityManager {
     private static final Array<String> collegeNames =
             new Array<>(new String[]{"goodricke", "constantine", "halifax"});
     private static final Array<String> powerupNames =
-            new Array<>(new String[]{"quickfire", "shield", "spray", "supersize", "bullet_hotshot"});
+            new Array<>(new String[]{/*"quickfire", */"shield"/*, "spray", "supersize", "bullet_hotshot"*/});
     private static final float pirateSpawnChance = 0.1f;
     private static final float powerupSpawnChance = 0.5f;
 
@@ -46,7 +46,7 @@ public final class EntityManager {
 
         spawnColleges();
         spawnPirates();
-        spawnPowerup();
+        spawnPowerups();
     }
 
     public static int registerEntity(IDrawable entity) {
@@ -158,7 +158,7 @@ public final class EntityManager {
 
     // POWERUP FUNCTIONS
 
-    private static void spawnPowerup() {
+    private static void spawnPowerups() {
         Powerup powerup;
 
         powerups = new Array<>();

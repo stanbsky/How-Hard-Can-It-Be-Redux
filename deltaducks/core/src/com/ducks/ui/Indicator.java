@@ -54,7 +54,7 @@ public class Indicator implements IDrawable {
 
     public void setAngry(boolean status) {
         isAngry = status;
-        texture.setFlashingColor(Color.CORAL);
+        texture.setFlashingColor(Color.RED);
     }
 
     /**

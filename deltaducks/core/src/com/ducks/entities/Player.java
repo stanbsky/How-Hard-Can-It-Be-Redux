@@ -1,24 +1,17 @@
 package com.ducks.entities;
 
-import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.ducks.components.RigidBody;
 import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.PowerupManager;
-import com.ducks.tools.BodyType;
-import com.ducks.tools.Debug;
 import com.ducks.tools.InputParser;
 import com.ducks.components.ShipAnimation;
 import com.ducks.ui.Hud;
 
-import javax.crypto.spec.PSource;
-
-import static com.ducks.DeltaDucks.scl;
 import static com.ducks.tools.FixtureFilter.*;
 
 public class Player extends Ship {
@@ -37,6 +30,7 @@ public class Player extends Ship {
     private Fixture fx;
 
     private boolean supersized = false;
+    private boolean shield = false;
 
     public Player() {
         super();
@@ -97,6 +91,13 @@ public class Player extends Ship {
             toggleSize(!supersized);
             supersized = !supersized;
         }
+        if (PowerupManager.shieldAcitve()) {
+            if (!shield) {
+                animation.setColor(new Color(0.7f,0.8f,1f,1));
+                shield = true;
+                System.out.println("blu");
+            }
+        }
         animation.update(deltaTime, getPosition(), direction, moving);
 //        Debug.debug(getPosition());
     }
@@ -113,6 +114,10 @@ public class Player extends Ship {
 
         } else if (PowerupManager.shieldAcitve()) {
             PowerupManager.shieldUsed();
+            if (!PowerupManager.shieldAcitve()) {
+                animation.removeColor();
+                shield = false;
+            }
         } else {
             Hud.decHealth();
         }

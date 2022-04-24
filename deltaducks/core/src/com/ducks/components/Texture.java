@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.ducks.managers.PowerupManager;
 import com.ducks.screens.MainGameScreen;
 
 import static com.ducks.DeltaDucks.batch;
@@ -54,7 +55,7 @@ public class Texture {
         if (angryFlashing) {
             colourTicks++;
             if (colourTicks % 13 == 0) {
-                renderColor = Color.RED;
+                renderColor = flashingColor;
             } else if (colourTicks % 30 == 0) {
                 renderColor = Color.WHITE;
                 colourTicks = 0;
@@ -70,5 +71,13 @@ public class Texture {
     public void setFlashingColor(Color color) {
         flashingColor = color;
         angryFlashing = true;
+    }
+
+    public void setColor(Color color) {
+        renderColor = color;
+    }
+
+    public void removeColor() {
+        renderColor = Color.WHITE;
     }
 }
