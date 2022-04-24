@@ -46,7 +46,7 @@ public class PlayerBullet extends Bullet {
         category = PLAYER_BULLET;
         data = new EntityData(category);
         direction.nor();
-        position.add(direction);
+        position.add(direction.cpy().scl(0.25f));
         defineBullet(position);
         setData(data);
         rigidBody.applyForce(shipMomentum, 55f);

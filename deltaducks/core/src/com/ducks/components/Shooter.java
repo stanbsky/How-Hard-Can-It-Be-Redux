@@ -19,17 +19,11 @@ public class Shooter {
         randomize = true;
     }
 
-    public boolean ready() {
-        return shootTimer >= shootWaitTime;
-    }
+    public boolean ready() { return shootTimer >= shootWaitTime; }
 
-    public void resetShootTimer() {
-        if (PowerupManager.quickshotAcitve()) {
-            shootTimer = shootWaitTime;
-        } else {
-            shootTimer = 0;
-        }
-    }
+    public void resetShootTimer() { shootTimer = 0; }
+
+    public void skipShootTimer() { shootTimer = shootWaitTime; }
 
     public void update(float deltaTime) {
         shootTimer += deltaTime * randomFactor();
