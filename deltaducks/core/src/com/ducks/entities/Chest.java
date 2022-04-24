@@ -16,7 +16,7 @@ import static com.ducks.tools.FixtureFilter.*;
 
 public class Chest extends Entity {
 
-    private int timeToCollect = 180;
+    private int timeToCollect = 240;
     private boolean playerInRange = false;
     private ChestAnimation animation;
 

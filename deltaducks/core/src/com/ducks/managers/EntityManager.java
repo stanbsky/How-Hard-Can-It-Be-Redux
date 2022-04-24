@@ -35,7 +35,9 @@ public final class EntityManager {
     public static void Initialize() {
         spawns = getListOfSpawns("pirates");
         collegeSpawns = getListOfSpawns("colleges");
+        collegeSpawns.shuffle();
         chestSpawns = getListOfSpawns("chests");
+
         entities = new Array<>();
 
         spawnColleges();
