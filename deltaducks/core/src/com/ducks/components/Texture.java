@@ -62,6 +62,11 @@ public class Texture {
         }
     }
 
+    public void changeSize (float multiplyer) {
+        width = width * multiplyer;
+        height = height * multiplyer;
+    }
+
     public void setFlashingColor(Color color) {
         flashingColor = color;
         angryFlashing = true;

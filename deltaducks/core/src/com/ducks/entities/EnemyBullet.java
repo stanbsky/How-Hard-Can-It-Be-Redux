@@ -19,7 +19,7 @@ public class EnemyBullet extends Bullet {
         data = new EntityData(category);
         defineBullet(position);
         setData(data);
-        final float BULLET_SPEED = 130f;
+        final float BULLET_SPEED = 160f;
         rigidBody.applyForce(direction, BULLET_SPEED);
     }
 

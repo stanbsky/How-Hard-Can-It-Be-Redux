@@ -1,5 +1,7 @@
 package com.ducks.managers;
 
+import com.ducks.entities.Player;
+
 public final class PowerupManager {
     private static int shields;
     private static int multishotTime;
@@ -18,31 +20,28 @@ public final class PowerupManager {
     public static void update(float deltaTime) {
         if (quickshotTime > 0) {
             quickshotTime -= 1;
-            System.out.println(quickshotTime);
         }
         if (multishotTime > 0) {
             multishotTime -= 1;
-            System.out.println(multishotTime);
         }
         if (supersizeTime > 0) {
             supersizeTime -= 1;
-            System.out.println(supersizeTime);
         }
     }
 
     public static void newPowerup (String powerup) {
         switch (powerup) {
             case "quickfire":
-                quickshotTime += 800;
+                quickshotTime += 400;
                 break;
             case "shield":
                 shields += 1;
                 break;
             case "spray":
-                multishotTime += 1200;
+                multishotTime += 500;
                 break;
             case "supersize":
-                supersizeTime += 600;
+                supersizeTime += 500;
                 break;
             case "bullet_hotshot":
                 hotshots += 15;

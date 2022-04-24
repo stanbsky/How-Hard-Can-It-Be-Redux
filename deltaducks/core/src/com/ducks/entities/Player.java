@@ -1,10 +1,16 @@
 package com.ducks.entities;
 
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.ducks.components.RigidBody;
 import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.PowerupManager;
+import com.ducks.tools.BodyType;
 import com.ducks.tools.Debug;
 import com.ducks.tools.InputParser;
 import com.ducks.components.ShipAnimation;
@@ -12,6 +18,7 @@ import com.ducks.ui.Hud;
 
 import javax.crypto.spec.PSource;
 
+import static com.ducks.DeltaDucks.scl;
 import static com.ducks.tools.FixtureFilter.*;
 
 public class Player extends Ship {
@@ -25,6 +32,11 @@ public class Player extends Ship {
     private final int SHIP_SPAWN_Y = 1563;
 
     private final float SHIP_FRAME_DURATION = 0.5f;
+
+    private FixtureDef fixture2 = new FixtureDef();
+    private Fixture fx;
+
+    private boolean supersized = false;
 
     public Player() {
         super();
@@ -49,12 +61,41 @@ public class Player extends Ship {
     }
 
     @Override
+    public void defineShip() {
+        super.defineShip();
+
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius*1.5f);
+        fixture2.shape = shape;
+        fixture2.filter.categoryBits = category;
+        fixture2.filter.maskBits = 0;
+        fx = rigidBody.addFixture(fixture2);
+    }
+
+    private void toggleSize(boolean large) {
+        rigidBody.getBody().destroyFixture(fx);
+        if (large) {
+            fixture2.filter.maskBits = MASK_ALL - PLAYER - PLAYER_BULLET;
+            animation.changeSize(1.5f);
+        } else {
+            fixture2.filter.maskBits = 0;
+            animation.changeSize((1f/1.5f));
+        }
+        rigidBody.addFixture(fixture2);
+    }
+
+    @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
         parseDirection(InputParser.parseInput());
         applyForce();
         if (PowerupManager.quickshotAcitve()) {
             shooter.skipShootTimer();
+        }
+        if (PowerupManager.supersizeAcitve() != supersized) {
+            toggleSize(!supersized);
+            supersized = !supersized;
         }
         animation.update(deltaTime, getPosition(), direction, moving);
 //        Debug.debug(getPosition());
@@ -68,6 +109,12 @@ public class Player extends Ship {
     }
 
     private void sufferHit() {
-        Hud.decHealth();
+        if (PowerupManager.supersizeAcitve()) {
+
+        } else if (PowerupManager.shieldAcitve()) {
+            PowerupManager.shieldUsed();
+        } else {
+            Hud.decHealth();
+        }
     }
 }
