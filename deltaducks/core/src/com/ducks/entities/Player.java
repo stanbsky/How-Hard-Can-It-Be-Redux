@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.PowerupManager;
+import com.ducks.managers.ShopManager;
 import com.ducks.tools.InputParser;
 import com.ducks.components.ShipAnimation;
 import com.ducks.ui.Hud;

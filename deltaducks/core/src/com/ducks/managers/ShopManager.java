@@ -3,13 +3,11 @@ package com.ducks.managers;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.ducks.ui.Hud;
 
-import java.util.Arrays;
-
 public class ShopManager {
 
-    ArrayMap<String, Integer> items = new ArrayMap<>();
+    private static ArrayMap<String, Integer> items = new ArrayMap<>();
 
-    public ShopManager() {
+    static {
         addItem("quickfire", 500);
         addItem("shield", 300);
         addItem("spray", 350);
@@ -17,11 +15,11 @@ public class ShopManager {
         addItem("bullet_hotshot", 400);
     }
 
-    public void addItem (String item, Integer price) {
+    public static void addItem (String item, Integer price) {
         items.insert(items.size, item, price);
     }
 
-    public void buyItem (String item) {
+    public static void buyItem(String item) {
         if (items.containsKey(item)) {
             int itemPrice = items.get(item);
             if (Hud.getGold() > itemPrice) {
