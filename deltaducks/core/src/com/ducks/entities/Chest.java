@@ -18,6 +18,7 @@ public class Chest extends Entity {
 
     private int timeToCollect = 240;
     private boolean playerInRange = false;
+    private boolean opened = false;
     private ChestAnimation animation;
 
     public Chest(Vector2 position) {
@@ -56,7 +57,12 @@ public class Chest extends Entity {
     @Override
     public void update(float deltaTime) {
         if (!isAlive())
-            return;
+            if (opened) {
+                return;
+            } else {
+                opened = true;
+                animation.setColor(1f, 1f, 1f, 0.8f);
+            }
         super.update(deltaTime);
         if (playerInRange) {
             animation.update(deltaTime);

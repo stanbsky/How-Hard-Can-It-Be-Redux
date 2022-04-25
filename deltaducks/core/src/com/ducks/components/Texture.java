@@ -73,6 +73,10 @@ public class Texture {
         angryFlashing = true;
     }
 
+    public void setColor(float r, float g, float b, float a) {
+        setColor(new Color(r, g, b, a));
+    }
+
     public void setColor(Color color) {
         renderColor = color;
     }
