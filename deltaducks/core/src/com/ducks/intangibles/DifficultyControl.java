@@ -2,12 +2,13 @@ package com.ducks.intangibles;
 
 public class DifficultyControl {
 
-    private static int difficulty = 2;
+    private static int difficulty = 0;
 
-    public DifficultyControl () {
+    public static <T> T getValue(T easy, T medium, T hard) {
+        return ((difficulty == 0) ? easy : ( (difficulty == 1) ? medium : hard));
     }
 
-    public static int getDifficulty() {
-        System.out.println(difficulty);
-        return difficulty; }
+    public static int getDifficulty() { return difficulty; }
+
+    public static void setDifficulty(int diff) { difficulty = diff; }
 }
