@@ -5,7 +5,7 @@ import com.ducks.ui.Hud;
 
 public class ShopManager {
 
-    private static ArrayMap<String, Integer> items = new ArrayMap<>();
+    private static final ArrayMap<String, Integer> items = new ArrayMap<>();
 
     static {
         addItem("quickfire", 500);
