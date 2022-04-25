@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
+import com.ducks.intangibles.DifficultyControl;
 import com.ducks.ui.MainMenu;
 
 /***
@@ -44,6 +45,8 @@ public class MainMenuScreen implements Screen {
 
     private static MainMenu mainMenu;
 
+    private static String buttonPressed;
+
     /**
      * Constructor
      * @param game object of DeltaDucks
@@ -73,7 +76,8 @@ public class MainMenuScreen implements Screen {
 
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(DeltaDucks.WIDTH, DeltaDucks.HEIGHT, gameCam);
-        mainMenu = new MainMenu(playButtonActive);
+        mainMenu = new MainMenu();
+        buttonPressed = "";
         Gdx.input.setInputProcessor(mainMenu);
     }
 
@@ -145,6 +149,30 @@ public class MainMenuScreen implements Screen {
         */
         mainMenu.act();
         mainMenu.draw();
+
+        switch (buttonPressed) {
+            case "easy":
+                nextScreen(0);
+                break;
+            case "medium":
+                nextScreen(1);
+                break;
+            case "hard":
+                nextScreen(2);
+                break;
+            case "exit":
+                this.dispose();
+                Gdx.app.exit();
+                break;
+        }
+    }
+
+    public static void setButtonPressed (String toText) { buttonPressed = toText; }
+
+    private void nextScreen (int Difficulty) {
+        DifficultyControl.setDifficulty(Difficulty);
+        this.dispose();
+        game.setScreen(new InitialStorylineScreen(this.game));
     }
 
     /**
@@ -155,6 +183,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         gamePort.update(width, height);
+        mainMenu.getViewport().update(width, height);
     }
 
     @Override

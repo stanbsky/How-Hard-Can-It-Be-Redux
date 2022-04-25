@@ -14,16 +14,18 @@ import com.ducks.screens.MainMenuScreen;
 
 public class MainMenu extends Stage {
 
-    private static final int BUTTON_WIDTH = 500;
+    private static final int BUTTON_WIDTH = 300;
+    private static final int BUTTON_HEIGHT = 150;
 
-    public MainMenu (com.badlogic.gdx.graphics.Texture playButtonActive) {
+    public MainMenu () {
 
         Table table = new Table();
         addActor(table);
         table.setFillParent(true);
         table.setDebug(true);
         table.defaults().width(BUTTON_WIDTH);
-        table.defaults().pad(30);
+        table.defaults().height(BUTTON_HEIGHT);
+        table.defaults().pad(20);
 
         // PLAY
 
@@ -42,7 +44,7 @@ public class MainMenu extends Stage {
             }
         });
 
-        table.add(button);
+        table.add(button).colspan(2);
 
         // EXIT
 
@@ -55,11 +57,10 @@ public class MainMenu extends Stage {
         // Add 10000 to gold
         button.addListener(new ClickListener() {
             @Override
-            public void clicked (InputEvent event, float x, float y) {
-                Hud.addGold(10000);
-            }
+            public void clicked (InputEvent event, float x, float y) { MainMenuScreen.setButtonPressed("exit"); }
         });
 
+        table.add(button);
         table.row();
 
         // EASY
@@ -74,9 +75,11 @@ public class MainMenu extends Stage {
         button.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                Hud.addGold(10000);
+                MainMenuScreen.setButtonPressed("easy");
             }
         });
+
+        table.add(button);
 
         // MEDIUM
 
@@ -90,9 +93,11 @@ public class MainMenu extends Stage {
         button.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                Hud.addGold(10000);
+                MainMenuScreen.setButtonPressed("medium");
             }
         });
+
+        table.add(button);
 
         // HARD
 
@@ -106,7 +111,7 @@ public class MainMenu extends Stage {
         button.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                Hud.addGold(10000);
+                MainMenuScreen.setButtonPressed("hard");
             }
         });
 
