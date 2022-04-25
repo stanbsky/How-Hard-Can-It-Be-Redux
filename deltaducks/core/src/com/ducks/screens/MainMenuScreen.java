@@ -6,10 +6,11 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
+import com.ducks.ui.MainMenu;
 
 /***
  * Main Menu Screen
@@ -32,8 +33,16 @@ public class MainMenuScreen implements Screen {
     private static final float PLAY_BUTTON_X = 0-PLAY_BUTTON_WIDTH/2;
     private static final float EXIT_BUTTON_X = 0-EXIT_BUTTON_WIDTH/2;
 
-    private Texture playButtonActive, playButtonInactive;
-    private Texture exitButtonActive, exitButtonInactive;
+    public static Texture playButtonActive, playButtonInactive;
+    public static Texture exitButtonActive, exitButtonInactive;
+    public static Texture easyButtonActive, easyButtonInactive;
+    public static Texture mediumButtonActive, mediumButtonInactive;
+    public static Texture hardButtonActive, hardButtonInactive;
+    public static Texture loadButtonActive, loadButtonInactive;
+
+    private Stage stage = new Stage();
+
+    private static MainMenu mainMenu;
 
     /**
      * Constructor
@@ -52,9 +61,20 @@ public class MainMenuScreen implements Screen {
         playButtonInactive = new Texture("main_menu/play_button_inactive.png");
         exitButtonActive = new Texture("main_menu/exit_button_active.png");
         exitButtonInactive = new Texture("main_menu/exit_button_inactive.png");
+        easyButtonActive = new Texture("main_menu/easy_button_active.png");
+        easyButtonInactive = new Texture("main_menu/easy_button_inactive.png");
+        mediumButtonActive = new Texture("main_menu/medium_button_active.png");
+        mediumButtonInactive = new Texture("main_menu/medium_button_inactive.png");
+        hardButtonActive = new Texture("main_menu/hard_button_active.png");
+        hardButtonInactive = new Texture("main_menu/hard_button_inactive.png");
+        loadButtonActive = new Texture("main_menu/load_button_active.png");
+        loadButtonInactive = new Texture("main_menu/load_button_inactive.png");
+
 
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(DeltaDucks.WIDTH, DeltaDucks.HEIGHT, gameCam);
+        mainMenu = new MainMenu(playButtonActive);
+        Gdx.input.setInputProcessor(mainMenu);
     }
 
     /**
@@ -91,9 +111,8 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.batch.enableBlending();
-        game.batch.setProjectionMatrix(gameCam.combined);
-        game.batch.begin();
+
+        /*
         Vector3 loc = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
         gameCam.unproject(loc, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
@@ -123,8 +142,9 @@ public class MainMenuScreen implements Screen {
         } else {
             game.batch.draw(exitButtonInactive, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
         }
-
-        game.batch.end();
+        */
+        mainMenu.act();
+        mainMenu.draw();
     }
 
     /**
