@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.intangibles.DifficultyControl;
-import com.ducks.ui.MainMenu;
+import com.ducks.ui.TableMainMenu;
 
 /***
  * Main Menu Screen
@@ -32,7 +32,7 @@ public class MainMenuScreen implements Screen {
 
     private Stage stage = new Stage();
 
-    private static MainMenu mainMenu;
+    private static TableMainMenu mainMenu;
 
     private static String buttonPressed;
 
@@ -65,7 +65,7 @@ public class MainMenuScreen implements Screen {
 
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(DeltaDucks.WIDTH, DeltaDucks.HEIGHT, gameCam);
-        mainMenu = new MainMenu();
+        mainMenu = new TableMainMenu();
         buttonPressed = "";
         Gdx.input.setInputProcessor(mainMenu);
     }

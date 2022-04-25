@@ -9,15 +9,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import com.ducks.components.Texture;
 import com.ducks.screens.MainMenuScreen;
 
-public class MainMenu extends Stage {
+public class TableMainMenu extends Stage {
 
     private static final int BUTTON_WIDTH = 300;
     private static final int BUTTON_HEIGHT = 150;
 
-    public MainMenu () {
+    public TableMainMenu() {
 
         Table table = new Table();
         addActor(table);
