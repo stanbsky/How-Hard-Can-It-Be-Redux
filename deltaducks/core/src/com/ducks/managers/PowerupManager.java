@@ -9,7 +9,7 @@ public final class PowerupManager {
     private static int quickshotTime;
     private static int supersizeTime;
 
-    public static void PowerupManager () {
+    public PowerupManager () {
         shields = 0;
         multishotTime = 0;
         hotshots = 0;

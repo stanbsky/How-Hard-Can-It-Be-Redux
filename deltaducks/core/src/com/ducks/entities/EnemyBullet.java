@@ -2,6 +2,7 @@ package com.ducks.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.components.Texture;
+import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
 import com.ducks.ui.Hud;
 
@@ -19,7 +20,7 @@ public class EnemyBullet extends Bullet {
         data = new EntityData(category);
         defineBullet(position);
         setData(data);
-        final float BULLET_SPEED = 160f;
+        final float BULLET_SPEED = new float[]{120f, 160f, 200f}[DifficultyControl.getDifficulty()];
         rigidBody.applyForce(direction, BULLET_SPEED);
     }
 

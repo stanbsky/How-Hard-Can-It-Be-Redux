@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.components.Shooter;
 import com.ducks.entities.*;
+import com.ducks.intangibles.DifficultyControl;
 import com.ducks.tools.IDrawable;
 import com.ducks.tools.IShooter;
 import com.ducks.ui.Crosshair;
@@ -32,7 +33,7 @@ public final class EntityManager {
             new Array<>(new String[]{"goodricke", "constantine", "halifax"});
     private static final Array<String> powerupNames =
             new Array<>(new String[]{"quickfire", "shield", "spray", "supersize", "bullet_hotshot"});
-    private static final float pirateSpawnChance = 0.1f;
+    private static final float pirateSpawnChance = new float[]{0.1f, 0.2f, 0.4f}[DifficultyControl.getDifficulty()];
     private static final float powerupSpawnChance = 0.5f;
 
     public static void Initialize() {
