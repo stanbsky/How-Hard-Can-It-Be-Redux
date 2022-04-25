@@ -1,6 +1,5 @@
 package com.ducks.entities;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -8,7 +7,6 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.PowerupManager;
-import com.ducks.managers.ShopManager;
 import com.ducks.tools.InputParser;
 import com.ducks.components.ShipAnimation;
 import com.ducks.ui.Hud;
@@ -85,14 +83,14 @@ public class Player extends Ship {
         super.update(deltaTime);
         parseDirection(InputParser.parseInput());
         applyForce();
-        if (PowerupManager.quickshotAcitve()) {
+        if (PowerupManager.quickshotActive()) {
             shooter.skipShootTimer();
         }
-        if (PowerupManager.supersizeAcitve() != supersized) {
+        if (PowerupManager.supersizeActive() != supersized) {
             toggleSize(!supersized);
             supersized = !supersized;
         }
-        if (PowerupManager.shieldAcitve()) {
+        if (PowerupManager.shieldActive()) {
             if (!shield) {
                 animation.setColor(0.7f,0.8f,1f,1);
                 shield = true;
@@ -110,11 +108,11 @@ public class Player extends Ship {
     }
 
     private void sufferHit() {
-        if (PowerupManager.supersizeAcitve()) {
+        if (PowerupManager.supersizeActive()) {
 
-        } else if (PowerupManager.shieldAcitve()) {
+        } else if (PowerupManager.shieldActive()) {
             PowerupManager.shieldUsed();
-            if (!PowerupManager.shieldAcitve()) {
+            if (!PowerupManager.shieldActive()) {
                 animation.removeColor();
                 shield = false;
             }

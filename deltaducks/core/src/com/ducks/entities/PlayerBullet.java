@@ -1,11 +1,9 @@
 package com.ducks.entities;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.components.Texture;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.PowerupManager;
-import com.ducks.screens.MainGameScreen;
 import com.ducks.ui.Crosshair;
 
 import static com.ducks.screens.MainGameScreen.player;
@@ -34,7 +32,7 @@ public class PlayerBullet extends Bullet {
     public PlayerBullet(float offset) { this(player.getPosition().cpy(), Crosshair.getCrosshairDirection().cpy().rotateDeg(offset), player.getVelocity().cpy());  }
 
     private PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
-        if (PowerupManager.hotshotAcitve()) {
+        if (PowerupManager.hotshotActive()) {
             this.BULLET_SPEED = 500f;
             texture = new Texture("bullet_redhot", position, radius * 1.5f);
             PowerupManager.hotshotUsed();

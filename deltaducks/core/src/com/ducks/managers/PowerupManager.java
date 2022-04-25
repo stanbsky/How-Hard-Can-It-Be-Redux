@@ -1,7 +1,5 @@
 package com.ducks.managers;
 
-import com.ducks.entities.Player;
-
 public final class PowerupManager {
     private static int shields;
     private static int multishotTime;
@@ -49,17 +47,17 @@ public final class PowerupManager {
         }
     }
 
-    public static boolean shieldAcitve () { return shields > 0; }
+    public static boolean shieldActive() { return shields > 0; }
 
     public static void shieldUsed () { shields -= 1; }
 
-    public static boolean hotshotAcitve () { return hotshots > 0; }
+    public static boolean hotshotActive() { return hotshots > 0; }
 
     public static void hotshotUsed () { hotshots -= 1; }
 
-    public static boolean multishotAcitve () { return multishotTime > 0; }
+    public static boolean multishotActive() { return multishotTime > 0; }
 
-    public static boolean quickshotAcitve () { return quickshotTime > 0; }
+    public static boolean quickshotActive() { return quickshotTime > 0; }
 
-    public static boolean supersizeAcitve () { return supersizeTime > 0; }
+    public static boolean supersizeActive() { return supersizeTime > 0; }
 }

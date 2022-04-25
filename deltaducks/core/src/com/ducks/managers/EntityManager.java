@@ -11,7 +11,6 @@ import com.ducks.entities.*;
 import com.ducks.intangibles.DifficultyControl;
 import com.ducks.tools.IDrawable;
 import com.ducks.tools.IShooter;
-import com.ducks.ui.Crosshair;
 
 import static com.ducks.screens.MainGameScreen.map;
 import static com.ducks.screens.MainGameScreen.player;
@@ -109,7 +108,6 @@ public final class EntityManager {
 
     // COLLEGE FUNCTIONS
 
-    // TODO: possibly broken...
     public static boolean livingCollegesExist() {
         for (College college : colleges) {
             if (college.isAlive()) {
@@ -156,7 +154,7 @@ public final class EntityManager {
     public static void spawnBullet() {
         if (player.ready()) {
             player.resetShootTimer();
-            if (PowerupManager.multishotAcitve()) {
+            if (PowerupManager.multishotActive()) {
                 registerEntity(new PlayerBullet());
                 registerEntity(new PlayerBullet(30f));
                 registerEntity(new PlayerBullet(-30f));
