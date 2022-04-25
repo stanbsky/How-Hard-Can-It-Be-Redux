@@ -2,7 +2,7 @@ package com.ducks.intangibles;
 
 public class DifficultyControl {
 
-    private static int difficulty = 0;
+    private static int difficulty = 2;
 
     public static <T> T getValue(T easy, T medium, T hard) {
         return ((difficulty == 0) ? easy : ( (difficulty == 1) ? medium : hard));

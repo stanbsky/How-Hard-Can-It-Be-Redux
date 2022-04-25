@@ -93,9 +93,8 @@ public class Player extends Ship {
         }
         if (PowerupManager.shieldAcitve()) {
             if (!shield) {
-                animation.setColor(new Color(0.7f,0.8f,1f,1));
+                animation.setColor(0.7f,0.8f,1f,1);
                 shield = true;
-                System.out.println("blu");
             }
         }
         animation.update(deltaTime, getPosition(), direction, moving);

@@ -2,6 +2,7 @@ package com.ducks.managers;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.Quest;
 import com.ducks.ui.Subtitle;
 
@@ -16,7 +17,7 @@ public class QuestManager {
     private Quest currentQuest;
     private float stateTime;
     private float spawnTime = 4;
-    private int finalQuestCounter = 8;
+    private int finalQuestCounter = DifficultyControl.getValue(3, 6, 9);
     private int finishedQuests = 0;
     private boolean debug = false;
 
