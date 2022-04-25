@@ -41,7 +41,7 @@ public class Chest extends Entity {
         FixtureDef fixture = new FixtureDef();
         fixture.shape = shape;
         fixture.filter.categoryBits = category;
-        fixture.filter.maskBits = mask;
+        fixture.filter.maskBits = 0;
         rigidBody.addFixture(fixture);
         rigidBody.setData(data);
 

@@ -23,17 +23,6 @@ public class MainMenuScreen implements Screen {
     private OrthographicCamera gameCam;
     private Viewport gamePort;
 
-    private static final int PLAY_BUTTON_WIDTH = 300;
-    private static final int PLAY_BUTTON_HEIGHT = 120;
-    private static final int EXIT_BUTTON_WIDTH = 250;
-    private static final int EXIT_BUTTON_HEIGHT = 120;
-
-    private static final float PLAY_BUTTON_Y = 0+PLAY_BUTTON_HEIGHT/4f;
-    private static final float EXIT_BUTTON_Y = 0-EXIT_BUTTON_HEIGHT;
-
-    private static final float PLAY_BUTTON_X = 0-PLAY_BUTTON_WIDTH/2;
-    private static final float EXIT_BUTTON_X = 0-EXIT_BUTTON_WIDTH/2;
-
     public static Texture playButtonActive, playButtonInactive;
     public static Texture exitButtonActive, exitButtonInactive;
     public static Texture easyButtonActive, easyButtonInactive;
@@ -115,38 +104,6 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-        /*
-        Vector3 loc = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        gameCam.unproject(loc, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            this.dispose();
-            game.setScreen(new InitialStorylineScreen(this.game));
-        }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            this.dispose();
-            Gdx.app.exit();
-        }
-        if ((loc.x < PLAY_BUTTON_X + PLAY_BUTTON_WIDTH) && (loc.x > PLAY_BUTTON_X) && (loc.y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT) && (loc.y > PLAY_BUTTON_Y)) {
-            game.batch.draw(playButtonActive, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-            if (Gdx.input.isTouched()) {
-                this.dispose();
-                game.setScreen(new InitialStorylineScreen(this.game));
-            }
-        } else {
-            game.batch.draw(playButtonInactive, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-        }
-
-        if ((loc.x < EXIT_BUTTON_X + EXIT_BUTTON_WIDTH) && (loc.x > EXIT_BUTTON_X) && (loc.y < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT) && (loc.y > EXIT_BUTTON_Y)) {
-            game.batch.draw(exitButtonActive, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-            if (Gdx.input.isTouched()) {
-                this.dispose();
-                Gdx.app.exit();
-            }
-        } else {
-            game.batch.draw(exitButtonInactive, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-        }
-        */
         mainMenu.act();
         mainMenu.draw();
 

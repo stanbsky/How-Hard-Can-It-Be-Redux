@@ -155,7 +155,7 @@ public class MainGameScreen implements Screen {
             game.setScreen(new FinalStorylineScreen(this.game, "Lost"));
         }
         if(!EntityManager.livingCollegesExist()) {
-            game.setScreen(new FinalStorylineScreen(this.game, "Won"));
+//            game.setScreen(new FinalStorylineScreen(this.game, "Won"));
         }
     }
 

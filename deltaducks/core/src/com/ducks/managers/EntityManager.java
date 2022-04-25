@@ -92,6 +92,8 @@ public final class EntityManager {
 
     // PIRATE FUNCTIONS
 
+    public static boolean livingPiratesExist() { return !pirates.isEmpty(); }
+
     private static void spawnPirates() {
         Pirate pirate;
         pirates = new Array<>();
@@ -108,7 +110,14 @@ public final class EntityManager {
     // COLLEGE FUNCTIONS
 
     // TODO: possibly broken...
-    public static boolean livingCollegesExist() { return colleges.size > 0; }
+    public static boolean livingCollegesExist() {
+        for (College college : colleges) {
+            if (college.isAlive()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static Array<Vector2> getCollegeCoordinates() {
         Array <Vector2> coordinates = new Array <Vector2>();
