@@ -167,7 +167,7 @@ public class MainMenuScreen implements Screen {
         }
     }
 
-    public static void setButtonPressed (String toText) { buttonPressed = toText; }
+    public static void setButtonPressed (String text) { buttonPressed = text; }
 
     private void nextScreen (int Difficulty) {
         DifficultyControl.setDifficulty(Difficulty);

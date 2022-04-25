@@ -27,49 +27,16 @@ public class MainMenu extends Stage {
         table.defaults().height(BUTTON_HEIGHT);
         table.defaults().pad(20);
 
-        // PLAY
 
         // Tint the "up" texture on mouse over, switch to "down" on click
-        Button.ButtonStyle style = new Button.ButtonStyle();
-        style.up = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.playButtonInactive));
-        style.over = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.playButtonInactive)).tint(Color.GRAY);
-        style.down = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.playButtonActive));
-        Button button = new Button(style);
-
-        // Unpause and go back to game
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked (InputEvent event, float x, float y) {
-                System.out.println("tees");
-            }
-        });
-
-        table.add(button).colspan(2);
-
-        // EXIT
-
-        style = new Button.ButtonStyle();
-        style.up = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.exitButtonInactive));
-        style.over = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.exitButtonInactive)).tint(Color.GRAY);
-        style.down = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.exitButtonActive));
-        button = new Button(style);
-
-        // Add 10000 to gold
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked (InputEvent event, float x, float y) { MainMenuScreen.setButtonPressed("exit"); }
-        });
-
-        table.add(button);
-        table.row();
 
         // EASY
 
-        style = new Button.ButtonStyle();
+        Button.ButtonStyle style = new Button.ButtonStyle();
         style.up = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.easyButtonInactive));
         style.over = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.easyButtonInactive)).tint(Color.GRAY);
         style.down = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.easyButtonActive));
-        button = new Button(style);
+        Button button = new Button(style);
 
         // Add 10000 to gold
         button.addListener(new ClickListener() {
@@ -116,6 +83,42 @@ public class MainMenu extends Stage {
         });
 
         table.add(button);
+        table.row();
+
+        // LOAD
+
+        style = new Button.ButtonStyle();
+        style.up = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.loadButtonInactive));
+        style.over = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.loadButtonInactive)).tint(Color.GRAY);
+        style.down = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.loadButtonActive));
+        button = new Button(style);
+
+        // Unpause and go back to game
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked (InputEvent event, float x, float y) {
+                MainMenuScreen.setButtonPressed("load");
+            }
+        });
+
+        table.add(button).colspan(2);
+
+        // EXIT
+
+        style = new Button.ButtonStyle();
+        style.up = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.exitButtonInactive));
+        style.over = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.exitButtonInactive)).tint(Color.GRAY);
+        style.down = new TextureRegionDrawable(new TextureRegion(MainMenuScreen.exitButtonActive));
+        button = new Button(style);
+
+        // Add 10000 to gold
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked (InputEvent event, float x, float y) { MainMenuScreen.setButtonPressed("exit"); }
+        });
+
+        table.add(button);
+        table.row();
 
 //        table.background(draw(Batch batch, float x, float y, float width, float height));
     }
