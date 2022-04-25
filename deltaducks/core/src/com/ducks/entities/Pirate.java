@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ducks.components.ShipAnimation;
 import com.ducks.components.Shooter;
+import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.EntityManager;
 import com.ducks.tools.IShooter;
@@ -22,7 +23,7 @@ public class Pirate extends Ship {
     private final float inputDurationThreshold = 0.7f;
     private float inputDurationRoll = 0f;
 
-    public final float SENSOR_SCALE = 5f;
+    public final float SENSOR_SCALE = DifficultyControl.getValue(3f, 4f, 6f);
 
     private boolean playerInRange = false;
     private boolean isAngry = false;

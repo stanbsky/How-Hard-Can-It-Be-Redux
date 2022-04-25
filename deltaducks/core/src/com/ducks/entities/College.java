@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
 import com.ducks.components.Shooter;
+import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.EntityManager;
 import com.ducks.tools.BodyType;
@@ -22,7 +23,7 @@ import static com.ducks.tools.FixtureFilter.*;
  */
 public class College extends Entity implements IShooter {
 
-    public final float SENSOR_SCALE = 4f;
+    public final float SENSOR_SCALE = DifficultyControl.getValue(3.5f, 4f, 6f);
 
     float stateTime;
 

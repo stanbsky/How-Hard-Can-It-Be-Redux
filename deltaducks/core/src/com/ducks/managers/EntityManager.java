@@ -34,7 +34,7 @@ public final class EntityManager {
     private static final Array<String> powerupNames =
             new Array<>(new String[]{"quickfire", "shield", "spray", "supersize", "bullet_hotshot"});
     private static final float pirateSpawnChance = DifficultyControl.getValue(0.1f, 0.2f, 0.4f);
-    private static final float powerupSpawnChance = 0.5f;
+    private static final float powerupSpawnChance = DifficultyControl.getValue(0.7f, 0.5f, 0.4f);
 
     public static void Initialize() {
         powerupSpawns = getListOfSpawns("powerups");

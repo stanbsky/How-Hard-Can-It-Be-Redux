@@ -12,7 +12,7 @@ import com.ducks.components.Texture;
 import static com.ducks.DeltaDucks.scl;
 
 public class Bullet extends Entity {
-    private final float BULLET_SPAWN_DURATION = 4f;
+    private final float BULLET_SPAWN_DURATION = 3f;
     float stateTime;
     float spawnTimer;
     float radius = scl(10);
