@@ -23,7 +23,7 @@ public class Pirate extends Ship {
     private final float inputDurationThreshold = 0.7f;
     private float inputDurationRoll = 0f;
 
-    public final float SENSOR_SCALE = DifficultyControl.getValue(3f, 4f, 6f);
+    public final float SENSOR_SCALE = DifficultyControl.getValue(3.5f, 4f, 6f);
 
     private boolean playerInRange = false;
     private boolean isAngry = false;
