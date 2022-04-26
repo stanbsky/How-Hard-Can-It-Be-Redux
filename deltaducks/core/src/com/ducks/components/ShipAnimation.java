@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import static com.ducks.screens.MainGameScreen.atlas;
+import static com.ducks.managers.AssetManager.atlas;
 
 
 public class ShipAnimation extends Texture {

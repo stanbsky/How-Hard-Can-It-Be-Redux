@@ -23,7 +23,6 @@ import com.ducks.ui.Hud;
 import com.ducks.ui.Subtitle;
 import com.ducks.entities.Player;
 import com.ducks.tools.B2WorldCreator;
-import com.ducks.tools.Content;
 import com.ducks.ui.Crosshair;
 import com.ducks.ui.TablePauseMenu;
 
@@ -61,9 +60,6 @@ public class MainGameScreen implements Screen {
 
     private EntityContactListener contactListener;
 
-    public static Content resources;
-    public static TextureAtlas atlas;
-    public static Skin ui;
     private QuestManager questManager;
 
     /**
@@ -72,13 +68,7 @@ public class MainGameScreen implements Screen {
      */
     public MainGameScreen(DeltaDucks game) {
         this.game = game;
-        resources = new Content();
-        atlas = new TextureAtlas("all_assets.atlas");
-        ui = new Skin(new TextureAtlas("ui_assets.atlas"));
-        //TODO: delete after pirate refactor
-        MainGameScreen.resources.loadTexture("ship_dark_SE.png", "pirate");
-        MainGameScreen.resources.loadTexture("arrow.png", "arrow");
-
+        AssetManager.Initialize();
         Gdx.input.setCursorCatched(true);
     }
 

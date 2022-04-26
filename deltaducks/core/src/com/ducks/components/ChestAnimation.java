@@ -1,12 +1,10 @@
 package com.ducks.components;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
-import static com.ducks.DeltaDucks.batch;
-import static com.ducks.screens.MainGameScreen.atlas;
+import static com.ducks.managers.AssetManager.atlas;
 
 public class ChestAnimation extends Texture {
 

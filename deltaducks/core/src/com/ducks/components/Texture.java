@@ -1,14 +1,11 @@
 package com.ducks.components;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.ducks.managers.PowerupManager;
-import com.ducks.screens.MainGameScreen;
 
 import static com.ducks.DeltaDucks.batch;
-import static com.ducks.screens.MainGameScreen.atlas;
+import static com.ducks.managers.AssetManager.atlas;
 
 public class Texture {
 

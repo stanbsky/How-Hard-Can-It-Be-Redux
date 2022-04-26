@@ -1,11 +1,10 @@
 package com.ducks.components;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import static com.ducks.DeltaDucks.scl;
 import static com.ducks.DeltaDucks.batch;
-import static com.ducks.screens.MainGameScreen.atlas;
+import static com.ducks.managers.AssetManager.atlas;
 
 public class HealthBar extends Texture {
     private final float maxHP;

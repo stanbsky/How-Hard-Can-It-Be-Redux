@@ -3,14 +3,11 @@ package com.ducks.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -19,8 +16,7 @@ import com.ducks.components.HealthBar;
 import com.ducks.intangibles.DifficultyControl;
 
 import static com.ducks.DeltaDucks.batch;
-import static com.ducks.screens.MainGameScreen.atlas;
-import static com.ducks.screens.MainGameScreen.ui;
+import static com.ducks.managers.AssetManager.ui;
 
 /***
  * HUD for the game

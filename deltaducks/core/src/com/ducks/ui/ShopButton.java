@@ -8,53 +8,38 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.ducks.managers.AssetManager;
 
-import static com.ducks.screens.MainGameScreen.*;
+import static com.ducks.managers.AssetManager.*;
 
 public class ShopButton extends Table {
 
     private ClickListener clickListener;
-    private NinePatchDrawable passive, over, down;
 
     public ShopButton(String label, String powerup, String price, BitmapFont font) {
-        this.setDebug(true);
-        initBackgrounds();
+        setBackground(button_up);
         this.setTouchable(Touchable.enabled);
-        this.setWidth(200);
-        this.defaults().pad(20).left();
+        this.defaults().pad(5).left();
         // Gold icon & price
-        this.add(new Image(ui.newDrawable("coin2"))).size(50);
-        this.add(new Label(price, new Label.LabelStyle( font , Color.WHITE)));
+        font.getData().setScale(0.8f);
+        this.add(new Image(AssetManager.ui.newDrawable("coin2"))).size(50).left();
+        this.add(new Label(price, new Label.LabelStyle( font , Color.BLACK))).left();
         // Powerup icon & name
-        this.add(new Image(ui.newDrawable(powerup))).size(50);
-        this.add(new Label(label, new Label.LabelStyle( font , Color.WHITE)));
-        // Description
-        this.row();
-        this.add(new Label("yadda yadda", new Label.LabelStyle( font , Color.WHITE)));
+        this.add(new Image(AssetManager.ui.newDrawable(powerup))).size(50).right();
+        this.add(new Label(label, new Label.LabelStyle( font , Color.BLACK))).right();
 
         addListener(clickListener = new ClickListener());
     }
 
-    private void initBackgrounds() {
-        NinePatch patch;
-        patch = new NinePatch(ui.getRegion("button"), 17, 17, 17, 17);
-        passive = new NinePatchDrawable(patch);
-        patch = new NinePatch(ui.getRegion("button_over"), 17, 17, 17, 17);
-        over = new NinePatchDrawable(patch);
-        patch = new NinePatch(ui.getRegion("button_down"), 17, 17, 17, 17);
-        down = new NinePatchDrawable(patch);
-        this.setBackground(passive);
-    }
-
     private void getBackgroundDrawable() {
         if (clickListener.isPressed()) {
-            setBackground(down);
+            setBackground(button_down);
             return;
         }
         if (clickListener.isOver())
-            setBackground(over);
+            setBackground(button_over);
         else
-            setBackground(passive);
+            setBackground(button_up);
     }
 
     public void draw(Batch batch, float parentAlpha) {
