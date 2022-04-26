@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -16,6 +19,8 @@ import com.ducks.components.HealthBar;
 import com.ducks.intangibles.DifficultyControl;
 
 import static com.ducks.DeltaDucks.batch;
+import static com.ducks.screens.MainGameScreen.atlas;
+import static com.ducks.screens.MainGameScreen.ui;
 
 /***
  * HUD for the game
@@ -29,12 +34,15 @@ public class Hud implements Disposable {
     private static Integer score;
     private static Integer gold;
 
-    private Label countdownLabel;
+    private static Label countdownLabel;
+    private static Image expSymbol;
     private static Label expLabel;
-    private Label timeLabel;
-    private Label goldTagLabel;
+    private static Image timeSymbol;
+    private static Label timeLabel;
+    private static Image goldSymbol;
+    private static Label goldTagLabel;
     private static Label goldLabel;
-    private Label expTagLabel;
+    private static Label expTagLabel;
 
     private static float health;
     private HealthBar hpBar;
@@ -66,23 +74,49 @@ public class Hud implements Disposable {
         Table table = new Table();
         table.top();
         table.setFillParent(true);
+        table.defaults().expandX().padTop(10);
+        table.defaults().colspan(2);
 
+        expSymbol = new Image(ui.newDrawable("trophy"));
         expTagLabel = new Label("USER EXP", new Label.LabelStyle(font, Color.WHITE));
         expLabel = new Label(String.format("%06d", score), new Label.LabelStyle(font, Color.WHITE));
 
+        goldSymbol = new Image(ui.newDrawable("coin2"));
         goldTagLabel = new Label("GOLD", new Label.LabelStyle(font, Color.WHITE));
         goldLabel = new Label(String.format("%05d", gold), new Label.LabelStyle(font, Color.WHITE));
 
+        timeSymbol = new Image(ui.newDrawable("coin"));
         timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
         countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font, Color.WHITE));
 
-        table.add(expTagLabel).expandX().padTop(10);
-        table.add(goldTagLabel).expandX().padTop(10);
-        table.add(timeLabel).expandX().padTop(10);
-        table.row();
-        table.add(expLabel).expandX();
-        table.add(goldLabel).expandX();
-        table.add(countdownLabel).expandX();
+        Table expTable = new Table();
+        expTable.add(expTagLabel).colspan(2);
+        expTable.row();
+        expTable.add(expSymbol);
+        expTable.add(expLabel);
+
+        Table goldTable = new Table();
+        goldTable.add(goldTagLabel).colspan(2);
+        goldTable.row();
+        goldTable.add(goldSymbol);
+        goldTable.add(goldLabel);
+
+        Table timeTable = new Table();
+        timeTable.add(timeLabel).colspan(2);
+        timeTable.row();
+        timeTable.add(timeSymbol);
+        timeTable.add(countdownLabel);
+
+//        table.add(expTagLabel).expandX().padTop(10);
+//        table.add(goldSymbol);
+//        table.add(goldTagLabel).expandX().padTop(10);
+        table.add(expTable);
+        table.add(goldTable);
+        table.add(timeTable);
+//        table.row();
+//        table.add(expLabel);
+//        table.add(goldLabel);
+//        table.add(countdownLabel);
         stage.addActor(table);
     }
 
