@@ -4,51 +4,114 @@ size: 2048, 512
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
+bullet_hotshot
+  rotate: false
+  xy: 1605, 437
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+button
+  rotate: false
+  xy: 401, 2
+  size: 397, 97
+  orig: 397, 97
+  offset: 0, 0
+  index: -1
+button_down
+  rotate: false
+  xy: 1206, 406
+  size: 397, 97
+  orig: 397, 97
+  offset: 0, 0
+  index: -1
+button_over
+  rotate: false
+  xy: 2, 2
+  size: 397, 97
+  orig: 397, 97
+  offset: 0, 0
+  index: -1
 coin
   rotate: false
-  xy: 2, 36
+  xy: 800, 67
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 coin2
   rotate: false
-  xy: 2, 2
+  xy: 834, 67
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 exit_down
   rotate: false
-  xy: 2, 272
+  xy: 2, 303
   size: 600, 200
   orig: 600, 200
   offset: 0, 0
   index: -1
 exit_up
   rotate: false
-  xy: 604, 272
+  xy: 604, 303
   size: 600, 200
   orig: 600, 200
   offset: 0, 0
   index: -1
 play_down
   rotate: false
-  xy: 604, 70
+  xy: 604, 101
   size: 600, 200
   orig: 600, 200
   offset: 0, 0
   index: -1
 play_up
   rotate: false
-  xy: 2, 70
+  xy: 2, 101
   size: 600, 200
   orig: 600, 200
   offset: 0, 0
   index: -1
+quickfire
+  rotate: false
+  xy: 1605, 471
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+shield
+  rotate: false
+  xy: 1240, 372
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+spray
+  rotate: false
+  xy: 1639, 471
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+supersize
+  rotate: false
+  xy: 800, 33
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+time
+  rotate: false
+  xy: 1206, 372
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 trophy
   rotate: false
-  xy: 1206, 440
+  xy: 1206, 338
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
