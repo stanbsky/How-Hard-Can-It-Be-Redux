@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.components.HealthBar;
+import com.ducks.intangibles.DifficultyControl;
 
 import static com.ducks.DeltaDucks.batch;
 
@@ -49,7 +50,7 @@ public class Hud implements Disposable {
         timeCount = 0;
         score = 0;
         gold = 0;
-        health = 1f;
+        health = DifficultyControl.getValue(3f, 2f, 1.5f);
 
         hpBar = new HealthBar(173, 0,5f,172f,false, health, true);
         viewport = new FitViewport(DeltaDucks.VIRTUAL_WIDTH, DeltaDucks.VIRTUAL_HEIGHT, new OrthographicCamera());
@@ -87,7 +88,6 @@ public class Hud implements Disposable {
 
     /**
      * Draw the UI and health bar (HUD) every delta time interval
-     * @param batch to draw on the screen
      */
     public void draw() {
         batch.setProjectionMatrix(stage.getCamera().combined);

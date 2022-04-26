@@ -124,7 +124,7 @@ public class MainGameScreen implements Screen {
         contactListener = new EntityContactListener();
         world.setContactListener(contactListener);
         //TODO: debug rendering
-        b2dr = new Box2DDebugRenderer(true, false, true, true, false, true);
+        b2dr = new Box2DDebugRenderer(false, false, false, false, false, false);
 
         new B2WorldCreator(world);
 
