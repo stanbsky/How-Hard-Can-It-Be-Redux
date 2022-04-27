@@ -1,7 +1,10 @@
 package com.ducks.components;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.entities.Entity;
+import com.ducks.managers.EntityManager;
 import com.ducks.managers.PowerupManager;
 import com.ducks.tools.IShooter;
 
@@ -24,6 +27,13 @@ public class Shooter {
     public void resetShootTimer() { shootTimer = 0; }
 
     public void skipShootTimer() { shootTimer = shootWaitTime; }
+
+    public void playerShoots() {
+        if (ready() && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            resetShootTimer();
+            EntityManager.spawnBullet();
+        }
+    }
 
     public void update(float deltaTime) {
         shootTimer += deltaTime * randomFactor();

@@ -94,20 +94,10 @@ public class MainGameScreen implements Screen {
     }
 
     /**
-     * Handle any Input
-     */
-    public void handleInput() {
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-            EntityManager.spawnBullet();
-        }
-    }
-
-    /**
      * Update the window every delta time interval
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
-        handleInput();
         questManager.checkForGameOver(this);
 
         // Step forward box2Dworld simulation

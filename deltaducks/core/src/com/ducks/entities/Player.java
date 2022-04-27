@@ -101,6 +101,7 @@ public class Player extends Ship {
                 shield = true;
             }
         }
+        shooter.playerShoots();
         animation.update(deltaTime, getPosition(), direction, moving);
 //        Debug.debug(getPosition());
     }

@@ -163,15 +163,12 @@ public final class EntityManager {
     }
 
     public static void spawnBullet() {
-        if (player.ready()) {
-            player.resetShootTimer();
-            if (PowerupManager.multishotActive()) {
-                registerEntity(new PlayerBullet());
-                registerEntity(new PlayerBullet(30f));
-                registerEntity(new PlayerBullet(-30f));
-            } else {
-                registerEntity(new PlayerBullet());
-            }
+        if (PowerupManager.multishotActive()) {
+            registerEntity(new PlayerBullet());
+            registerEntity(new PlayerBullet(30f));
+            registerEntity(new PlayerBullet(-30f));
+        } else {
+            registerEntity(new PlayerBullet());
         }
     }
 
