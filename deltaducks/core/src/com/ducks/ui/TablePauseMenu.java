@@ -69,13 +69,26 @@ public class TablePauseMenu extends Stage {
 
         buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
-        // Imagine this is the save button...
+        // Save button functionality needed
+        style = new Button.ButtonStyle();
+        style.up = AssetManager.ui.newDrawable("exit_up");
+        style.over = AssetManager.ui.newDrawable("exit_up", Color.LIGHT_GRAY);
+        style.down = AssetManager.ui.newDrawable("exit_down");
         button = new Button(style);
+
+        // Add 10000 to gold
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked (InputEvent event, float x, float y) {
+                Hud.addGold(10000);
+            }
+        });
+
         buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
         Table powerups = new Table();
         powerups.defaults().spaceBottom(5);
-        powerups.add(new ShopButton("Shield", "shield", "500", font)).spaceBottom(5);
+        powerups.add(new ShopButton("Shield", "shield", "500", font));
         powerups.row();
         powerups.add(new ShopButton("Quick Fire", "quickfire", "500", font));
         powerups.row();

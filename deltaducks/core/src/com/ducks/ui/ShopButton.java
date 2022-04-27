@@ -19,10 +19,13 @@ public class ShopButton extends Table {
     private ClickListener clickListener;
     private String powerup;
     private int price;
+    private String name;
+    private String description;
 
     public ShopButton(String label, String powerup, String price, BitmapFont font) {
         setBackground(button_up);
         this.powerup = powerup;
+//        this.price, this.name, this.description = ShopManager.getItem(powerup)
         this.price = Integer.parseInt(price);
         this.setTouchable(Touchable.enabled);
         this.defaults().pad(5).left();
