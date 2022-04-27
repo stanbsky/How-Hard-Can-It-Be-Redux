@@ -26,7 +26,7 @@ public class ShopButton extends Table {
         this.add(new Label(price, new Label.LabelStyle( font , Color.BLACK))).left();
         // Powerup icon & name
         this.add(new Image(AssetManager.ui.newDrawable(powerup))).size(50).right();
-        this.add(new Label(label, new Label.LabelStyle( font , Color.BLACK))).right();
+        this.add(new Label(label, new Label.LabelStyle( font , Color.BLACK))).right().expandX();
 
         addListener(clickListener = new ClickListener());
     }
