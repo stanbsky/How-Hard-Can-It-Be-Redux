@@ -12,6 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.ducks.DeltaDucks;
 import com.ducks.entities.Player;
+import com.ducks.managers.AssetManager;
+import com.ducks.managers.PowerupManager;
+
+import java.util.Objects;
 
 import static com.ducks.DeltaDucks.batch;
 import static com.ducks.managers.AssetManager.*;
@@ -22,19 +26,19 @@ public class TableHud extends Stage {
     private static Image expSymbol;
     private static Label expLabel;
     private static Label expTagLabel;
-    private Table expTable = new Table();
     private static Label countdownLabel;
     private static Image timeSymbol;
     private static Label timeLabel;
-    private Table timeTable = new Table();
     private static Image goldSymbol;
     private static Label goldTagLabel;
     private static Label goldLabel;
-    private Table goldTable = new Table();
 
     private FreeTypeFontGenerator generator;
     private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     private BitmapFont topBarFont;
+
+    private Table powerupList;
+    private Table[] powerupCells;
 
     public TableHud() {
 
@@ -59,10 +63,7 @@ public class TableHud extends Stage {
 //        topBar.setFillParent(true);
         root.add(topBar).expandX().fillX();
 
-        createTopBarUI();
-        topBar.add(expTable);
-        topBar.add(goldTable);
-        topBar.add(timeTable);
+        createTopBarUI(topBar);
 
         root.row();
 
@@ -78,16 +79,31 @@ public class TableHud extends Stage {
         bottomUI.add(hpBar).height(300).width(50);
 
         // TODO: add powerup info box here
-        Table powerupList = new Table();
-        bottomUI.add(powerupList).height(300);
+        powerupList = new Table();
+        powerupCells = new Table[]{new Table(), new Table(), new Table(), new Table(), new Table()};
+        powerupList.bottom();
+        for (Table powerupCell : powerupCells) {
+            powerupCell = makePowerupUI("shield");
+            powerupList.add(powerupCell).size(60);
+            powerupList.row();
+        }
 
+
+        bottomUI.add(powerupList);
+        update();
         // Subtitle button - ShopButton placeholder for layout purposes
 //        ShopButton sub = new ShopButton("shield", font);
 //        bottomUI.add(sub).expandX().bottom();
 
     }
 
-    private void createTopBarUI() {
+    public void update () {
+        for (int i = 0; i < 5; i++) {
+            powerupCells[i].reset();
+        }
+    }
+
+    private void createTopBarUI(Table topBar) {
         expSymbol = new Image(ui.newDrawable("trophy"));
         expTagLabel = new Label("USER EXP", new Label.LabelStyle(topBarFont, Color.WHITE));
         expLabel = new Label(String.format("%d", 0), new Label.LabelStyle(topBarFont, Color.WHITE));
@@ -115,15 +131,33 @@ public class TableHud extends Stage {
         timeTableS.row();
         timeTableS.add(countdownLabel);
 
-
+        Table expTable = new Table();
         expTable.add(expSymbol).size(64);
         expTable.add(expTableS);
 
+        Table goldTable = new Table();
         goldTable.add(goldSymbol).size(64);
         goldTable.add(goldTableS);
 
+        Table timeTable = new Table();
         timeTable.add(timeSymbol).size(64);
         timeTable.add(timeTableS);
+
+        topBar.add(expTable);
+        topBar.add(goldTable);
+        topBar.add(timeTable);
     }
 
+    private Table makePowerupUI(String powerup) {
+        Table thisPowerupCell = new Table();
+
+        if (!Objects.equals(powerup, "")) {
+            thisPowerupCell.add(new Image(AssetManager.ui.newDrawable(powerup))).size(60);
+
+            Label powerupLabel = new Label(PowerupManager.powerupLeft(powerup), new Label.LabelStyle(topBarFont, Color.BLACK));
+            thisPowerupCell.add(powerupLabel);
+        }
+
+        return thisPowerupCell;
+    }
 }
