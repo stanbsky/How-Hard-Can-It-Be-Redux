@@ -6,7 +6,7 @@ import com.ducks.entities.College;
 import com.ducks.entities.Entity;
 import com.ducks.entities.Pirate;
 import com.ducks.managers.EntityManager;
-import com.ducks.ui.Hud;
+import com.ducks.managers.StatsManager;
 import com.ducks.ui.Indicator;
 import com.ducks.ui.Subtitle;
 
@@ -65,7 +65,7 @@ public class Quest {
         indicator.dispose();
 //        objective.dispose(); This stalls the game indefinitely
         subtitle.setSubtitle("Well done!");
-        Hud.addGold(500);
-        Hud.addScore(1000);
+        StatsManager.addGold(500);
+        StatsManager.addScore(1000);
     }
 }

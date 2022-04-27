@@ -10,8 +10,8 @@ import com.ducks.components.Shooter;
 import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.EntityManager;
+import com.ducks.managers.StatsManager;
 import com.ducks.tools.IShooter;
-import com.ducks.ui.Hud;
 import com.ducks.tools.InputParser;
 
 import static com.ducks.tools.FixtureFilter.*;
@@ -109,8 +109,8 @@ public class Pirate extends Ship {
     public void dispose() {
         EntityManager.killPirate(this);
         rigidBody.dispose();
-        Hud.addGold(100);
-        Hud.addScore(1000);
+        StatsManager.addGold(100);
+        StatsManager.addScore(1000);
 
     }
 }

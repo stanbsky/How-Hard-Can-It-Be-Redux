@@ -2,7 +2,6 @@ package com.ducks.managers;
 
 import com.badlogic.gdx.utils.ArrayMap;
 import com.ducks.tools.Triplet;
-import com.ducks.ui.Hud;
 
 public class ShopManager {
 
@@ -26,8 +25,8 @@ public class ShopManager {
 
     public static void buyItem(String item) {
         int itemPrice = items.get(item).x;
-        if (Hud.getGold() > itemPrice) {
-            Hud.addGold(-itemPrice);
+        if (StatsManager.getGold() > itemPrice) {
+            StatsManager.addGold(-itemPrice);
             PowerupManager.newPowerup(item);
         }
     }

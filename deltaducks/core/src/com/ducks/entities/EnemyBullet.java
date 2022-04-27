@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.ducks.components.Texture;
 import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
-import com.ducks.ui.Hud;
+import com.ducks.managers.StatsManager;
 
 import static com.ducks.tools.FixtureFilter.*;
 public class EnemyBullet extends Bullet {
@@ -27,6 +27,6 @@ public class EnemyBullet extends Bullet {
     @Override
     public void dispose() {
         super.dispose();
-        Hud.addScore(50);
+        StatsManager.addScore(50);
     }
 }

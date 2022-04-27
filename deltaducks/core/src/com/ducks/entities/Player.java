@@ -10,7 +10,6 @@ import com.ducks.intangibles.EntityData;
 import com.ducks.managers.PowerupManager;
 import com.ducks.tools.InputParser;
 import com.ducks.components.ShipAnimation;
-import com.ducks.ui.Hud;
 
 import static com.ducks.tools.FixtureFilter.*;
 

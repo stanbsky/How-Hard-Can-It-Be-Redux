@@ -34,7 +34,6 @@ public class MainGameScreen implements Screen {
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
-    private Hud hud;
     private static TablePauseMenu pauseMenu;
 
     private TmxMapLoader mapLoader;
@@ -77,7 +76,6 @@ public class MainGameScreen implements Screen {
     public void show() {
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
-        hud = new Hud();
         newhud = new TableHud();
         pauseMenu = new TablePauseMenu();
         subtitle = new Subtitle();
@@ -135,7 +133,7 @@ public class MainGameScreen implements Screen {
      * @param deltaTime of the game
      */
     public void handleTime(float deltaTime) {
-        if(hud.getTimer()<0.1f){
+        if(StatsManager.getWorldTimer()<=0){
 //            Gdx.app.exit();
             this.dispose();
             game.setScreen(new FinalStorylineScreen(this.game, "Lost"));
@@ -165,12 +163,12 @@ public class MainGameScreen implements Screen {
         world.step(deltaTime, 6, 2);
 
         player.update(deltaTime);
-        hud.update(deltaTime);
         subtitle.update(deltaTime);
         crosshair.update(deltaTime);
         EntityManager.update(deltaTime);
         questManager.update(deltaTime);
         PowerupManager.update(deltaTime);
+        StatsManager.update(deltaTime);
         Debug.update();
 
         gameCam.position.x = player.getPosition().x;

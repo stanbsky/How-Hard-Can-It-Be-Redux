@@ -3,6 +3,7 @@ package com.ducks.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.ducks.DeltaDucks;
 import com.ducks.entities.Player;
+import com.ducks.managers.ShopManager;
+import com.ducks.managers.StatsManager;
 
 import static com.ducks.DeltaDucks.batch;
 import static com.ducks.managers.AssetManager.*;
@@ -81,7 +84,6 @@ public class TableHud extends Stage {
         // Subtitle button - ShopButton placeholder for layout purposes
         ShopButton sub = new ShopButton("shield", font);
         bottomUI.add(sub).expandX().bottom();
-
     }
 
     private void createTopBarUI() {
@@ -120,6 +122,13 @@ public class TableHud extends Stage {
 
         timeTable.add(timeSymbol);
         timeTable.add(timeTableS);
+    }
+
+    public void draw() {
+        timeLabel.setText(String.format("%d", StatsManager.getWorldTimer()));
+        goldLabel.setText(String.format("%d", StatsManager.getGold()));
+        expLabel.setText(String.format("%d", StatsManager.getScore()));
+        super.draw();
     }
 
 }
