@@ -83,46 +83,46 @@ public class Hud implements Disposable {
         timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
         countdownLabel = new Label(String.format("%d", worldTimer), new Label.LabelStyle(font, Color.WHITE));
 
+        // Exp
+
         Table expTable = new Table();
         expTable.add(expTagLabel).colspan(2);
         expTable.row();
         expTable.add(expLabel);
-
-        Table goldTable = new Table();
-        goldTable.add(goldTagLabel).colspan(2);
-        goldTable.row();
-        goldTable.add(goldLabel);
-
-        Table timeTable = new Table();
-        timeTable.add(timeLabel).colspan(2);
-        timeTable.row();
-        timeTable.add(countdownLabel);
 
         Table expTable2 = new Table();
         expTable2.defaults().size(50);
         expTable2.add(expSymbol).padRight(4);
         expTable2.add(expTable);
 
+        // Gold
+
+        Table goldTable = new Table();
+        goldTable.add(goldTagLabel).colspan(2);
+        goldTable.row();
+        goldTable.add(goldLabel);
+
         Table goldTable2 = new Table();
         goldTable2.defaults().size(50);
         goldTable2.add(goldSymbol);
         goldTable2.add(goldTable);
+
+        // Time
+
+        Table timeTable = new Table();
+        timeTable.add(timeLabel).colspan(2);
+        timeTable.row();
+        timeTable.add(countdownLabel);
 
         Table timeTable2 = new Table();
         timeTable2.defaults().size(50);
         timeTable2.add(timeSymbol);
         timeTable2.add(timeTable);
 
-//        table.add(expTagLabel).expandX().padTop(10);
-//        table.add(goldSymbol);
-//        table.add(goldTagLabel).expandX().padTop(10);
         table.add(expTable2);
         table.add(goldTable2);
         table.add(timeTable2);
-//        table.row();
-//        table.add(expLabel);
-//        table.add(goldLabel);
-//        table.add(countdownLabel);
+
         stage.addActor(table);
     }
 
