@@ -43,7 +43,7 @@ public class TableHud extends Stage {
         parameter.size = 25;
 
         topBarFont = generator.generateFont(parameter);
-        topBarFont.getData().setScale(.5f);
+        topBarFont.getData().setScale(.8f);
 
         // root
         Table root = new Table();
@@ -54,8 +54,9 @@ public class TableHud extends Stage {
 
         // topBar
         Table topBar = new Table();
-        topBar.setDebug(true);
-        topBar.defaults().pad(10).expandX().fillX();
+        topBar.setDebug(false);
+        topBar.defaults().pad(10).expandX().height(70);
+//        topBar.setFillParent(true);
         root.add(topBar).expandX().fillX();
 
         createTopBarUI();
@@ -67,7 +68,7 @@ public class TableHud extends Stage {
 
         // bottomUI
         Table bottomUI = new Table();
-        bottomUI.bottom();
+        bottomUI.bottom().left();
         bottomUI.setDebug(true);
         bottomUI.defaults().pad(10);
         root.add(bottomUI).expand().fill();
@@ -77,10 +78,12 @@ public class TableHud extends Stage {
         bottomUI.add(hpBar).height(300).width(50);
 
         // TODO: add powerup info box here
+        Table powerupList = new Table();
+        bottomUI.add(powerupList).height(300);
 
         // Subtitle button - ShopButton placeholder for layout purposes
-        ShopButton sub = new ShopButton("shield", font);
-        bottomUI.add(sub).expandX().bottom();
+//        ShopButton sub = new ShopButton("shield", font);
+//        bottomUI.add(sub).expandX().bottom();
 
     }
 
@@ -98,27 +101,28 @@ public class TableHud extends Stage {
         countdownLabel = new Label(String.format("%d", 0), new Label.LabelStyle(topBarFont, Color.WHITE));
 
         Table expTableS = new Table();
-        expTableS.add(expTagLabel).colspan(2);
+        expTableS.add(expTagLabel);
         expTableS.row();
         expTableS.add(expLabel);
 
         Table goldTableS = new Table();
-        goldTableS.add(goldTagLabel).colspan(2);
+        goldTableS.add(goldTagLabel);
         goldTableS.row();
         goldTableS.add(goldLabel);
 
         Table timeTableS = new Table();
-        timeTableS.add(timeLabel).colspan(2);
+        timeTableS.add(timeLabel);
         timeTableS.row();
         timeTableS.add(countdownLabel);
 
-        expTable.add(expSymbol);
+
+        expTable.add(expSymbol).size(64);
         expTable.add(expTableS);
 
-        goldTable.add(goldSymbol);
+        goldTable.add(goldSymbol).size(64);
         goldTable.add(goldTableS);
 
-        timeTable.add(timeSymbol);
+        timeTable.add(timeSymbol).size(64);
         timeTable.add(timeTableS);
     }
 

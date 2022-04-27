@@ -70,7 +70,6 @@ public final class EntityManager {
             }
 
         }
-        System.out.println(livingPiratesExist());
         entities.removeAll(cleanup, true);
     }
 
