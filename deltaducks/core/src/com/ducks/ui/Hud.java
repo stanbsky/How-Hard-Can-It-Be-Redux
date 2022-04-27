@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.components.HealthBar;
+import com.ducks.entities.Player;
 import com.ducks.intangibles.DifficultyControl;
 
 import static com.ducks.DeltaDucks.batch;
@@ -40,7 +41,6 @@ public class Hud implements Disposable {
     private static Label goldLabel;
     private static Label expTagLabel;
 
-    private static float health;
     private HealthBar hpBar;
 
     private FreeTypeFontGenerator generator;
@@ -54,9 +54,8 @@ public class Hud implements Disposable {
         timeCount = 0;
         score = 0;
         gold = 0;
-        health = DifficultyControl.getValue(3f, 2f, 1.6f);
 
-        hpBar = new HealthBar(173, 0,5f,172f,false, health, true);
+        hpBar = new HealthBar(173, 0,5f,172f,false, Player.getHealth(), true);
         viewport = new FitViewport(DeltaDucks.VIRTUAL_WIDTH, DeltaDucks.VIRTUAL_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, batch);
 
@@ -153,7 +152,7 @@ public class Hud implements Disposable {
      */
     public void update(float deltaTime) {
         timeCount += deltaTime;
-        hpBar.update(health);
+        hpBar.update(Player.getHealth());
         if(timeCount >= 1) {
             worldTimer--;
             countdownLabel.setText(String.format("%d", worldTimer));
@@ -199,16 +198,9 @@ public class Hud implements Disposable {
      * Get the value of health
      * @return health
      */
-    public static float getHealth() {
-        return health;
-    }
-
-    /**
-     * Decrease the health (damage)
-     */
-    public static void decHealth() {
-        health-=.2f;
-    }
+//    public static float getHealth() {
+//        return health;
+//    }
 
     /**
      * Get the world time life (clock)

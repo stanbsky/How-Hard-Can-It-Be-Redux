@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.ducks.components.Shooter;
+import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.PowerupManager;
 import com.ducks.tools.InputParser;
@@ -31,9 +32,12 @@ public class Player extends Ship {
     private boolean supersized = false;
     private boolean shield = false;
 
+    private static float health;
+
     public Player() {
         super();
         shootWaitTime = 0.3f;
+        health = DifficultyControl.getValue(3f, 2f, 1.6f);
         shooter = new Shooter(shootWaitTime);
         category = PLAYER;
         mask = MASK_ALL - PLAYER_BULLET;
@@ -117,7 +121,20 @@ public class Player extends Ship {
                 shield = false;
             }
         } else {
-            Hud.decHealth();
+            decHealth();
         }
+    }
+
+    public static float getHealth () {
+        return health;
+    }
+
+    public static void setHealth (float newHealth) { health = newHealth; }
+
+    /**
+     * Decrease the health (damage)
+     */
+    public static void decHealth() {
+        health -= .2f;
     }
 }
