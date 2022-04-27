@@ -19,12 +19,9 @@ import com.ducks.DeltaDucks;
 import com.ducks.managers.*;
 import com.ducks.tools.Debug;
 import com.ducks.tools.EntityContactListener;
-import com.ducks.ui.Hud;
-import com.ducks.ui.Subtitle;
+import com.ducks.ui.*;
 import com.ducks.entities.Player;
 import com.ducks.tools.B2WorldCreator;
-import com.ducks.ui.Crosshair;
-import com.ducks.ui.TablePauseMenu;
 
 import static com.ducks.DeltaDucks.batch;
 import static com.ducks.DeltaDucks.scl;
@@ -57,6 +54,7 @@ public class MainGameScreen implements Screen {
     public static Player player;
     private Crosshair crosshair;
     private Subtitle subtitle;
+    private TableHud newhud;
 
     private EntityContactListener contactListener;
 
@@ -80,6 +78,7 @@ public class MainGameScreen implements Screen {
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
         hud = new Hud();
+        newhud = new TableHud();
         pauseMenu = new TablePauseMenu();
         subtitle = new Subtitle();
 
@@ -225,7 +224,8 @@ public class MainGameScreen implements Screen {
         batch.end();
 
         // Set our batch to now draw what the Hud camera sees.
-        hud.draw();
+//        hud.draw();
+        newhud.draw();
 
 
         // Display the pause menu, only when necessary

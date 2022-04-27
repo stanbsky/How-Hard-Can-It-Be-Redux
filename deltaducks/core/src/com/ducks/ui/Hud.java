@@ -67,6 +67,7 @@ public class Hud implements Disposable {
         font.getData().setScale(.5f);
 
         Table table = new Table();
+        table.setDebug(true);
         table.top();
         table.setFillParent(true);
         table.defaults().expandX().padTop(10);
