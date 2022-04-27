@@ -35,10 +35,16 @@ public class TableHud extends Stage {
 
     private FreeTypeFontGenerator generator;
     private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
-    private BitmapFont topBarFont;
+    private static BitmapFont topBarFont;
 
-    private Table powerupList;
+    private static Table powerupList;
     private Table[] powerupCells;
+
+    private static Table shieldCell;
+    private static Table multishotCell;
+    private static Table hotshotCell;
+    private static Table quickshotCell;
+    private static Table supersizeCell;
 
     public TableHud() {
 
@@ -81,25 +87,40 @@ public class TableHud extends Stage {
         // TODO: add powerup info box here
         powerupList = new Table();
         powerupCells = new Table[]{new Table(), new Table(), new Table(), new Table(), new Table()};
-        powerupList.bottom();
-        for (Table powerupCell : powerupCells) {
-            powerupCell = makePowerupUI("shield");
-            powerupList.add(powerupCell).size(60);
-            powerupList.row();
-        }
-
 
         bottomUI.add(powerupList);
-        update();
         // Subtitle button - ShopButton placeholder for layout purposes
 //        ShopButton sub = new ShopButton("shield", font);
 //        bottomUI.add(sub).expandX().bottom();
 
     }
 
-    public void update () {
-        for (int i = 0; i < 5; i++) {
-            powerupCells[i].reset();
+    public static void update() {
+        powerupList.reset();
+        powerupList.bottom();
+        if (PowerupManager.shieldActive()) {
+            shieldCell = makePowerupUI("shield");
+            powerupList.add(shieldCell).size(60);
+            powerupList.row();
+        }
+        if (PowerupManager.multishotActive()) {
+            multishotCell = makePowerupUI("spray");
+            powerupList.add(multishotCell).size(60);
+            powerupList.row();
+        }
+        if (PowerupManager.hotshotActive()) {
+            hotshotCell = makePowerupUI("bullet_hotshot");
+            powerupList.add(hotshotCell).size(60);
+            powerupList.row();
+        }
+        if (PowerupManager.quickshotActive()) {
+            quickshotCell = makePowerupUI("quickfire");
+            powerupList.add(quickshotCell).size(60);
+            powerupList.row();
+        }
+        if (PowerupManager.supersizeActive()) {
+            supersizeCell = makePowerupUI("supersize");
+            powerupList.add(supersizeCell).size(60).bottom().expandY();
         }
     }
 
@@ -148,7 +169,7 @@ public class TableHud extends Stage {
         topBar.add(timeTable);
     }
 
-    private Table makePowerupUI(String powerup) {
+    private static Table makePowerupUI(String powerup) {
         Table thisPowerupCell = new Table();
 
         if (!Objects.equals(powerup, "")) {
