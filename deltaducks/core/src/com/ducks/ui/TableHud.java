@@ -38,7 +38,6 @@ public class TableHud extends Stage {
     private static BitmapFont topBarFont;
 
     private static Table powerupList;
-    private Table[] powerupCells;
 
     private static Table shieldCell;
     private static Table multishotCell;
@@ -86,7 +85,6 @@ public class TableHud extends Stage {
 
         // TODO: add powerup info box here
         powerupList = new Table();
-        powerupCells = new Table[]{new Table(), new Table(), new Table(), new Table(), new Table()};
 
         bottomUI.add(powerupList);
         // Subtitle button - ShopButton placeholder for layout purposes
