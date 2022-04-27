@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -13,17 +12,14 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
-import com.ducks.entities.Entity;
 import com.ducks.managers.*;
 import com.ducks.tools.Debug;
 import com.ducks.tools.EntityContactListener;
 import com.ducks.ui.*;
 import com.ducks.entities.Player;
-import com.ducks.tools.B2WorldCreator;
 
 import static com.ducks.DeltaDucks.batch;
 import static com.ducks.DeltaDucks.scl;
@@ -37,20 +33,18 @@ public class MainGameScreen implements Screen {
     private static TablePauseMenu pauseMenu;
 
     private Camera camera;
-    private TmxMapLoader mapLoader;
     public static TiledMap map;
 
     private static boolean isPaused = false;
     private boolean escPressed;
 
-    // Box2d Variables
     private World world;
 
 
     public static Player player;
     private Crosshair crosshair;
     private Subtitle subtitle;
-    private TableHud newhud;
+    private TableHud hud;
 
     private EntityContactListener contactListener;
 
@@ -73,7 +67,7 @@ public class MainGameScreen implements Screen {
      */
     @Override
     public void show() {
-        newhud = new TableHud();
+        hud = new TableHud();
         pauseMenu = new TablePauseMenu();
         subtitle = new Subtitle();
 
@@ -93,7 +87,6 @@ public class MainGameScreen implements Screen {
         contactListener = new EntityContactListener();
         world.setContactListener(contactListener);
 
-
         EntityManager.buildWorldMap(world);
 
         crosshair = new Crosshair();
@@ -109,41 +102,18 @@ public class MainGameScreen implements Screen {
         }
     }
 
-
-    /**
-     * Handle any changes to the game corresponding to the interval of time
-     * @param deltaTime of the game
-     */
-    public void handleTime(float deltaTime) {
-        if(StatsManager.getWorldTimer()<=0){
-//            Gdx.app.exit();
-            this.dispose();
-            game.setScreen(new FinalStorylineScreen(this.game, "Lost"));
-        }
-        if(Player.getHealth()<=0f) {
-            game.setScreen(new FinalStorylineScreen(this.game, "Lost"));
-        }
-        if(!EntityManager.livingCollegesExist()) {
-//            game.setScreen(new FinalStorylineScreen(this.game, "Won"));
-        }
-    }
-
-    public static void togglePause() {
-        isPaused = !isPaused;
-        Gdx.input.setInputProcessor(isPaused ? pauseMenu : null);
-        Gdx.input.setCursorCatched(!isPaused);
-    }
-
     /**
      * Update the window every delta time interval
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
         handleInput();
-        handleTime(deltaTime);
+        questManager.checkForGameOver(this);
 
+        // Step forward box2Dworld simulation
         world.step(deltaTime, 6, 2);
 
+        // Update all entities
         player.update(deltaTime);
         subtitle.update(deltaTime);
         crosshair.update(deltaTime);
@@ -162,24 +132,11 @@ public class MainGameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            if (!escPressed) {
-                escPressed = true;
-                togglePause();
-            }
-        }
-        else if (escPressed) {
-            escPressed = false;
-        }
-        if (!isPaused) {
-            update(delta);
-        }
-        Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        checkPausedStatus();
+        updateGameUnlessPaused(delta);
 
+        // Draw game map and entities
         camera.render();
-
-
         batch.setProjectionMatrix(camera.projection);
         batch.begin();
         player.draw();
@@ -187,45 +144,14 @@ public class MainGameScreen implements Screen {
         EntityManager.render();
         batch.end();
 
-        // Set our batch to now draw what the Hud camera sees.
-//        hud.draw();
-        newhud.draw();
+        // Draw UI elements
+        hud.draw();
+        if (isPaused)
+            showPauseMenu();
 
-
-        // Display the pause menu, only when necessary
-        if (isPaused) {
-            pauseMenu.act();
-            pauseMenu.draw();
-        }
-
+        // TODO: remove once Subtitle is refactored
         batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
         subtitle.stage.draw();
-
-    }
-
-    /**
-     * Resize the window
-     * @param width of new window
-     * @param height of new window
-     */
-    @Override
-    public void resize(int width, int height) {
-        camera.resize(width, height);
-        pauseMenu.getViewport().update(width, height);
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
 
     }
 
@@ -240,6 +166,52 @@ public class MainGameScreen implements Screen {
         Debug.dispose();
 //        hud.dispose();
         pauseMenu.dispose();
+    }
+
+    /**
+     * Resize the window
+     * @param width of new window
+     * @param height of new window
+     */
+    @Override
+    public void resize(int width, int height) {
+        camera.resize(width, height);
+        pauseMenu.getViewport().update(width, height);
+    }
+
+    public void gameOver(String status) {
+        this.dispose();
+        game.setScreen(new FinalStorylineScreen(game, status));
+    }
+
+
+    // PAUSE MENU RELATED FEATURES
+
+    public static void togglePause() {
+        isPaused = !isPaused;
+        Gdx.input.setInputProcessor(isPaused ? pauseMenu : null);
+        Gdx.input.setCursorCatched(!isPaused);
+    }
+
+    private void updateGameUnlessPaused(float delta) {
+        if (!isPaused)
+            update(delta);
+    }
+
+    private void checkPausedStatus() {
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            if (!escPressed) {
+                escPressed = true;
+                togglePause();
+            }
+        } else if (escPressed) {
+            escPressed = false;
+        }
+    }
+
+    private void showPauseMenu() {
+        pauseMenu.act();
+        pauseMenu.draw();
     }
 
     private class Camera {
@@ -291,6 +263,8 @@ public class MainGameScreen implements Screen {
         }
 
         public void render() {
+            Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             // Render our game map
             renderer.render();
             Debug.render(world, gameCam);
@@ -303,5 +277,22 @@ public class MainGameScreen implements Screen {
         public void dispose() {
             renderer.dispose();
         }
+    }
+
+    // BOILERPLATE OVERRIDES
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
     }
 }

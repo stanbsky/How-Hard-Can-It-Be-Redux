@@ -2,8 +2,12 @@ package com.ducks.managers;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.ducks.DeltaDucks;
+import com.ducks.entities.Player;
 import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.Quest;
+import com.ducks.screens.FinalStorylineScreen;
+import com.ducks.screens.MainGameScreen;
 import com.ducks.ui.Subtitle;
 
 import java.util.Random;
@@ -19,6 +23,7 @@ public class QuestManager {
     private float stateTime;
     private float spawnTime = 4;
     private int finalQuestCounter = DifficultyControl.getValue(4, 6, 9);
+    private boolean finalQuestCompleted = false;
     private int finishedQuests = 0;
     private boolean debug = false;
 
@@ -57,13 +62,24 @@ public class QuestManager {
 
     }
 
-
     private void checkQuestCompletion() {
         if (currentQuest.isCompleted()) {
             finishedQuests++;
             currentQuest.dispose();
             currentQuest = null;
         }
+    }
+
+    public void checkForGameOver(MainGameScreen gameScreen) {
+        // Out of time
+        if (StatsManager.getWorldTimer() <= 0)
+            gameScreen.gameOver("Lost");
+        // Player died
+        if (Player.getHealth() <= 0f)
+            gameScreen.gameOver("Lost");
+        // Boss quest finished
+        if (finalQuestCompleted)
+            gameScreen.gameOver("Won");
     }
 
     public void update(float deltaTime) {
