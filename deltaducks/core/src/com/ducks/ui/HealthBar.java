@@ -11,7 +11,6 @@ import static com.ducks.managers.AssetManager.button_up;
 import static com.ducks.managers.AssetManager.ui;
 
 public class HealthBar extends Table {
-
     private Image health;
     private final int FULL_WIDTH = 30;
     private final int FULL_HEIGHT = 284;
@@ -31,6 +30,6 @@ public class HealthBar extends Table {
     }
 
     private void updateHPBarSize() {
-//        health.setHeight(FULL_HEIGHT * Player.getHealthPercentage());
+        health.setHeight(FULL_HEIGHT * Player.getHealthPercentage());
     }
 }
