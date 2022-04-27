@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -33,16 +34,11 @@ import static com.ducks.DeltaDucks.scl;
 public class MainGameScreen implements Screen {
     DeltaDucks game;
 
-    private OrthographicCamera gameCam;
-    private Viewport gamePort;
     private static TablePauseMenu pauseMenu;
 
+    private Camera camera;
     private TmxMapLoader mapLoader;
     public static TiledMap map;
-    private MapProperties prop;
-    private OrthogonalTiledMapRenderer renderer;
-    private int mapPixelWidth;
-    private int mapPixelHeight;
 
     private static boolean isPaused = false;
     private boolean escPressed;
@@ -82,7 +78,7 @@ public class MainGameScreen implements Screen {
         subtitle = new Subtitle();
 
 
-        setupGameCam();
+        camera = new Camera();
 
         // Set Up Box2D
         world = new World(new Vector2(0, 0), true);
@@ -113,25 +109,6 @@ public class MainGameScreen implements Screen {
         }
     }
 
-    private void setupGameCam() {
-        gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
-
-        // Create Map
-        mapLoader = new TmxMapLoader();
-        map = mapLoader.load("abi_map.tmx");
-        prop = map.getProperties();
-        renderer = new OrthogonalTiledMapRenderer(map, DeltaDucks.TILEED_MAP_SCALE / DeltaDucks.PIXEL_PER_METER);
-
-        int mapWidth = prop.get("width", Integer.class);
-        int mapHeight = prop.get("height", Integer.class);
-        int tilePixelWidth = prop.get("tilewidth", Integer.class);
-        int tilePixelHeight = prop.get("tileheight", Integer.class);
-        mapPixelWidth = mapWidth * tilePixelWidth;
-        mapPixelHeight = mapHeight * tilePixelHeight;
-
-        gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
-    }
 
     /**
      * Handle any changes to the game corresponding to the interval of time
@@ -176,18 +153,7 @@ public class MainGameScreen implements Screen {
         StatsManager.update(deltaTime);
         Debug.update();
 
-        gameCam.position.x = player.getPosition().x;
-        gameCam.position.y = player.getPosition().y;
-
-        // Keeps camera centered if the ship reaches the edge of the map
-        gameCam.position.x = MathUtils.clamp(gameCam.position.x,
-                gameCam.viewportWidth/2, scl(mapPixelWidth) - gameCam.viewportWidth/2);
-        gameCam.position.y = MathUtils.clamp(gameCam.position.y,
-                gameCam.viewportHeight/2, scl(mapPixelHeight) - gameCam.viewportHeight/2);
-
-        gameCam.update();
-
-        renderer.setView(gameCam);
+        camera.update();
     }
 
     /**
@@ -211,13 +177,10 @@ public class MainGameScreen implements Screen {
         Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Render our game map
-        renderer.render();
-
-        Debug.render(world, gameCam);
+        camera.render();
 
 
-        batch.setProjectionMatrix(gameCam.combined);
+        batch.setProjectionMatrix(camera.projection);
         batch.begin();
         player.draw();
         crosshair.draw();
@@ -247,7 +210,7 @@ public class MainGameScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-        gamePort.update(width, height);
+        camera.resize(width, height);
         pauseMenu.getViewport().update(width, height);
     }
 
@@ -272,10 +235,73 @@ public class MainGameScreen implements Screen {
     @Override
     public void dispose() {
         map.dispose();
-        renderer.dispose();
+        camera.renderer.dispose();
 //        world.dispose();
         Debug.dispose();
 //        hud.dispose();
         pauseMenu.dispose();
+    }
+
+    private class Camera {
+        public OrthographicCamera gameCam;
+        public Viewport gamePort;
+        public MapProperties prop;
+        public OrthogonalTiledMapRenderer renderer;
+        public int mapPixelWidth;
+        public int mapPixelHeight;
+        public Matrix4 projection;
+
+        public Camera() {
+            setupGameCam();
+        }
+
+        private void setupGameCam() {
+            gameCam = new OrthographicCamera();
+            gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
+
+            // Create Map
+            TmxMapLoader mapLoader = new TmxMapLoader();
+            map = mapLoader.load("abi_map.tmx");
+            prop = map.getProperties();
+            renderer = new OrthogonalTiledMapRenderer(map, DeltaDucks.TILEED_MAP_SCALE / DeltaDucks.PIXEL_PER_METER);
+
+            int mapWidth = prop.get("width", Integer.class);
+            int mapHeight = prop.get("height", Integer.class);
+            int tilePixelWidth = prop.get("tilewidth", Integer.class);
+            int tilePixelHeight = prop.get("tileheight", Integer.class);
+            mapPixelWidth = mapWidth * tilePixelWidth;
+            mapPixelHeight = mapHeight * tilePixelHeight;
+
+            gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
+            projection = gameCam.combined;
+        }
+
+        public void update() {
+            gameCam.position.x = player.getPosition().x;
+            gameCam.position.y = player.getPosition().y;
+
+            // Keeps camera centered if the ship reaches the edge of the map
+            gameCam.position.x = MathUtils.clamp(gameCam.position.x,
+                    gameCam.viewportWidth/2, scl(mapPixelWidth) - gameCam.viewportWidth/2);
+            gameCam.position.y = MathUtils.clamp(gameCam.position.y,
+                    gameCam.viewportHeight/2, scl(mapPixelHeight) - gameCam.viewportHeight/2);
+
+            gameCam.update();
+            renderer.setView(gameCam);
+        }
+
+        public void render() {
+            // Render our game map
+            renderer.render();
+            Debug.render(world, gameCam);
+        }
+
+        public void resize(int width, int height) {
+            gamePort.update(width, height);
+        }
+
+        public void dispose() {
+            renderer.dispose();
+        }
     }
 }
