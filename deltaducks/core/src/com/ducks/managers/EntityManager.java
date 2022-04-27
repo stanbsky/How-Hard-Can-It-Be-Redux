@@ -4,11 +4,13 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.components.Shooter;
 import com.ducks.entities.*;
 import com.ducks.intangibles.DifficultyControl;
+import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.IDrawable;
 import com.ducks.tools.IShooter;
 
@@ -36,17 +38,25 @@ public final class EntityManager {
     private static final float powerupSpawnChance = DifficultyControl.getValue(0.7f, 0.5f, 0.4f);
 
     public static void Initialize() {
+        entities = new Array<>();
+    }
+
+    /**
+     * Separated from Initialize to simplify testing
+     */
+    public static void spawnEntities() {
         powerupSpawns = getListOfSpawns("powerups");
         pirateSpawns = getListOfSpawns("pirates");
         collegeSpawns = getListOfSpawns("colleges");
         collegeSpawns.shuffle();
         chestSpawns = getListOfSpawns("chests");
-
-        entities = new Array<>();
-
         spawnColleges();
         spawnPirates();
         spawnPowerups();
+    }
+
+    public static void buildWorldMap(World world) {
+        new B2WorldCreator(world);
     }
 
     public static int registerEntity(IDrawable entity) {
@@ -70,7 +80,6 @@ public final class EntityManager {
             }
 
         }
-        System.out.println(livingPiratesExist());
         entities.removeAll(cleanup, true);
     }
 

@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
+import com.ducks.entities.Entity;
 import com.ducks.managers.*;
 import com.ducks.tools.Debug;
 import com.ducks.tools.EntityContactListener;
@@ -48,7 +49,7 @@ public class MainGameScreen implements Screen {
 
     // Box2d Variables
     private World world;
-    private Box2DDebugRenderer b2dr;
+
 
     public static Player player;
     private Crosshair crosshair;
@@ -58,6 +59,8 @@ public class MainGameScreen implements Screen {
     private EntityContactListener contactListener;
 
     private QuestManager questManager;
+
+    private boolean debug = false;
 
     /**
      * Constructor
@@ -74,29 +77,12 @@ public class MainGameScreen implements Screen {
      */
     @Override
     public void show() {
-        gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
         newhud = new TableHud();
         pauseMenu = new TablePauseMenu();
         subtitle = new Subtitle();
 
-        // Create Map
-        mapLoader = new TmxMapLoader();
-//        map = mapLoader.load("test_map.tmx");
-        map = mapLoader.load("abi_map.tmx");
-        prop = map.getProperties();
-        renderer = new OrthogonalTiledMapRenderer(map, DeltaDucks.TILEED_MAP_SCALE / DeltaDucks.PIXEL_PER_METER);
 
-        int mapWidth = prop.get("width", Integer.class);
-        int mapHeight = prop.get("height", Integer.class);
-        int tilePixelWidth = prop.get("tilewidth", Integer.class);
-        int tilePixelHeight = prop.get("tileheight", Integer.class);
-        mapPixelWidth = mapWidth * tilePixelWidth;
-        mapPixelHeight = mapHeight * tilePixelHeight;
-
-
-        gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
-
+        setupGameCam();
 
         // Set Up Box2D
         world = new World(new Vector2(0, 0), true);
@@ -105,15 +91,14 @@ public class MainGameScreen implements Screen {
         EntityManager.Initialize();
         Debug.Initialize();
 
+        EntityManager.spawnEntities();
         player = new Player();
 
-//        contactListener = new MyContactListener(player, subtitle);
         contactListener = new EntityContactListener();
         world.setContactListener(contactListener);
-        //TODO: debug rendering
-        b2dr = new Box2DDebugRenderer(false, false, false, false, false, false);
 
-        new B2WorldCreator(world);
+
+        EntityManager.buildWorldMap(world);
 
         crosshair = new Crosshair();
         questManager = new QuestManager(subtitle);
@@ -126,6 +111,26 @@ public class MainGameScreen implements Screen {
         if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
             EntityManager.spawnBullet();
         }
+    }
+
+    private void setupGameCam() {
+        gameCam = new OrthographicCamera();
+        gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
+
+        // Create Map
+        mapLoader = new TmxMapLoader();
+        map = mapLoader.load("abi_map.tmx");
+        prop = map.getProperties();
+        renderer = new OrthogonalTiledMapRenderer(map, DeltaDucks.TILEED_MAP_SCALE / DeltaDucks.PIXEL_PER_METER);
+
+        int mapWidth = prop.get("width", Integer.class);
+        int mapHeight = prop.get("height", Integer.class);
+        int tilePixelWidth = prop.get("tilewidth", Integer.class);
+        int tilePixelHeight = prop.get("tileheight", Integer.class);
+        mapPixelWidth = mapWidth * tilePixelWidth;
+        mapPixelHeight = mapHeight * tilePixelHeight;
+
+        gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
     }
 
     /**
@@ -209,9 +214,7 @@ public class MainGameScreen implements Screen {
         // Render our game map
         renderer.render();
 
-        //TODO: debug rendering
-        // Render our Box2DDebugLines
-        b2dr.render(world, gameCam.combined);
+        Debug.render(world, gameCam);
 
 
         batch.setProjectionMatrix(gameCam.combined);
@@ -271,8 +274,7 @@ public class MainGameScreen implements Screen {
         map.dispose();
         renderer.dispose();
 //        world.dispose();
-        //TODO: debug rendering
-        b2dr.dispose();
+        Debug.dispose();
 //        hud.dispose();
         pauseMenu.dispose();
     }
