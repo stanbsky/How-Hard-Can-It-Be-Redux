@@ -64,7 +64,7 @@ public class Hud implements Disposable {
         parameter.size = 25;
 
         BitmapFont font = generator.generateFont(parameter);
-        font.getData().setScale(.5f);
+        font.getData().setScale(.6f);
 
         Table table = new Table();
         table.top();
@@ -92,7 +92,7 @@ public class Hud implements Disposable {
 
         Table expTable2 = new Table();
         expTable2.defaults().size(50);
-        expTable2.add(expSymbol).padRight(4);
+        expTable2.add(expSymbol).padRight(8);
         expTable2.add(expTable);
 
         // Gold

@@ -26,7 +26,6 @@ public class Pirate extends Ship {
 
     private boolean playerInRange = false;
     private boolean isAngry = false;
-    private int id;
 
     public Pirate(String college, Vector2 spawn) {
         this(college, spawn.x, spawn.y);
@@ -108,13 +107,10 @@ public class Pirate extends Ship {
     }
 
     public void dispose() {
-        EntityManager.pirates.removeIndex(id);
+        EntityManager.killPirate(this);
         rigidBody.dispose();
         Hud.addGold(100);
         Hud.addScore(1000);
-    }
 
-    public void setId(int id) {
-        this.id = id;
     }
 }
