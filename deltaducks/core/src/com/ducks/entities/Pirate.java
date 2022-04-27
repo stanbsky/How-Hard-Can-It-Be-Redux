@@ -14,7 +14,6 @@ import com.ducks.tools.IShooter;
 import com.ducks.ui.Hud;
 import com.ducks.tools.InputParser;
 
-import static com.ducks.DeltaDucks.batch;
 import static com.ducks.tools.FixtureFilter.*;
 
 public class Pirate extends Ship {
@@ -27,8 +26,7 @@ public class Pirate extends Ship {
 
     private boolean playerInRange = false;
     private boolean isAngry = false;
-
-
+    private int id;
 
     public Pirate(String college, Vector2 spawn) {
         this(college, spawn.x, spawn.y);
@@ -110,8 +108,13 @@ public class Pirate extends Ship {
     }
 
     public void dispose() {
+        EntityManager.pirates.removeIndex(id);
         rigidBody.dispose();
         Hud.addGold(100);
         Hud.addScore(1000);
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
