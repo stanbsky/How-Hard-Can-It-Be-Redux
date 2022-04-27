@@ -30,27 +30,22 @@ import static com.ducks.DeltaDucks.scl;
 public class MainGameScreen implements Screen {
     DeltaDucks game;
 
-    private static TablePauseMenu pauseMenu;
-
-    private Camera camera;
+    // World & related mechanics
     public static TiledMap map;
-
-    private static boolean isPaused = false;
-    private boolean escPressed;
-
     private World world;
+    private Camera camera;
+    private EntityContactListener contactListener;
 
+    // UI
+    private static TablePauseMenu pauseMenu;
+    private TableHud hud;
 
+    // Entities
     public static Player player;
     private Crosshair crosshair;
     private Subtitle subtitle;
-    private TableHud hud;
-
-    private EntityContactListener contactListener;
 
     private QuestManager questManager;
-
-    private boolean debug = false;
 
     /**
      * Constructor
@@ -59,6 +54,8 @@ public class MainGameScreen implements Screen {
     public MainGameScreen(DeltaDucks game) {
         this.game = game;
         AssetManager.Initialize();
+        EntityManager.Initialize();
+        Debug.Initialize();
         Gdx.input.setCursorCatched(true);
     }
 
@@ -67,29 +64,25 @@ public class MainGameScreen implements Screen {
      */
     @Override
     public void show() {
-        hud = new TableHud();
-        pauseMenu = new TablePauseMenu();
-        subtitle = new Subtitle();
-
-
         camera = new Camera();
 
-        // Set Up Box2D
+        // Set up Box2D
         world = new World(new Vector2(0, 0), true);
         PhysicsManager.Initialize(world);
+        contactListener = new EntityContactListener();
+        world.setContactListener(contactListener);
+        EntityManager.buildWorldMap(world);
 
-        EntityManager.Initialize();
-        Debug.Initialize();
-
+        // Set up entities
         EntityManager.spawnEntities();
         player = new Player();
 
-        contactListener = new EntityContactListener();
-        world.setContactListener(contactListener);
-
-        EntityManager.buildWorldMap(world);
-
+        // Set up UI
+        hud = new TableHud();
+        pauseMenu = new TablePauseMenu();
+        subtitle = new Subtitle();
         crosshair = new Crosshair();
+
         questManager = new QuestManager(subtitle);
     }
 
@@ -176,6 +169,11 @@ public class MainGameScreen implements Screen {
 
 
     // PAUSE MENU RELATED FEATURES
+    // NB: these are not hidden in an inner class due to
+    // the need for static access in UI buttons to toggle pause
+
+    private static boolean isPaused = false;
+    private boolean escPressed;
 
     public static void togglePause() {
         isPaused = !isPaused;
