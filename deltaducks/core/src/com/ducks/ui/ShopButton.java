@@ -9,15 +9,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.ducks.managers.AssetManager;
+import com.ducks.managers.PowerupManager;
+import com.ducks.managers.ShopManager;
 
 import static com.ducks.managers.AssetManager.*;
 
 public class ShopButton extends Table {
 
     private ClickListener clickListener;
+    private String powerup;
+    private int price;
 
     public ShopButton(String label, String powerup, String price, BitmapFont font) {
         setBackground(button_up);
+        this.powerup = powerup;
+        this.price = Integer.parseInt(price);
         this.setTouchable(Touchable.enabled);
         this.defaults().pad(5).left();
         // Gold icon & price
@@ -45,7 +51,7 @@ public class ShopButton extends Table {
     public void draw(Batch batch, float parentAlpha) {
         getBackgroundDrawable();
         if (clickListener.isPressed()) {
-            System.out.println("CLICK");
+            ShopManager.buyItem(powerup);
             // TODO: Do stuff!
         }
         super.draw(batch, parentAlpha);
