@@ -71,7 +71,6 @@ public class Hud implements Disposable {
         table.top();
         table.setFillParent(true);
         table.defaults().expandX().padTop(10);
-        table.defaults().colspan(2);
 
         expSymbol = new Image(ui.newDrawable("trophy"));
         expTagLabel = new Label("USER EXP", new Label.LabelStyle(font, Color.WHITE));
@@ -101,14 +100,17 @@ public class Hud implements Disposable {
         timeTable.add(countdownLabel);
 
         Table expTable2 = new Table();
-        expTable2.add(expSymbol);
+        expTable2.defaults().size(50);
+        expTable2.add(expSymbol).padRight(4);
         expTable2.add(expTable);
 
         Table goldTable2 = new Table();
+        goldTable2.defaults().size(50);
         goldTable2.add(goldSymbol);
         goldTable2.add(goldTable);
 
         Table timeTable2 = new Table();
+        timeTable2.defaults().size(50);
         timeTable2.add(timeSymbol);
         timeTable2.add(timeTable);
 
