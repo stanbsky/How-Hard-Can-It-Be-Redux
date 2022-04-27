@@ -18,12 +18,17 @@ public class ShopButton extends Table {
 
     private ClickListener clickListener;
     private String powerup;
-    private int price;
+    private String price;
+    private String name;
+    private String description;
 
-    public ShopButton(String label, String powerup, String price, BitmapFont font) {
+    public ShopButton(String powerup, BitmapFont font) {
         setBackground(button_up);
         this.powerup = powerup;
-        this.price = Integer.parseInt(price);
+        this.price = String.valueOf(ShopManager.getItem(powerup).x);
+        this.name = ShopManager.getItem(powerup).y;
+        this.description = ShopManager.getItem(powerup).z;
+//        this.price = Integer.parseInt(price);
         this.setTouchable(Touchable.enabled);
         this.defaults().pad(5).left();
         // Gold icon & price
@@ -32,7 +37,7 @@ public class ShopButton extends Table {
         this.add(new Label(price, new Label.LabelStyle( font , Color.BLACK))).left();
         // Powerup icon & name
         this.add(new Image(AssetManager.ui.newDrawable(powerup))).size(50).right();
-        this.add(new Label(label, new Label.LabelStyle( font , Color.BLACK))).right().expandX();
+        this.add(new Label(name, new Label.LabelStyle( font , Color.BLACK))).right().expandX();
 
         addListener(clickListener = new ClickListener());
     }

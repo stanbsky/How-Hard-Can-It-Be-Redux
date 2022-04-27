@@ -54,10 +54,6 @@ public final class EntityManager {
         return entitiesCount++;
     }
 
-    public static void removeEntity(int entityId) {
-        entities.removeIndex(entityId);
-    }
-
     public static void render() {
         for (IDrawable entity : entities) {
             entity.draw();
@@ -74,7 +70,7 @@ public final class EntityManager {
             }
 
         }
-        System.out.println(pirates.size);
+        System.out.println(livingPiratesExist());
         entities.removeAll(cleanup, true);
     }
 
@@ -94,6 +90,10 @@ public final class EntityManager {
 
     public static boolean livingPiratesExist() { return !pirates.isEmpty(); }
 
+    public static void killPirate (Pirate pirate) {
+        pirates.removeValue(pirate, true);
+    }
+
     private static void spawnPirates() {
         Pirate pirate;
         pirates = new Array<>();
@@ -104,7 +104,7 @@ public final class EntityManager {
             pirate = new Pirate(collegeNames.random(), spawn);
             registerEntity(pirate);
             pirates.add(pirate);
-            pirate.setId(pirates.size - 1);
+//            pirate.setId(pirates.size - 1);
         }
     }
 
