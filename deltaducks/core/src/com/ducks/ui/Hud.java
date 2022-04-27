@@ -75,15 +75,15 @@ public class Hud implements Disposable {
 
         expSymbol = new Image(ui.newDrawable("trophy"));
         expTagLabel = new Label("USER EXP", new Label.LabelStyle(font, Color.WHITE));
-        expLabel = new Label(String.format("%06d", score), new Label.LabelStyle(font, Color.WHITE));
+        expLabel = new Label(String.format("%d", score), new Label.LabelStyle(font, Color.WHITE));
 
         goldSymbol = new Image(ui.newDrawable("coin2"));
         goldTagLabel = new Label("GOLD", new Label.LabelStyle(font, Color.WHITE));
-        goldLabel = new Label(String.format("%05d", gold), new Label.LabelStyle(font, Color.WHITE));
+        goldLabel = new Label(String.format("%d", gold), new Label.LabelStyle(font, Color.WHITE));
 
-        timeSymbol = new Image(ui.newDrawable("coin"));
+        timeSymbol = new Image(ui.newDrawable("time"));
         timeLabel = new Label("TIME", new Label.LabelStyle(font, Color.WHITE));
-        countdownLabel = new Label(String.format("%03d", worldTimer), new Label.LabelStyle(font, Color.WHITE));
+        countdownLabel = new Label(String.format("%d", worldTimer), new Label.LabelStyle(font, Color.WHITE));
 
         Table expTable = new Table();
         expTable.add(expTagLabel).colspan(2);
@@ -165,7 +165,7 @@ public class Hud implements Disposable {
      */
     public static void addGold(int value) {
         gold += value;
-        goldLabel.setText(String.format("%06d", gold));
+        goldLabel.setText(String.format("%d", gold));
     }
 
     /**
