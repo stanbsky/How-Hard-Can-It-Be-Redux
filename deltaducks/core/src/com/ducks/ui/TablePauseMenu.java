@@ -88,15 +88,15 @@ public class TablePauseMenu extends Stage {
 
         Table powerups = new Table();
         powerups.defaults().spaceBottom(5);
-        powerups.add(new ShopButton("Shield", "shield", "500", font));
+        powerups.add(new ShopButton("shield", font));
         powerups.row();
-        powerups.add(new ShopButton("Quick Fire", "quickfire", "500", font));
+        powerups.add(new ShopButton( "quickfire", font));
         powerups.row();
-        powerups.add(new ShopButton("Spray", "spray", "500", font));
+        powerups.add(new ShopButton("spray", font));
         powerups.row();
-        powerups.add(new ShopButton("Hotshot", "bullet_hotshot", "500", font));
+        powerups.add(new ShopButton("bullet_hotshot", font));
         powerups.row();
-        powerups.add(new ShopButton("Supersize", "supersize", "500", font));
+        powerups.add(new ShopButton( "supersize", font));
         shop.add(powerups);
         TextButton.TextButtonStyle bs = new TextButton.TextButtonStyle();
         bs.up = button_up;
