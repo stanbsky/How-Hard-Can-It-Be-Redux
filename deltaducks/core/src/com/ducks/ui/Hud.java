@@ -54,7 +54,7 @@ public class Hud implements Disposable {
         timeCount = 0;
         score = 0;
         gold = 0;
-        health = DifficultyControl.getValue(3f, 2f, 1.5f);
+        health = DifficultyControl.getValue(3f, 2f, 1.6f);
 
         hpBar = new HealthBar(173, 0,5f,172f,false, health, true);
         viewport = new FitViewport(DeltaDucks.VIRTUAL_WIDTH, DeltaDucks.VIRTUAL_HEIGHT, new OrthographicCamera());
@@ -88,27 +88,36 @@ public class Hud implements Disposable {
         Table expTable = new Table();
         expTable.add(expTagLabel).colspan(2);
         expTable.row();
-        expTable.add(expSymbol);
         expTable.add(expLabel);
 
         Table goldTable = new Table();
         goldTable.add(goldTagLabel).colspan(2);
         goldTable.row();
-        goldTable.add(goldSymbol);
         goldTable.add(goldLabel);
 
         Table timeTable = new Table();
         timeTable.add(timeLabel).colspan(2);
         timeTable.row();
-        timeTable.add(timeSymbol);
         timeTable.add(countdownLabel);
+
+        Table expTable2 = new Table();
+        expTable2.add(expSymbol);
+        expTable2.add(expTable);
+
+        Table goldTable2 = new Table();
+        goldTable2.add(goldSymbol);
+        goldTable2.add(goldTable);
+
+        Table timeTable2 = new Table();
+        timeTable2.add(timeSymbol);
+        timeTable2.add(timeTable);
 
 //        table.add(expTagLabel).expandX().padTop(10);
 //        table.add(goldSymbol);
 //        table.add(goldTagLabel).expandX().padTop(10);
-        table.add(expTable);
-        table.add(goldTable);
-        table.add(timeTable);
+        table.add(expTable2);
+        table.add(goldTable2);
+        table.add(timeTable2);
 //        table.row();
 //        table.add(expLabel);
 //        table.add(goldLabel);
@@ -145,7 +154,7 @@ public class Hud implements Disposable {
         hpBar.update(health);
         if(timeCount >= 1) {
             worldTimer--;
-            countdownLabel.setText(String.format("%03d", worldTimer));
+            countdownLabel.setText(String.format("%d", worldTimer));
             timeCount = 0;
         }
     }
@@ -156,7 +165,7 @@ public class Hud implements Disposable {
      */
     public static void addScore(int value) {
         score += value;
-        expLabel.setText(String.format("%06d", score));
+        expLabel.setText(String.format("%d", score));
     }
 
     /**
