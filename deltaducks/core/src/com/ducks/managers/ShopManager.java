@@ -8,7 +8,7 @@ public class ShopManager {
     private static final ArrayMap<String, Triplet<Integer, String, String>> items = new ArrayMap<>();
 
     static {
-        addItem("quickfire", 500, "Quick shot", "");
+        addItem("quickfire", 500, "Quick shot", "No cooldown when shooting, click as fast as you can.()");
         addItem("shield", 300, "Shield", "");
         addItem("spray", 350, "Triple Shot", "");
         addItem("supersize", 350, "Super Size", "");

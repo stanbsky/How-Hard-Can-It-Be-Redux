@@ -51,10 +51,12 @@ public class ShopButton extends Table {
             setBackground(button_down);
             return;
         }
-        if (clickListener.isOver())
+        if (clickListener.isOver()) {
             setBackground(button_over);
-        else
+            TablePauseMenu.updateInfo(description);
+        } else {
             setBackground(button_up);
+        }
     }
 
     public void draw(Batch batch, float parentAlpha) {

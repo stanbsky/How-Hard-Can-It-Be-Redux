@@ -29,15 +29,15 @@ public class TableHud extends Stage {
     private static Image expSymbol;
     private static Label expLabel;
     private static Label expTagLabel;
-    private Table expTable = new Table();
+    private static Table expTable = new Table();
     private static Label countdownLabel;
     private static Image timeSymbol;
     private static Label timeLabel;
-    private Table timeTable = new Table();
+    private static Table timeTable = new Table();
     private static Image goldSymbol;
     private static Label goldTagLabel;
     private static Label goldLabel;
-    private Table goldTable = new Table();
+    private static Table goldTable = new Table();
 
     private FreeTypeFontGenerator generator;
     private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
@@ -92,7 +92,7 @@ public class TableHud extends Stage {
         // TODO: add powerup info box here
         powerupList = new Table();
         powerupList.setBackground(ui_background);
-        powerupList.setColor(1, 1, 1, 0.7f); // makes background transparent
+        //powerupList.setColor(1, 1, 1, 0.7f); // makes background transparent
 
         bottomUI.add(powerupList).width(120).bottom();
         // Subtitle button - ShopButton placeholder for layout purposes
