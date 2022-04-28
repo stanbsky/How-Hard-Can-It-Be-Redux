@@ -24,7 +24,7 @@ public class Pirate extends Ship {
 
     public final float SENSOR_SCALE = DifficultyControl.getValue(3.5f, 4f, 6f);
 
-    private boolean playerInRange = false;
+    protected boolean playerInRange = false;
     private boolean isAngry = false;
 
     public Pirate() {
@@ -69,15 +69,12 @@ public class Pirate extends Ship {
             applyForce();
         else
             inputDurationRoll = 0f;
-        if (playerInRange) {
-            EntityManager.spawnBullet((IShooter) this);
-        }
-//            enemyBullets.spawnBullet(this);
-//        if(rigidBody.getSensorData().contains("Attack")) {
-//            enemyBullets.spawnBullet(this);
-//        }
+        if (playerInRange)
+            shootBullet();
         animation.update(deltaTime, getPosition(), direction, false);
     }
+
+    protected void shootBullet() { EntityManager.spawnBullet((IShooter) this); }
 
     @Override
     protected void handleContact(Fixture contactor) {

@@ -162,6 +162,20 @@ public final class EntityManager {
         }
     }
 
+    public static void spawnBossShot(Boss boss) {
+        if (boss.ready()) {
+            System.out.println("BOSSSHOT");
+            boss.resetShootTimer();
+            boss.bossShotCount--;
+            registerEntity(new EnemyBullet(boss.getPosition(),
+                    Shooter.getDirection(boss, player)));
+            registerEntity(new EnemyBullet(boss.getPosition(),
+                    Shooter.getDirection(boss, player), 30f));
+            registerEntity(new EnemyBullet(boss.getPosition(),
+                    Shooter.getDirection(boss, player), -30f));
+        }
+    }
+
     public static void spawnBullet() {
         if (PowerupManager.multishotActive()) {
             registerEntity(new PlayerBullet());
