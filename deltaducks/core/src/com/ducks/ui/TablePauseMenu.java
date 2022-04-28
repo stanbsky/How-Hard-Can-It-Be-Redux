@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.ducks.managers.AssetManager;
+import com.ducks.managers.StatsManager;
 
 import static com.ducks.managers.AssetManager.button_up;
 import static com.ducks.screens.MainGameScreen.*;
@@ -63,7 +64,7 @@ public class TablePauseMenu extends Stage {
         button.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                Hud.addGold(10000);
+                StatsManager.addGold(10000);
             }
         });
 
@@ -80,7 +81,7 @@ public class TablePauseMenu extends Stage {
         button.addListener(new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                Hud.addGold(10000);
+                StatsManager.addGold(10000);
             }
         });
 

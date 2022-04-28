@@ -2,16 +2,12 @@ package com.ducks.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.ducks.DeltaDucks;
-import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.PowerupManager;
+import com.ducks.managers.StatsManager;
 import com.ducks.tools.BodyType;
-import com.ducks.components.HealthBar;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
-import com.ducks.ui.Hud;
-import com.ducks.ui.Indicator;
 
 import static com.ducks.DeltaDucks.scl;
 import static com.ducks.tools.FixtureFilter.*;
@@ -121,7 +117,7 @@ public class Powerup extends Entity {
      *
      */
     public void dispose() {
-        Hud.addScore(1000);
+        StatsManager.addScore(1000);
         PowerupManager.newPowerup(name);
         rigidBody.dispose();
     }

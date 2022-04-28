@@ -10,8 +10,8 @@ import com.ducks.components.Shooter;
 import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.EntityManager;
+import com.ducks.managers.StatsManager;
 import com.ducks.tools.IShooter;
-import com.ducks.ui.Hud;
 import com.ducks.tools.InputParser;
 
 import static com.ducks.tools.FixtureFilter.*;
@@ -24,8 +24,11 @@ public class Pirate extends Ship {
 
     public final float SENSOR_SCALE = DifficultyControl.getValue(3.5f, 4f, 6f);
 
-    private boolean playerInRange = false;
+    protected boolean playerInRange = false;
     private boolean isAngry = false;
+
+    public Pirate() {
+    }
 
     public Pirate(String college, Vector2 spawn) {
         this(college, spawn.x, spawn.y);
@@ -66,15 +69,12 @@ public class Pirate extends Ship {
             applyForce();
         else
             inputDurationRoll = 0f;
-        if (playerInRange) {
-            EntityManager.spawnBullet((IShooter) this);
-        }
-//            enemyBullets.spawnBullet(this);
-//        if(rigidBody.getSensorData().contains("Attack")) {
-//            enemyBullets.spawnBullet(this);
-//        }
+        if (playerInRange)
+            shootBullet();
         animation.update(deltaTime, getPosition(), direction, false);
     }
+
+    protected void shootBullet() { EntityManager.spawnBullet((IShooter) this); }
 
     @Override
     protected void handleContact(Fixture contactor) {
@@ -109,8 +109,8 @@ public class Pirate extends Ship {
     public void dispose() {
         EntityManager.killPirate(this);
         rigidBody.dispose();
-        Hud.addGold(100);
-        Hud.addScore(1000);
+        StatsManager.addGold(100);
+        StatsManager.addScore(1000);
 
     }
 }

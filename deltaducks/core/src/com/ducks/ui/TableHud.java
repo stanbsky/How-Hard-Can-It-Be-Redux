@@ -3,6 +3,7 @@ package com.ducks.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,6 +17,8 @@ import com.ducks.managers.AssetManager;
 import com.ducks.managers.PowerupManager;
 
 import java.util.Objects;
+import com.ducks.managers.ShopManager;
+import com.ducks.managers.StatsManager;
 
 import static com.ducks.DeltaDucks.batch;
 import static com.ducks.managers.AssetManager.*;
@@ -26,12 +29,15 @@ public class TableHud extends Stage {
     private static Image expSymbol;
     private static Label expLabel;
     private static Label expTagLabel;
+    private Table expTable = new Table();
     private static Label countdownLabel;
     private static Image timeSymbol;
     private static Label timeLabel;
+    private Table timeTable = new Table();
     private static Image goldSymbol;
     private static Label goldTagLabel;
     private static Label goldLabel;
+    private Table goldTable = new Table();
 
     private FreeTypeFontGenerator generator;
     private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
@@ -179,4 +185,11 @@ public class TableHud extends Stage {
 
         return thisPowerupCell;
     }
+    public void draw() {
+        timeLabel.setText(String.format("%d", StatsManager.getWorldTimer()));
+        goldLabel.setText(String.format("%d", StatsManager.getGold()));
+        expLabel.setText(String.format("%d", StatsManager.getScore()));
+        super.draw();
+    }
+
 }
