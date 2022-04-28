@@ -91,8 +91,9 @@ public class TableHud extends Stage {
 
         // TODO: add powerup info box here
         powerupList = new Table();
+        powerupList.setBackground(ui_background);
 
-        bottomUI.add(powerupList);
+        bottomUI.add(powerupList).width(120).bottom();
         // Subtitle button - ShopButton placeholder for layout purposes
 //        ShopButton sub = new ShopButton("shield", font);
 //        bottomUI.add(sub).expandX().bottom();
