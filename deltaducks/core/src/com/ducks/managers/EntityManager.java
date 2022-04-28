@@ -162,11 +162,10 @@ public final class EntityManager {
         }
     }
 
-    public static void spawnBossShot(Boss boss) {
+    public static void spawnBossShot(IShooter boss) {
         if (boss.ready()) {
             System.out.println("BOSSSHOT");
             boss.resetShootTimer();
-            boss.bossShotCount--;
             registerEntity(new EnemyBullet(boss.getPosition(),
                     Shooter.getDirection(boss, player)));
             registerEntity(new EnemyBullet(boss.getPosition(),

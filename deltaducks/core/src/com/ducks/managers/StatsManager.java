@@ -1,5 +1,7 @@
 package com.ducks.managers;
 
+import com.ducks.ui.TablePauseMenu;
+
 public final class StatsManager {
 
     private static int worldTimer = 300;
@@ -32,6 +34,7 @@ public final class StatsManager {
 
     public static void addGold(int gold) {
         StatsManager.gold += gold;
+        TablePauseMenu.updateGold();
     }
 
     public static void update(float deltaTime) {

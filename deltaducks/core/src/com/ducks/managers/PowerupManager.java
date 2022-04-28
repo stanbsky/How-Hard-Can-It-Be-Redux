@@ -47,17 +47,44 @@ public final class PowerupManager {
         }
     }
 
+    public static String powerupLeft (String powerup) {
+        switch (powerup) {
+            case "quickfire":
+                return quickshotLeft();
+            case "shield":
+                return shieldLeft();
+            case "spray":
+                return multishotLeft();
+            case "supersize":
+                return supersizeLeft();
+            case "bullet_hotshot":
+                return hotshotLeft();
+            default:
+                return "";
+        }
+    }
+
     public static boolean shieldActive() { return shields > 0; }
 
     public static void shieldUsed () { shields -= 1; }
+
+    public static String shieldLeft () { return shields + "x"; }
 
     public static boolean hotshotActive() { return hotshots > 0; }
 
     public static void hotshotUsed () { hotshots -= 1; }
 
+    public static String hotshotLeft () { return hotshots + "x"; }
+
     public static boolean multishotActive() { return multishotTime > 0; }
+
+    public static String multishotLeft () { return (multishotTime/60) + "s"; }
 
     public static boolean quickshotActive() { return quickshotTime > 0; }
 
+    public static String quickshotLeft () { return (quickshotTime/60) + "s"; }
+
     public static boolean supersizeActive() { return supersizeTime > 0; }
+
+    public static String supersizeLeft () { return (supersizeTime/60) + "s"; }
 }

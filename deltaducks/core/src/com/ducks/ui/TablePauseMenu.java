@@ -10,18 +10,20 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.ducks.managers.AssetManager;
 import com.ducks.managers.StatsManager;
 
-import static com.ducks.managers.AssetManager.button_up;
+import static com.ducks.managers.AssetManager.*;
 import static com.ducks.screens.MainGameScreen.*;
-import static com.ducks.managers.AssetManager.font;
 
 public class TablePauseMenu extends Stage {
 
     private static final int BUTTON_WIDTH = 250;
     private static final int BUTTON_HEIGHT = 100;
-    public static TextButton info;
+    public static Label info;
+
+    private static Label goldLabel;
 
     public TablePauseMenu () {
 
@@ -31,7 +33,7 @@ public class TablePauseMenu extends Stage {
         root.setBackground(AssetManager.ui.newDrawable("blank", new Color(1,1,1,0.5f)));
         Table buttons = new Table();
         buttons.defaults().pad(5);
-        buttons.setDebug(true);
+        buttons.setDebug(false);
         Table shop = new Table().pad(5);
         root.add(buttons);
         root.row();
@@ -88,7 +90,7 @@ public class TablePauseMenu extends Stage {
         buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
         Table powerups = new Table();
-        powerups.defaults().spaceBottom(5);
+        powerups.defaults().spaceBottom(5).minWidth(500);
         powerups.add(new ShopButton("shield", font));
         powerups.row();
         powerups.add(new ShopButton( "quickfire", font));
@@ -99,11 +101,27 @@ public class TablePauseMenu extends Stage {
         powerups.row();
         powerups.add(new ShopButton( "supersize", font));
         shop.add(powerups);
-        TextButton.TextButtonStyle bs = new TextButton.TextButtonStyle();
-        bs.up = button_up;
-        bs.font = font;
-        bs.fontColor = Color.BLACK;
-        info = new TextButton("Mouse over an item on the left for more info", bs);
-        shop.add(info).fillY().spaceLeft(5);
+
+        Table infoBox = new Table();
+        infoBox.setBackground(ui_background);
+        Table infoCoinBox = new Table();
+        infoCoinBox.add(new Image(ui.newDrawable("coin2"))).size(64);
+        goldLabel = new Label(String.format("%d", StatsManager.getGold()), new Label.LabelStyle(font, Color.BLACK));
+        infoCoinBox.add(goldLabel);
+        infoBox.add(infoCoinBox).right().expandX();
+        infoBox.row();
+        info = new Label("Mouse over an item on the left for more info", new Label.LabelStyle(font, Color.BLACK));
+        info.setWrap(true);
+        info.setAlignment(Align.center);
+        infoBox.add(info).fillY().expandY().width(500);
+        shop.add(infoBox).fillY().spaceLeft(5);
+    }
+
+    public static void updateGold () {
+        goldLabel.setText(String.format("%d", StatsManager.getGold()));
+    }
+
+    public static void updateInfo (String newString) {
+        info.setText(newString);
     }
 }
