@@ -40,9 +40,26 @@ public class TablePauseMenu extends Stage {
             }
         });
 
+        // Save button
         table.add(button);
         table.row();
+        style = new Button.ButtonStyle();
+        style.up = ui.newDrawable("save_up");
+        style.over = ui.newDrawable("save_up", Color.LIGHT_GRAY);
+        style.down = ui.newDrawable("save_down");
+        button = new Button(style);
 
+        // Unpause and go back to game
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked (InputEvent event, float x, float y) {
+                save();
+                togglePause();
+            }
+        });
+
+        table.add(button);
+        table.row();
         style = new Button.ButtonStyle();
         style.up = ui.newDrawable("exit_up");
         style.over = ui.newDrawable("exit_up", Color.LIGHT_GRAY);

@@ -38,7 +38,7 @@ public class MainGameScreen implements Screen {
 
     private OrthographicCamera gameCam;
     private Viewport gamePort;
-    private Hud hud;
+    private static Hud hud;
     private static TablePauseMenu pauseMenu;
 
     private TmxMapLoader mapLoader;
@@ -163,6 +163,9 @@ public class MainGameScreen implements Screen {
         isPaused = !isPaused;
         Gdx.input.setInputProcessor(isPaused ? pauseMenu : null);
         Gdx.input.setCursorCatched(!isPaused);
+    }
+    public static void save(){
+        SaveManager.Save(hud);
     }
 
     /**

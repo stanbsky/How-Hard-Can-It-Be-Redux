@@ -46,9 +46,23 @@ play_up
   orig: 600, 200
   offset: 0, 0
   index: -1
+save_up
+  rotate: false
+  xy: 1206, 70
+  size: 600, 200
+  orig: 600, 200
+  offset: 0, 0
+  index: -1
+save_down
+  rotate: false
+  xy: 1206, 272
+  size: 600, 200
+  orig: 600, 200
+  offset: 0, 0
+  index: -1
 trophy
   rotate: false
-  xy: 1206, 440
+  xy: 1808, 440
   size: 32, 32
   orig: 32, 32
   offset: 0, 0

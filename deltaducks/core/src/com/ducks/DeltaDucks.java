@@ -2,6 +2,7 @@ package com.ducks;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.ducks.managers.SaveManager;
 import com.ducks.screens.MainMenuScreen;
 
 /***
@@ -33,6 +34,8 @@ public class DeltaDucks extends Game {
 	 */
 	@Override
 	public void create () {
+		SaveManager.Initialize();
+
 		batch = new SpriteBatch();
 		this.setScreen(new MainMenuScreen(this));
 	}
