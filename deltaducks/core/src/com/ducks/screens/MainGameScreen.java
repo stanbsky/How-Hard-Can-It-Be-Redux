@@ -47,7 +47,6 @@ public class MainGameScreen implements Screen {
     private Subtitle subtitle;
 
     private QuestManager questManager;
-    private ParticleTest ptest;
 
     /**
      * Constructor
@@ -86,7 +85,6 @@ public class MainGameScreen implements Screen {
         crosshair = new Crosshair();
 
         questManager = new QuestManager(subtitle);
-        ptest = new ParticleTest(player.getPosition().scl(100f));
     }
 
     /**
@@ -127,7 +125,6 @@ public class MainGameScreen implements Screen {
         player.draw();
         crosshair.draw();
         EntityManager.render();
-        ptest.draw(delta);
         batch.end();
 
 
