@@ -162,7 +162,7 @@ public class MainGameScreen implements Screen {
     }
 
     public void gameOver(String status) {
-        this.dispose();
+//        this.dispose(); crashed the game
         game.setScreen(new FinalStorylineScreen(game, status));
     }
 
