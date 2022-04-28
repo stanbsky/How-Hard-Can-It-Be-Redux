@@ -21,7 +21,7 @@ public class QuestManager {
     private final Subtitle subtitle;
     private Quest currentQuest;
     private float stateTime;
-    private float spawnTime = 4;
+    private float spawnTime = 2;
     private int finalQuestCounter = DifficultyControl.getValue(4, 6, 9);
     private boolean finalQuestCompleted = false;
     private int finishedQuests = 0;
@@ -51,15 +51,20 @@ public class QuestManager {
     }
 
     private void spawnQuest() {
-        float spawnRoll = (float) Math.random();
-        if (spawnRoll < 0.4f && livingCollegesExist()) {
-            currentQuest = new Quest("college", EntityManager.colleges.random().getPosition(), subtitle);
-        } else if (spawnRoll > 0.7f && livingPiratesExist()) {
-            currentQuest = new Quest("pirate", null, subtitle);
+        // TODO: revert after testing
+//        if (finishedQuests == finalQuestCounter) {
+        if (true) {
+            currentQuest = new Quest("boss", null, subtitle);
         } else {
-            currentQuest = new Quest("chest", pickSpawn(EntityManager.chestSpawns), subtitle);
+            float spawnRoll = (float) Math.random();
+            if (spawnRoll < 0.4f && livingCollegesExist()) {
+                currentQuest = new Quest("college", EntityManager.colleges.random().getPosition(), subtitle);
+            } else if (spawnRoll > 0.7f && livingPiratesExist()) {
+                currentQuest = new Quest("pirate", null, subtitle);
+            } else {
+                currentQuest = new Quest("chest", pickSpawn(EntityManager.chestSpawns), subtitle);
+            }
         }
-
     }
 
     private void checkQuestCompletion() {

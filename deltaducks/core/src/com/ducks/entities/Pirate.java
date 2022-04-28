@@ -27,6 +27,9 @@ public class Pirate extends Ship {
     private boolean playerInRange = false;
     private boolean isAngry = false;
 
+    public Pirate() {
+    }
+
     public Pirate(String college, Vector2 spawn) {
         this(college, spawn.x, spawn.y);
     }

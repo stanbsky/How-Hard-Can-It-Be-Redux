@@ -1,16 +1,14 @@
 package com.ducks.intangibles;
 
 import com.badlogic.gdx.math.Vector2;
-import com.ducks.entities.Chest;
-import com.ducks.entities.College;
-import com.ducks.entities.Entity;
-import com.ducks.entities.Pirate;
+import com.ducks.entities.*;
 import com.ducks.managers.EntityManager;
 import com.ducks.managers.StatsManager;
 import com.ducks.ui.Indicator;
 import com.ducks.ui.Subtitle;
 
-import java.util.Objects;
+import static com.ducks.managers.EntityManager.*;
+
 
 public class Quest {
 
@@ -20,24 +18,39 @@ public class Quest {
     private String description;
     private Indicator indicator;
 
+    public Quest (String type, Subtitle subtitle) {
+        this(type, null, subtitle);
+    }
     public Quest (String type, Vector2 location, Subtitle subtitle) {
         this.subtitle = subtitle;
-        if (Objects.equals(type, "chest")) {
-            objective = new Chest(location);
-            EntityManager.registerEntity(objective);
-            description = "Open the chest";
-            registerIndicator(type);
-        } else if (Objects.equals(type, "pirate")) {
-            objective = EntityManager.pirates.random();
-            ((Pirate) objective).setAngry(true);
-            description = "Defeat the angry pirate!";
-            registerIndicator("warning");
-
-        } else if (Objects.equals(type, "college")) {
-            objective = EntityManager.colleges.random();
-            description = "Destroy the marked college!";
-            indicator = ((College) objective).getIndicator();
-            indicator.setAngry(true);
+        switch (type) {
+            case "chest":
+                objective = new Chest(location);
+                registerEntity(objective);
+                description = "Open the chest";
+                registerIndicator(type);
+                break;
+            case "pirate":
+                objective = pirates.random();
+                ((Pirate) objective).setAngry(true);
+                description = "Defeat the angry pirate!";
+                registerIndicator("warning");
+                break;
+            case "college":
+                objective = colleges.random();
+                description = "Destroy the marked college!";
+                indicator = ((College) objective).getIndicator();
+                indicator.setAngry(true);
+                break;
+            case "boss":
+                Vector2 spawn = pirateSpawns.random();
+                objective = new Boss(collegeNames.random(),
+                        spawn);
+                registerEntity(objective);
+                description = "Defeat the Pirate Boss!";
+                registerIndicator("warning");
+                indicator.setAngry(true);
+                break;
         }
     }
 
@@ -58,7 +71,7 @@ public class Quest {
 
     private void registerIndicator(String texture) {
         indicator = new Indicator(objective, texture, 15f);
-        EntityManager.registerEntity(indicator);
+        registerEntity(indicator);
     }
 
     public void dispose() {

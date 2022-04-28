@@ -30,7 +30,7 @@ public final class EntityManager {
     private static Array<IDrawable> cleanup;
 
     // TODO: these belong in some kind of constants class - maybe play difficulty related?
-    private static final Array<String> collegeNames =
+    public static final Array<String> collegeNames =
             new Array<>(new String[]{"goodricke", "constantine", "halifax"});
     private static final Array<String> powerupNames =
             new Array<>(new String[]{"quickfire", "shield", "spray", "supersize", "bullet_hotshot"});
