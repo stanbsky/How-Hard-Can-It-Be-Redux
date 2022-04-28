@@ -21,7 +21,7 @@ public class TableMainMenu extends Stage {
         Table table = new Table();
         addActor(table);
         table.setFillParent(true);
-        table.setDebug(true);
+        table.setDebug(false);
         table.defaults().width(BUTTON_WIDTH);
         table.defaults().height(BUTTON_HEIGHT);
         table.defaults().pad(20);

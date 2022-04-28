@@ -31,7 +31,7 @@ public class TablePauseMenu extends Stage {
         root.setBackground(AssetManager.ui.newDrawable("blank", new Color(1,1,1,0.5f)));
         Table buttons = new Table();
         buttons.defaults().pad(5);
-        buttons.setDebug(true);
+        buttons.setDebug(false);
         Table shop = new Table().pad(5);
         root.add(buttons);
         root.row();

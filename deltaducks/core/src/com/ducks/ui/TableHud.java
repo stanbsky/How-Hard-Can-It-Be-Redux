@@ -64,7 +64,7 @@ public class TableHud extends Stage {
         Table root = new Table();
         addActor(root);
         root.setFillParent(true);
-        root.setDebug(true);
+        root.setDebug(false);
         root.top();
 
         // topBar
@@ -81,7 +81,7 @@ public class TableHud extends Stage {
         // bottomUI
         Table bottomUI = new Table();
         bottomUI.bottom().left();
-        bottomUI.setDebug(true);
+        bottomUI.setDebug(false);
         bottomUI.defaults().pad(10);
         root.add(bottomUI).expand().fill();
 
@@ -101,7 +101,6 @@ public class TableHud extends Stage {
 
     public static void drawPowerups() {
         powerupList.reset();
-        powerupList.bottom();
         if (PowerupManager.shieldActive()) {
             shieldCell = makePowerupUI("shield");
             powerupList.add(shieldCell).size(60);
@@ -124,7 +123,7 @@ public class TableHud extends Stage {
         }
         if (PowerupManager.supersizeActive()) {
             supersizeCell = makePowerupUI("supersize");
-            powerupList.add(supersizeCell).size(60).bottom().expandY();
+            powerupList.add(supersizeCell).size(60);
         }
     }
 
