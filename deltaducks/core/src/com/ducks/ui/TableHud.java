@@ -99,7 +99,7 @@ public class TableHud extends Stage {
 
     }
 
-    public static void update() {
+    public static void drawPowerups() {
         powerupList.reset();
         powerupList.bottom();
         if (PowerupManager.shieldActive()) {
@@ -186,9 +186,12 @@ public class TableHud extends Stage {
         return thisPowerupCell;
     }
     public void draw() {
-        timeLabel.setText(String.format("%d", StatsManager.getWorldTimer()));
+        countdownLabel.setText(String.format("%d", StatsManager.getWorldTimer()));
         goldLabel.setText(String.format("%d", StatsManager.getGold()));
         expLabel.setText(String.format("%d", StatsManager.getScore()));
+
+        drawPowerups();
+
         super.draw();
     }
 

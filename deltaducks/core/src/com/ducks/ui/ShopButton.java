@@ -17,6 +17,7 @@ import static com.ducks.managers.AssetManager.*;
 public class ShopButton extends Table {
 
     private ClickListener clickListener;
+    private boolean isPressed;
     private String powerup;
     private String price;
     private String name;
@@ -55,9 +56,12 @@ public class ShopButton extends Table {
 
     public void draw(Batch batch, float parentAlpha) {
         getBackgroundDrawable();
-        if (clickListener.isPressed()) {
+        if (clickListener.isPressed() && !isPressed) {
+            isPressed = true;
             ShopManager.buyItem(powerup);
             // TODO: Do stuff!
+        } else if (!clickListener.isPressed()) {
+            isPressed = false;
         }
         super.draw(batch, parentAlpha);
     }
