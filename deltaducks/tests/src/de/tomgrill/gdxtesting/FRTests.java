@@ -4,13 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
+import com.ducks.entities.College;
 import com.ducks.entities.Player;
 import com.ducks.managers.AssetManager;
+import com.ducks.managers.EntityManager;
 import com.ducks.managers.PhysicsManager;
 import com.ducks.tools.EntityContactListener;
 import com.ducks.tools.InputParser;
+import com.ducks.ui.Hud;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -48,6 +54,7 @@ public class FRTests {
         contactListener = new EntityContactListener();
         PhysicsManager.Initialize(world);
         AssetManager.Initialize();
+        EntityManager.Initialize();
     }
 
     /**
@@ -170,5 +177,24 @@ public class FRTests {
             assert player.getVelocity().y == 0;
         }
 
+    }
+
+    @Test
+    public void test_FR_COMBAT() {
+        Player player = new Player();
+        Vector2 playerLocation = player.getPosition().cpy();
+        playerLocation.x += 1;
+        College college = new College(playerLocation, "constantine");
+//        try (MockedStatic<EntityManager> entityManager = Mockito.mockStatic(EntityManager.class)) {
+//            String foo = "";
+//            Array<Vector2> spawns = new Array<>();
+            for (int i = 0; i < 600; i++) {
+                world.step(deltaTime, 6, 2);
+                player.update(deltaTime);
+                college.update(deltaTime);
+                // Print out our location to get a feel for if things are working out
+                System.out.println(player.getHealth());
+            }
+//        }
     }
 }

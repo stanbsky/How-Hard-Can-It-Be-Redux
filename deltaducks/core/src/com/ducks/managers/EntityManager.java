@@ -74,6 +74,7 @@ public final class EntityManager {
             }
 
         }
+        System.out.println(pirates.size);
         entities.removeAll(cleanup, true);
     }
 
@@ -103,6 +104,7 @@ public final class EntityManager {
             pirate = new Pirate(collegeNames.random(), spawn);
             registerEntity(pirate);
             pirates.add(pirate);
+            pirate.setId(pirates.size - 1);
         }
     }
 
