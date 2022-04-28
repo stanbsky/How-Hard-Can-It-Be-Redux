@@ -86,7 +86,7 @@ public class MainGameScreen implements Screen {
         crosshair = new Crosshair();
 
         questManager = new QuestManager(subtitle);
-        ptest = new ParticleTest(player.getPosition().scl(100f));
+        ptest = new ParticleTest(player.getPosition().scl(1));
     }
 
     /**
