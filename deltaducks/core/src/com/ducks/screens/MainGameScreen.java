@@ -97,9 +97,9 @@ public class MainGameScreen implements Screen {
         world.step(deltaTime, 6, 2);
 
         // Update all entities
+        crosshair.update(deltaTime);
         player.update(deltaTime);
         subtitle.update(deltaTime);
-        crosshair.update(deltaTime);
         EntityManager.update(deltaTime);
         questManager.update(deltaTime);
         PowerupManager.update(deltaTime);
@@ -108,7 +108,6 @@ public class MainGameScreen implements Screen {
 
         camera.update();
     }
-
     /**
      * Render the window
      * @param delta time of the game
