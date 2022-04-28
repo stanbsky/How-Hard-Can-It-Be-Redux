@@ -92,6 +92,7 @@ public class TableHud extends Stage {
         // TODO: add powerup info box here
         powerupList = new Table();
         powerupList.setBackground(ui_background);
+        powerupList.setColor(1, 1, 1, 0.7f); // makes background transparent
 
         bottomUI.add(powerupList).width(120).bottom();
         // Subtitle button - ShopButton placeholder for layout purposes
@@ -140,9 +141,19 @@ public class TableHud extends Stage {
         timeTable.add(timeSymbol).size(64);
         timeTable.add(timeTableS);
 
-        topBar.add(expTable);
-        topBar.add(goldTable);
-        topBar.add(timeTable);
+        topbar_background.setRightWidth(32);
+
+        expTable.pack();
+        expTable.setBackground(topbar_background);
+        topBar.add(expTable).width(expTable.getWidth() + 32);
+
+        goldTable.pack();
+        goldTable.setBackground(topbar_background);
+        topBar.add(goldTable).width(goldTable.getWidth() + 32);
+
+        timeTable.pack();
+        timeTable.setBackground(topbar_background);
+        topBar.add(timeTable).width(timeTable.getWidth() + 32);
     }
 
     public static void drawPowerups() {
