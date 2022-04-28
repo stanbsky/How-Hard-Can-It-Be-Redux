@@ -39,7 +39,7 @@ public final class PowerupManager {
                 multishotTime += 541;
                 break;
             case "supersize":
-                supersizeTime += 320;
+                supersizeTime += 301;
                 break;
             case "bullet_hotshot":
                 hotshots += 15;

@@ -64,11 +64,11 @@ public class ShopButton extends Table {
         if (clickListener.isPressed() && !isPressed) {
             isPressed = true;
             ShopManager.buyItem(powerup);
-            powerupInfo.setText(PowerupManager.powerupLeft(powerup));
             // TODO: Do stuff!
         } else if (!clickListener.isPressed()) {
             isPressed = false;
         }
+        powerupInfo.setText(PowerupManager.powerupLeft(powerup));
         super.draw(batch, parentAlpha);
     }
 }
