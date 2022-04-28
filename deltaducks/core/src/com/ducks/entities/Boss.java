@@ -16,7 +16,7 @@ public class Boss extends Pirate {
     private int health = 20;
     private HealthBar hpBar;
     private float bossShotTimer = 0f;
-    private final float bossShotThreshold = 3f;
+    private final float bossShotThreshold = 15f;
     public int bossShotCount = 0;
 
     public Boss(String college, Vector2 spawn) {
@@ -54,10 +54,13 @@ public class Boss extends Pirate {
     }
 
     protected void shootBullet() {
-        if (bossShotReady())
+        if (bossShotReady() && ready()) {
+            System.out.println(bossShotCount);
+            bossShotCount--;
             EntityManager.spawnBossShot(this);
-        else
+        } else {
             super.shootBullet();
+        }
     }
 
     public void draw() {
@@ -78,14 +81,14 @@ public class Boss extends Pirate {
 
     public boolean bossShotReady() {
         // TODO: bossshot bugs out and gets stuck inside the boss?
-//        if (bossShotCount > 0) {
-//            return true;
-//        }
-//        if (bossShotTimer > bossShotThreshold) {
-//            bossShotTimer = 0f;
-//            bossShotCount = 10;
-//            return true;
-//        }
+        if (bossShotCount > 0) {
+            return true;
+        }
+        if (bossShotTimer > bossShotThreshold) {
+            bossShotTimer = 0f;
+            bossShotCount = 4;
+            return true;
+        }
         return false;
     }
 

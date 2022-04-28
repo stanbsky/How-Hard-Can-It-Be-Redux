@@ -21,7 +21,7 @@ public class EnemyBullet extends Bullet {
 //        System.out.println(position);
         texture = new Texture("bullet_college", position, radius);
         category = ENEMY_BULLET;
-        mask = MASK_ALL - ENEMY;
+        mask = MASK_ALL - ENEMY - ENEMY_BULLET;
         data = new EntityData(category);
         defineBullet(position);
         setData(data);
