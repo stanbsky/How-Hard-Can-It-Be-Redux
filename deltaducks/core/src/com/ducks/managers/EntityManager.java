@@ -50,10 +50,10 @@ public final class EntityManager {
         collegeSpawns = getListOfSpawns("colleges");
         collegeSpawns.shuffle();
         chestSpawns = getListOfSpawns("chests");
+        registerEntity(new Whirlpool(new Vector2(1390, 1693)));
         spawnColleges();
         spawnPirates();
         spawnPowerups();
-        registerEntity(new Whirlpool(new Vector2(1390, 1563)));
     }
 
     public static void buildWorldMap(World world) {
