@@ -31,7 +31,7 @@ public class FRTests {
     private World world;
     private EntityContactListener contactListener;
     private final Vector2 zero = new Vector2(0, 0);
-    private final float deltaTime = 1/60f;
+    private final float deltaTime = 1 / 60f;
 
     @BeforeAll
     public static void setupApp() {
@@ -41,9 +41,10 @@ public class FRTests {
         game = new DDHeadless();
         app = new HeadlessApplication(game, conf);
     }
+
     @BeforeEach
     public void setupWorld() {
-        world = new World(new Vector2(0,0), true);
+        world = new World(new Vector2(0, 0), true);
         contactListener = new EntityContactListener();
         PhysicsManager.Initialize(world);
         AssetManager.Initialize();
@@ -63,7 +64,7 @@ public class FRTests {
 
             // Set up the mock to always return northern direction
             directions.add(InputParser.Direction.NORTH);
-            inputParser.when(()->InputParser.parseInput()).thenReturn(directions);
+            inputParser.when(() -> InputParser.parseInput()).thenReturn(directions);
 
             // Run our world for 60 steps aka 1 second's worth of time at 60fps
             for (int i = 0; i < 60; i++) {
@@ -80,6 +81,7 @@ public class FRTests {
             assert player.getVelocity().x == 0;
         }
     }
+
     @Test
     public void test_FR_A() {
         // Create a player and record their initial position
@@ -91,7 +93,7 @@ public class FRTests {
 
             // Set up the mock to always return northern direction
             directions.add(InputParser.Direction.WEST);
-            inputParser.when(()->InputParser.parseInput()).thenReturn(directions);
+            inputParser.when(() -> InputParser.parseInput()).thenReturn(directions);
 
             // Run our world for 60 steps aka 1 second's worth of time at 60fps
             for (int i = 0; i < 60; i++) {
@@ -100,12 +102,73 @@ public class FRTests {
                 // Print out our location to get a feel for if things are working out
                 System.out.println(player.getPosition());
             }
-            // The location of the player should be further north than it was at the start
+            // The location of the player should be further west than it was at the start
             assert initial.x > player.getPosition().x;
-            // The player's ship should have positive momentum in the y direction
+            // The player's ship should have positive momentum in the x direction
             assert player.getVelocity().x < 0;
             // The player's ship should NOT have any momentum in other directions!
             assert player.getVelocity().y == 0;
         }
+
+    }
+
+    @Test
+    public void test_FR_S() {
+        // Create a player and record their initial position
+        Player player = new Player();
+        Vector2 initial = player.getPosition().cpy();
+        // Mock the InputParser component to allow us to fake keyboard input
+        try (MockedStatic<InputParser> inputParser = Mockito.mockStatic(InputParser.class)) {
+            ArrayList<InputParser.Direction> directions = new ArrayList<>();
+
+            // Set up the mock to always return northern direction
+            directions.add(InputParser.Direction.SOUTH);
+            inputParser.when(() -> InputParser.parseInput()).thenReturn(directions);
+
+            // Run our world for 60 steps aka 1 second's worth of time at 60fps
+            for (int i = 0; i < 60; i++) {
+                world.step(deltaTime, 6, 2);
+                player.update(deltaTime);
+                // Print out our location to get a feel for if things are working out
+                System.out.println(player.getPosition());
+            }
+            // The location of the player should be further south than it was at the start
+            assert initial.y > player.getPosition().y;
+            // The player's ship should have positive momentum in the y direction
+            assert player.getVelocity().y < 0;
+            // The player's ship should NOT have any momentum in other directions!
+            assert player.getVelocity().x == 0;
+        }
+
+    }
+
+    @Test
+    public void test_FR_D() {
+        // Create a player and record their initial position
+        Player player = new Player();
+        Vector2 initial = player.getPosition().cpy();
+        // Mock the InputParser component to allow us to fake keyboard input
+        try (MockedStatic<InputParser> inputParser = Mockito.mockStatic(InputParser.class)) {
+            ArrayList<InputParser.Direction> directions = new ArrayList<>();
+
+            // Set up the mock to always return northern direction
+            directions.add(InputParser.Direction.EAST);
+            inputParser.when(() -> InputParser.parseInput()).thenReturn(directions);
+
+            // Run our world for 60 steps aka 1 second's worth of time at 60fps
+            for (int i = 0; i < 60; i++) {
+                world.step(deltaTime, 6, 2);
+                player.update(deltaTime);
+                // Print out our location to get a feel for if things are working out
+                System.out.println(player.getPosition());
+            }
+            // The location of the player should be further west than it was at the start
+            assert initial.x < player.getPosition().x;
+            // The player's ship should have positive momentum in the x direction
+            assert player.getVelocity().x > 0;
+            // The player's ship should NOT have any momentum in other directions!
+            assert player.getVelocity().y == 0;
+        }
+
     }
 }
