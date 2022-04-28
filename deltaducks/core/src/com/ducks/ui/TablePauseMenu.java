@@ -88,7 +88,7 @@ public class TablePauseMenu extends Stage {
         buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
         Table powerups = new Table();
-        powerups.defaults().spaceBottom(5);
+        powerups.defaults().spaceBottom(5).minWidth(500);
         powerups.add(new ShopButton("shield", font));
         powerups.row();
         powerups.add(new ShopButton( "quickfire", font));

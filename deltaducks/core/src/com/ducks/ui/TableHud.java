@@ -99,34 +99,6 @@ public class TableHud extends Stage {
 
     }
 
-    public static void drawPowerups() {
-        powerupList.reset();
-        if (PowerupManager.shieldActive()) {
-            shieldCell = makePowerupUI("shield");
-            powerupList.add(shieldCell).size(60);
-            powerupList.row();
-        }
-        if (PowerupManager.multishotActive()) {
-            multishotCell = makePowerupUI("spray");
-            powerupList.add(multishotCell).size(60);
-            powerupList.row();
-        }
-        if (PowerupManager.hotshotActive()) {
-            hotshotCell = makePowerupUI("bullet_hotshot");
-            powerupList.add(hotshotCell).size(60);
-            powerupList.row();
-        }
-        if (PowerupManager.quickshotActive()) {
-            quickshotCell = makePowerupUI("quickfire");
-            powerupList.add(quickshotCell).size(60);
-            powerupList.row();
-        }
-        if (PowerupManager.supersizeActive()) {
-            supersizeCell = makePowerupUI("supersize");
-            powerupList.add(supersizeCell).size(60);
-        }
-    }
-
     private void createTopBarUI(Table topBar) {
         expSymbol = new Image(ui.newDrawable("trophy"));
         expTagLabel = new Label("USER EXP", new Label.LabelStyle(topBarFont, Color.WHITE));
@@ -170,6 +142,34 @@ public class TableHud extends Stage {
         topBar.add(expTable);
         topBar.add(goldTable);
         topBar.add(timeTable);
+    }
+
+    public static void drawPowerups() {
+        powerupList.reset();
+        if (PowerupManager.shieldActive()) {
+            shieldCell = makePowerupUI("shield");
+            powerupList.add(shieldCell).size(60);
+            powerupList.row();
+        }
+        if (PowerupManager.multishotActive()) {
+            multishotCell = makePowerupUI("spray");
+            powerupList.add(multishotCell).size(60);
+            powerupList.row();
+        }
+        if (PowerupManager.hotshotActive()) {
+            hotshotCell = makePowerupUI("bullet_hotshot");
+            powerupList.add(hotshotCell).size(60);
+            powerupList.row();
+        }
+        if (PowerupManager.quickshotActive()) {
+            quickshotCell = makePowerupUI("quickfire");
+            powerupList.add(quickshotCell).size(60);
+            powerupList.row();
+        }
+        if (PowerupManager.supersizeActive()) {
+            supersizeCell = makePowerupUI("supersize");
+            powerupList.add(supersizeCell).size(60);
+        }
     }
 
     private static Table makePowerupUI(String powerup) {
