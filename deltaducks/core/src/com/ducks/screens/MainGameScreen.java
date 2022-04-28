@@ -122,9 +122,9 @@ public class MainGameScreen implements Screen {
         camera.render();
         batch.setProjectionMatrix(camera.projection);
         batch.begin();
-        player.draw();
         crosshair.draw();
         EntityManager.render();
+        player.draw();
         batch.end();
 
 

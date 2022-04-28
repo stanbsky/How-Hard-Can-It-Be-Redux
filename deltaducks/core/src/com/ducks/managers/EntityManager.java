@@ -53,6 +53,7 @@ public final class EntityManager {
         spawnColleges();
         spawnPirates();
         spawnPowerups();
+        registerEntity(new Whirlpool(new Vector2(1390, 1563)));
     }
 
     public static void buildWorldMap(World world) {

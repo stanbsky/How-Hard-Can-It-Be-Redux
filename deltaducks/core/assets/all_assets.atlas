@@ -76,14 +76,14 @@ chest
   index: 2
 chest
   rotate: false
-  xy: 714, 668
+  xy: 2008, 1956
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: 4
 chest
   rotate: false
-  xy: 550, 470
+  xy: 584, 504
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -97,7 +97,7 @@ coin
   index: -1
 coin2
   rotate: false
-  xy: 1614, 1792
+  xy: 550, 470
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -167,7 +167,7 @@ constantine09
   index: -1
 constantine_icon
   rotate: false
-  xy: 2008, 1956
+  xy: 906, 974
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -713,14 +713,14 @@ shield
   index: -1
 spray
   rotate: false
-  xy: 906, 974
+  xy: 774, 776
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 supersize
   rotate: false
-  xy: 774, 776
+  xy: 1614, 1792
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -751,5 +751,12 @@ warning256
   xy: 516, 736
   size: 256, 256
   orig: 256, 256
+  offset: 0, 0
+  index: -1
+whirlpool
+  rotate: false
+  xy: 714, 668
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
