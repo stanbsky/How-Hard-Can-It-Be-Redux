@@ -17,11 +17,13 @@ public class Quest {
     private Entity objective;
     private String description;
     private Indicator indicator;
+    public String type;
 
     public Quest (String type, Subtitle subtitle) {
         this(type, null, subtitle);
     }
     public Quest (String type, Vector2 location, Subtitle subtitle) {
+        this.type = type;
         this.subtitle = subtitle;
         switch (type) {
             case "chest":
@@ -64,8 +66,8 @@ public class Quest {
             isCompleted = true;
             return;
         }
-        // TODO: if a pirate quest is spawned, the pirate will have
-        // TODO: twice the update rolls. This is a feature?
+        // Note: if a pirate or boss quest is spawned, they will have
+        //  twice the update rolls. This is a feature.
         objective.update(deltaTime);
     }
 

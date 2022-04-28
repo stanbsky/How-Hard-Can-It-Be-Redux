@@ -52,8 +52,8 @@ public class QuestManager {
 
     private void spawnQuest() {
         // TODO: revert after testing
-//        if (finishedQuests == finalQuestCounter) {
-        if (true) {
+        if (finishedQuests == finalQuestCounter) {
+//        if (true) {
             currentQuest = new Quest("boss", null, subtitle);
         } else {
             float spawnRoll = (float) Math.random();
@@ -69,6 +69,12 @@ public class QuestManager {
 
     private void checkQuestCompletion() {
         if (currentQuest.isCompleted()) {
+            if (currentQuest.type == "boss") {
+                finalQuestCompleted = true;
+                // TODO: return here stops crash on game over, see
+                //  https://github.com/stanbsky/How-Hard-Can-It-Be-Redux/issues/33#issue-1218051196
+                return;
+            }
             finishedQuests++;
             currentQuest.dispose();
             currentQuest = null;
@@ -88,10 +94,6 @@ public class QuestManager {
     }
 
     public void update(float deltaTime) {
-        if (finishedQuests >= finalQuestCounter) {
-            subtitle.setSubtitle("You've finished all quests");
-            return;
-        }
         if (currentQuest == null) {
             stateTime += deltaTime;
         } else {
