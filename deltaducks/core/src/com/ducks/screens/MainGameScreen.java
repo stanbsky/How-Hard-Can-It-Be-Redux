@@ -136,7 +136,7 @@ public class MainGameScreen implements Screen {
 
         // TODO: remove once Subtitle is refactored
         batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
-        subtitle.stage.draw();
+        //subtitle.stage.draw();
 
     }
 
