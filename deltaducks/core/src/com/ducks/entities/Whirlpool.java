@@ -10,6 +10,7 @@ import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
 import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
+import com.ducks.managers.EntityManager;
 import com.ducks.tools.BodyType;
 
 import static com.ducks.DeltaDucks.scl;
@@ -20,6 +21,7 @@ public class Whirlpool extends Entity {
     private Vector2 position;
     private Array<Body> bodiesInRange;
     private int ticks = 0;
+    private int timer = 30 * 60; // 30 seconds before the whirlpool disappears
     private final float pullRadius = DifficultyControl.getValue(2f, 3f, 4f);
     private final float minForce = 1f;
     private final float maxForce = DifficultyControl.getValue(3f, 4f, 5f);
@@ -39,13 +41,14 @@ public class Whirlpool extends Entity {
 
     public void update(float deltaTime) {
         super.update(deltaTime);
+        timer--;
         pullEntities();
         texture.update(deltaTime, position);
     }
 
     @Override
     protected void handleSensorContact(Fixture contactor) {
-        System.out.println("TICK");
+//        System.out.println("TICK");
         if (EntityData.equals(contactor, PLAYER) || EntityData.equals(contactor, ENEMY)) {
             Body body = contactor.getBody();
             if (bodiesInRange.contains(body, false)) {
@@ -75,6 +78,10 @@ public class Whirlpool extends Entity {
                 body.getPosition().y - getPosition().y).nor().scl(-1);
     }
 
+    public boolean cleanup() {
+        return timer <= 0;
+    }
+
     public void defineWhirlpool(Vector2 position) {
         rigidBody = new RigidBody(position, BodyType.Static, 1f);
 
@@ -93,5 +100,11 @@ public class Whirlpool extends Entity {
         fixture.filter.categoryBits = category;
         fixture.filter.maskBits = MASK_ALL - PLAYER_BULLET - ENEMY_BULLET;
         rigidBody.addSensor(fixture, category, "Whirlpool Sensor");
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        EntityManager.spawnNextWhirlpool();
     }
 }

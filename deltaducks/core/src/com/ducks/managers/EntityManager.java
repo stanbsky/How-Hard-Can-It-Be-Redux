@@ -22,6 +22,8 @@ public final class EntityManager {
     public static Array<Vector2> pirateSpawns;
     public static Array<Vector2> collegeSpawns;
     public static Array<Vector2> chestSpawns;
+    public static Array<Vector2> whirlpoolSpawns;
+    public static int whirlpoolNo;
     public static Array<IDrawable> entities;
     private static int entitiesCount = 0;
     public static Array<College> colleges;
@@ -50,7 +52,10 @@ public final class EntityManager {
         collegeSpawns = getListOfSpawns("colleges");
         collegeSpawns.shuffle();
         chestSpawns = getListOfSpawns("chests");
-        registerEntity(new Whirlpool(new Vector2(1390, 1693)));
+        whirlpoolSpawns = getListOfSpawns("whirlpools");
+        whirlpoolSpawns.shuffle();
+        whirlpoolNo = 0;
+        spawnNextWhirlpool();
         spawnColleges();
         spawnPirates();
         spawnPowerups();
@@ -201,5 +206,13 @@ public final class EntityManager {
             registerEntity(powerup);
             powerups.add(powerup);
         }
+    }
+
+    // WHRILPOOL FUCTIONS
+
+    public static void spawnNextWhirlpool() {
+        Whirlpool whirlpool;
+        whirlpool = new Whirlpool(whirlpoolSpawns.get(whirlpoolNo++));
+        registerEntity(whirlpool);
     }
 }
