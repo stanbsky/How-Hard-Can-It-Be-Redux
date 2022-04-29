@@ -108,7 +108,7 @@ public class TablePauseMenu extends Stage {
         infoCoinBox.add(new Image(ui.newDrawable("coin2"))).size(64);
         goldLabel = new Label(String.format("%d", StatsManager.getGold()), new Label.LabelStyle(font, Color.BLACK));
         infoCoinBox.add(goldLabel);
-        infoBox.add(infoCoinBox).right().expandX();
+        infoBox.add(infoCoinBox).right().expandX().padRight(10);
         infoBox.row();
         info = new Label("Mouse over an item on the left for more info", new Label.LabelStyle(font, Color.BLACK));
         info.setWrap(true);
