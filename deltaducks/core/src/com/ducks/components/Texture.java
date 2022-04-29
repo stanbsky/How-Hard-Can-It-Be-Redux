@@ -1,21 +1,24 @@
 package com.ducks.components;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.ducks.screens.MainGameScreen;
 
 import static com.ducks.DeltaDucks.batch;
-import static com.ducks.screens.MainGameScreen.atlas;
+import static com.ducks.managers.AssetManager.atlas;
 
 public class Texture {
 
+    public boolean angryFlashing = false;
+    protected Color renderColor = Color.WHITE;
     float stateTime;
     TextureRegion frame;
     protected float x;
     protected float y;
     protected float width;
     protected float height;
+    private int colourTicks = 0;
+    private Color flashingColor;
 
     public Texture(String name, Vector2 pos, float radius) {
         frame = atlas.findRegion(name);
@@ -31,6 +34,7 @@ public class Texture {
     public void update(float deltaTime, Vector2 pos) {
         stateTime += deltaTime;
         updatePosition(pos);
+        updateRenderColor();
     }
 
     public void updatePosition(Vector2 pos) {
@@ -39,7 +43,42 @@ public class Texture {
     }
 
     public void render() {
+        batch.setColor(renderColor);
         batch.draw(this.frame, this.x, this.y, width, height);
+        batch.setColor(Color.WHITE);
     }
 
+    public void updateRenderColor() {
+        if (angryFlashing) {
+            colourTicks++;
+            if (colourTicks % 13 == 0) {
+                renderColor = flashingColor;
+            } else if (colourTicks % 30 == 0) {
+                renderColor = Color.WHITE;
+                colourTicks = 0;
+            }
+        }
+    }
+
+    public void changeSize (float multiplyer) {
+        width = width * multiplyer;
+        height = height * multiplyer;
+    }
+
+    public void setFlashingColor(Color color) {
+        flashingColor = color;
+        angryFlashing = true;
+    }
+
+    public void setColor(float r, float g, float b, float a) {
+        setColor(new Color(r, g, b, a));
+    }
+
+    public void setColor(Color color) {
+        renderColor = color;
+    }
+
+    public void removeColor() {
+        renderColor = Color.WHITE;
+    }
 }

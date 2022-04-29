@@ -43,9 +43,9 @@ public class RigidBody {
         this.bodyId = PhysicsManager.createBody(bodyDef);
     }
 
-    public void addFixture(FixtureDef fixture) {
+    public Fixture addFixture(FixtureDef fixture) {
         fixture.restitution = 0.2f;
-        getBody().createFixture(fixture);
+        return getBody().createFixture(fixture);
     }
 
     public void addSensor(FixtureDef fixture, short category, String name) {

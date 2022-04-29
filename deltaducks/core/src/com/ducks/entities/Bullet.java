@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.ducks.intangibles.DifficultyControl;
 import com.ducks.tools.BodyType;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
@@ -11,7 +12,7 @@ import com.ducks.components.Texture;
 import static com.ducks.DeltaDucks.scl;
 
 public class Bullet extends Entity {
-    private final float BULLET_SPAWN_DURATION = 2f;
+    private final float BULLET_SPAWN_DURATION = 3f;
     float stateTime;
     float spawnTimer;
     float radius = scl(10);

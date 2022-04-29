@@ -4,14 +4,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.DeltaDucks;
 import com.ducks.components.Shooter;
+import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.EntityManager;
+import com.ducks.managers.StatsManager;
 import com.ducks.tools.BodyType;
 import com.ducks.components.HealthBar;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
 import com.ducks.tools.IShooter;
-import com.ducks.ui.Hud;
 import com.ducks.ui.Indicator;
 
 import static com.ducks.DeltaDucks.scl;
@@ -22,7 +23,7 @@ import static com.ducks.tools.FixtureFilter.*;
  */
 public class College extends Entity implements IShooter {
 
-    public final float SENSOR_SCALE = 4f;
+    public final float SENSOR_SCALE = DifficultyControl.getValue(3.5f, 4f, 6f);
 
     float stateTime;
 
@@ -90,8 +91,8 @@ public class College extends Entity implements IShooter {
             if(!isDestroyed) {
                 isDestroyed = true;
                 indicator.dispose();
-                Hud.addGold(1000);
-                Hud.addScore(10000);
+                StatsManager.addGold(1000);
+                StatsManager.addScore(10000);
                 this.texture = new Texture("destroyed", this.position, scl(radius * scale));
                 this.texture.update(deltaTime, rigidBody.getBody().getPosition());
             }
@@ -130,6 +131,14 @@ public class College extends Entity implements IShooter {
     @Override
     public boolean cleanup() {
         return false;
+    }
+
+    public void markIndicator() {
+        indicator.setAngry(true);
+    }
+
+    public Indicator getIndicator() {
+        return indicator;
     }
 
     /**

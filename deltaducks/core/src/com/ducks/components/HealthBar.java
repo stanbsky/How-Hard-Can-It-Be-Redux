@@ -1,11 +1,14 @@
 package com.ducks.components;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
+import com.ducks.tools.Debug;
+
+import java.util.Vector;
 
 import static com.ducks.DeltaDucks.scl;
 import static com.ducks.DeltaDucks.batch;
-import static com.ducks.screens.MainGameScreen.atlas;
+import static com.ducks.managers.AssetManager.atlas;
 
 public class HealthBar extends Texture {
     private final float maxHP;
@@ -30,6 +33,12 @@ public class HealthBar extends Texture {
 
     public void update(float hp) {
         this.hp = hp;
+    }
+
+    public void update(float hp, Vector2 pos) {
+        this.hp = hp;
+        this.x = pos.x - width/2;
+        this.y = pos.y + width/2;
     }
 
     public void render() {

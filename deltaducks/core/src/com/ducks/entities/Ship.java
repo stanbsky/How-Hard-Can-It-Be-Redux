@@ -3,6 +3,7 @@ package com.ducks.entities;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.components.Shooter;
+import com.ducks.managers.PowerupManager;
 import com.ducks.tools.BodyType;
 import com.ducks.tools.IShooter;
 import com.ducks.tools.InputParser;

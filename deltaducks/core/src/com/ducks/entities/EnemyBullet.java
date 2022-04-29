@@ -2,11 +2,17 @@ package com.ducks.entities;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.components.Texture;
+import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
-import com.ducks.ui.Hud;
+import com.ducks.managers.StatsManager;
 
 import static com.ducks.tools.FixtureFilter.*;
 public class EnemyBullet extends Bullet {
+
+    public EnemyBullet(Vector2 position, Vector2 direction, float offset) {
+        this(position, direction.cpy().rotateDeg(offset));
+        System.out.println(direction.cpy().rotateDeg(offset));
+    }
 
     /**
      * Constructor
@@ -15,17 +21,17 @@ public class EnemyBullet extends Bullet {
 //        System.out.println(position);
         texture = new Texture("bullet_college", position, radius);
         category = ENEMY_BULLET;
-        mask = MASK_ALL - ENEMY;
+        mask = MASK_ALL - ENEMY - ENEMY_BULLET;
         data = new EntityData(category);
         defineBullet(position);
         setData(data);
-        final float BULLET_SPEED = 130f;
+        final float BULLET_SPEED = DifficultyControl.getValue(120f, 160f, 200f);
         rigidBody.applyForce(direction, BULLET_SPEED);
     }
 
     @Override
     public void dispose() {
         super.dispose();
-        Hud.addScore(50);
+        StatsManager.addScore(50);
     }
 }

@@ -4,28 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
+import com.ducks.intangibles.ParticleTest;
 import com.ducks.managers.*;
 import com.ducks.tools.Debug;
 import com.ducks.tools.EntityContactListener;
-import com.ducks.ui.Hud;
-import com.ducks.ui.Subtitle;
+import com.ducks.ui.*;
 import com.ducks.entities.Player;
-import com.ducks.tools.B2WorldCreator;
-import com.ducks.tools.Content;
-import com.ducks.ui.Crosshair;
-import com.ducks.ui.TablePauseMenu;
 
 import static com.ducks.DeltaDucks.batch;
 import static com.ducks.DeltaDucks.scl;
@@ -36,35 +31,23 @@ import static com.ducks.DeltaDucks.scl;
 public class MainGameScreen implements Screen {
     DeltaDucks game;
 
-    private OrthographicCamera gameCam;
-    private Viewport gamePort;
-    private static Hud hud;
-    private static TablePauseMenu pauseMenu;
-
-    private TmxMapLoader mapLoader;
+    // World & related mechanics
     public static TiledMap map;
-    private MapProperties prop;
-    private OrthogonalTiledMapRenderer renderer;
-    private int mapPixelWidth;
-    private int mapPixelHeight;
-
-    private static boolean isPaused = false;
-    private boolean escPressed;
-
-    // Box2d Variables
     private World world;
-    private Box2DDebugRenderer b2dr;
+    private Camera camera;
+    private EntityContactListener contactListener;
 
+    // UI
+    private static TablePauseMenu pauseMenu;
+    private TableHud hud;
+
+    // Entities
     public static Player player;
     private Crosshair crosshair;
     private Subtitle subtitle;
 
-    private EntityContactListener contactListener;
-
-    public static Content resources;
-    public static TextureAtlas atlas;
-    public static Skin ui;
     private QuestManager questManager;
+    private ParticleTest ptest;
 
     /**
      * Constructor
@@ -72,13 +55,9 @@ public class MainGameScreen implements Screen {
      */
     public MainGameScreen(DeltaDucks game) {
         this.game = game;
-        resources = new Content();
-        atlas = new TextureAtlas("all_assets.atlas");
-        ui = new Skin(new TextureAtlas("ui_assets.atlas"));
-        //TODO: delete after pirate refactor
-        MainGameScreen.resources.loadTexture("ship_dark_SE.png", "pirate");
-        MainGameScreen.resources.loadTexture("arrow.png", "arrow");
-
+        AssetManager.Initialize();
+        EntityManager.Initialize();
+        Debug.Initialize();
         Gdx.input.setCursorCatched(true);
     }
 
@@ -87,85 +66,27 @@ public class MainGameScreen implements Screen {
      */
     @Override
     public void show() {
-        gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
-        hud = new Hud();
-        pauseMenu = new TablePauseMenu();
-        subtitle = new Subtitle();
+        camera = new Camera();
 
-        // Create Map
-        mapLoader = new TmxMapLoader();
-//        map = mapLoader.load("test_map.tmx");
-        map = mapLoader.load("abi_map.tmx");
-        prop = map.getProperties();
-        renderer = new OrthogonalTiledMapRenderer(map, DeltaDucks.TILEED_MAP_SCALE / DeltaDucks.PIXEL_PER_METER);
-
-        int mapWidth = prop.get("width", Integer.class);
-        int mapHeight = prop.get("height", Integer.class);
-        int tilePixelWidth = prop.get("tilewidth", Integer.class);
-        int tilePixelHeight = prop.get("tileheight", Integer.class);
-        mapPixelWidth = mapWidth * tilePixelWidth;
-        mapPixelHeight = mapHeight * tilePixelHeight;
-
-
-        gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
-
-
-        // Set Up Box2D
+        // Set up Box2D
         world = new World(new Vector2(0, 0), true);
         PhysicsManager.Initialize(world);
-
-        EntityManager.Initialize();
-        Debug.Initialize();
-
-        player = new Player();
-
-//        contactListener = new MyContactListener(player, subtitle);
         contactListener = new EntityContactListener();
         world.setContactListener(contactListener);
-        //TODO: debug rendering
-        b2dr = new Box2DDebugRenderer(true, false, true, true, false, true);
+        EntityManager.buildWorldMap(world);
 
-        new B2WorldCreator(world);
+        // Set up entities
+        EntityManager.spawnEntities();
+        player = new Player();
 
+        // Set up UI
+        hud = new TableHud();
+        pauseMenu = new TablePauseMenu();
+        subtitle = new Subtitle();
         crosshair = new Crosshair();
+
         questManager = new QuestManager(subtitle);
-    }
-
-    /**
-     * Handle any Input
-     */
-    public void handleInput() {
-        if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
-            EntityManager.spawnBullet();
-        }
-    }
-
-    /**
-     * Handle any changes to the game corresponding to the interval of time
-     * @param deltaTime of the game
-     */
-    public void handleTime(float deltaTime) {
-        if(hud.getTimer()<0.1f){
-//            Gdx.app.exit();
-            this.dispose();
-            game.setScreen(new FinalStorylineScreen(this.game, "Lost"));
-        }
-        if(hud.getHealth()<=0f) {
-            game.setScreen(new FinalStorylineScreen(this.game, "Lost"));
-        }
-        if(EntityManager.getNumbersOfColleges()<=0) {
-            game.setScreen(new FinalStorylineScreen(this.game, "Won"));
-        }
-    }
-
-    public static void togglePause() {
-        isPaused = !isPaused;
-        Gdx.input.setInputProcessor(isPaused ? pauseMenu : null);
-        Gdx.input.setCursorCatched(!isPaused);
-    }
-    public static void save(){
-        SaveManager.Save(hud);
+//        ptest = new ParticleTest(player.getPosition().scl(1f));
     }
 
     /**
@@ -173,82 +94,66 @@ public class MainGameScreen implements Screen {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
-        handleInput();
-        handleTime(deltaTime);
+        questManager.checkForGameOver(this);
 
+        // Step forward box2Dworld simulation
         world.step(deltaTime, 6, 2);
 
-        player.update(deltaTime);
-        hud.update(deltaTime);
-        subtitle.update(deltaTime);
+        // Update all entities
         crosshair.update(deltaTime);
+        player.update(deltaTime);
+        subtitle.update(deltaTime);
         EntityManager.update(deltaTime);
         questManager.update(deltaTime);
+        PowerupManager.update(deltaTime);
+        StatsManager.update(deltaTime);
         Debug.update();
 
-        gameCam.position.x = player.getPosition().x;
-        gameCam.position.y = player.getPosition().y;
-
-        // Keeps camera centered if the ship reaches the edge of the map
-        gameCam.position.x = MathUtils.clamp(gameCam.position.x,
-                gameCam.viewportWidth/2, scl(mapPixelWidth) - gameCam.viewportWidth/2);
-        gameCam.position.y = MathUtils.clamp(gameCam.position.y,
-                gameCam.viewportHeight/2, scl(mapPixelHeight) - gameCam.viewportHeight/2);
-
-        gameCam.update();
-
-        renderer.setView(gameCam);
+        camera.update();
     }
-
     /**
      * Render the window
      * @param delta time of the game
      */
     @Override
     public void render(float delta) {
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            if (!escPressed) {
-                escPressed = true;
-                togglePause();
-            }
-        }
-        else if (escPressed) {
-            escPressed = false;
-        }
-        if (!isPaused) {
-            update(delta);
-        }
-        Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        checkPausedStatus();
+        updateGameUnlessPaused(delta);
 
-        // Render our game map
-        renderer.render();
-
-        //TODO: debug rendering
-        // Render our Box2DDebugLines
-        b2dr.render(world, gameCam.combined);
-
-
-        batch.setProjectionMatrix(gameCam.combined);
+        // Draw game map and entities
+        camera.render();
+        batch.setProjectionMatrix(camera.projection);
         batch.begin();
         player.draw();
         crosshair.draw();
         EntityManager.render();
+//        ptest.draw(delta);
         batch.end();
 
-        // Set our batch to now draw what the Hud camera sees.
+
+
+        // Draw UI elements
         hud.draw();
+        if (isPaused)
+            showPauseMenu();
 
-
-        // Display the pause menu, only when necessary
-        if (isPaused) {
-            pauseMenu.act();
-            pauseMenu.draw();
-        }
-
+        // TODO: remove once Subtitle is refactored
         batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
         subtitle.stage.draw();
 
+    }
+
+    /**
+     * Dispose the unwanted objects
+     */
+    @Override
+    public void dispose() {
+        map.dispose();
+        camera.renderer.dispose();
+//        world.dispose();
+        Debug.dispose();
+//        hud.dispose();
+        pauseMenu.dispose();
     }
 
     /**
@@ -258,9 +163,116 @@ public class MainGameScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-        gamePort.update(width, height);
+        camera.resize(width, height);
         pauseMenu.getViewport().update(width, height);
     }
+
+    public void gameOver(String status) {
+//        this.dispose(); crashed the game
+        game.setScreen(new FinalStorylineScreen(game, status));
+    }
+
+
+    // PAUSE MENU RELATED FEATURES
+    // NB: these are not hidden in an inner class due to
+    // the need for static access in UI buttons to toggle pause
+
+    private static boolean isPaused = false;
+    private boolean escPressed;
+
+    public static void togglePause() {
+        isPaused = !isPaused;
+        Gdx.input.setInputProcessor(isPaused ? pauseMenu : null);
+        Gdx.input.setCursorCatched(!isPaused);
+    }
+
+    private void updateGameUnlessPaused(float delta) {
+        if (!isPaused)
+            update(delta);
+    }
+
+    private void checkPausedStatus() {
+        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+            if (!escPressed) {
+                escPressed = true;
+                togglePause();
+            }
+        } else if (escPressed) {
+            escPressed = false;
+        }
+    }
+
+    private void showPauseMenu() {
+        pauseMenu.act();
+        pauseMenu.draw();
+    }
+
+    private class Camera {
+        public OrthographicCamera gameCam;
+        public Viewport gamePort;
+        public MapProperties prop;
+        public OrthogonalTiledMapRenderer renderer;
+        public int mapPixelWidth;
+        public int mapPixelHeight;
+        public Matrix4 projection;
+
+        public Camera() {
+            setupGameCam();
+        }
+
+        private void setupGameCam() {
+            gameCam = new OrthographicCamera();
+            gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
+
+            // Create Map
+            TmxMapLoader mapLoader = new TmxMapLoader();
+            map = mapLoader.load("abi_map.tmx");
+            prop = map.getProperties();
+            renderer = new OrthogonalTiledMapRenderer(map, DeltaDucks.TILEED_MAP_SCALE / DeltaDucks.PIXEL_PER_METER);
+
+            int mapWidth = prop.get("width", Integer.class);
+            int mapHeight = prop.get("height", Integer.class);
+            int tilePixelWidth = prop.get("tilewidth", Integer.class);
+            int tilePixelHeight = prop.get("tileheight", Integer.class);
+            mapPixelWidth = mapWidth * tilePixelWidth;
+            mapPixelHeight = mapHeight * tilePixelHeight;
+
+            gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
+            projection = gameCam.combined;
+        }
+
+        public void update() {
+            gameCam.position.x = player.getPosition().x;
+            gameCam.position.y = player.getPosition().y;
+
+            // Keeps camera centered if the ship reaches the edge of the map
+            gameCam.position.x = MathUtils.clamp(gameCam.position.x,
+                    gameCam.viewportWidth/2, scl(mapPixelWidth) - gameCam.viewportWidth/2);
+            gameCam.position.y = MathUtils.clamp(gameCam.position.y,
+                    gameCam.viewportHeight/2, scl(mapPixelHeight) - gameCam.viewportHeight/2);
+
+            gameCam.update();
+            renderer.setView(gameCam);
+        }
+
+        public void render() {
+            Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            // Render our game map
+            renderer.render();
+            Debug.render(world, gameCam);
+        }
+
+        public void resize(int width, int height) {
+            gamePort.update(width, height);
+        }
+
+        public void dispose() {
+            renderer.dispose();
+        }
+    }
+
+    // BOILERPLATE OVERRIDES
 
     @Override
     public void pause() {
@@ -275,19 +287,5 @@ public class MainGameScreen implements Screen {
     @Override
     public void hide() {
 
-    }
-
-    /**
-     * Dispose the unwanted objects
-     */
-    @Override
-    public void dispose() {
-        map.dispose();
-        renderer.dispose();
-//        world.dispose();
-        //TODO: debug rendering
-        b2dr.dispose();
-//        hud.dispose();
-        pauseMenu.dispose();
     }
 }

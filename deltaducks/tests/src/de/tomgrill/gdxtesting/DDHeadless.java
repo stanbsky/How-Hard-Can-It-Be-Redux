@@ -1,6 +1,13 @@
 package de.tomgrill.gdxtesting;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.backends.headless.HeadlessApplication;
+import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
+import com.ducks.managers.AssetManager;
+import com.ducks.managers.PhysicsManager;
+import com.ducks.tools.EntityContactListener;
 
 import static org.mockito.Mockito.mock;
 
@@ -9,11 +16,6 @@ import static org.mockito.Mockito.mock;
  */
 public class DDHeadless implements ApplicationListener {
     public DDHeadless() {
-        //super(klass);
-//        HeadlessApplicationConfiguration conf = new HeadlessApplicationConfiguration();
-//
-//        new HeadlessApplication(this, conf);
-//        Gdx.gl = mock(GL20.class);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.ducks.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -20,6 +21,7 @@ public class Indicator implements IDrawable {
     protected Entity target;
     private static Vector2 direction;
     private boolean cleanup = false;
+    private boolean isAngry = false;
 
     private final float crosshairRadius = 1.6f;
     private int midX = Gdx.graphics.getWidth()/2;
@@ -49,6 +51,11 @@ public class Indicator implements IDrawable {
     }
 
     public boolean cleanup() { return cleanup; }
+
+    public void setAngry(boolean status) {
+        isAngry = status;
+        texture.setFlashingColor(Color.RED);
+    }
 
     /**
      * Transforms player's mouse location into the coordinates where the crosshair must be drawn
