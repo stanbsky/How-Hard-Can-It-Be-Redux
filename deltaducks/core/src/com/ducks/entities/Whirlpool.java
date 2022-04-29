@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
+import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
 import com.ducks.tools.BodyType;
 
@@ -19,9 +20,9 @@ public class Whirlpool extends Entity {
     private Vector2 position;
     private Array<Body> bodiesInRange;
     private int ticks = 0;
-    private final float pullRadius = 4f;
+    private final float pullRadius = DifficultyControl.getValue(2f, 3f, 4f);
     private final float minForce = 1f;
-    private final float maxForce = 5f;
+    private final float maxForce = DifficultyControl.getValue(3f, 4f, 5f);
 
     public Whirlpool(Vector2 position) {
         radius = 50f;
@@ -90,7 +91,7 @@ public class Whirlpool extends Entity {
         shape.setRadius(pullRadius);
         fixture.shape = shape;
         fixture.filter.categoryBits = category;
-        fixture.filter.maskBits = -1;
+        fixture.filter.maskBits = MASK_ALL - PLAYER_BULLET - ENEMY_BULLET;
         rigidBody.addSensor(fixture, category, "Whirlpool Sensor");
     }
 }
