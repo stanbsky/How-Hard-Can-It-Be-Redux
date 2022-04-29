@@ -81,7 +81,7 @@ public class TableHud extends Stage {
         // bottomUI
         Table bottomUI = new Table();
         bottomUI.bottom().left();
-        bottomUI.setDebug(false);
+        bottomUI.setDebug(true);
         bottomUI.defaults().pad(10);
         root.add(bottomUI).expand().fill();
 
@@ -98,6 +98,9 @@ public class TableHud extends Stage {
         // Subtitle button - ShopButton placeholder for layout purposes
 //        ShopButton sub = new ShopButton("shield", font);
 //        bottomUI.add(sub).expandX().bottom();
+
+        TableSubtitle subtitle = new TableSubtitle(font);
+        bottomUI.add(subtitle).expandX().bottom();
 
     }
 

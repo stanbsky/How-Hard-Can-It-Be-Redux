@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
-import com.ducks.intangibles.ParticleTest;
 import com.ducks.managers.*;
 import com.ducks.tools.Debug;
 import com.ducks.tools.EntityContactListener;
@@ -47,7 +46,6 @@ public class MainGameScreen implements Screen {
     private Subtitle subtitle;
 
     private QuestManager questManager;
-    private ParticleTest ptest;
 
     /**
      * Constructor
@@ -86,7 +84,6 @@ public class MainGameScreen implements Screen {
         crosshair = new Crosshair();
 
         questManager = new QuestManager(subtitle);
-//        ptest = new ParticleTest(player.getPosition().scl(1f));
     }
 
     /**
@@ -124,10 +121,9 @@ public class MainGameScreen implements Screen {
         camera.render();
         batch.setProjectionMatrix(camera.projection);
         batch.begin();
-        player.draw();
         crosshair.draw();
         EntityManager.render();
-//        ptest.draw(delta);
+        player.draw();
         batch.end();
 
 
@@ -139,7 +135,7 @@ public class MainGameScreen implements Screen {
 
         // TODO: remove once Subtitle is refactored
         batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
-        subtitle.stage.draw();
+        //subtitle.stage.draw();
 
     }
 
