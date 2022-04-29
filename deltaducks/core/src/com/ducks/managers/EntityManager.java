@@ -164,7 +164,7 @@ public final class EntityManager {
 
     public static void spawnBossShot(IShooter boss) {
         if (boss.ready()) {
-            System.out.println("BOSSSHOT");
+//            System.out.println("BOSSSHOT");
             boss.resetShootTimer();
             registerEntity(new EnemyBullet(boss.getPosition(),
                     Shooter.getDirection(boss, player)));

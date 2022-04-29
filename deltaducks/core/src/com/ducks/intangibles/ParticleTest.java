@@ -26,7 +26,7 @@ public class ParticleTest {
 
         ParticleEffectPool.PooledEffect effect = rainEffectPool.obtain();
         effect.setPosition(location.x, location.y);
-//        effect.scaleEffect(0.7f);
+        effect.scaleEffect(0.1f);
         effects.add(effect);
         System.out.println(location);
     }
