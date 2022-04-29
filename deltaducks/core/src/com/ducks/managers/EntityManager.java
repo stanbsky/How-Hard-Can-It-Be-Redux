@@ -65,9 +65,12 @@ public final class EntityManager {
         new B2WorldCreator(world);
     }
 
-    public static int registerEntity(IDrawable entity) {
+    public static void registerEntity(IDrawable entity) {
         entities.add(entity);
-        return entitiesCount++;
+    }
+
+    public static void registerBackgroundEntity(IDrawable entity) {
+        entities.insert(0, entity);
     }
 
     public static void render() {
@@ -213,6 +216,6 @@ public final class EntityManager {
     public static void spawnNextWhirlpool() {
         Whirlpool whirlpool;
         whirlpool = new Whirlpool(whirlpoolSpawns.get(whirlpoolNo++));
-        registerEntity(whirlpool);
+        registerBackgroundEntity(whirlpool);
     }
 }
