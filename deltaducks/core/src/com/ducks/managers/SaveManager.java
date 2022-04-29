@@ -1,7 +1,6 @@
 package com.ducks.managers;
 
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonValue;
 import com.ducks.tools.SaveData;
 import com.ducks.ui.Hud;
 
@@ -9,89 +8,53 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
-import java.util.stream.Stream;
 
 public class SaveManager {
-    private static boolean inited = false;
-    private static HashMap<String, SaveData> data;
-    private static final Path SAVE_LOCATION = Paths.get("./Saves");
+    public static SaveData saveData;
+    private static final Path SAVE_LOCATION = Paths.get("./Saves/Save.json");
     public static void Initialize() {
-        inited = true;
-        data = new HashMap<>();
-        LoadSaves();
+        saveData = null;
+        LoadSave();
     }
-    public static void LoadSaves() {
-        if(!Files.exists(SAVE_LOCATION)) {
-            try{
-                Files.createDirectories(SAVE_LOCATION);
-            }
-            catch (Exception e){
-
+    private static void LoadSave() {
+        try {
+            if(Files.exists(SAVE_LOCATION)) {
+                File myObj = new File(SAVE_LOCATION.toString());
+                Scanner myReader = new Scanner(myObj);
+                while (myReader.hasNextLine()) {
+                    String txt = myReader.nextLine();
+                    Json j = new Json();
+                    saveData = j.fromJson(SaveData.class, txt);
+                }
+                myReader.close();
             }
         }
+        catch (Exception ignored) {
 
-        File folder = new File(String.valueOf(SAVE_LOCATION));
-
-        File[] listOfFiles = folder.listFiles();
-
-        assert listOfFiles != null;
-
-        for (File file : listOfFiles) {
-            if (file.isFile()) {
-                String name = file.getName();
-                name = name.substring(0, name.length() - 6);
-                try{
-                    File myObj = new File(file.getPath());
-                    Scanner myReader = new Scanner(myObj);
-                    while (myReader.hasNextLine()) {
-                        String txt = myReader.nextLine();
-                        Json j = new Json();
-                        SaveData save = j.fromJson(SaveData.class, txt);
-                        int i = 0;
-                        data.put(name, save);
-                    }
-                    myReader.close();
-                }
-                catch (Exception e) {
-
-                }
-            }
         }
     }
 
     public static void Save(Hud hud) {
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, HH-mm");
-
-        String fileName = String.format("/Save " +  (data.size() + 1) + " " + now.format(formatter) + ".json");
         try {
-            FileWriter out = new FileWriter(SAVE_LOCATION.toString() + fileName);
+            FileWriter out = new FileWriter(SAVE_LOCATION.toString());
+
             SaveData save = new SaveData();
             save.gold = Hud.getGold();
             save.health = Hud.getHealth();
             save.xp = Hud.getScore();
             save.time = hud.getTimer();
+
             Json j = new Json();
             String d = j.toJson(save);
             out.write(d);
             out.close();
+            saveData = save;
         }
-        catch (Exception e) {
+        catch (Exception ignored) {
 
-        }
-    }
-
-    private static void tryInit() {
-        if(!inited) {
-            Initialize();
         }
     }
 }
