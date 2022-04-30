@@ -1,15 +1,10 @@
 package com.ducks.ui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.ducks.managers.AssetManager;
 import com.ducks.managers.StatsManager;
@@ -39,31 +34,19 @@ public class TablePauseMenu extends Stage {
         root.row();
         root.add(shop);
 
-        // Tint the "up" texture on mouse over, switch to "down" on click
-        Button.ButtonStyle style = new Button.ButtonStyle();
-        style.up = AssetManager.ui.newDrawable("play_up");
-        style.over = AssetManager.ui.newDrawable("play_up", Color.LIGHT_GRAY);
-        style.down = AssetManager.ui.newDrawable("play_down");
-        Button button = new Button(style);
-
         // Unpause and go back to game
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked (InputEvent event, float x, float y) {
-                togglePause();
-            }
-        });
+        PlainButton button = new PlainButton("Play",
+                new ClickListener() {
+                    @Override
+                    public void clicked (InputEvent event, float x, float y) {
+                        togglePause();
+                    }
+                });
 
         buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
-        style = new Button.ButtonStyle();
-        style.up = AssetManager.ui.newDrawable("exit_up");
-        style.over = AssetManager.ui.newDrawable("exit_up", Color.LIGHT_GRAY);
-        style.down = AssetManager.ui.newDrawable("exit_down");
-        button = new Button(style);
-
         // Add 10000 to gold
-        button.addListener(new ClickListener() {
+        button = new PlainButton("Load", new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 StatsManager.addGold(10000);
@@ -73,44 +56,37 @@ public class TablePauseMenu extends Stage {
         buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
         // Save button functionality needed
-        style = new Button.ButtonStyle();
-        style.up = AssetManager.ui.newDrawable("exit_up");
-        style.over = AssetManager.ui.newDrawable("exit_up", Color.LIGHT_GRAY);
-        style.down = AssetManager.ui.newDrawable("exit_down");
-        button = new Button(style);
-
-        // Add 10000 to gold
-        button.addListener(new ClickListener() {
-            @Override
-            public void clicked (InputEvent event, float x, float y) {
-                StatsManager.addGold(10000);
-            }
-        });
-
+        button = new PlainButton("Exit",
+                new ClickListener() {
+                    @Override
+                    public void clicked (InputEvent event, float x, float y) {
+                        StatsManager.addGold(10000);
+                    }
+                });
         buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
         Table powerups = new Table();
         powerups.defaults().spaceBottom(5).minWidth(500);
-        powerups.add(new ShopButton("shield", font));
+        powerups.add(new ShopButton("shield", plainFont));
         powerups.row();
-        powerups.add(new ShopButton( "quickfire", font));
+        powerups.add(new ShopButton( "quickfire", plainFont));
         powerups.row();
-        powerups.add(new ShopButton("spray", font));
+        powerups.add(new ShopButton("spray", plainFont));
         powerups.row();
-        powerups.add(new ShopButton("bullet_hotshot", font));
+        powerups.add(new ShopButton("bullet_hotshot", plainFont));
         powerups.row();
-        powerups.add(new ShopButton( "supersize", font));
+        powerups.add(new ShopButton( "supersize", plainFont));
         shop.add(powerups);
 
         Table infoBox = new Table();
         infoBox.setBackground(ui_background);
         Table infoCoinBox = new Table();
         infoCoinBox.add(new Image(ui.newDrawable("coin2"))).size(64);
-        goldLabel = new Label(String.format("%d", StatsManager.getGold()), new Label.LabelStyle(font, Color.BLACK));
+        goldLabel = new Label(String.format("%d", StatsManager.getGold()), new Label.LabelStyle(plainFont, Color.BLACK));
         infoCoinBox.add(goldLabel);
         infoBox.add(infoCoinBox).right().expandX().padRight(10);
         infoBox.row();
-        info = new Label("Mouse over an item on the left for more info", new Label.LabelStyle(font, Color.BLACK));
+        info = new Label("Mouse over an item on the left for more info", new Label.LabelStyle(plainFont, Color.BLACK));
         info.setWrap(true);
         info.setAlignment(Align.center);
         infoBox.add(info).fillY().expandY().width(500);
