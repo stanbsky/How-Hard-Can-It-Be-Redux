@@ -11,7 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 public final class AssetManager {
     public static TextureAtlas atlas;
     public static Skin ui;
-    public static BitmapFont font;
+    public static BitmapFont plainFont;
+    public static BitmapFont pixelFont;
+    public static BitmapFont newFont;
     public static NinePatchDrawable button_up, button_down, button_over, ui_background, topbar_background;
 
     public static void Initialize() {
@@ -21,7 +23,17 @@ public final class AssetManager {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/OpenSans-Regular.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 40;
-        font = generator.generateFont(parameter);
+        plainFont = generator.generateFont(parameter);
+
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/boy.ttf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 40;
+        pixelFont = generator.generateFont(parameter);
+
+        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/DrawveticaMini.ttf"));
+        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 60;
+        newFont = generator.generateFont(parameter);
 
         NinePatch patch;
         patch = new NinePatch(AssetManager.ui.getRegion("button"), 17, 17, 17, 17);

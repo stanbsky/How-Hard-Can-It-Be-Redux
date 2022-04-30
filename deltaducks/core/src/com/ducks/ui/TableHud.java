@@ -2,25 +2,19 @@ package com.ducks.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.ducks.DeltaDucks;
-import com.ducks.entities.Player;
 import com.ducks.managers.AssetManager;
 import com.ducks.managers.PowerupManager;
 
 import java.util.Objects;
-import com.ducks.managers.ShopManager;
+
 import com.ducks.managers.StatsManager;
 
-import static com.ducks.DeltaDucks.batch;
 import static com.ducks.managers.AssetManager.*;
 
 public class TableHud extends Stage {
@@ -99,7 +93,7 @@ public class TableHud extends Stage {
 //        ShopButton sub = new ShopButton("shield", font);
 //        bottomUI.add(sub).expandX().bottom();
 
-        TableSubtitle subtitle = new TableSubtitle(font);
+        TableSubtitle subtitle = new TableSubtitle(plainFont);
         bottomUI.add(subtitle).expandX().bottom();
 
     }
