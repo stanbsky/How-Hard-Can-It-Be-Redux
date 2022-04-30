@@ -256,6 +256,24 @@ public class FRTests {
     }
 
     @Test
+    public void test_FR_CHEST() {
+        Player player = new Player();
+        Chest chest = new Chest(player.getPosition().cpy().scl(100f));
+
+        // The chest should be closed after it's created
+        assert chest.isAlive();
+
+        for (int i = 0; i <= 240; i++) {
+            world.step(deltaTime, 6, 2);
+            player.update(deltaTime);
+            chest.update(deltaTime);
+        }
+
+        // The whirlpool should be open after the player is in its range for 4 seconds
+        assert !chest.isAlive();
+    }
+
+    @Test
     public void test_Pirate_Move() {
         // Create a pirate and record their initial position
         Pirate pirate = new Pirate();
