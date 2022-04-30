@@ -1,27 +1,28 @@
 Ship
 	Spawning
-	Movement
+	Movement (W + A + S + D)
 	Shooting
 	Losing health
 	Dying
 	Stopping on Collision
 
 Entities
-	Spawning
-	
 	Powerups
+	    Spawning
 		Functionality
-		Shop fuction
+		Shop function
 		Timer/count counting down
-		Display acvive powerups
+		Display active powerups
 
 	Pirates
+	    Spawning
 		Move
 		Shoot
 		Die
 		Collision
 
 	Colleges
+	    Spawning
 		Shoot
 		Lose Health
 		Die
@@ -35,9 +36,11 @@ Entities
 		Pull ships in
 	
 	Chests
+	    Spawning
 		Opened
 	
 	Bullets
+	    Spawning
 		Slow down
 		Despawns
 		Collide with opposite team
