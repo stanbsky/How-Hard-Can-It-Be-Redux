@@ -81,8 +81,6 @@ public class FRTests {
             for (int i = 0; i < 60; i++) {
                 world.step(deltaTime, 6, 2);
                 player.update(deltaTime);
-                // Print out our location to get a feel for if things are working out
-                System.out.println(player.getPosition());
             }
             // The location of the player should be further north than it was at the start
             assert initial.y < player.getPosition().y;
@@ -110,8 +108,6 @@ public class FRTests {
             for (int i = 0; i < 60; i++) {
                 world.step(deltaTime, 6, 2);
                 player.update(deltaTime);
-                // Print out our location to get a feel for if things are working out
-                System.out.println(player.getPosition());
             }
             // The location of the player should be further west than it was at the start
             assert initial.x > player.getPosition().x;
@@ -140,8 +136,6 @@ public class FRTests {
             for (int i = 0; i < 60; i++) {
                 world.step(deltaTime, 6, 2);
                 player.update(deltaTime);
-                // Print out our location to get a feel for if things are working out
-                System.out.println(player.getPosition());
             }
             // The location of the player should be further south than it was at the start
             assert initial.y > player.getPosition().y;
@@ -170,8 +164,6 @@ public class FRTests {
             for (int i = 0; i < 60; i++) {
                 world.step(deltaTime, 6, 2);
                 player.update(deltaTime);
-                // Print out our location to get a feel for if things are working out
-                System.out.println(player.getPosition());
             }
             // The location of the player should be further west than it was at the start
             assert initial.x < player.getPosition().x;
