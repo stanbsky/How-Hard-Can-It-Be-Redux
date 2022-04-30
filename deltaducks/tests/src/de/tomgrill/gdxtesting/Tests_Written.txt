@@ -7,6 +7,8 @@ Ship
 	Stopping on Collision
 
 Entities
+    Spawns entities
+
 	Powerups
 	    Spawning
 		Functionality
@@ -29,9 +31,9 @@ Entities
 		
 	Whirlpool
 		Spawns
-			Spawns new
-			Despawns (after 30s)
-			Loops
+			Spawns new              test_FR_WHIRLPOOL
+			Despawns (after 30s)    test_FR_WHIRLPOOL
+			Loops                   test_FR_ENTITY_SPAWNS
 			
 		Pull ships in
 	
