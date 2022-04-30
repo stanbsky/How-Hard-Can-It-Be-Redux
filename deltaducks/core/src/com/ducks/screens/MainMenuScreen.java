@@ -25,8 +25,6 @@ public class MainMenuScreen implements Screen {
     private OrthographicCamera gameCam;
     private Viewport gamePort;
 
-    private Stage stage = new Stage();
-
     private static TableMainMenu mainMenu;
 
     private static String buttonPressed;

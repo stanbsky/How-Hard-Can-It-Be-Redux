@@ -22,17 +22,18 @@ jobs:
           distribution: 'adopt'
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
-      - name: Build with Gradle
-          - uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-            with:
-              arguments: test
-              build-root-directory: deltaducks
-          - uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+      - name: Run gradle tests
+        uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+        with:
+          arguments: test
+          build-root-directory: deltaducks
+      - name: Build jar
+        uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
         with:
           arguments: desktop:dist
           build-root-directory: deltaducks
       - name: Automatic Releases
-      uses: marvinpinto/action-automatic-releases@v1.2.1
+        uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
             automatic_release_tag: "latest"
