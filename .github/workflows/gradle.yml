@@ -5,7 +5,10 @@
 
 name: Java CI
 
-on: [ push ]
+on:
+  push:
+    branches:
+      - "main"
 
 jobs:
   build:
@@ -38,6 +41,6 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: true
-          title: "Development Build"
+          title: "Latest Build"
           files: |
             deltaducks/desktop/build/libs/desktop-1.0.jar
