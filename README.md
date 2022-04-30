@@ -1,4 +1,4 @@
-![Tests](https://github.com/stanbsky/How-Hard-Can-It-Be-Redux/actions/workflows/test.yml/badge.svg)
+[![Tests](https://github.com/stanbsky/How-Hard-Can-It-Be-Redux/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/stanbsky/How-Hard-Can-It-Be-Redux/actions/workflows/test.yml)
 ![Build](https://github.com/stanbsky/How-Hard-Can-It-Be-Redux/actions/workflows/build.yml/badge.svg)
 
 # Eng 1 Assessment 2 - Team 3
