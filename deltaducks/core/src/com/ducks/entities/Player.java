@@ -10,7 +10,6 @@ import com.ducks.intangibles.EntityData;
 import com.ducks.managers.PowerupManager;
 import com.ducks.tools.InputParser;
 import com.ducks.components.ShipAnimation;
-import com.ducks.ui.Hud;
 
 import static com.ducks.tools.FixtureFilter.*;
 
@@ -33,11 +32,13 @@ public class Player extends Ship {
     private boolean shield = false;
 
     private static float health;
+    private static float fullHealth;
 
     public Player() {
         super();
         shootWaitTime = 0.3f;
         health = DifficultyControl.getValue(3f, 2f, 1.6f);
+        fullHealth = health;
         shooter = new Shooter(shootWaitTime);
         category = PLAYER;
         mask = MASK_ALL - PLAYER_BULLET;
@@ -100,6 +101,7 @@ public class Player extends Ship {
                 shield = true;
             }
         }
+        shooter.playerShoots();
         animation.update(deltaTime, getPosition(), direction, moving);
 //        Debug.debug(getPosition());
     }
@@ -128,6 +130,8 @@ public class Player extends Ship {
     public static float getHealth () {
         return health;
     }
+
+    public static float getHealthPercentage() { return health / fullHealth; }
 
     public static void setHealth (float newHealth) { health = newHealth; }
 

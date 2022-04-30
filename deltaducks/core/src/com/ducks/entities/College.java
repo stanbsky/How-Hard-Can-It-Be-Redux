@@ -7,12 +7,12 @@ import com.ducks.components.Shooter;
 import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.EntityManager;
+import com.ducks.managers.StatsManager;
 import com.ducks.tools.BodyType;
 import com.ducks.components.HealthBar;
 import com.ducks.components.RigidBody;
 import com.ducks.components.Texture;
 import com.ducks.tools.IShooter;
-import com.ducks.ui.Hud;
 import com.ducks.ui.Indicator;
 
 import static com.ducks.DeltaDucks.scl;
@@ -91,8 +91,8 @@ public class College extends Entity implements IShooter {
             if(!isDestroyed) {
                 isDestroyed = true;
                 indicator.dispose();
-                Hud.addGold(1000);
-                Hud.addScore(10000);
+                StatsManager.addGold(1000);
+                StatsManager.addScore(10000);
                 this.texture = new Texture("destroyed", this.position, scl(radius * scale));
                 this.texture.update(deltaTime, rigidBody.getBody().getPosition());
             }

@@ -4,11 +4,13 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 import com.ducks.DeltaDucks;
 import com.ducks.components.Shooter;
 import com.ducks.entities.*;
 import com.ducks.intangibles.DifficultyControl;
+import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.IDrawable;
 import com.ducks.tools.IShooter;
 
@@ -20,6 +22,8 @@ public final class EntityManager {
     public static Array<Vector2> pirateSpawns;
     public static Array<Vector2> collegeSpawns;
     public static Array<Vector2> chestSpawns;
+    public static Array<Vector2> whirlpoolSpawns;
+    public static int whirlpoolNo;
     public static Array<IDrawable> entities;
     private static int entitiesCount = 0;
     public static Array<College> colleges;
@@ -28,7 +32,7 @@ public final class EntityManager {
     private static Array<IDrawable> cleanup;
 
     // TODO: these belong in some kind of constants class - maybe play difficulty related?
-    private static final Array<String> collegeNames =
+    public static final Array<String> collegeNames =
             new Array<>(new String[]{"goodricke", "constantine", "halifax"});
     private static final Array<String> powerupNames =
             new Array<>(new String[]{"quickfire", "shield", "spray", "supersize", "bullet_hotshot"});
@@ -36,26 +40,37 @@ public final class EntityManager {
     private static final float powerupSpawnChance = DifficultyControl.getValue(0.7f, 0.5f, 0.4f);
 
     public static void Initialize() {
+        entities = new Array<>();
+    }
+
+    /**
+     * Separated from Initialize to simplify testing
+     */
+    public static void spawnEntities() {
         powerupSpawns = getListOfSpawns("powerups");
         pirateSpawns = getListOfSpawns("pirates");
         collegeSpawns = getListOfSpawns("colleges");
         collegeSpawns.shuffle();
         chestSpawns = getListOfSpawns("chests");
-
-        entities = new Array<>();
-
+        whirlpoolSpawns = getListOfSpawns("whirlpools");
+        whirlpoolSpawns.shuffle();
+        whirlpoolNo = 0;
+        spawnNextWhirlpool();
         spawnColleges();
         spawnPirates();
         spawnPowerups();
     }
 
-    public static int registerEntity(IDrawable entity) {
-        entities.add(entity);
-        return entitiesCount++;
+    public static void buildWorldMap(World world) {
+        new B2WorldCreator(world);
     }
 
-    public static void removeEntity(int entityId) {
-        entities.removeIndex(entityId);
+    public static void registerEntity(IDrawable entity) {
+        entities.add(entity);
+    }
+
+    public static void registerBackgroundEntity(IDrawable entity) {
+        entities.insert(0, entity);
     }
 
     public static void render() {
@@ -74,7 +89,6 @@ public final class EntityManager {
             }
 
         }
-        System.out.println(pirates.size);
         entities.removeAll(cleanup, true);
     }
 
@@ -94,6 +108,10 @@ public final class EntityManager {
 
     public static boolean livingPiratesExist() { return !pirates.isEmpty(); }
 
+    public static void killPirate (Pirate pirate) {
+        pirates.removeValue(pirate, true);
+    }
+
     private static void spawnPirates() {
         Pirate pirate;
         pirates = new Array<>();
@@ -104,7 +122,7 @@ public final class EntityManager {
             pirate = new Pirate(collegeNames.random(), spawn);
             registerEntity(pirate);
             pirates.add(pirate);
-            pirate.setId(pirates.size - 1);
+//            pirate.setId(pirates.size - 1);
         }
     }
 
@@ -153,16 +171,26 @@ public final class EntityManager {
         }
     }
 
+    public static void spawnBossShot(IShooter boss) {
+        if (boss.ready()) {
+//            System.out.println("BOSSSHOT");
+            boss.resetShootTimer();
+            registerEntity(new EnemyBullet(boss.getPosition(),
+                    Shooter.getDirection(boss, player)));
+            registerEntity(new EnemyBullet(boss.getPosition(),
+                    Shooter.getDirection(boss, player), 30f));
+            registerEntity(new EnemyBullet(boss.getPosition(),
+                    Shooter.getDirection(boss, player), -30f));
+        }
+    }
+
     public static void spawnBullet() {
-        if (player.ready()) {
-            player.resetShootTimer();
-            if (PowerupManager.multishotActive()) {
-                registerEntity(new PlayerBullet());
-                registerEntity(new PlayerBullet(30f));
-                registerEntity(new PlayerBullet(-30f));
-            } else {
-                registerEntity(new PlayerBullet());
-            }
+        if (PowerupManager.multishotActive()) {
+            registerEntity(new PlayerBullet());
+            registerEntity(new PlayerBullet(30f));
+            registerEntity(new PlayerBullet(-30f));
+        } else {
+            registerEntity(new PlayerBullet());
         }
     }
 
@@ -181,5 +209,13 @@ public final class EntityManager {
             registerEntity(powerup);
             powerups.add(powerup);
         }
+    }
+
+    // WHRILPOOL FUCTIONS
+
+    public static void spawnNextWhirlpool() {
+        Whirlpool whirlpool;
+        whirlpool = new Whirlpool(whirlpoolSpawns.get(whirlpoolNo++));
+        registerBackgroundEntity(whirlpool);
     }
 }

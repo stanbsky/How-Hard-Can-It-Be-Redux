@@ -12,7 +12,7 @@ public final class AssetManager {
     public static TextureAtlas atlas;
     public static Skin ui;
     public static BitmapFont font;
-    public static NinePatchDrawable button_up, button_down, button_over;
+    public static NinePatchDrawable button_up, button_down, button_over, ui_background, topbar_background;
 
     public static void Initialize() {
         atlas = new TextureAtlas("all_assets.atlas");
@@ -26,6 +26,8 @@ public final class AssetManager {
         NinePatch patch;
         patch = new NinePatch(AssetManager.ui.getRegion("button"), 17, 17, 17, 17);
         button_up = new NinePatchDrawable(patch);
+        ui_background = new NinePatchDrawable(patch);
+        topbar_background = new NinePatchDrawable(patch);
         patch = new NinePatch(AssetManager.ui.getRegion("button_over"), 17, 17, 17, 17);
         button_over = new NinePatchDrawable(patch);
         patch = new NinePatch(AssetManager.ui.getRegion("button_down"), 17, 17, 17, 17);

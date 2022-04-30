@@ -2,8 +2,12 @@ package com.ducks.managers;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.ducks.DeltaDucks;
+import com.ducks.entities.Player;
 import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.Quest;
+import com.ducks.screens.FinalStorylineScreen;
+import com.ducks.screens.MainGameScreen;
 import com.ducks.ui.Subtitle;
 
 import java.util.Random;
@@ -17,8 +21,9 @@ public class QuestManager {
     private final Subtitle subtitle;
     private Quest currentQuest;
     private float stateTime;
-    private float spawnTime = 4;
+    private float spawnTime = 2;
     private int finalQuestCounter = DifficultyControl.getValue(4, 6, 9);
+    private boolean finalQuestCompleted = false;
     private int finishedQuests = 0;
     private boolean debug = false;
 
@@ -46,31 +51,49 @@ public class QuestManager {
     }
 
     private void spawnQuest() {
-        float spawnRoll = (float) Math.random();
-        if (spawnRoll < 0.4f && livingCollegesExist()) {
-            currentQuest = new Quest("college", EntityManager.colleges.random().getPosition(), subtitle);
-        } else if (spawnRoll > 0.7f && livingPiratesExist()) {
-            currentQuest = new Quest("pirate", null, subtitle);
+        // TODO: revert after testing
+        if (finishedQuests == finalQuestCounter) {
+//        if (true) {
+            currentQuest = new Quest("boss", null, subtitle);
         } else {
-            currentQuest = new Quest("chest", pickSpawn(EntityManager.chestSpawns), subtitle);
+            float spawnRoll = (float) Math.random();
+            if (spawnRoll < 0.4f && livingCollegesExist()) {
+                currentQuest = new Quest("college", EntityManager.colleges.random().getPosition(), subtitle);
+            } else if (spawnRoll > 0.7f && livingPiratesExist()) {
+                currentQuest = new Quest("pirate", null, subtitle);
+            } else {
+                currentQuest = new Quest("chest", pickSpawn(EntityManager.chestSpawns), subtitle);
+            }
         }
-
     }
-
 
     private void checkQuestCompletion() {
         if (currentQuest.isCompleted()) {
+            if (currentQuest.type == "boss") {
+                finalQuestCompleted = true;
+                // TODO: return here stops crash on game over, see
+                //  https://github.com/stanbsky/How-Hard-Can-It-Be-Redux/issues/33#issue-1218051196
+                return;
+            }
             finishedQuests++;
             currentQuest.dispose();
             currentQuest = null;
         }
     }
 
+    public void checkForGameOver(MainGameScreen gameScreen) {
+        // Out of time
+        if (StatsManager.getWorldTimer() <= 0)
+            gameScreen.gameOver("Lost");
+        // Player died
+        if (Player.getHealth() <= 0f)
+            gameScreen.gameOver("Lost");
+        // Boss quest finished
+        if (finalQuestCompleted)
+            gameScreen.gameOver("Won");
+    }
+
     public void update(float deltaTime) {
-        if (finishedQuests >= finalQuestCounter) {
-            subtitle.setSubtitle("You've finished all quests");
-            return;
-        }
         if (currentQuest == null) {
             stateTime += deltaTime;
         } else {
