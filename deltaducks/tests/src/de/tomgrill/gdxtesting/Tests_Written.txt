@@ -1,8 +1,8 @@
 Ship
 	Spawning
-	Movement (W + A + S + D)
+	Movement (W + A + S + D)        test_FR_W,test_FR_A,test_FR_S,test_FR_D
 	Shooting
-	Losing health
+	Losing health                   test_FR_PLAYER_DAMAGE
 	Dying
 	Stopping on Collision
 
@@ -17,16 +17,23 @@ Entities
 		Display active powerups
 
 	Pirates
+	    Boss
+	        Spawn
+	        Health                  test_FR_BOSS_DAMAGE
+	        Triple shot
+
 	    Spawning
 		Move
 		Shoot
 		Die
 		Collision
 
+
+
 	Colleges
 	    Spawning
 		Shoot
-		Lose Health
+		Lose Health                 test_FR_COLLEGE_DAMAGE
 		Die
 		
 	Whirlpool

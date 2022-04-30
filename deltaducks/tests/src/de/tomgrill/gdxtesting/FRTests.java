@@ -14,6 +14,7 @@ import com.ducks.managers.*;
 import com.ducks.screens.*;
 import com.ducks.tools.*;
 import com.ducks.ui.*;
+import jdk.tools.jmod.Main;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -292,16 +293,46 @@ public class FRTests {
     }
 
     @Test
-    public void test_college_Damage(){
+    public void test_FR_COLLEGE_DAMAGE(){
+        //Ensure colleges' health goes down after a bullet hits them
         College college = new College(new Vector2(0,0),"constantine");
         int initial_health = college.health;
         PlayerBullet bullet = new PlayerBullet(zero, zero, zero);
         world.step(deltaTime, 6, 2);
         college.update(deltaTime);
         bullet.update(deltaTime);
+        //The current health should be less than it started with
         assert initial_health > college.health;
     }
 
+    @Test
+    public void test_FR_PLAYER_DAMAGE(){
+        //Ensure player's health goes down after a bullet hits them
+        Player player = new Player();
+        float initial_health = Player.getHealth();
+        Vector2 playerLocation = player.getPosition().cpy();
+        EnemyBullet bullet = new EnemyBullet(playerLocation, playerLocation);
+        world.step(deltaTime, 6, 2);
+        player.update(deltaTime);
+        bullet.update(deltaTime);
+        float new_health = Player.getHealth();
+        //The current health should be less than it started with
+        assert initial_health > new_health;
+    }
+
+    @Test
+    public void test_FR_BOSS_DAMAGE(){
+        //Ensure boss's health goes down after a bullet hits it
+        Boss boss = new Boss("constantine", zero);
+        float initial_health = boss.getHealth();
+        PlayerBullet bullet = new PlayerBullet(zero, zero, zero);
+        world.step(deltaTime, 6, 2);
+        boss.update(deltaTime);
+        bullet.update(deltaTime);
+        float new_health = boss.getHealth();
+        //The current health should be less than it started with
+        assert initial_health > new_health;
+    }
 
 
 }
