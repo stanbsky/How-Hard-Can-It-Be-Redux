@@ -6,9 +6,7 @@ import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.ducks.entities.College;
-import com.ducks.entities.Pirate;
-import com.ducks.entities.Player;
+import com.ducks.entities.*;
 import com.ducks.managers.AssetManager;
 import com.ducks.managers.EntityManager;
 import com.ducks.managers.PhysicsManager;
@@ -49,6 +47,7 @@ public class FRTests {
     public void setupWorld() {
         world = new World(new Vector2(0, 0), true);
         contactListener = new EntityContactListener();
+        world.setContactListener(contactListener);
         PhysicsManager.Initialize(world);
         AssetManager.Initialize();
         EntityManager.Initialize();
@@ -230,5 +229,18 @@ public class FRTests {
         }
 
     }
+
+    @Test
+    public void test_college_Damage(){
+        College college = new College(new Vector2(0,0),"constantine");
+        int initial_health = college.health;
+        PlayerBullet bullet = new PlayerBullet(zero, zero, zero);
+        world.step(deltaTime, 6, 2);
+        college.update(deltaTime);
+        bullet.update(deltaTime);
+        assert initial_health > college.health;
+    }
+
+
 
 }
