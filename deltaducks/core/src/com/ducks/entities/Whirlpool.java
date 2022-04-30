@@ -41,7 +41,7 @@ public class Whirlpool extends Entity {
 
     public void update(float deltaTime) {
         super.update(deltaTime);
-        timer--;
+        System.out.println(timer--);
         pullEntities();
         texture.update(deltaTime, position);
     }
@@ -105,6 +105,5 @@ public class Whirlpool extends Entity {
     @Override
     public void dispose() {
         super.dispose();
-        EntityManager.spawnNextWhirlpool();
     }
 }
