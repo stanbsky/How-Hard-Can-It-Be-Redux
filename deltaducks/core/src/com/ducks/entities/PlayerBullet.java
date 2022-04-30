@@ -35,7 +35,7 @@ public class PlayerBullet extends Bullet {
         if (PowerupManager.hotshotActive()) {
             this.BULLET_SPEED = 500f;
             texture = new Texture("bullet_redhot", position, radius * 1.5f);
-            PowerupManager.hotshotUsed();
+//            PowerupManager.hotshotUsed(); repeated in shooter.java
         } else {
             this.BULLET_SPEED = 200f;
             texture = new Texture("bullet_player", position, radius * 1.5f);

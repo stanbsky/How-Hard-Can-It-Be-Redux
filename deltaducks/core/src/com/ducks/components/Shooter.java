@@ -2,6 +2,7 @@ package com.ducks.components;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.entities.Entity;
 import com.ducks.managers.EntityManager;
@@ -31,6 +32,7 @@ public class Shooter {
     public void playerShoots() {
         if (ready() && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             resetShootTimer();
+            if (PowerupManager.hotshotActive()) { PowerupManager.hotshotUsed(); }
             EntityManager.spawnBullet();
         }
     }
