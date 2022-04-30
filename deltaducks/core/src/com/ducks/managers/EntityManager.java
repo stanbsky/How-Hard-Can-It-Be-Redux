@@ -24,8 +24,8 @@ public final class EntityManager {
     public static Array<Vector2> chestSpawns;
     public static Array<Vector2> whirlpoolSpawns;
     public static int whirlpoolNo;
+    private static int whirlpoolTime = 0;
     public static Array<IDrawable> entities;
-    private static int entitiesCount = 0;
     public static Array<College> colleges;
     public static Array<Pirate> pirates;
     public static Array<Powerup> powerups;
@@ -37,7 +37,7 @@ public final class EntityManager {
     private static final Array<String> powerupNames =
             new Array<>(new String[]{"quickfire", "shield", "spray", "supersize", "bullet_hotshot"});
     private static final float pirateSpawnChance = DifficultyControl.getValue(0.1f, 0.2f, 0.4f);
-    private static final float powerupSpawnChance = DifficultyControl.getValue(0.7f, 0.5f, 0.4f);
+    private static final float powerupSpawnChance = DifficultyControl.getValue(0.8f, 0.6f, 0.5f);
 
     public static void Initialize() {
         entities = new Array<>();
@@ -90,6 +90,11 @@ public final class EntityManager {
 
         }
         entities.removeAll(cleanup, true);
+
+        if (whirlpoolTime++ >= 40*60) {
+            spawnNextWhirlpool();
+            whirlpoolTime = 0;
+        }
     }
 
     public static Array<Vector2> getListOfSpawns(String type) {
