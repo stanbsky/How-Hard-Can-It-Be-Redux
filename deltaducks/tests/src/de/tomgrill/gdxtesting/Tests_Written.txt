@@ -1,0 +1,44 @@
+Ship
+	Spawning
+	Movement
+	Shooting
+	Losing health
+	Dying
+	Stopping on Collision
+
+Entities
+	Spawning
+	
+	Powerups
+		Functionality
+		Shop fuction
+		Timer/count counting down
+		Display acvive powerups
+
+	Pirates
+		Move
+		Shoot
+		Die
+		Collision
+
+	Colleges
+		Shoot
+		Lose Health
+		Die
+		
+	Whirlpool
+		Spawns
+			Spawns new
+			Despawns (after 30s)
+			Loops
+			
+		Pull ships in
+	
+	Chests
+		Opened
+	
+	Bullets
+		Slow down
+		Despawns
+		Collide with opposite team
+	

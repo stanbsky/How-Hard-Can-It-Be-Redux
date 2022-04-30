@@ -67,7 +67,7 @@ public class FRTests {
 
             // Set up the mock to always return northern direction
             directions.add(InputParser.Direction.NORTH);
-            inputParser.when(() -> InputParser.parseInput()).thenReturn(directions);
+            inputParser.when(InputParser::parseInput).thenReturn(directions);
 
             // Run our world for 60 steps aka 1 second's worth of time at 60fps
             for (int i = 0; i < 60; i++) {
@@ -96,7 +96,7 @@ public class FRTests {
 
             // Set up the mock to always return northern direction
             directions.add(InputParser.Direction.WEST);
-            inputParser.when(() -> InputParser.parseInput()).thenReturn(directions);
+            inputParser.when(InputParser::parseInput).thenReturn(directions);
 
             // Run our world for 60 steps aka 1 second's worth of time at 60fps
             for (int i = 0; i < 60; i++) {
@@ -126,7 +126,7 @@ public class FRTests {
 
             // Set up the mock to always return northern direction
             directions.add(InputParser.Direction.SOUTH);
-            inputParser.when(() -> InputParser.parseInput()).thenReturn(directions);
+            inputParser.when(InputParser::parseInput).thenReturn(directions);
 
             // Run our world for 60 steps aka 1 second's worth of time at 60fps
             for (int i = 0; i < 60; i++) {
@@ -156,7 +156,7 @@ public class FRTests {
 
             // Set up the mock to always return northern direction
             directions.add(InputParser.Direction.EAST);
-            inputParser.when(() -> InputParser.parseInput()).thenReturn(directions);
+            inputParser.when(InputParser::parseInput).thenReturn(directions);
 
             // Run our world for 60 steps aka 1 second's worth of time at 60fps
             for (int i = 0; i < 60; i++) {
@@ -189,7 +189,7 @@ public class FRTests {
                 player.update(deltaTime);
                 college.update(deltaTime);
                 // Print out our location to get a feel for if things are working out
-                System.out.println(player.getHealth());
+                System.out.println(Player.getHealth());
             }
 //        }
     }

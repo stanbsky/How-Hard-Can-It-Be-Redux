@@ -215,7 +215,7 @@ public final class EntityManager {
 
     public static void spawnNextWhirlpool() {
         Whirlpool whirlpool;
-        whirlpool = new Whirlpool(whirlpoolSpawns.get(whirlpoolNo++));
+        whirlpool = new Whirlpool(whirlpoolSpawns.get(whirlpoolNo++ % whirlpoolSpawns.size));
         registerBackgroundEntity(whirlpool);
     }
 }
