@@ -183,7 +183,7 @@ public class FRTests {
         Player player = new Player();
         Vector2 playerLocation = player.getPosition().cpy();
         playerLocation.x += 1;
-        College college = new College(playerLocation, "constantine");
+        College college = new College(playerLocation.scl(100), "constantine");
 //        try (MockedStatic<EntityManager> entityManager = Mockito.mockStatic(EntityManager.class)) {
 //            String foo = "";
 //            Array<Vector2> spawns = new Array<>();
@@ -243,17 +243,35 @@ public class FRTests {
     @Test
     public void test_FR_WHIRLPOOL_EFFECT() {
         Player player = new Player();
-        Vector2 playerLocation = player.getPosition().cpy();
+        Vector2 initialLocation = player.getPosition().cpy();
 
-        Whirlpool whirlpool = new Whirlpool(player.getPosition().cpy().add(new Vector2(5, 0)));
+        Whirlpool whirlpool = new Whirlpool(player.getPosition().cpy().scl(100f));
 
         world.step(deltaTime, 6,2);
-        whirlpool.update(deltaTime);
         player.update(deltaTime);
+        whirlpool.update(deltaTime);
         world.step(deltaTime, 6,2);
 
         // The player should be moved by the whirlpool's proximity
-        assert !playerLocation.equals(player.getPosition().cpy()) ;
+        assert !initialLocation.equals(player.getPosition().cpy()) ;
+    }
+
+    @Test
+    public void test_FR_CHEST() {
+        Player player = new Player();
+        Chest chest = new Chest(player.getPosition().cpy().scl(100f));
+
+        // The chest should be closed after it's created
+        assert chest.isAlive();
+
+        for (int i = 0; i <= 240; i++) {
+            world.step(deltaTime, 6, 2);
+            player.update(deltaTime);
+            chest.update(deltaTime);
+        }
+
+        // The whirlpool should be open after the player is in its range for 4 seconds
+        assert !chest.isAlive();
     }
 
     @Test
