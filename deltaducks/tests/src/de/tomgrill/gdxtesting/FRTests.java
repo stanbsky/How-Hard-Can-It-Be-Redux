@@ -14,6 +14,7 @@ import com.ducks.managers.*;
 import com.ducks.screens.*;
 import com.ducks.tools.*;
 import com.ducks.ui.*;
+import jdk.tools.jmod.Main;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,9 +23,13 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class FRTests {
@@ -35,6 +40,7 @@ public class FRTests {
     private EntityContactListener contactListener;
     private final Vector2 zero = new Vector2(0, 0);
     private final float deltaTime = 1 / 60f;
+    private final String collegeName = "constantine";
 
     @BeforeAll
     public static void setupApp() {
@@ -178,22 +184,26 @@ public class FRTests {
     }
 
     @Test
-    public void test_FR_COMBAT() {
+    public void test_FR_COMBAT() throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+            NoSuchFieldException {
         Player player = new Player();
         Vector2 playerLocation = player.getPosition().cpy();
-        playerLocation.x += 1;
-        College college = new College(playerLocation.scl(100), "constantine");
-//        try (MockedStatic<EntityManager> entityManager = Mockito.mockStatic(EntityManager.class)) {
-//            String foo = "";
-//            Array<Vector2> spawns = new Array<>();
+        playerLocation.x -= 0.5;
+        float originalHealth = Player.getHealth();
+        College college = new College(playerLocation.scl(100), collegeName);
+        EntityManager.registerEntity(college);
+        try (MockedStatic<MainGameScreen> mgs = Mockito.mockStatic(MainGameScreen.class)) {
+            Field playerField = MainGameScreen.class.getDeclaredField("player");
+            playerField.setAccessible(true);
+            playerField.set(mgs, player);
             for (int i = 0; i < 600; i++) {
                 world.step(deltaTime, 6, 2);
                 player.update(deltaTime);
-                college.update(deltaTime);
-                // Print out our location to get a feel for if things are working out
-                System.out.println(Player.getHealth());
+                EntityManager.update(deltaTime);
             }
-//        }
+        }
+        assert Player.getHealth() < originalHealth;
     }
 
     @Test
@@ -258,37 +268,55 @@ public class FRTests {
     @Test
     public void test_Pirate_Move() {
         // Create a pirate and record their initial position
-        Pirate pirate = new Pirate();
-        Vector2 initial = pirate.getPosition().cpy();
+        Pirate pirate = new Pirate(collegeName, zero);
+        Vector2 initialPosition = pirate.getPosition().cpy();
+        Vector2 initialVelocity = pirate.getVelocity().cpy();
 
+        ArrayList<Vector2> firstRunPositions = new ArrayList<>();
+        ArrayList<Vector2> firstRunVelocities = new ArrayList<>();
 
-        // Mock the InputParser component to allow us to fake keyboard input
-        try (MockedStatic<InputParser> inputParser = Mockito.mockStatic(InputParser.class)) {
-            ArrayList<InputParser.Direction> directions = new ArrayList<>();
-
-            // Set up the mock to always return northern direction
-            directions.add(InputParser.Direction.WEST);
-            inputParser.when(InputParser::parseInput).thenReturn(directions);
-
-            // Run our world for 60 steps aka 1 second's worth of time at 60fps
-            for (int i = 0; i < 60; i++) {
-                world.step(deltaTime, 6, 2);
-                pirate.update(deltaTime);
-                // Print out our location to get a feel for if things are working out
-                System.out.println(pirate.getPosition());
+        // Run our world for 300 steps = 5 second's worth of time at 60fps
+        for (int i = 0; i < 300; i++) {
+            world.step(deltaTime, 6, 2);
+            pirate.update(deltaTime);
+            // If position is different from starting, save it
+            if (!pirate.getPosition().epsilonEquals(initialPosition)) {
+                firstRunPositions.add(pirate.getPosition().cpy());
             }
-
-
-
-
-            // The location of the player should be further west than it was at the start
-            assert initial.x > pirate.getPosition().x;
-            // The player's ship should have positive momentum in the x direction
-            assert pirate.getVelocity().x < 0;
-            // The player's ship should NOT have any momentum in other directions!
-            assert pirate.getVelocity().y == 0;
+            // If velocity is different from starting, save it
+            if (!pirate.getVelocity().epsilonEquals(initialVelocity)) {
+                firstRunVelocities.add(pirate.getVelocity().cpy());
+            }
         }
 
+        // Different positions and velocities must've been observed
+        assert firstRunPositions.size() > 0;
+        assert firstRunVelocities.size() > 0;
+
+        // Record current position and velocity for a second run
+        initialPosition = pirate.getPosition().cpy();
+        initialVelocity = pirate.getVelocity().cpy();
+
+        ArrayList<Vector2> secondRunPositions = new ArrayList<>();
+        ArrayList<Vector2> secondRunVelocities = new ArrayList<>();
+
+        // Run our world for 300 steps = 5 second's worth of time at 60fps
+        for (int i = 0; i < 300; i++) {
+            world.step(deltaTime, 6, 2);
+            pirate.update(deltaTime);
+            // If position is different from starting, save it
+            if (!pirate.getPosition().epsilonEquals(initialPosition)) {
+                secondRunPositions.add(pirate.getPosition().cpy());
+            }
+            // If velocity is different from starting, save it
+            if (!pirate.getVelocity().epsilonEquals(initialVelocity)) {
+                secondRunVelocities.add(pirate.getVelocity().cpy());
+            }
+        }
+
+        // Different positions and velocities must've been observed
+        assert secondRunPositions.size() > 0;
+        assert secondRunVelocities.size() > 0;
     }
 
     @Test
