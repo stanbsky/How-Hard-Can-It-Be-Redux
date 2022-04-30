@@ -4,12 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ducks.entities.*;
 import com.ducks.managers.AssetManager;
 import com.ducks.managers.EntityManager;
 import com.ducks.managers.PhysicsManager;
+import com.ducks.managers.QuestManager;
+import com.ducks.screens.MainGameScreen;
 import com.ducks.tools.EntityContactListener;
 import com.ducks.tools.InputParser;
 import org.junit.jupiter.api.BeforeAll;
@@ -192,6 +195,65 @@ public class FRTests {
                 System.out.println(Player.getHealth());
             }
 //        }
+    }
+
+    @Test
+    public void test_FR_ENTITY_SPAWNS() {
+        // Load the map for pulling the spawn locations
+        TmxMapLoader mapLoader = new TmxMapLoader();
+        MainGameScreen.map = mapLoader.load("abi_map.tmx");
+        EntityManager.spawnEntities();
+
+        // There should be at least one powerup spawned at the start of the game
+        assert EntityManager.powerups.size >= 1;
+
+        // There should be at least one pirate spawned at the start of the game
+        assert EntityManager.pirates.size >= 1;
+
+        // There should be 3 colleges spawned at the start of the game
+        assert EntityManager.colleges.size == 3;
+
+        // The program should be able to spawn 'unlimited' whirlpools, never in the same place
+        for (int i = 0; i <= EntityManager.whirlpoolSpawns.size + 1; i++) {
+            EntityManager.spawnNextWhirlpool();
+        }
+    }
+
+    @Test
+    public void test_FR_WHIRLPOOL_SPAWNING() {
+        Whirlpool whirlpool = new Whirlpool(new Vector2(0 ,0));
+
+        // The whirlpool should exist after it's created
+        assert !whirlpool.cleanup();
+
+        // Progressing the game
+        for (int i = 0; i <= 30 * 60; i++) {
+            whirlpool.update(deltaTime);
+        }
+
+        // The whirlpool should no longer exist after 30 seconds (1800 frames) have passed
+        assert whirlpool.cleanup();
+
+        try (MockedStatic<EntityManager> entityManager = Mockito.mockStatic(EntityManager.class)) {
+            whirlpool.dispose();
+        }
+
+    }
+
+    @Test
+    public void test_FR_WHIRLPOOL_EFFECT() {
+        Player player = new Player();
+        Vector2 playerLocation = player.getPosition().cpy();
+
+        Whirlpool whirlpool = new Whirlpool(player.getPosition().cpy().add(new Vector2(5, 0)));
+
+        world.step(deltaTime, 6,2);
+        whirlpool.update(deltaTime);
+        player.update(deltaTime);
+        world.step(deltaTime, 6,2);
+
+        // The player should be moved by the whirlpool's proximity
+        assert !playerLocation.equals(player.getPosition().cpy()) ;
     }
 
     @Test

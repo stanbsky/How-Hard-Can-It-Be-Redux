@@ -1,43 +1,48 @@
 Ship
 	Spawning
-	Movement
+	Movement (W + A + S + D)
 	Shooting
 	Losing health
 	Dying
 	Stopping on Collision
 
 Entities
-	Spawning
-	
+    Spawns entities
+
 	Powerups
+	    Spawning
 		Functionality
-		Shop fuction
+		Shop function
 		Timer/count counting down
-		Display acvive powerups
+		Display active powerups
 
 	Pirates
+	    Spawning
 		Move
 		Shoot
 		Die
 		Collision
 
 	Colleges
+	    Spawning
 		Shoot
 		Lose Health
 		Die
 		
 	Whirlpool
 		Spawns
-			Spawns new
-			Despawns (after 30s)
-			Loops
+			Spawns new              test_FR_WHIRLPOOL
+			Despawns (after 30s)    test_FR_WHIRLPOOL
+			Loops                   test_FR_ENTITY_SPAWNS
 			
 		Pull ships in
 	
 	Chests
+	    Spawning
 		Opened
 	
 	Bullets
+	    Spawning
 		Slow down
 		Despawns
 		Collide with opposite team
