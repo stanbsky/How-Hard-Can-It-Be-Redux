@@ -92,4 +92,8 @@ public class Boss extends Pirate {
         return false;
     }
 
+    public int getHealth(){
+        return health;
+    }
+
 }

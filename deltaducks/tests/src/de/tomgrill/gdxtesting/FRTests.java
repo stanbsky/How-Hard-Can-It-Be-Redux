@@ -266,6 +266,24 @@ public class FRTests {
     }
 
     @Test
+    public void test_FR_CHEST() {
+        Player player = new Player();
+        Chest chest = new Chest(player.getPosition().cpy().scl(100f));
+
+        // The chest should be closed after it's created
+        assert chest.isAlive();
+
+        for (int i = 0; i <= 240; i++) {
+            world.step(deltaTime, 6, 2);
+            player.update(deltaTime);
+            chest.update(deltaTime);
+        }
+
+        // The whirlpool should be open after the player is in its range for 4 seconds
+        assert !chest.isAlive();
+    }
+
+    @Test
     public void test_Pirate_Move() {
         // Create a pirate and record their initial position
         Pirate pirate = new Pirate(collegeName, zero);
@@ -320,16 +338,46 @@ public class FRTests {
     }
 
     @Test
-    public void test_college_Damage(){
+    public void test_FR_COLLEGE_DAMAGE(){
+        //Ensure colleges' health goes down after a bullet hits them
         College college = new College(new Vector2(0,0),"constantine");
         int initial_health = college.health;
         PlayerBullet bullet = new PlayerBullet(zero, zero, zero);
         world.step(deltaTime, 6, 2);
         college.update(deltaTime);
         bullet.update(deltaTime);
+        //The current health should be less than it started with
         assert initial_health > college.health;
     }
 
+    @Test
+    public void test_FR_PLAYER_DAMAGE(){
+        //Ensure player's health goes down after a bullet hits them
+        Player player = new Player();
+        float initial_health = Player.getHealth();
+        Vector2 playerLocation = player.getPosition().cpy();
+        EnemyBullet bullet = new EnemyBullet(playerLocation, playerLocation);
+        world.step(deltaTime, 6, 2);
+        player.update(deltaTime);
+        bullet.update(deltaTime);
+        float new_health = Player.getHealth();
+        //The current health should be less than it started with
+        assert initial_health > new_health;
+    }
+
+    @Test
+    public void test_FR_BOSS_DAMAGE(){
+        //Ensure boss's health goes down after a bullet hits it
+        Boss boss = new Boss("constantine", zero);
+        float initial_health = boss.getHealth();
+        PlayerBullet bullet = new PlayerBullet(zero, zero, zero);
+        world.step(deltaTime, 6, 2);
+        boss.update(deltaTime);
+        bullet.update(deltaTime);
+        float new_health = boss.getHealth();
+        //The current health should be less than it started with
+        assert initial_health > new_health;
+    }
 
 
 }
