@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.ducks.entities.College;
+import com.ducks.entities.Pirate;
 import com.ducks.entities.Player;
 import com.ducks.managers.AssetManager;
 import com.ducks.managers.EntityManager;
@@ -193,4 +194,41 @@ public class FRTests {
             }
 //        }
     }
+
+    @Test
+    public void test_Pirate_Move() {
+        // Create a pirate and record their initial position
+        Pirate pirate = new Pirate();
+        Vector2 initial = pirate.getPosition().cpy();
+
+
+        // Mock the InputParser component to allow us to fake keyboard input
+        try (MockedStatic<InputParser> inputParser = Mockito.mockStatic(InputParser.class)) {
+            ArrayList<InputParser.Direction> directions = new ArrayList<>();
+
+            // Set up the mock to always return northern direction
+            directions.add(InputParser.Direction.WEST);
+            inputParser.when(InputParser::parseInput).thenReturn(directions);
+
+            // Run our world for 60 steps aka 1 second's worth of time at 60fps
+            for (int i = 0; i < 60; i++) {
+                world.step(deltaTime, 6, 2);
+                pirate.update(deltaTime);
+                // Print out our location to get a feel for if things are working out
+                System.out.println(pirate.getPosition());
+            }
+
+
+
+
+            // The location of the player should be further west than it was at the start
+            assert initial.x > pirate.getPosition().x;
+            // The player's ship should have positive momentum in the x direction
+            assert pirate.getVelocity().x < 0;
+            // The player's ship should NOT have any momentum in other directions!
+            assert pirate.getVelocity().y == 0;
+        }
+
+    }
+
 }
