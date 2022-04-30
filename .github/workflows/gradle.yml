@@ -5,13 +5,13 @@
 
 name: Java CI
 
-on: [push]
+on: [ push ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      working-directory: ./deltaducks
+      working-directory: deltaducks
 
     steps:
       - uses: actions/checkout@v3
@@ -23,7 +23,20 @@ jobs:
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - name: Build with Gradle
-        uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+          - uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
+            with:
+              arguments: test
+              build-root-directory: deltaducks
+          - uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
         with:
-          arguments: build
-          build-root-directory: ./deltaducks
+          arguments: desktop:dist
+          build-root-directory: deltaducks
+      - name: Automatic Releases
+      uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+            automatic_release_tag: "latest"
+            prerelease: true
+            title: "Development Build"
+            files: |
+              deltaducks/desktop/build/libs/desktop-1.0.jar
