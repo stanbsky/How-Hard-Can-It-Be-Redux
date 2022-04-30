@@ -31,11 +31,11 @@ Entities
 		
 	Whirlpool
 		Spawns
-			Spawns new              test_FR_WHIRLPOOL
-			Despawns (after 30s)    test_FR_WHIRLPOOL
+			Spawns new              test_FR_WHIRLPOOL_SPAWNING
+			Despawns (after 30s)    test_FR_WHIRLPOOL_SPAWNING
 			Loops                   test_FR_ENTITY_SPAWNS
 			
-		Pull ships in
+		Pull ships in               test_FR_WHIRLPOOL_EFFECT
 	
 	Chests
 	    Spawning

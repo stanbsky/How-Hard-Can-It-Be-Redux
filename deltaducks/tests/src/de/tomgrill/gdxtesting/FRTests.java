@@ -182,7 +182,7 @@ public class FRTests {
         Player player = new Player();
         Vector2 playerLocation = player.getPosition().cpy();
         playerLocation.x += 1;
-        College college = new College(playerLocation, "constantine");
+        College college = new College(playerLocation.scl(100), "constantine");
 //        try (MockedStatic<EntityManager> entityManager = Mockito.mockStatic(EntityManager.class)) {
 //            String foo = "";
 //            Array<Vector2> spawns = new Array<>();
