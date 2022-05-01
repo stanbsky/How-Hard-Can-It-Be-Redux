@@ -42,6 +42,7 @@ public class Whirlpool extends Entity {
     public void update(float deltaTime) {
         super.update(deltaTime);
         pullEntities();
+        timer--;
         texture.update(deltaTime, position);
     }
 

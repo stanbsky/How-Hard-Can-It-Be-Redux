@@ -79,7 +79,6 @@ public class Boss extends Pirate {
     }
 
     public boolean bossShotReady() {
-        // TODO: bossshot bugs out and gets stuck inside the boss?
         if (bossShotCount > 0) {
             return true;
         }
