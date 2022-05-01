@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.Align;
 import com.ducks.managers.AssetManager;
 import com.ducks.managers.SaveManager;
 import com.ducks.managers.StatsManager;
+import com.ducks.screens.MainGameScreen;
+import com.ducks.screens.MainMenuScreen;
 
 import static com.ducks.managers.AssetManager.*;
 import static com.ducks.screens.MainGameScreen.*;
@@ -57,11 +59,11 @@ public class PauseMenu extends Stage {
         buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
         // Save button functionality needed
-        button = new PlainButton("Exit",
+        button = new PlainButton("Quit",
                 new ClickListener() {
                     @Override
                     public void clicked (InputEvent event, float x, float y) {
-                        StatsManager.addGold(10000);
+                        quitToMenu = true;
                     }
                 });
         buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);

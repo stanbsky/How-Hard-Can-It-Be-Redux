@@ -58,6 +58,10 @@ public class MainGameScreen implements Screen {
         PowerupManager.Initialise();
         Debug.Initialize();
         Gdx.input.setCursorCatched(true);
+
+        // Pause menu variables
+        isPaused = false;
+        quitToMenu = false;
     }
 
     /**
@@ -175,6 +179,7 @@ public class MainGameScreen implements Screen {
 
     private static boolean isPaused = false;
     private boolean escPressed;
+    public static boolean quitToMenu = false;
 
     public static void togglePause() {
         isPaused = !isPaused;
@@ -183,8 +188,9 @@ public class MainGameScreen implements Screen {
     }
 
     private void updateGameUnlessPaused(float delta) {
-        if (!isPaused)
+        if (!isPaused){
             update(delta);
+        }
     }
 
     private void checkPausedStatus() {
@@ -201,6 +207,9 @@ public class MainGameScreen implements Screen {
     private void showPauseMenu() {
         pauseMenu.act();
         pauseMenu.draw();
+        if (quitToMenu) {
+            game.setScreen(new MainMenuScreen(game));
+        }
     }
 
     private class Camera {

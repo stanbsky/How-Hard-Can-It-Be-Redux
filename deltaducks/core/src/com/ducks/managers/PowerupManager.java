@@ -1,5 +1,7 @@
 package com.ducks.managers;
 
+import com.badlogic.gdx.utils.Array;
+
 public final class PowerupManager {
     private static int shields;
     private static int multishotTime;
@@ -26,11 +28,13 @@ public final class PowerupManager {
     }
 
     public static void Initialise () {
-        shields = 0;
-        multishotTime = 0;
-        hotshots = 0;
-        quickshotTime = 0;
-        supersizeTime = 0;
+        if(!SaveManager.LoadSave) {
+            shields = 0;
+            multishotTime = 0;
+            hotshots = 0;
+            quickshotTime = 0;
+            supersizeTime = 0;
+        }
     }
 
     public static void update(float deltaTime) {
