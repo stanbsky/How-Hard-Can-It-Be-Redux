@@ -54,6 +54,8 @@ public class MainGameScreen implements Screen {
         this.game = game;
         AssetManager.Initialize();
         EntityManager.Initialize();
+        QuestManager.Initialise();
+        PowerupManager.Initialise();
         Debug.Initialize();
         Gdx.input.setCursorCatched(true);
     }

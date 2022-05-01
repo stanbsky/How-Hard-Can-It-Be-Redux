@@ -2,9 +2,13 @@ package com.ducks.intangibles;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.entities.*;
+import com.ducks.managers.EntityManager;
+import com.ducks.managers.SaveManager;
 import com.ducks.managers.StatsManager;
 import com.ducks.ui.Indicator;
 import com.ducks.ui.Hud;
+
+import java.util.Objects;
 
 import static com.ducks.managers.EntityManager.*;
 import static com.ducks.ui.Hud.subtitle;
@@ -19,9 +23,10 @@ public class Quest {
     public String type;
 
     public Quest (String type) {
-        this(type, null);
+        this(type, null, "");
     }
-    public Quest (String type, Vector2 location) {
+
+    public Quest (String type, Vector2 location, String collageName) {
         this.type = type;
         switch (type) {
             case "chest":
@@ -43,8 +48,14 @@ public class Quest {
                 indicator.setAngry(true);
                 break;
             case "boss":
-                Vector2 spawn = pirateSpawns.random();
-                objective = new Boss(collegeNames.random(),
+                Vector2 spawn = null;
+                if(!SaveManager.LoadSave) {
+                    spawn = pirateSpawns.random();
+                }
+                if(location != null) {
+                    spawn = location.cpy();
+                }
+                objective = new Boss(Objects.equals(collageName, "") ? collegeNames.random() : collageName,
                         spawn);
                 registerEntity(objective);
                 Hud.subtitle.setQuestNotice("Defeat the ", "warning", " Pirate Boss!");
@@ -58,6 +69,14 @@ public class Quest {
         return isCompleted;
     }
 
+    public String getCollage() {
+        try {
+            return ((Boss) objective).collegeName;
+        }
+        catch (Exception e) {
+            return "";
+        }
+    }
     public void update(float deltaTime) {
         if (!objective.isAlive()) {
             isCompleted = true;
@@ -79,5 +98,15 @@ public class Quest {
         subtitle.setNotice("Well done!");
         StatsManager.addGold(500);
         StatsManager.addScore(1000);
+    }
+
+    public Vector2 getPosition(){
+        return objective.getPosition();
+    }
+
+    public void setBossHealth(int health) {
+        if(type == "Boss") {
+            ((Boss) objective).setHealth(health);
+        }
     }
 }

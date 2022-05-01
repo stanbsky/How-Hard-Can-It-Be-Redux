@@ -8,6 +8,7 @@ import com.ducks.components.Shooter;
 import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.PowerupManager;
+import com.ducks.managers.SaveManager;
 import com.ducks.tools.InputParser;
 import com.ducks.components.ShipAnimation;
 
@@ -37,14 +38,22 @@ public class Player extends Ship {
     public Player() {
         super();
         shootWaitTime = 0.3f;
-        health = DifficultyControl.getValue(3f, 2f, 1.6f);
-        fullHealth = health;
+        if(SaveManager.LoadSave) {
+            fullHealth = DifficultyControl.getValue(3f, 2f, 1.6f);
+        }else{
+            health = DifficultyControl.getValue(3f, 2f, 1.6f);
+            fullHealth = health;
+        }
         shooter = new Shooter(shootWaitTime);
         category = PLAYER;
         mask = MASK_ALL - PLAYER_BULLET;
 
         x = SHIP_SPAWN_X - width/2;
         y = SHIP_SPAWN_Y - height/2;
+        if(SaveManager.LoadSave) {
+            x = SaveManager.saveData.player.position.x;
+            y = SaveManager.saveData.player.position.y;
+        }
         //TODO: reset to 1 & 4 for production
         acceleration = 4f;
         max_velocity = 16f;

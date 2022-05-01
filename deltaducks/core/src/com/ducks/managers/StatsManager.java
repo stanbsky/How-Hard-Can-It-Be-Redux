@@ -1,5 +1,7 @@
 package com.ducks.managers;
 
+import com.ducks.tools.Saving.ISaveData;
+import com.ducks.tools.Saving.StatsSaveData;
 import com.ducks.ui.PauseMenu;
 
 public final class StatsManager {
@@ -54,5 +56,30 @@ public final class StatsManager {
     public static void update(float deltaTime) {
         timeProgress += deltaTime;
         updateWorldTimer();
+    }
+
+    public static ISaveData Save() {
+        StatsSaveData save = new StatsSaveData();
+        save.gold = gold;
+        save.xp = score;
+        save.time = worldTimer;
+        return save;
+    }
+
+    public static void Load(ISaveData data) {
+        StatsSaveData save = (StatsSaveData) data;
+        setGold(save.gold);
+        setScore(save.xp);
+        setWorldTimer(save.time);
+    }
+
+    public static void setGold(int gold) {
+        StatsManager.gold = gold;
+    }
+    public static void setScore(int score) {
+        StatsManager.score = score;
+    }
+    public static void setWorldTimer(int time) {
+        StatsManager.worldTimer = time;
     }
 }

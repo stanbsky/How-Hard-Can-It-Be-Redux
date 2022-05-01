@@ -7,7 +7,25 @@ public final class PowerupManager {
     private static int quickshotTime;
     private static int supersizeTime;
 
-    public PowerupManager () {
+    public static int[] getPowerUps() {
+        int[] powers = {
+          shields,
+          multishotTime,
+          hotshots,
+          quickshotTime,
+          supersizeTime
+        };
+        return powers;
+    }
+    public static void setPowerUps(int[] powerUps) {
+        shields = powerUps[0];
+        multishotTime = powerUps[1];
+        hotshots = powerUps[2];
+        quickshotTime = powerUps[3];
+        supersizeTime = powerUps[4];
+    }
+
+    public static void Initialise () {
         shields = 0;
         multishotTime = 0;
         hotshots = 0;
