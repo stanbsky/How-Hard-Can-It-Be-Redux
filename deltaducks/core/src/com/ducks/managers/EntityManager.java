@@ -57,10 +57,10 @@ public final class EntityManager {
         whirlpoolSpawns = getListOfSpawns("whirlpools");
         whirlpoolSpawns.shuffle();
         whirlpoolNo = 0;
-        spawnNextWhirlpool();
         spawnColleges();
         spawnPirates();
         spawnPowerups();
+        spawnNextWhirlpool();
         if(SaveManager.LoadSave) {
             pirates = new Array<>();
             colleges = new Array<>(3);
@@ -80,7 +80,9 @@ public final class EntityManager {
     }
 
     public static void registerBackgroundEntity(IDrawable entity) {
+        System.out.println(entities.get(3));
         entities.insert(0, entity);
+        System.out.println(entities.get(4));
     }
 
     public static void render() {
@@ -101,7 +103,7 @@ public final class EntityManager {
         }
         entities.removeAll(cleanup, true);
 
-        if (whirlpoolTime++ >= 40*60) {
+        if (whirlpoolTime++ >= 40 * 60) {
             spawnNextWhirlpool();
             whirlpoolTime = 0;
         }
@@ -226,13 +228,15 @@ public final class EntityManager {
         }
     }
 
-    // WHRILPOOL FUCTIONS
+    // WHRILPOOL FUNCTIONS
 
     public static void spawnNextWhirlpool() {
         Whirlpool whirlpool;
         whirlpool = new Whirlpool(whirlpoolSpawns.get(whirlpoolNo++ % whirlpoolSpawns.size));
         registerBackgroundEntity(whirlpool);
     }
+
+    // SAVING FUNCTIONS
 
     public static ISaveData Save() {
         EntitiesSaveData save = new EntitiesSaveData();

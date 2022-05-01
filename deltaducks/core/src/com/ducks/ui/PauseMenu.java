@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.ducks.managers.AssetManager;
+import com.ducks.managers.SaveManager;
 import com.ducks.managers.StatsManager;
 
 import static com.ducks.managers.AssetManager.*;
@@ -45,11 +46,11 @@ public class PauseMenu extends Stage {
 
         buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
-        // Add 10000 to gold
-        button = new PlainButton("Load", new ClickListener() {
+        // Save the game
+        button = new PlainButton("Save", new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                StatsManager.addGold(10000);
+                SaveManager.Save();
             }
         });
 

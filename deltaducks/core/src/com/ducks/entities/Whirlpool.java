@@ -42,6 +42,7 @@ public class Whirlpool extends Entity {
     public void update(float deltaTime) {
         super.update(deltaTime);
         pullEntities();
+        timer--;
         texture.update(deltaTime, position);
     }
 
@@ -97,7 +98,7 @@ public class Whirlpool extends Entity {
         shape.setRadius(pullRadius);
         fixture.shape = shape;
         fixture.filter.categoryBits = category;
-        fixture.filter.maskBits = MASK_ALL - PLAYER_BULLET - ENEMY_BULLET;
+        fixture.filter.maskBits = 0;
         rigidBody.addSensor(fixture, category, "Whirlpool Sensor");
     }
 
