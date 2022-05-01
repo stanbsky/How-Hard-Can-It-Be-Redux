@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="130" height="130" tilewidth="32" tileheight="32" infinite="0" nextlayerid="14" nextobjectid="381">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="130" height="130" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="404">
  <tileset firstgid="1" source="ocean.tsx"/>
  <tileset firstgid="145" source="content.tsx"/>
  <tileset firstgid="190" source="boundaries.tsx"/>
@@ -405,7 +405,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="13" name="powerups">
+ <objectgroup id="13" name="powerups" visible="0">
   <object id="325" x="1120" y="2176">
    <point/>
   </object>
@@ -443,26 +443,76 @@
    <point/>
   </object>
  </objectgroup>
+ <objectgroup id="14" name="whirlpools" visible="0">
+  <object id="381" x="3088" y="3736">
+   <point/>
+  </object>
+  <object id="382" x="3544" y="2392">
+   <point/>
+  </object>
+  <object id="383" x="3696" y="1344">
+   <point/>
+  </object>
+  <object id="384" x="1584" y="848">
+   <point/>
+  </object>
+  <object id="385" x="936" y="1816">
+   <point/>
+  </object>
+  <object id="386" x="1240" y="3720">
+   <point/>
+  </object>
+  <object id="387" x="2232" y="1232">
+   <point/>
+  </object>
+  <object id="388" x="3064" y="1088">
+   <point/>
+  </object>
+  <object id="389" x="3752" y="656">
+   <point/>
+  </object>
+  <object id="390" x="720" y="1232">
+   <point/>
+  </object>
+  <object id="391" x="936" y="2728">
+   <point/>
+  </object>
+  <object id="392" x="1640" y="3168">
+   <point/>
+  </object>
+  <object id="393" x="2576" y="2992">
+   <point/>
+  </object>
+  <object id="394" x="2952" y="2520">
+   <point/>
+  </object>
+  <object id="395" x="2512" y="2152">
+   <point/>
+  </object>
+  <object id="396" x="3840" y="2080">
+   <point/>
+  </object>
+ </objectgroup>
  <objectgroup id="12" name="chests" visible="0">
   <object id="314" x="1472" y="416">
    <point/>
   </object>
-  <object id="315" x="2112" y="832">
+  <object id="315" x="2092" y="840">
    <point/>
   </object>
-  <object id="316" x="3360" y="96">
+  <object id="316" x="3441.82" y="214.182">
    <point/>
   </object>
-  <object id="317" x="3840" y="3872">
+  <object id="317" x="3754" y="3866.67">
    <point/>
   </object>
-  <object id="318" x="352" y="3904">
+  <object id="318" x="606" y="3968">
    <point/>
   </object>
   <object id="319" x="2080" y="1888">
    <point/>
   </object>
-  <object id="320" x="288" y="352">
+  <object id="320" x="275.879" y="400.485">
    <point/>
   </object>
   <object id="321" x="256" y="1664">
@@ -475,6 +525,15 @@
    <point/>
   </object>
   <object id="324" x="2112" y="3264">
+   <point/>
+  </object>
+  <object id="397" x="3408" y="1040">
+   <point/>
+  </object>
+  <object id="398" x="216" y="2728">
+   <point/>
+  </object>
+  <object id="400" x="1272" y="2904">
    <point/>
   </object>
  </objectgroup>
@@ -680,7 +739,7 @@
   <object id="198" x="2592" y="32" width="128" height="64"/>
   <object id="199" x="2528" y="32" width="64" height="32"/>
  </objectgroup>
- <objectgroup id="3" name="colleges" visible="0" offsetx="-66.8333" offsety="139.833">
+ <objectgroup id="3" name="colleges" offsetx="-66.8333" offsety="139.833">
   <object id="355" x="2754.47" y="564.606">
    <point/>
   </object>
@@ -696,7 +755,16 @@
   <object id="367" x="614" y="3343.33">
    <point/>
   </object>
-  <object id="368" x="1577.83" y="1352.83">
+  <object id="368" x="1596.33" y="1483.16">
+   <point/>
+  </object>
+  <object id="401" x="428.167" y="2140.17">
+   <point/>
+  </object>
+  <object id="402" x="3214.83" y="2949.5">
+   <point/>
+  </object>
+  <object id="403" x="3661.5" y="2909.5">
    <point/>
   </object>
  </objectgroup>

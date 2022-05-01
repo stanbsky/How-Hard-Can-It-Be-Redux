@@ -26,7 +26,7 @@ public class ShopManager {
     public static void buyItem(String item) {
         int itemPrice = items.get(item).x;
         if (StatsManager.getGold() > itemPrice) {
-            StatsManager.addGold(-itemPrice);
+            StatsManager.spendGold(itemPrice);
             PowerupManager.newPowerup(item);
         }
     }

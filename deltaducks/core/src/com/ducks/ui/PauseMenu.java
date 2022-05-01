@@ -1,93 +1,103 @@
 package com.ducks.ui;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.*;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.ducks.DeltaDucks;
-import com.ducks.screens.InitialStorylineScreen;
-import com.ducks.screens.MainMenuScreen;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
+import com.ducks.managers.AssetManager;
+import com.ducks.managers.StatsManager;
 
-//TODO: remove unused class
-public class PauseMenu {
+import static com.ducks.managers.AssetManager.*;
+import static com.ducks.screens.MainGameScreen.*;
 
-    private final ShapeRenderer shapeRenderer;
+public class PauseMenu extends Stage {
 
-    private OrthographicCamera gameCam;
-    private Viewport gamePort;
+    private static final int BUTTON_WIDTH = 250;
+    private static final int BUTTON_HEIGHT = 100;
+    public static Label info;
 
-    private static final int PLAY_BUTTON_WIDTH = 300;
-    private static final int PLAY_BUTTON_HEIGHT = 120;
-    private static final int EXIT_BUTTON_WIDTH = 250;
-    private static final int EXIT_BUTTON_HEIGHT = 120;
-
-    private static final float PLAY_BUTTON_Y = (DeltaDucks.HEIGHT/2f)+PLAY_BUTTON_HEIGHT/4f;
-    private static final float EXIT_BUTTON_Y = (DeltaDucks.HEIGHT/2f)-EXIT_BUTTON_HEIGHT;
-
-    private static final float PLAY_BUTTON_X = (DeltaDucks.WIDTH/2f)-PLAY_BUTTON_WIDTH/2f;
-    private static final float EXIT_BUTTON_X = (DeltaDucks.WIDTH/2f)-EXIT_BUTTON_WIDTH/2f;
-
-    public Stage stage;
-    public Viewport viewport;
-
-    private final Texture playButtonActive, playButtonInactive;
-    private final Texture exitButtonActive, exitButtonInactive;
+    private static Label goldLabel;
 
     public PauseMenu() {
-        shapeRenderer = new ShapeRenderer();
-        shapeRenderer.setAutoShapeType(true);
-        gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(DeltaDucks.WIDTH, DeltaDucks.HEIGHT, gameCam);
 
-        playButtonActive = new Texture("main_menu/play_button_active.png");
-        playButtonInactive = new Texture("main_menu/play_button_inactive.png");
-        exitButtonActive = new Texture("main_menu/exit_button_active.png");
-        exitButtonInactive = new Texture("main_menu/exit_button_inactive.png");
+        Table root = new Table();
+        addActor(root);
+        root.setFillParent(true);
+        root.setBackground(AssetManager.ui.newDrawable("blank", new Color(1,1,1,0.5f)));
+        Table buttons = new Table();
+        buttons.defaults().pad(5);
+        buttons.setDebug(false);
+        Table shop = new Table().pad(5);
+        root.add(buttons);
+        root.row();
+        root.add(shop);
+
+        // Unpause and go back to game
+        PlainButton button = new PlainButton("Play",
+                new ClickListener() {
+                    @Override
+                    public void clicked (InputEvent event, float x, float y) {
+                        togglePause();
+                    }
+                });
+
+        buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+
+        // Add 10000 to gold
+        button = new PlainButton("Load", new ClickListener() {
+            @Override
+            public void clicked (InputEvent event, float x, float y) {
+                StatsManager.addGold(10000);
+            }
+        });
+
+        buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+
+        // Save button functionality needed
+        button = new PlainButton("Exit",
+                new ClickListener() {
+                    @Override
+                    public void clicked (InputEvent event, float x, float y) {
+                        StatsManager.addGold(10000);
+                    }
+                });
+        buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+
+        Table powerups = new Table();
+        powerups.defaults().spaceBottom(5).minWidth(500);
+        powerups.add(new ShopButton("shield", plainFont));
+        powerups.row();
+        powerups.add(new ShopButton( "quickfire", plainFont));
+        powerups.row();
+        powerups.add(new ShopButton("spray", plainFont));
+        powerups.row();
+        powerups.add(new ShopButton("bullet_hotshot", plainFont));
+        powerups.row();
+        powerups.add(new ShopButton( "supersize", plainFont));
+        shop.add(powerups);
+
+        Table infoBox = new Table();
+        infoBox.setBackground(ui_background);
+        Table infoCoinBox = new Table();
+        infoCoinBox.add(new Image(ui.newDrawable("coin2"))).size(64);
+        goldLabel = new Label(String.format("%d", StatsManager.getGold()), new Label.LabelStyle(plainFont, Color.BLACK));
+        infoCoinBox.add(goldLabel);
+        infoBox.add(infoCoinBox).right().expandX().padRight(10);
+        infoBox.row();
+        info = new Label("Mouse over an item on the left for more info", new Label.LabelStyle(plainFont, Color.BLACK));
+        info.setWrap(true);
+        info.setAlignment(Align.center);
+        infoBox.add(info).fillY().expandY().width(500);
+        shop.add(infoBox).fillY().spaceLeft(5);
     }
 
-    public void draw(SpriteBatch batch) {
-        // Dark Grey background for pause menu
-//        Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 0);
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        viewport = new FitViewport(DeltaDucks.WIDTH, DeltaDucks.HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, batch);
-
-        batch.setProjectionMatrix(stage.getCamera().combined);
-        stage.draw();
-        batch.begin();
-
-        Vector3 loc = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
-        if ((loc.x < PLAY_BUTTON_X + PLAY_BUTTON_WIDTH) && (loc.x > PLAY_BUTTON_X) && (loc.y < PLAY_BUTTON_Y + PLAY_BUTTON_HEIGHT) && (loc.y > PLAY_BUTTON_Y)) {
-            batch.draw(playButtonActive, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-
-        } else {
-            batch.draw(playButtonInactive, PLAY_BUTTON_X, PLAY_BUTTON_Y, PLAY_BUTTON_WIDTH, PLAY_BUTTON_HEIGHT);
-        }
-
-        if ((loc.x < EXIT_BUTTON_X + EXIT_BUTTON_WIDTH) && (loc.x > EXIT_BUTTON_X) && (loc.y < EXIT_BUTTON_Y + EXIT_BUTTON_HEIGHT) && (loc.y > EXIT_BUTTON_Y)) {
-            batch.draw(exitButtonActive, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-        } else {
-            batch.draw(exitButtonInactive, EXIT_BUTTON_X, EXIT_BUTTON_Y, EXIT_BUTTON_WIDTH, EXIT_BUTTON_HEIGHT);
-        }
-        batch.end();
+    public static void updateGold () {
+        goldLabel.setText(String.format("%d", StatsManager.getGold()));
     }
 
-    public void draw() {
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(new Color(25, 25, 25, 155));
-        shapeRenderer.rect(100, 100, DeltaDucks.VIRTUAL_WIDTH, DeltaDucks.VIRTUAL_HEIGHT);
-        shapeRenderer.end();
+    public static void updateInfo (String newString) {
+        info.setText(newString);
     }
 }

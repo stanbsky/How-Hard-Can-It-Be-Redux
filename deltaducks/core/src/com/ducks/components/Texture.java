@@ -19,13 +19,24 @@ public class Texture {
     protected float height;
     private int colourTicks = 0;
     private Color flashingColor;
+    private boolean rotate = false;
+    private float rotationFrequency = 1f;
+    private float rotationDegrees;
+    private float currentRotation = 0f;
 
-    public Texture(String name, Vector2 pos, float radius) {
+    public Texture(String name, Vector2 pos, float radius, float rotationDegrees, float rotationFrequency) {
+        rotate = rotationDegrees == 0 ? false : true;
+        this.rotationDegrees = rotationDegrees;
+        this.rotationFrequency = rotationFrequency;
+
         frame = atlas.findRegion(name);
 
         width = height = radius * 2;
         x = pos.x - this.width/2;
         y = pos.y - this.height/2;
+    }
+    public Texture(String name, Vector2 pos, float radius) {
+        this(name, pos, radius, 0f, 0f);
     }
 
     public Texture() {
@@ -44,8 +55,23 @@ public class Texture {
 
     public void render() {
         batch.setColor(renderColor);
-        batch.draw(this.frame, this.x, this.y, width, height);
+        if (!rotate) {
+            batch.draw(this.frame, this.x, this.y, width, height);
+        } else {
+            getRotationDegrees();
+            batch.draw(this.frame, this.x, this.y, width/2, height/2, width, height,
+                    1f, 1f, -currentRotation);
+        }
         batch.setColor(Color.WHITE);
+    }
+
+    private float getRotationDegrees() {
+        if (stateTime > rotationFrequency) {
+            stateTime = 0;
+            currentRotation += rotationDegrees;
+            currentRotation = currentRotation == 360 ? 0 : currentRotation;
+        }
+        return currentRotation;
     }
 
     public void updateRenderColor() {

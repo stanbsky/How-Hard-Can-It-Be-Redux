@@ -2,30 +2,25 @@ package com.ducks.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.ducks.DeltaDucks;
-import com.ducks.entities.Player;
 import com.ducks.managers.AssetManager;
 import com.ducks.managers.PowerupManager;
 
 import java.util.Objects;
-import com.ducks.managers.ShopManager;
+
 import com.ducks.managers.StatsManager;
 
-import static com.ducks.DeltaDucks.batch;
 import static com.ducks.managers.AssetManager.*;
 
-public class TableHud extends Stage {
+public class Hud extends Stage {
 
 
+    public static Subtitle subtitle;
     private static Image expSymbol;
     private static Label expLabel;
     private static Label expTagLabel;
@@ -51,7 +46,7 @@ public class TableHud extends Stage {
     private static Table quickshotCell;
     private static Table supersizeCell;
 
-    public TableHud() {
+    public Hud() {
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/futur.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -81,7 +76,7 @@ public class TableHud extends Stage {
         // bottomUI
         Table bottomUI = new Table();
         bottomUI.bottom().left();
-        bottomUI.setDebug(false);
+        bottomUI.setDebug(true);
         bottomUI.defaults().pad(10);
         root.add(bottomUI).expand().fill();
 
@@ -98,6 +93,9 @@ public class TableHud extends Stage {
         // Subtitle button - ShopButton placeholder for layout purposes
 //        ShopButton sub = new ShopButton("shield", font);
 //        bottomUI.add(sub).expandX().bottom();
+
+        subtitle = new Subtitle(plainFont);
+        bottomUI.add(subtitle).expandX().bottom();
 
     }
 

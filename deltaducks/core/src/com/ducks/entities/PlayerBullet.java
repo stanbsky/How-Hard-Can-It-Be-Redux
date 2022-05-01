@@ -31,11 +31,11 @@ public class PlayerBullet extends Bullet {
 
     public PlayerBullet(float offset) { this(player.getPosition().cpy(), Crosshair.getCrosshairDirection().cpy().rotateDeg(offset), player.getVelocity().cpy());  }
 
-    private PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
+    public PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
         if (PowerupManager.hotshotActive()) {
             this.BULLET_SPEED = 500f;
             texture = new Texture("bullet_redhot", position, radius * 1.5f);
-            PowerupManager.hotshotUsed();
+//            PowerupManager.hotshotUsed(); repeated in shooter.java
         } else {
             this.BULLET_SPEED = 200f;
             texture = new Texture("bullet_player", position, radius * 1.5f);

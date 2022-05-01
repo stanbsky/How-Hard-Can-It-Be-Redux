@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
-import com.ducks.intangibles.ParticleTest;
 import com.ducks.managers.*;
 import com.ducks.tools.Debug;
 import com.ducks.tools.EntityContactListener;
@@ -38,15 +37,14 @@ public class MainGameScreen implements Screen {
     private EntityContactListener contactListener;
 
     // UI
-    private static TablePauseMenu pauseMenu;
-    private TableHud hud;
+    private static PauseMenu pauseMenu;
+    private Hud hud;
 
     // Entities
     public static Player player;
     private Crosshair crosshair;
-    private Subtitle subtitle;
 
-    private ParticleTest ptest;
+    private QuestManager questManager;
 
     /**
      * Constructor
@@ -79,13 +77,11 @@ public class MainGameScreen implements Screen {
         player = new Player();
 
         // Set up UI
-        hud = new TableHud();
-        pauseMenu = new TablePauseMenu();
-        subtitle = new Subtitle();
+        hud = new Hud();
+        pauseMenu = new PauseMenu();
         crosshair = new Crosshair();
 
-        QuestManager.Initialise(subtitle);
-//        ptest = new ParticleTest(player.getPosition().scl(1f));
+        questManager = new QuestManager();
     }
 
     /**
@@ -93,7 +89,7 @@ public class MainGameScreen implements Screen {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
-        QuestManager.checkForGameOver(this);
+        questManager.checkForGameOver(this);
 
         // Step forward box2Dworld simulation
         world.step(deltaTime, 6, 2);
@@ -101,9 +97,8 @@ public class MainGameScreen implements Screen {
         // Update all entities
         crosshair.update(deltaTime);
         player.update(deltaTime);
-        subtitle.update(deltaTime);
         EntityManager.update(deltaTime);
-        QuestManager.update(deltaTime);
+        questManager.update(deltaTime);
         PowerupManager.update(deltaTime);
         StatsManager.update(deltaTime);
         Debug.update();
@@ -123,10 +118,9 @@ public class MainGameScreen implements Screen {
         camera.render();
         batch.setProjectionMatrix(camera.projection);
         batch.begin();
-        player.draw();
         crosshair.draw();
         EntityManager.render();
-//        ptest.draw(delta);
+        player.draw();
         batch.end();
 
 
@@ -137,8 +131,8 @@ public class MainGameScreen implements Screen {
             showPauseMenu();
 
         // TODO: remove once Subtitle is refactored
-        batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
-        subtitle.stage.draw();
+//        batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
+        //subtitle.stage.draw();
 
     }
 
@@ -166,9 +160,10 @@ public class MainGameScreen implements Screen {
         pauseMenu.getViewport().update(width, height);
     }
 
-    public void gameOver(String status) {
+    public void gameOver(boolean won) {
 //        this.dispose(); crashed the game
-        game.setScreen(new FinalStorylineScreen(game, status));
+        game.setScreen(new EndgameScreen(game, won));
+//        game.setScreen(new FinalStorylineScreen(game, status));
     }
 
 

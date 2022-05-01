@@ -9,7 +9,6 @@ import com.ducks.intangibles.Quest;
 import com.ducks.screens.MainGameScreen;
 import com.ducks.tools.Saving.ISaveData;
 import com.ducks.tools.Saving.QuestSaveData;
-import com.ducks.ui.Subtitle;
 
 import java.util.Objects;
 
@@ -20,7 +19,6 @@ import static com.ducks.screens.MainGameScreen.player;
 
 public final class QuestManager {
 
-    private static Subtitle subtitle;
     private static Quest currentQuest;
     private static float stateTime;
     private static float spawnTime = 2;
@@ -29,8 +27,7 @@ public final class QuestManager {
     private static int finishedQuests = 0;
     private static boolean debug = false;
 
-    public static void Initialise(Subtitle subtitle) {
-        QuestManager.subtitle = subtitle;
+    public static void Initialise() {
         currentQuest = null;
         if(SaveManager.LoadSave) {
             if(SaveManager.saveData.quests.hasBoss) {
@@ -62,15 +59,15 @@ public final class QuestManager {
         // TODO: revert after testing
         if (finishedQuests == finalQuestCounter) {
 //        if (true) {
-            currentQuest = new Quest("boss", null, subtitle, "");
+            currentQuest = new Quest("boss", null, "");
         } else {
             float spawnRoll = (float) Math.random();
             if (spawnRoll < 0.4f && livingCollegesExist()) {
-                currentQuest = new Quest("college", EntityManager.colleges.random().getPosition(), subtitle, "");
+                currentQuest = new Quest("college", EntityManager.colleges.random().getPosition(), "");
             } else if (spawnRoll > 0.7f && livingPiratesExist()) {
-                currentQuest = new Quest("pirate", null, subtitle, "");
+                currentQuest = new Quest("pirate", null, "");
             } else {
-                currentQuest = new Quest("chest", pickSpawn(EntityManager.chestSpawns), subtitle, "");
+                currentQuest = new Quest("chest", pickSpawn(EntityManager.chestSpawns), "");
             }
         }
     }
@@ -92,13 +89,13 @@ public final class QuestManager {
     public static void checkForGameOver(MainGameScreen gameScreen) {
         // Out of time
         if (StatsManager.getWorldTimer() <= 0)
-            gameScreen.gameOver("Lost");
+            gameScreen.gameOver(false);
         // Player died
         if (Player.getHealth() <= 0f)
-            gameScreen.gameOver("Lost");
+            gameScreen.gameOver(false);
         // Boss quest finished
         if (finalQuestCompleted)
-            gameScreen.gameOver("Won");
+            gameScreen.gameOver(true);
     }
 
     public static void update(float deltaTime) {

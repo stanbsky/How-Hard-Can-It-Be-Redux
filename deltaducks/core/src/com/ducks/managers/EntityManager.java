@@ -24,8 +24,10 @@ public final class EntityManager {
     public static Array<Vector2> pirateSpawns;
     public static Array<Vector2> collegeSpawns;
     public static Array<Vector2> chestSpawns;
+    public static Array<Vector2> whirlpoolSpawns;
+    public static int whirlpoolNo;
+    private static int whirlpoolTime = 0;
     public static Array<IDrawable> entities;
-    private static int entitiesCount = 0;
     public static Array<College> colleges;
     public static Array<Pirate> pirates;
     public static Array<Powerup> powerups;
@@ -37,7 +39,7 @@ public final class EntityManager {
     private static final Array<String> powerupNames =
             new Array<>(new String[]{"quickfire", "shield", "spray", "supersize", "bullet_hotshot"});
     private static final float pirateSpawnChance = DifficultyControl.getValue(0.1f, 0.2f, 0.4f);
-    private static final float powerupSpawnChance = DifficultyControl.getValue(0.7f, 0.5f, 0.4f);
+    private static final float powerupSpawnChance = DifficultyControl.getValue(0.8f, 0.6f, 0.5f);
 
     public static void Initialize() {
         entities = new Array<>();
@@ -48,16 +50,22 @@ public final class EntityManager {
      */
     public static void spawnEntities() {
         powerupSpawns = getListOfSpawns("powerups");
+        pirateSpawns = getListOfSpawns("pirates");
+        collegeSpawns = getListOfSpawns("colleges");
+        collegeSpawns.shuffle();
         chestSpawns = getListOfSpawns("chests");
+        whirlpoolSpawns = getListOfSpawns("whirlpools");
+        whirlpoolSpawns.shuffle();
+        whirlpoolNo = 0;
+        spawnNextWhirlpool();
+        spawnColleges();
+        spawnPirates();
         spawnPowerups();
         if(SaveManager.LoadSave) {
             pirates = new Array<>();
             colleges = new Array<>(3);
             Load(SaveManager.saveData.entityManager);
         }else {
-            pirateSpawns = getListOfSpawns("pirates");
-            collegeSpawns = getListOfSpawns("colleges");
-            collegeSpawns.shuffle();
             spawnColleges();
             spawnPirates();
         }
@@ -67,9 +75,12 @@ public final class EntityManager {
         new B2WorldCreator(world);
     }
 
-    public static int registerEntity(IDrawable entity) {
+    public static void registerEntity(IDrawable entity) {
         entities.add(entity);
-        return entitiesCount++;
+    }
+
+    public static void registerBackgroundEntity(IDrawable entity) {
+        entities.insert(0, entity);
     }
 
     public static void render() {
@@ -89,6 +100,11 @@ public final class EntityManager {
 
         }
         entities.removeAll(cleanup, true);
+
+        if (whirlpoolTime++ >= 40*60) {
+            spawnNextWhirlpool();
+            whirlpoolTime = 0;
+        }
     }
 
     public static Array<Vector2> getListOfSpawns(String type) {
@@ -208,6 +224,14 @@ public final class EntityManager {
             registerEntity(powerup);
             powerups.add(powerup);
         }
+    }
+
+    // WHRILPOOL FUCTIONS
+
+    public static void spawnNextWhirlpool() {
+        Whirlpool whirlpool;
+        whirlpool = new Whirlpool(whirlpoolSpawns.get(whirlpoolNo++ % whirlpoolSpawns.size));
+        registerBackgroundEntity(whirlpool);
     }
 
     public static ISaveData Save() {
