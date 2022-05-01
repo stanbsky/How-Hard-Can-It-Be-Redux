@@ -160,9 +160,10 @@ public class MainGameScreen implements Screen {
         pauseMenu.getViewport().update(width, height);
     }
 
-    public void gameOver(String status) {
+    public void gameOver(boolean won) {
 //        this.dispose(); crashed the game
-        game.setScreen(new FinalStorylineScreen(game, status));
+        game.setScreen(new EndgameScreen(game, won));
+//        game.setScreen(new FinalStorylineScreen(game, status));
     }
 
 

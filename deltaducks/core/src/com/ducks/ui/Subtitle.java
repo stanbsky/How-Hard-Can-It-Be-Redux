@@ -27,12 +27,12 @@ public class Subtitle extends Table {
         this.add(l);
     }
 
-    public void setQuestNotice(String first, String glyph, String second) {
+    public void setQuestNotice(String first, String icon, String second) {
         this.clearChildren();
         Label l = new Label(first, new Label.LabelStyle(font, Color.BLACK));
         l.setAlignment(Align.right);
         this.add(l);
-        this.add(new Image(ui.newDrawable(glyph))).size(40);
+        this.add(new Image(ui.newDrawable(icon))).size(40);
         l = new Label(second, new Label.LabelStyle(font, Color.BLACK));
         l.setAlignment(Align.left);
         this.add(l);
@@ -45,7 +45,14 @@ public class Subtitle extends Table {
         this.add(l);
     }
 
-//    public void setBigNotice(String notice) {
-//
-//    }
+    public void setDoubleIconNotice(String notice, String icon) {
+        this.clearChildren();
+        Image i = new Image(ui.newDrawable(icon));
+        i.setAlign(Align.right);
+        this.add(i).size(40);
+        this.add(new Label(notice, new Label.LabelStyle(font, Color.BLACK)));
+        i = new Image(ui.newDrawable(icon));
+        i.setAlign(Align.left);
+        this.add(i).size(40);
+    }
 }

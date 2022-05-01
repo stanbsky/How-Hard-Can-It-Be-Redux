@@ -77,13 +77,13 @@ public class QuestManager {
     public void checkForGameOver(MainGameScreen gameScreen) {
         // Out of time
         if (StatsManager.getWorldTimer() <= 0)
-            gameScreen.gameOver("Lost");
+            gameScreen.gameOver(false);
         // Player died
         if (Player.getHealth() <= 0f)
-            gameScreen.gameOver("Lost");
+            gameScreen.gameOver(false);
         // Boss quest finished
         if (finalQuestCompleted)
-            gameScreen.gameOver("Won");
+            gameScreen.gameOver(true);
     }
 
     public void update(float deltaTime) {

@@ -72,7 +72,7 @@ public class MainMenu extends Stage {
         Table bottomRow = new Table();
         bottomRow.defaults().width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(15);
 
-        button = new PlainButton("LOAD",new ClickListener() {
+        button = new PlainButton("LOAD", new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 MainMenuScreen.setButtonPressed("load");

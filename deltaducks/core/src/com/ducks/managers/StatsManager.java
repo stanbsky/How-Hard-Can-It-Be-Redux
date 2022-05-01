@@ -8,6 +8,7 @@ public final class StatsManager {
     private static float timeProgress = 0;
     private static int score = 0;
     private static int gold = 0;
+    private static int goldEarned = 0;
 
     public static int getWorldTimer() {
         return worldTimer;
@@ -32,9 +33,22 @@ public final class StatsManager {
         return gold;
     }
 
+    public static int getTotalEarnedGold() { return goldEarned; }
+
     public static void addGold(int gold) {
         StatsManager.gold += gold;
+        StatsManager.goldEarned += gold;
         PauseMenu.updateGold();
+    }
+
+    public static void spendGold(int gold) {
+        StatsManager.gold -= gold;
+        PauseMenu.updateGold();
+    }
+
+    public static void reset() {
+        worldTimer = 300;
+        timeProgress = score = gold = goldEarned = 0;
     }
 
     public static void update(float deltaTime) {
