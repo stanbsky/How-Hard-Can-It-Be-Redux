@@ -32,7 +32,7 @@ public class Boss extends Pirate {
         max_velocity = 16f;
 
         float hpRadius = radius * 100f;
-        System.out.println("Boss x " + x + "radius " + hpRadius);
+//        System.out.println("Boss x " + x + "radius " + hpRadius);
         hpBar = new HealthBar(x - hpRadius, y + hpRadius,
                 hpRadius*2, 10f, true, health, false);
 
@@ -55,7 +55,6 @@ public class Boss extends Pirate {
 
     protected void shootBullet() {
         if (bossShotReady() && ready()) {
-            System.out.println(bossShotCount);
             bossShotCount--;
             EntityManager.spawnBossShot(this);
         } else {

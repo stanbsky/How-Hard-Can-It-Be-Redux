@@ -11,7 +11,6 @@ public class EnemyBullet extends Bullet {
 
     public EnemyBullet(Vector2 position, Vector2 direction, float offset) {
         this(position, direction.cpy().rotateDeg(offset));
-        System.out.println(direction.cpy().rotateDeg(offset));
     }
 
     /**
