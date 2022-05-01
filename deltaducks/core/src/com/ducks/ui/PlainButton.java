@@ -2,6 +2,7 @@ package com.ducks.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -18,7 +19,9 @@ public class PlainButton extends Table {
         setBackground(button_up);
         this.setTouchable(Touchable.enabled);
         this.defaults().pad(5).left();
-        this.add(new Label(text, new Label.LabelStyle(newFont, Color.BLACK)));
+        BitmapFont font = pixelFont;
+        font.getData().setScale(0.7f);
+        this.add(new Label(text, new Label.LabelStyle(pixelFont, Color.BLACK)));
         addListener(listener);
         addListener(clickListener = new ClickListener());
     }

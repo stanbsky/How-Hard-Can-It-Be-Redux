@@ -76,7 +76,7 @@ public class TableHud extends Stage {
         // bottomUI
         Table bottomUI = new Table();
         bottomUI.bottom().left();
-        bottomUI.setDebug(false);
+        bottomUI.setDebug(true);
         bottomUI.defaults().pad(10);
         root.add(bottomUI).expand().fill();
 

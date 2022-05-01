@@ -19,7 +19,7 @@ public class TableSubtitle extends Table {
     public TableSubtitle(BitmapFont font) {
         this.font = font;
         setBackground(button_up);
-        setDebug(false);
+        setDebug(true);
         this.defaults().prefWidth(maxWidth).center();
         font.getData().setScale(0.8f);
         Label l = new Label(initialMessage, new Label.LabelStyle(font, Color.BLACK));
@@ -44,4 +44,8 @@ public class TableSubtitle extends Table {
         l.setAlignment(Align.center);
         this.add(l);
     }
+
+//    public void setBigNotice(String notice) {
+//
+//    }
 }
