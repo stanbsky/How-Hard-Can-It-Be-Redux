@@ -13,7 +13,9 @@ import com.ducks.intangibles.DifficultyControl;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.IDrawable;
 import com.ducks.tools.IShooter;
+import com.ducks.tools.Saving.*;
 
+import static com.ducks.DeltaDucks.PIXEL_PER_METER;
 import static com.ducks.screens.MainGameScreen.map;
 import static com.ducks.screens.MainGameScreen.player;
 
@@ -46,13 +48,19 @@ public final class EntityManager {
      */
     public static void spawnEntities() {
         powerupSpawns = getListOfSpawns("powerups");
-        pirateSpawns = getListOfSpawns("pirates");
-        collegeSpawns = getListOfSpawns("colleges");
-        collegeSpawns.shuffle();
         chestSpawns = getListOfSpawns("chests");
-        spawnColleges();
-        spawnPirates();
         spawnPowerups();
+        if(SaveManager.LoadSave) {
+            pirates = new Array<>();
+            colleges = new Array<>(3);
+            Load(SaveManager.saveData.entityManager);
+        }else {
+            pirateSpawns = getListOfSpawns("pirates");
+            collegeSpawns = getListOfSpawns("colleges");
+            collegeSpawns.shuffle();
+            spawnColleges();
+            spawnPirates();
+        }
     }
 
     public static void buildWorldMap(World world) {
@@ -199,6 +207,40 @@ public final class EntityManager {
             powerup = new Powerup(spawn, powerupNames.random());
             registerEntity(powerup);
             powerups.add(powerup);
+        }
+    }
+
+    public static ISaveData Save() {
+        EntitiesSaveData save = new EntitiesSaveData();
+        for(College c : colleges) {
+            CollageSaveData data = new CollageSaveData();
+            data.name = c.name;
+            data.health = c.health;
+            data.position = c.getPosition().scl(PIXEL_PER_METER);
+            save.collages.add(data);
+        }
+        for(Pirate p : pirates) {
+            PirateSaveData data = new PirateSaveData();
+            data.college = p.collegeName;
+            data.position = p.getPosition().scl(PIXEL_PER_METER);
+            save.pirates.add(data);
+        }
+        return save;
+    }
+
+    public static void Load(ISaveData data) {
+        EntitiesSaveData save = (EntitiesSaveData) data;
+        for(CollageSaveData c : save.collages) {
+            College coll = new College(c.position, c.name);
+            coll.health = c.health;
+
+            registerEntity(coll);
+            colleges.add(coll);
+        }
+        for(PirateSaveData p : save.pirates) {
+            Pirate pirate = new Pirate(p.college, p.position);
+            registerEntity(pirate);
+            pirates.add(pirate);
         }
     }
 }

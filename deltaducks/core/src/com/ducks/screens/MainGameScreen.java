@@ -46,7 +46,6 @@ public class MainGameScreen implements Screen {
     private Crosshair crosshair;
     private Subtitle subtitle;
 
-    private QuestManager questManager;
     private ParticleTest ptest;
 
     /**
@@ -85,7 +84,7 @@ public class MainGameScreen implements Screen {
         subtitle = new Subtitle();
         crosshair = new Crosshair();
 
-        questManager = new QuestManager(subtitle);
+        QuestManager.Initialise(subtitle);
 //        ptest = new ParticleTest(player.getPosition().scl(1f));
     }
 
@@ -94,7 +93,7 @@ public class MainGameScreen implements Screen {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
-        questManager.checkForGameOver(this);
+        QuestManager.checkForGameOver(this);
 
         // Step forward box2Dworld simulation
         world.step(deltaTime, 6, 2);
@@ -104,7 +103,7 @@ public class MainGameScreen implements Screen {
         player.update(deltaTime);
         subtitle.update(deltaTime);
         EntityManager.update(deltaTime);
-        questManager.update(deltaTime);
+        QuestManager.update(deltaTime);
         PowerupManager.update(deltaTime);
         StatsManager.update(deltaTime);
         Debug.update();

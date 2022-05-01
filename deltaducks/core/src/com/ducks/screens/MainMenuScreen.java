@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
 import com.ducks.intangibles.DifficultyControl;
+import com.ducks.managers.SaveManager;
 import com.ducks.ui.TableMainMenu;
 
 /***
@@ -116,6 +117,10 @@ public class MainMenuScreen implements Screen {
                 break;
             case "hard":
                 nextScreen(2);
+                break;
+            case "load":
+                SaveManager.LoadSave();
+                nextScreen(DifficultyControl.getDifficulty());
                 break;
             case "exit":
                 this.dispose();

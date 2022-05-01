@@ -7,6 +7,7 @@ import com.ducks.components.ShipAnimation;
 import com.ducks.components.Shooter;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.EntityManager;
+import com.ducks.managers.SaveManager;
 import com.ducks.tools.Debug;
 
 import static com.ducks.tools.FixtureFilter.*;
@@ -28,6 +29,10 @@ public class Boss extends Pirate {
 
         x = spawn.x - width / 2;
         y = spawn.y - height / 2;
+        if(SaveManager.LoadSave) {
+            x = spawn.x;
+            y = spawn.y;
+        }
         acceleration = 4f;
         max_velocity = 16f;
 
@@ -41,7 +46,7 @@ public class Boss extends Pirate {
         moving = false;
         animation = new ShipAnimation(college, new Vector2(x, y), radius*scale, 0.5f);
         data = new EntityData(category);
-
+        collegeName = college;
         defineShip();
     }
 
@@ -90,6 +95,10 @@ public class Boss extends Pirate {
             return true;
         }
         return false;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 
 }
