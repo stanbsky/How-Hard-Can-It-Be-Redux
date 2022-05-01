@@ -2,45 +2,44 @@ package com.ducks.intangibles;
 
 import com.badlogic.gdx.math.Vector2;
 import com.ducks.entities.*;
-import com.ducks.managers.EntityManager;
 import com.ducks.managers.StatsManager;
 import com.ducks.ui.Indicator;
-import com.ducks.ui.Subtitle;
+import com.ducks.ui.TableHud;
+import com.ducks.ui.TableSubtitle;
 
 import static com.ducks.managers.EntityManager.*;
+import static com.ducks.ui.TableHud.subtitle;
 
 
 public class Quest {
 
     private boolean isCompleted = false;
-    private Subtitle subtitle;
     private Entity objective;
     private String description;
     private Indicator indicator;
     public String type;
 
-    public Quest (String type, Subtitle subtitle) {
-        this(type, null, subtitle);
+    public Quest (String type) {
+        this(type, null);
     }
-    public Quest (String type, Vector2 location, Subtitle subtitle) {
+    public Quest (String type, Vector2 location) {
         this.type = type;
-        this.subtitle = subtitle;
         switch (type) {
             case "chest":
                 objective = new Chest(location);
                 registerEntity(objective);
-                description = "Open the chest";
+                TableHud.subtitle.setQuestNotice("Open the ", "chest", " chest");
                 registerIndicator(type);
                 break;
             case "pirate":
                 objective = pirates.random();
                 ((Pirate) objective).setAngry(true);
-                description = "Defeat the angry pirate!";
+                TableHud.subtitle.setQuestNotice("Defeat the ", "warning", " angry pirate!");
                 registerIndicator("warning");
                 break;
             case "college":
                 objective = colleges.random();
-                description = "Destroy the marked college!";
+                TableHud.subtitle.setQuestNotice("Destroy the ", ((College)objective).name, " marked college!");
                 indicator = ((College) objective).getIndicator();
                 indicator.setAngry(true);
                 break;
@@ -49,7 +48,7 @@ public class Quest {
                 objective = new Boss(collegeNames.random(),
                         spawn);
                 registerEntity(objective);
-                description = "Defeat the Pirate Boss!";
+                TableHud.subtitle.setQuestNotice("Defeat the ", "warning", " Pirate Boss!");
                 registerIndicator("warning");
                 indicator.setAngry(true);
                 break;
@@ -61,7 +60,6 @@ public class Quest {
     }
 
     public void update(float deltaTime) {
-        subtitle.setSubtitle(description);
         if (!objective.isAlive()) {
             isCompleted = true;
             return;
@@ -79,7 +77,7 @@ public class Quest {
     public void dispose() {
         indicator.dispose();
 //        objective.dispose(); This stalls the game indefinitely
-        subtitle.setSubtitle("Well done!");
+        subtitle.setNotice("Well done!");
         StatsManager.addGold(500);
         StatsManager.addScore(1000);
     }

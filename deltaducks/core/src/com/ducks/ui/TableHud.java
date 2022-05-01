@@ -20,6 +20,7 @@ import static com.ducks.managers.AssetManager.*;
 public class TableHud extends Stage {
 
 
+    public static TableSubtitle subtitle;
     private static Image expSymbol;
     private static Label expLabel;
     private static Label expTagLabel;
@@ -75,7 +76,7 @@ public class TableHud extends Stage {
         // bottomUI
         Table bottomUI = new Table();
         bottomUI.bottom().left();
-        bottomUI.setDebug(true);
+        bottomUI.setDebug(false);
         bottomUI.defaults().pad(10);
         root.add(bottomUI).expand().fill();
 
@@ -93,7 +94,7 @@ public class TableHud extends Stage {
 //        ShopButton sub = new ShopButton("shield", font);
 //        bottomUI.add(sub).expandX().bottom();
 
-        TableSubtitle subtitle = new TableSubtitle(plainFont);
+        subtitle = new TableSubtitle(plainFont);
         bottomUI.add(subtitle).expandX().bottom();
 
     }

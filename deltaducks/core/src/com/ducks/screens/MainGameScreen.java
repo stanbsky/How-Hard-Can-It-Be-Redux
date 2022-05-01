@@ -43,7 +43,6 @@ public class MainGameScreen implements Screen {
     // Entities
     public static Player player;
     private Crosshair crosshair;
-    private Subtitle subtitle;
 
     private QuestManager questManager;
 
@@ -80,10 +79,9 @@ public class MainGameScreen implements Screen {
         // Set up UI
         hud = new TableHud();
         pauseMenu = new TablePauseMenu();
-        subtitle = new Subtitle();
         crosshair = new Crosshair();
 
-        questManager = new QuestManager(subtitle);
+        questManager = new QuestManager();
     }
 
     /**
@@ -99,7 +97,6 @@ public class MainGameScreen implements Screen {
         // Update all entities
         crosshair.update(deltaTime);
         player.update(deltaTime);
-        subtitle.update(deltaTime);
         EntityManager.update(deltaTime);
         questManager.update(deltaTime);
         PowerupManager.update(deltaTime);
@@ -134,7 +131,7 @@ public class MainGameScreen implements Screen {
             showPauseMenu();
 
         // TODO: remove once Subtitle is refactored
-        batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
+//        batch.setProjectionMatrix(subtitle.stage.getCamera().combined);
         //subtitle.stage.draw();
 
     }

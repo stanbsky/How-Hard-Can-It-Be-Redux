@@ -13,7 +13,7 @@ blank
   index: -1
 bullet_hotshot
   rotate: false
-  xy: 1605, 440
+  xy: 834, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -39,16 +39,30 @@ button_over
   orig: 397, 97
   offset: 0, 0
   index: -1
+chest
+  rotate: false
+  xy: 1206, 251
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 coin
   rotate: false
-  xy: 800, 70
+  xy: 1605, 440
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 coin2
   rotate: false
-  xy: 834, 70
+  xy: 1330, 375
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+constantine
+  rotate: false
+  xy: 1605, 474
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -67,6 +81,20 @@ exit_up
   orig: 600, 200
   offset: 0, 0
   index: -1
+goodricke
+  rotate: false
+  xy: 1296, 375
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+halifax
+  rotate: false
+  xy: 1639, 440
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 play_down
   rotate: false
   xy: 604, 104
@@ -83,43 +111,50 @@ play_up
   index: -1
 quickfire
   rotate: false
-  xy: 1605, 474
+  xy: 1206, 285
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 shield
   rotate: false
-  xy: 1240, 375
+  xy: 800, 36
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 spray
   rotate: false
-  xy: 1639, 474
+  xy: 1296, 341
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 supersize
   rotate: false
-  xy: 800, 36
+  xy: 1240, 285
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 time
   rotate: false
-  xy: 1206, 375
+  xy: 800, 70
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 trophy
   rotate: false
-  xy: 1206, 341
+  xy: 1639, 474
   size: 32, 32
   orig: 32, 32
+  offset: 0, 0
+  index: -1
+warning
+  rotate: false
+  xy: 1206, 319
+  size: 88, 88
+  orig: 88, 88
   offset: 0, 0
   index: -1

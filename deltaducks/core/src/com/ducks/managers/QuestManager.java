@@ -8,7 +8,7 @@ import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.Quest;
 import com.ducks.screens.FinalStorylineScreen;
 import com.ducks.screens.MainGameScreen;
-import com.ducks.ui.Subtitle;
+import com.ducks.ui.TableSubtitle;
 
 import java.util.Random;
 
@@ -18,7 +18,6 @@ import static com.ducks.screens.MainGameScreen.player;
 
 public class QuestManager {
 
-    private final Subtitle subtitle;
     private Quest currentQuest;
     private float stateTime;
     private float spawnTime = 2;
@@ -27,8 +26,7 @@ public class QuestManager {
     private int finishedQuests = 0;
     private boolean debug = false;
 
-    public QuestManager(Subtitle subtitle) {
-        this.subtitle = subtitle;
+    public QuestManager() {
         this.currentQuest = null;
     }
 
@@ -54,15 +52,15 @@ public class QuestManager {
         // TODO: revert after testing
         if (finishedQuests == finalQuestCounter) {
 //        if (true) {
-            currentQuest = new Quest("boss", null, subtitle);
+            currentQuest = new Quest("boss", null);
         } else {
             float spawnRoll = (float) Math.random();
             if (spawnRoll < 0.4f && livingCollegesExist()) {
-                currentQuest = new Quest("college", EntityManager.colleges.random().getPosition(), subtitle);
+                currentQuest = new Quest("college", EntityManager.colleges.random().getPosition());
             } else if (spawnRoll > 0.7f && livingPiratesExist()) {
-                currentQuest = new Quest("pirate", null, subtitle);
+                currentQuest = new Quest("pirate", null);
             } else {
-                currentQuest = new Quest("chest", pickSpawn(EntityManager.chestSpawns), subtitle);
+                currentQuest = new Quest("chest", pickSpawn(EntityManager.chestSpawns));
             }
         }
     }
