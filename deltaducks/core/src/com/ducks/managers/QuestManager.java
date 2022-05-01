@@ -2,15 +2,10 @@ package com.ducks.managers;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.ducks.DeltaDucks;
 import com.ducks.entities.Player;
 import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.Quest;
-import com.ducks.screens.FinalStorylineScreen;
 import com.ducks.screens.MainGameScreen;
-import com.ducks.ui.TableSubtitle;
-
-import java.util.Random;
 
 import static com.ducks.managers.EntityManager.livingCollegesExist;
 import static com.ducks.managers.EntityManager.livingPiratesExist;

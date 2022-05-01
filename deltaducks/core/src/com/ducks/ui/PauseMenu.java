@@ -12,7 +12,7 @@ import com.ducks.managers.StatsManager;
 import static com.ducks.managers.AssetManager.*;
 import static com.ducks.screens.MainGameScreen.*;
 
-public class TablePauseMenu extends Stage {
+public class PauseMenu extends Stage {
 
     private static final int BUTTON_WIDTH = 250;
     private static final int BUTTON_HEIGHT = 100;
@@ -20,7 +20,7 @@ public class TablePauseMenu extends Stage {
 
     private static Label goldLabel;
 
-    public TablePauseMenu () {
+    public PauseMenu() {
 
         Table root = new Table();
         addActor(root);

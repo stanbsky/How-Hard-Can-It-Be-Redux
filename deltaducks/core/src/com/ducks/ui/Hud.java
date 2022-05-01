@@ -17,10 +17,10 @@ import com.ducks.managers.StatsManager;
 
 import static com.ducks.managers.AssetManager.*;
 
-public class TableHud extends Stage {
+public class Hud extends Stage {
 
 
-    public static TableSubtitle subtitle;
+    public static Subtitle subtitle;
     private static Image expSymbol;
     private static Label expLabel;
     private static Label expTagLabel;
@@ -46,7 +46,7 @@ public class TableHud extends Stage {
     private static Table quickshotCell;
     private static Table supersizeCell;
 
-    public TableHud() {
+    public Hud() {
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/futur.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -94,7 +94,7 @@ public class TableHud extends Stage {
 //        ShopButton sub = new ShopButton("shield", font);
 //        bottomUI.add(sub).expandX().bottom();
 
-        subtitle = new TableSubtitle(plainFont);
+        subtitle = new Subtitle(plainFont);
         bottomUI.add(subtitle).expandX().bottom();
 
     }

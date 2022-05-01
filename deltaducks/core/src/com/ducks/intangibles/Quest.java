@@ -4,11 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.ducks.entities.*;
 import com.ducks.managers.StatsManager;
 import com.ducks.ui.Indicator;
-import com.ducks.ui.TableHud;
-import com.ducks.ui.TableSubtitle;
+import com.ducks.ui.Hud;
 
 import static com.ducks.managers.EntityManager.*;
-import static com.ducks.ui.TableHud.subtitle;
+import static com.ducks.ui.Hud.subtitle;
 
 
 public class Quest {
@@ -28,18 +27,18 @@ public class Quest {
             case "chest":
                 objective = new Chest(location);
                 registerEntity(objective);
-                TableHud.subtitle.setQuestNotice("Open the ", "chest", " chest");
+                Hud.subtitle.setQuestNotice("Open the ", "chest", " chest");
                 registerIndicator(type);
                 break;
             case "pirate":
                 objective = pirates.random();
                 ((Pirate) objective).setAngry(true);
-                TableHud.subtitle.setQuestNotice("Defeat the ", "warning", " angry pirate!");
+                Hud.subtitle.setQuestNotice("Defeat the ", "warning", " angry pirate!");
                 registerIndicator("warning");
                 break;
             case "college":
                 objective = colleges.random();
-                TableHud.subtitle.setQuestNotice("Destroy the ", ((College)objective).name, " marked college!");
+                Hud.subtitle.setQuestNotice("Destroy the ", ((College)objective).name, " marked college!");
                 indicator = ((College) objective).getIndicator();
                 indicator.setAngry(true);
                 break;
@@ -48,7 +47,7 @@ public class Quest {
                 objective = new Boss(collegeNames.random(),
                         spawn);
                 registerEntity(objective);
-                TableHud.subtitle.setQuestNotice("Defeat the ", "warning", " Pirate Boss!");
+                Hud.subtitle.setQuestNotice("Defeat the ", "warning", " Pirate Boss!");
                 registerIndicator("warning");
                 indicator.setAngry(true);
                 break;

@@ -1,160 +1,51 @@
 package com.ducks.ui;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.ducks.DeltaDucks;
+import com.badlogic.gdx.utils.Align;
 
-import static com.ducks.DeltaDucks.batch;
+import static com.ducks.managers.AssetManager.button_up;
+import static com.ducks.managers.AssetManager.ui;
 
-/***
- * Subtile (Bottom Text) fot the game
- */
-public class Subtitle implements Disposable {
-    public Stage stage;
-    public Viewport viewport;
+public class Subtitle extends Table {
 
-    private String subtitle;
-    private Label subtitleLabel;
-    private FreeTypeFontGenerator generator;
-    private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    private final String initialMessage = "Find your bearings and get ready!";
+    private final float maxWidth = 800f;
+    private BitmapFont font;
 
-    private float stateTimer;
-    private float tolerateTime;
-    private int state;
-    private static int ticks = 0;
-    private final static int tickFrequency = 60;
-
-    /**
-     * Constructor
-     */
-    public Subtitle() {
-
-        viewport = new FitViewport(DeltaDucks.VIRTUAL_WIDTH, DeltaDucks.VIRTUAL_HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, batch);
-
-        Table table = new Table();
-        table.top();
-        table.setFillParent(true);
-
-        generator = new FreeTypeFontGenerator(Gdx.files.internal("font/OpenSans-Regular.ttf"));
-        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 40;
-
-        BitmapFont font = generator.generateFont(parameter);
-        font.getData().setScale(.5f);
-        subtitleLabel = new Label(subtitle, new Label.LabelStyle( font , Color.BLACK));
-
-
-        table.add(subtitleLabel).expandX().padTop(DeltaDucks.VIRTUAL_HEIGHT * .9f);
-
-
-        stage.addActor(table);
-
-        tolerateTime = 5;
+    public Subtitle(BitmapFont font) {
+        this.font = font;
+        setBackground(button_up);
+        setDebug(true);
+        this.defaults().prefWidth(maxWidth).center();
+        font.getData().setScale(0.8f);
+        Label l = new Label(initialMessage, new Label.LabelStyle(font, Color.BLACK));
+        l.setAlignment(Align.center);
+        this.add(l);
     }
 
-    /**
-     * Update the subtitle text corresponding to the time
-     * @param deltaTime
-     */
-    public void update(float deltaTime) {
-        stateTimer += deltaTime;
-        if(stateTimer >= tolerateTime) {
-            stateTimer = 0;
-            state++;
-        }
-//        showIntro();
+    public void setQuestNotice(String first, String glyph, String second) {
+        this.clearChildren();
+        Label l = new Label(first, new Label.LabelStyle(font, Color.BLACK));
+        l.setAlignment(Align.right);
+        this.add(l);
+        this.add(new Image(ui.newDrawable(glyph))).size(40);
+        l = new Label(second, new Label.LabelStyle(font, Color.BLACK));
+        l.setAlignment(Align.left);
+        this.add(l);
     }
 
-    private void showIntro() {
-        switch (state) {
-            case 0:
-                subtitle = "use W A S D to move around";
-                subtitleLabel.setText(subtitle);
-                break;
-            case 1:
-                subtitle = "use mouse to move the cursor";
-                subtitleLabel.setText(subtitle);
-                break;
-            case 2:
-                subtitle = "use left mouse click to shoot";
-                subtitleLabel.setText(subtitle);
-                break;
-            case 3:
-                subtitle = "your health and position (blue dot) is visible on bottom left side";
-                subtitleLabel.setText(subtitle);
-                break;
-            case 5:
-                subtitle = "fight the colleges (red dot on bottom left mini map) to win";
-                subtitleLabel.setText(subtitle);
-                break;
-            case 6:
-                subtitle = "you earn xp and money by dodging attacks and defeating the attackers";
-                subtitleLabel.setText(subtitle);
-                break;
-            case 7:
-                subtitle = "game ends once you defeat all 3 colleges or your time runs out or you die";
-                subtitleLabel.setText(subtitle);
-                break;
-            case 8:
-                subtitle = "Good Luck! (You Might Need One)";
-                subtitleLabel.setText(subtitle);
-                break;
-            case 9:
-                subtitle = "";
-                subtitleLabel.setText(subtitle);
-                break;
-            default:
-                subtitleLabel.setText(subtitle);
-                break;
-        }
+    public void setNotice(String notice) {
+        this.clearChildren();
+        Label l = new Label(notice, new Label.LabelStyle(font, Color.BLACK));
+        l.setAlignment(Align.center);
+        this.add(l);
     }
 
-    /**
-     * Set the subtitle text
-     * @param sub
-     */
-    public void setSubtitle(String sub) {
-        this.subtitle = sub;
-        subtitleLabel.setText(subtitle);
-    }
-
-    /**
-     * Mainly for using subtitle as a debugging printout
-     * @param sub
-     */
-    public void setSubtitleOnTick(String sub) {
-        this.subtitle = sub;
-        ticks++;
-        if (ticks == tickFrequency) {
-            ticks = 0;
-            subtitleLabel.setText(subtitle);
-        }
-    }
-
-    /**
-     * Remove the subtitle text
-     */
-    public void removeSubtitle() {
-        this.subtitle = "";
-        subtitleLabel.setText(subtitle);
-    }
-
-    /**
-     * Dispose the unwanted object
-     */
-    @Override
-    public void dispose() {
-        stage.dispose();
-    }
+//    public void setBigNotice(String notice) {
+//
+//    }
 }

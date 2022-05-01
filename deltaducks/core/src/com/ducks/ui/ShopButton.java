@@ -3,11 +3,9 @@ package com.ducks.ui;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.ducks.managers.AssetManager;
 import com.ducks.managers.PowerupManager;
 import com.ducks.managers.ShopManager;
@@ -53,7 +51,7 @@ public class ShopButton extends Table {
         }
         if (clickListener.isOver()) {
             setBackground(button_over);
-            TablePauseMenu.updateInfo(description);
+            PauseMenu.updateInfo(description);
         } else {
             setBackground(button_up);
         }

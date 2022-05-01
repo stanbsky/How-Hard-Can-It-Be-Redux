@@ -3,26 +3,22 @@ package com.ducks.ui;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import com.ducks.managers.AssetManager;
 import com.ducks.screens.MainMenuScreen;
 
-public class TableMainMenu extends Stage {
+public class MainMenu extends Stage {
 
     private static final int BUTTON_WIDTH = 300;
     private static final int BUTTON_HEIGHT = 130;
 
-    public TableMainMenu() {
+    public MainMenu() {
 
         Table table = new Table();
         addActor(table);
@@ -38,9 +34,9 @@ public class TableMainMenu extends Stage {
         parameter.size = 60;
         BitmapFont font = generator.generateFont(parameter);
 //        font.getData().setScale(.5f);
-        TableSubtitle title = new TableSubtitle(font);
+        Subtitle title = new Subtitle(font);
         title.setNotice("~~ Pirates of York ~~");
-        Cell<TableSubtitle> titleCell = table.add(title).colspan(3).grow();//.width(600);
+        Cell<Subtitle> titleCell = table.add(title).colspan(3).grow();//.width(600);
         table.row();
 
         PlainButton button;

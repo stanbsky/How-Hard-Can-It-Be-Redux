@@ -37,8 +37,8 @@ public class MainGameScreen implements Screen {
     private EntityContactListener contactListener;
 
     // UI
-    private static TablePauseMenu pauseMenu;
-    private TableHud hud;
+    private static PauseMenu pauseMenu;
+    private Hud hud;
 
     // Entities
     public static Player player;
@@ -77,8 +77,8 @@ public class MainGameScreen implements Screen {
         player = new Player();
 
         // Set up UI
-        hud = new TableHud();
-        pauseMenu = new TablePauseMenu();
+        hud = new Hud();
+        pauseMenu = new PauseMenu();
         crosshair = new Crosshair();
 
         questManager = new QuestManager();
