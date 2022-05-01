@@ -31,7 +31,7 @@ public final class QuestManager {
         currentQuest = null;
         if(SaveManager.LoadSave) {
             if(SaveManager.saveData.quests.hasBoss) {
-                currentQuest = new Quest("boss", SaveManager.saveData.quests.position, subtitle, SaveManager.saveData.quests.bossCollege);
+                currentQuest = new Quest("boss", SaveManager.saveData.quests.position, SaveManager.saveData.quests.bossCollege);
                 Load(SaveManager.saveData.quests);
             }
         }

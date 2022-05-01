@@ -12,7 +12,6 @@ import com.ducks.intangibles.DifficultyControl;
 import com.ducks.managers.AssetManager;
 import com.ducks.ui.MainMenu;
 import com.ducks.managers.SaveManager;
-import com.ducks.ui.TableMainMenu;
 
 /***
  * Main Menu Screen

@@ -8,6 +8,8 @@ import com.ducks.managers.StatsManager;
 import com.ducks.ui.Indicator;
 import com.ducks.ui.Hud;
 
+import java.util.Objects;
+
 import static com.ducks.managers.EntityManager.*;
 import static com.ducks.ui.Hud.subtitle;
 
@@ -21,9 +23,10 @@ public class Quest {
     public String type;
 
     public Quest (String type) {
-        this(type, null);
+        this(type, null, "");
     }
-    public Quest (String type, Vector2 location) {
+
+    public Quest (String type, Vector2 location, String collageName) {
         this.type = type;
         switch (type) {
             case "chest":
