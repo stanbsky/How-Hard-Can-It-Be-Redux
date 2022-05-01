@@ -70,7 +70,12 @@ public class Quest {
     }
 
     public String getCollage() {
-        return ((Boss) objective).collegeName;
+        try {
+            return ((Boss) objective).collegeName;
+        }
+        catch (Exception e) {
+            return "";
+        }
     }
     public void update(float deltaTime) {
         subtitle.setSubtitle(description);

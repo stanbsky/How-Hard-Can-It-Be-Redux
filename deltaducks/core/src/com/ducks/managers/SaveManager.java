@@ -79,7 +79,7 @@ public class SaveManager {
             saveData = save;
         }
         catch (Exception ignored) {
-
+            int i = 0;
         }
     }
 }

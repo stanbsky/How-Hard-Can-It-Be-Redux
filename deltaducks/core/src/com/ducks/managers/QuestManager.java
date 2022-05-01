@@ -118,9 +118,11 @@ public final class QuestManager {
     public static ISaveData Save() {
         QuestSaveData save = new QuestSaveData();
         save.finishedQuests = finishedQuests;
-        save.hasBoss = Objects.equals(currentQuest.type, "boss");
-        save.position = currentQuest.getPosition().scl(PIXEL_PER_METER);
-        save.bossCollege = currentQuest.getCollage();
+        if(currentQuest != null) {
+            save.hasBoss = Objects.equals(currentQuest.type, "boss");
+            save.position = currentQuest.getPosition().scl(PIXEL_PER_METER);
+            save.bossCollege = currentQuest.getCollage();
+        }
         return save;
     }
 
