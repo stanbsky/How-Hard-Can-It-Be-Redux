@@ -376,7 +376,7 @@ public class FRTests {
     }
 
     //TODO move test to correct file
-    @Test
+    /*@Test
     public void test_SCREENS(){
 
         DeltaDucks deltaDucks = new DeltaDucks();
@@ -420,6 +420,6 @@ public class FRTests {
 
         // Checking instance of FinalStorylineScreen can be disposed of properly
         finalStorylineScreen.dispose();
-    }
+    }*/
 
 }
