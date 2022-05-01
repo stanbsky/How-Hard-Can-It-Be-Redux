@@ -98,7 +98,7 @@ public class Whirlpool extends Entity {
         shape.setRadius(pullRadius);
         fixture.shape = shape;
         fixture.filter.categoryBits = category;
-        fixture.filter.maskBits = 0;
+        fixture.filter.maskBits = MASK_ALL - PLAYER_BULLET - ENEMY_BULLET;
         rigidBody.addSensor(fixture, category, "Whirlpool Sensor");
     }
 

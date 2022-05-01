@@ -38,11 +38,13 @@ public final class EntityManager {
             new Array<>(new String[]{"goodricke", "constantine", "halifax"});
     private static final Array<String> powerupNames =
             new Array<>(new String[]{"quickfire", "shield", "spray", "supersize", "bullet_hotshot"});
-    private static final float pirateSpawnChance = DifficultyControl.getValue(0.1f, 0.2f, 0.4f);
-    private static final float powerupSpawnChance = DifficultyControl.getValue(0.8f, 0.6f, 0.5f);
+    private static float pirateSpawnChance;
+    private static float powerupSpawnChance;
 
     public static void Initialize() {
         entities = new Array<>();
+        pirateSpawnChance = DifficultyControl.getValue(0.1f, 0.2f, 0.4f);
+        powerupSpawnChance = DifficultyControl.getValue(0.8f, 0.6f, 0.5f);
     }
 
     /**
@@ -57,8 +59,6 @@ public final class EntityManager {
         whirlpoolSpawns = getListOfSpawns("whirlpools");
         whirlpoolSpawns.shuffle();
         whirlpoolNo = 0;
-        spawnColleges();
-        spawnPirates();
         spawnPowerups();
         spawnNextWhirlpool();
         if(SaveManager.LoadSave) {
@@ -80,9 +80,7 @@ public final class EntityManager {
     }
 
     public static void registerBackgroundEntity(IDrawable entity) {
-        System.out.println(entities.get(3));
         entities.insert(0, entity);
-        System.out.println(entities.get(4));
     }
 
     public static void render() {
@@ -113,8 +111,8 @@ public final class EntityManager {
         Array<Vector2> spawns = new Array<>();
         Rectangle rectangle;
         Vector2 location;
-        for (MapObject object : map.getLayers().get(type).getObjects().getByType(RectangleMapObject.class)) {
-            rectangle = ((RectangleMapObject) object).getRectangle();
+        for (RectangleMapObject object : map.getLayers().get(type).getObjects().getByType(RectangleMapObject.class)) {
+            rectangle = object.getRectangle();
             location = new Vector2(rectangle.getX(), rectangle.getY()).scl(DeltaDucks.TILEED_MAP_SCALE);
             spawns.add(location);
         }

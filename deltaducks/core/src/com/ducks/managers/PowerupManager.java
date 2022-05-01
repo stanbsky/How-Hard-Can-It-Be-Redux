@@ -25,7 +25,7 @@ public final class PowerupManager {
         supersizeTime = powerUps[4];
     }
 
-    public PowerupManager () {
+    public static void Initialise () {
         shields = 0;
         multishotTime = 0;
         hotshots = 0;

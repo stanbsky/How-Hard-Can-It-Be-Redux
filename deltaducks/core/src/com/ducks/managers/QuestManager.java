@@ -22,13 +22,16 @@ public final class QuestManager {
     private static Quest currentQuest;
     private static float stateTime;
     private static float spawnTime = 2;
-    private static int finalQuestCounter = DifficultyControl.getValue(4, 6, 9);
-    private static boolean finalQuestCompleted = false;
-    private static int finishedQuests = 0;
+    private static int finalQuestCounter;
+    private static boolean finalQuestCompleted;
+    private static int finishedQuests;
     private static boolean debug = false;
 
     public static void Initialise() {
         currentQuest = null;
+        finalQuestCompleted = false;
+        finishedQuests = 0;
+        finalQuestCounter = DifficultyControl.getValue(4, 6, 9);
         if(SaveManager.LoadSave) {
             if(SaveManager.saveData.quests.hasBoss) {
                 currentQuest = new Quest("boss", SaveManager.saveData.quests.position, SaveManager.saveData.quests.bossCollege);
@@ -74,7 +77,7 @@ public final class QuestManager {
 
     private static void checkQuestCompletion() {
         if (currentQuest.isCompleted()) {
-            if (currentQuest.type == "boss") {
+            if (Objects.equals(currentQuest.type, "boss")) {
                 finalQuestCompleted = true;
                 // TODO: return here stops crash on game over, see
                 //  https://github.com/stanbsky/How-Hard-Can-It-Be-Redux/issues/33#issue-1218051196
