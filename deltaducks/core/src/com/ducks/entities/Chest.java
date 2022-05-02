@@ -19,8 +19,12 @@ public class Chest extends Entity {
     private int timeToCollect = 240;
     private boolean playerInRange = false;
     private boolean opened = false;
-    private ChestAnimation animation;
+    private final ChestAnimation animation;
 
+    /**
+     * Defines chest with animation and sensor
+     * @param position of chest
+     */
     public Chest(Vector2 position) {
         radius = 50f;
         scale = 1.2f;
@@ -29,10 +33,13 @@ public class Chest extends Entity {
         animation = new ChestAnimation(position, scl(radius*scale));
         data = new EntityData(category);
         defineChest(position.scl(0.01f));
-        //TODO: we should be setting position in ChestAnimation
         animation.updatePosition(rigidBody.getBody().getPosition());
     }
 
+    /**
+     * Sets chest fixture at location
+     * @param position of chest/fixture
+     */
     public void defineChest(Vector2 position) {
         rigidBody = new RigidBody(position, BodyType.Static, 1f);
 
@@ -54,6 +61,10 @@ public class Chest extends Entity {
         rigidBody.addSensor(fixture, category, "Chest Sensor");
     }
 
+    /**
+     * Updates chest stage if player in range
+     * @param deltaTime of game
+     */
     @Override
     public void update(float deltaTime) {
         if (!isAlive())
@@ -74,16 +85,21 @@ public class Chest extends Entity {
         animation.render();
     }
 
+    /**
+     * Checks if player is in the range
+     * @param contactor which object is in contact
+     */
     @Override
     protected void handleSensorContact(Fixture contactor) {
         if (EntityData.equals(contactor, PLAYER))
             playerInRange = !playerInRange;
     }
 
+    /**
+     * Nothing happens when the chest contacts
+     */
     @Override
     protected void handleContact(Fixture contactor) {
-        if (EntityData.equals(contactor, PLAYER))
-            playerInRange = !playerInRange;
     }
 
     @Override

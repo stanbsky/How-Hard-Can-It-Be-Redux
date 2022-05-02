@@ -19,26 +19,36 @@ import static com.ducks.tools.FixtureFilter.*;
 
 public class Pirate extends Ship {
 
-    private final float inputStickinessThreshold = 0.03f;
-    private final float inputDurationThreshold = 0.7f;
     private float inputDurationRoll = 0f;
 
     public final float SENSOR_SCALE = DifficultyControl.getValue(3.5f, 4f, 6f);
 
     protected boolean playerInRange = false;
-    private boolean isAngry = false;
 
     public String collegeName;
 
+    /**
+     * Used for extensions of pirate
+     */
     public Pirate() {
     }
 
+    /**
+     * Defines pirate using a vector for the location
+     * @param college flag
+     * @param spawn location
+     */
     public Pirate(String college, Vector2 spawn) {
         this(college, spawn.x, spawn.y);
     }
 
-    @Deprecated
-    public Pirate(String college, float spawn_x, float spawn_y) {
+    /**
+     * Defines pirate using a x and y floats for the location
+     * @param college flag
+     * @param spawn_x location
+     * @param spawn_y location
+     */
+    private Pirate(String college, float spawn_x, float spawn_y) {
         super();
         collegeName = college;
         mask = MASK_ALL - ENEMY_BULLET;
@@ -65,14 +75,21 @@ public class Pirate extends Ship {
         defineShip();
     }
 
+    /**
+     * Updating pirate
+     * Moves ship, shoots bullets, advances animation
+     * @param deltaTime of game
+     */
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
         shooter.update(deltaTime);
         // Roll on whether we need to pull a new random input direction
+        float inputStickinessThreshold = 0.03f;
         if (Math.random() < inputStickinessThreshold)
             parseDirection(InputParser.fakeInput(0.3f));
         // Roll on whether we keep applying force in the given direction
+        float inputDurationThreshold = 0.7f;
         if (inputDurationRoll + Math.random() * 0.1 < inputDurationThreshold)
             applyForce();
         else
@@ -84,23 +101,36 @@ public class Pirate extends Ship {
 
     protected void shootBullet() { EntityManager.spawnBullet((IShooter) this); }
 
+    /**
+     * Kills pirate if collides with player bullet
+     * @param contactor of pirate
+     */
     @Override
     protected void handleContact(Fixture contactor) {
         if (EntityData.equals(contactor, PLAYER_BULLET))
             isAlive = false;
     }
 
+    /**
+     * Lets pirate shoot at player if in range
+     * @param contactor of pirate
+     */
     @Override
     protected void handleSensorContact(Fixture contactor) {
         if (EntityData.equals(contactor, PLAYER))
             playerInRange = !playerInRange;
     }
 
-    public void setAngry(boolean status) {
-        isAngry = status;
+    /**
+     * Activates red flashing
+     */
+    public void setAngry() {
         animation.setFlashingColor(Color.RED);
     }
 
+    /**
+     * Defines ship with sensor for looking at the player
+     */
     @Override
     public void defineShip() {
         super.defineShip();

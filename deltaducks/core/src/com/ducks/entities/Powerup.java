@@ -72,6 +72,10 @@ public class Powerup extends Entity {
     protected void handleContact(Fixture contactor) {
     }
 
+    /**
+     * Gets collected if collides with player
+     * @param contactor of powerup
+     */
     @Override
     protected void handleSensorContact(Fixture contactor) {
         if (EntityData.equals(contactor, PLAYER))

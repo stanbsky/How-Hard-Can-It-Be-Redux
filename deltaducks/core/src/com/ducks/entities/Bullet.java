@@ -12,7 +12,6 @@ import com.ducks.components.Texture;
 import static com.ducks.DeltaDucks.scl;
 
 public class Bullet extends Entity {
-    private final float BULLET_SPAWN_DURATION = 3f;
     float stateTime;
     float spawnTimer;
     float radius = scl(10);
@@ -33,10 +32,15 @@ public class Bullet extends Entity {
         stateTime += deltaTime;
         spawnTimer += deltaTime;
         this.texture.update(deltaTime, getPosition());
+        float BULLET_SPAWN_DURATION = 3f;
         if (spawnTimer > BULLET_SPAWN_DURATION)
             isAlive = false;
     }
 
+    /**
+     * Kills the bullet upon collision
+     * @param contactor to bullet
+     */
     @Override
     protected void handleContact(Fixture contactor) {
         if (!contactor.isSensor()) {
@@ -46,7 +50,8 @@ public class Bullet extends Entity {
     }
 
     /**
-     * Define the Box2D body and fixture and map it onto the Box2D world
+     * Define the bullet
+     * @param position of bullet
      */
     public void defineBullet(Vector2 position) {
         rigidBody = new RigidBody(position, BodyType.Dynamic, 0.25f);

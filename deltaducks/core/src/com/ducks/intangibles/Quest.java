@@ -37,7 +37,7 @@ public class Quest {
                 break;
             case "pirate":
                 objective = pirates.random();
-                ((Pirate) objective).setAngry(true);
+                ((Pirate) objective).setAngry();
                 Hud.subtitle.setQuestNotice("Defeat the ", "warning", " angry pirate!");
                 registerIndicator("warning");
                 break;

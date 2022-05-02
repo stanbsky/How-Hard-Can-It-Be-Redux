@@ -21,6 +21,11 @@ public class Boss extends Pirate {
     private final float bossShotThreshold = DifficultyControl.getValue(25f, 20f,15f);
     public int bossShotCount = 0;
 
+    /**
+     * Instantiate boss
+     * @param college flag waving on boss
+     * @param spawn location of boss
+     */
     public Boss(String college, Vector2 spawn) {
         mask = MASK_ALL - ENEMY_BULLET;
         category = ENEMY;
@@ -51,6 +56,10 @@ public class Boss extends Pirate {
         defineShip();
     }
 
+    /**
+     * Updates ship
+     * @param deltaTime of game
+     */
     @Override
     public void update(float deltaTime) {
         if (playerInRange)
@@ -59,6 +68,9 @@ public class Boss extends Pirate {
         hpBar.update(health, getPosition());
     }
 
+    /**
+     * Shoots regular shots, or triple shots if the boss shot is ready
+     */
     protected void shootBullet() {
         if (bossShotReady() && ready()) {
             bossShotCount--;
@@ -68,11 +80,18 @@ public class Boss extends Pirate {
         }
     }
 
+    /**
+     * Draws boss
+     */
     public void draw() {
         super.draw();
         this.hpBar.render();
     }
 
+    /**
+     * Lets the boss take damage if contactor is PLAYER_BULLET
+     * @param contactor to ship
+     */
     @Override
     protected void handleContact(Fixture contactor) {
         if (EntityData.equals(contactor, PLAYER_BULLET))
@@ -84,6 +103,10 @@ public class Boss extends Pirate {
         return health > 0;
     }
 
+    /**
+     * Checks if the boss should fire triple shots
+     * @return is ready
+     */
     public boolean bossShotReady() {
         if (bossShotCount > 0) {
             return true;

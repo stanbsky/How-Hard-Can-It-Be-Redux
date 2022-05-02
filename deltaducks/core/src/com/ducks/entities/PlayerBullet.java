@@ -13,8 +13,6 @@ import static com.ducks.tools.FixtureFilter.*;
  */
 public class PlayerBullet extends Bullet {
 
-    private float BULLET_SPEED;
-
     /**
      * Purely for printing debug info
      * @param deltaTime of the game
@@ -25,19 +23,29 @@ public class PlayerBullet extends Bullet {
     }
 
     /**
-     * Constructor
+     * Defines player bullet to shoot from player
      */
     public PlayerBullet() { this(player.getPosition().cpy(), Crosshair.getCrosshairDirection().cpy(), player.getVelocity().cpy());  }
 
+    /**
+     * Defines player bullet to shoot from player with offset
+     * @param offset of direction
+     */
     public PlayerBullet(float offset) { this(player.getPosition().cpy(), Crosshair.getCrosshairDirection().cpy().rotateDeg(offset), player.getVelocity().cpy());  }
 
+    /**
+     * Defines player
+     * @param position of ship
+     * @param direction of ship
+     */
     public PlayerBullet(Vector2 position, Vector2 direction, Vector2 shipMomentum) {
+        float BULLET_SPEED;
         if (PowerupManager.hotshotActive()) {
-            this.BULLET_SPEED = 500f;
+            BULLET_SPEED = 500f;
             texture = new Texture("bullet_redhot", position, radius * 1.5f);
 //            PowerupManager.hotshotUsed(); repeated in shooter.java
         } else {
-            this.BULLET_SPEED = 200f;
+            BULLET_SPEED = 200f;
             texture = new Texture("bullet_player", position, radius * 1.5f);
         }
         mask = MASK_ALL - PLAYER - PLAYER_BULLET;
