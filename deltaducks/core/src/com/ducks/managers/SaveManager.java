@@ -44,14 +44,15 @@ public class SaveManager {
     }
 
     public static void LoadSave() {
-        LoadSave = true;
-        Player.setHealth(saveData.player.health);
-        DifficultyControl.setDifficulty(saveData.difficulty);
-        PowerupManager.setPowerUps(saveData.powerUps);
+        if (saveData != null) {
+            LoadSave = true;
+            Player.setHealth(saveData.player.health);
+            DifficultyControl.setDifficulty(saveData.difficulty);
+            PowerupManager.setPowerUps(saveData.powerUps);
 
-        StatsManager.Load(saveData.stats);
-        // EntityManager.Load(saveData.entityManager);
-
+            StatsManager.Load(saveData.stats);
+            // EntityManager.Load(saveData.entityManager);
+        }
     }
 
     public static void Save() {

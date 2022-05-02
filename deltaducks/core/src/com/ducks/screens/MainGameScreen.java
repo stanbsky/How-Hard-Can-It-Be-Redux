@@ -52,7 +52,6 @@ public class MainGameScreen implements Screen {
      */
     public MainGameScreen(DeltaDucks game) {
         this.game = game;
-        SaveManager.Initialize();
         AssetManager.Initialize();
         EntityManager.Initialize();
         QuestManager.Initialise();
@@ -124,9 +123,9 @@ public class MainGameScreen implements Screen {
         camera.render();
         batch.setProjectionMatrix(camera.projection);
         batch.begin();
-        crosshair.draw();
         EntityManager.render();
         player.draw();
+        crosshair.draw();
         batch.end();
 
 

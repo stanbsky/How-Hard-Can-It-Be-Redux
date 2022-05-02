@@ -59,13 +59,14 @@ public final class EntityManager {
         whirlpoolSpawns = getListOfSpawns("whirlpools");
         whirlpoolSpawns.shuffle();
         whirlpoolNo = 0;
-        spawnPowerups();
         spawnNextWhirlpool();
         if(SaveManager.LoadSave) {
+            powerups = new Array<>();
             pirates = new Array<>();
             colleges = new Array<>(3);
             Load(SaveManager.saveData.entityManager);
         }else {
+            spawnPowerups();
             spawnColleges();
             spawnPirates();
         }
@@ -251,6 +252,12 @@ public final class EntityManager {
             data.position = p.getPosition().scl(PIXEL_PER_METER);
             save.pirates.add(data);
         }
+        for(Powerup p : powerups) {
+            PowerupSaveData data = new PowerupSaveData();
+            data.powerup = p.name;
+            data.position = p.getPosition().scl(PIXEL_PER_METER);
+            save.powerups.add(data);
+        }
         return save;
     }
 
@@ -267,6 +274,11 @@ public final class EntityManager {
             Pirate pirate = new Pirate(p.college, p.position);
             registerEntity(pirate);
             pirates.add(pirate);
+        }
+        for(PowerupSaveData p : save.powerups) {
+            Powerup powerup = new Powerup(p.position, p.powerup);
+            registerEntity(powerup);
+            powerups.add(powerup);
         }
     }
 }

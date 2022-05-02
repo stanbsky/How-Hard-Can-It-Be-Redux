@@ -33,6 +33,8 @@ public class MainMenuScreen implements Screen {
      */
     public MainMenuScreen(DeltaDucks game) {
         this.game = game;
+        SaveManager.LoadSave = false;
+        SaveManager.Initialize();
     }
 
     /**
