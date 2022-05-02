@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import com.ducks.managers.AssetManager;
 import com.ducks.screens.MainMenuScreen;
+import sun.tools.jconsole.Tab;
 
 public class MainMenu extends Stage {
 
@@ -37,7 +38,8 @@ public class MainMenu extends Stage {
 //        font.getData().setScale(.5f);
         Subtitle title = new Subtitle(font);
         title.setNotice("~~ Pirates of York ~~");
-        Cell<Subtitle> titleCell = table.add(title).colspan(3).grow();//.width(600);
+        Table subTable = new Table();
+        Cell<Subtitle> titleCell = table.add(title).colspan(3).width(700);
         table.row();
 
         PlainButton button;
@@ -99,7 +101,7 @@ public class MainMenu extends Stage {
         table.add(instructions).colspan(3).fillX().expandX().width(1000);
 
         table.pack();
-        titleCell.width(table.getWidth());
+        //titleCell.width(table.getWidth());
         table.pack();
     }
 }

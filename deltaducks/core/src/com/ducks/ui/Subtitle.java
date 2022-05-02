@@ -50,7 +50,9 @@ public class Subtitle extends Table {
         Image i = new Image(ui.newDrawable(icon));
         i.setAlign(Align.right);
         this.add(i).size(40);
-        this.add(new Label(notice, new Label.LabelStyle(font, Color.BLACK)));
+        Label l = new Label(notice, new Label.LabelStyle(font, Color.BLACK));
+        l.setAlignment(Align.center);
+        this.add(l);
         i = new Image(ui.newDrawable(icon));
         i.setAlign(Align.left);
         this.add(i).size(40);
