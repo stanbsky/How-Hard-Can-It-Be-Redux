@@ -31,7 +31,7 @@ public class Endgame extends Stage {
         table.setBackground(AssetManager.ui.newDrawable("blank", new Color(1,1,1,0.8f)));
         table.setFillParent(true);
         table.setDebug(false);
-        table.defaults().pad(20);
+        table.defaults().pad(10);
 
         Subtitle title = new Subtitle(AssetManager.pixelFont);
         if (won) {
@@ -46,7 +46,7 @@ public class Endgame extends Stage {
         infoBox.setDebug(false);
         Label.LabelStyle style = new Label.LabelStyle(pixelFont, Color.BLACK);
         infoBox.setBackground(ui_background);
-        infoBox.defaults().right().pad(20);
+        infoBox.defaults().right().padLeft(30).padRight(30).padTop(10).padBottom(10);
 
         // Time played
         infoBox.add(new Label("You played for ", style)).expandX();
@@ -66,12 +66,12 @@ public class Endgame extends Stage {
         infoBox.add((new Label(" " + StatsManager.getScore() + " points of score", style)));
         infoBox.row();
 
-        infoBox.add(new Label("Try again?", style)).bottom().right().colspan(3);
+        infoBox.add(new Label("Try again?", style)).bottom().center().colspan(3).padTop(50).padBottom(20);
         table.add(infoBox);
         table.row();
 
         Table bottomRow = new Table();
-        bottomRow.defaults().width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(15);
+        bottomRow.defaults().width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padRight(55).padLeft(55);
 
         PlainButton button = new PlainButton("PLAY", new ClickListener() {
             @Override

@@ -25,7 +25,6 @@ public class Bullet extends Entity {
 
     /**
      * Update the bullet every delta time interval
-     *
      * @param deltaTime of the game
      */
     @Override

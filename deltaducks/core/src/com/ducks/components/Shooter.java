@@ -29,6 +29,9 @@ public class Shooter {
 
     public void skipShootTimer() { shootTimer = shootWaitTime; }
 
+    /**
+     * If the shooting cooldown is over, shoots a bullet
+     */
     public void playerShoots() {
         if (ready() && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             resetShootTimer();
@@ -45,9 +48,13 @@ public class Shooter {
         return randomize ? ((Math.random() * 0.5)+0.5) : 1d;
     }
 
+    /**
+     * Gets vector from a to b
+     * @param a start
+     * @param b finish
+     * @return resultant normalised vector
+     */
     public static Vector2 getDirection(IShooter a, Entity b) {
-        //TODO: vector subtraction is not the same as subtracting x and y values??
-        //return a.getPosition().sub(b.getPosition()).nor().scl(-1);
         Vector2 body = a.getPosition();
         Vector2 target = b.getPosition();
         return new Vector2(body.x - target.x, body.y - target.y).nor().scl(-1);

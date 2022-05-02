@@ -24,8 +24,16 @@ public class Texture {
     private float rotationDegrees;
     private float currentRotation = 0f;
 
+    /**
+     * Creating new texture
+     * @param name of texture
+     * @param pos of texture
+     * @param radius of texture
+     * @param rotationDegrees of texture
+     * @param rotationFrequency speed of rotation
+     */
     public Texture(String name, Vector2 pos, float radius, float rotationDegrees, float rotationFrequency) {
-        rotate = rotationDegrees == 0 ? false : true;
+        rotate = rotationDegrees != 0;
         this.rotationDegrees = rotationDegrees;
         this.rotationFrequency = rotationFrequency;
 
@@ -35,6 +43,13 @@ public class Texture {
         x = pos.x - this.width/2;
         y = pos.y - this.height/2;
     }
+
+    /**
+     * Create new texture without rotation
+     * @param name of texture
+     * @param pos of texture
+     * @param radius of texture
+     */
     public Texture(String name, Vector2 pos, float radius) {
         this(name, pos, radius, 0f, 0f);
     }
@@ -42,38 +57,55 @@ public class Texture {
     public Texture() {
     }
 
+    /**
+     * Update texture
+     * @param deltaTime of game
+     * @param pos of texture
+     */
     public void update(float deltaTime, Vector2 pos) {
         stateTime += deltaTime;
         updatePosition(pos);
         updateRenderColor();
     }
 
+    /**
+     * Set new texture position
+     * @param pos of texture
+     */
     public void updatePosition(Vector2 pos) {
         x = pos.x - width/2;
         y = pos.y - height/2;
     }
 
+    /**
+     * Renders texture
+     */
     public void render() {
         batch.setColor(renderColor);
         if (!rotate) {
             batch.draw(this.frame, this.x, this.y, width, height);
         } else {
-            getRotationDegrees();
+            updateRotationDegrees();
             batch.draw(this.frame, this.x, this.y, width/2, height/2, width, height,
                     1f, 1f, -currentRotation);
         }
         batch.setColor(Color.WHITE);
     }
 
-    private float getRotationDegrees() {
+    /**
+     * Sets the rotation
+     */
+    private void updateRotationDegrees() {
         if (stateTime > rotationFrequency) {
             stateTime = 0;
             currentRotation += rotationDegrees;
             currentRotation = currentRotation == 360 ? 0 : currentRotation;
         }
-        return currentRotation;
     }
 
+    /**
+     * Updates color filter
+     */
     public void updateRenderColor() {
         if (angryFlashing) {
             colourTicks++;
@@ -86,9 +118,9 @@ public class Texture {
         }
     }
 
-    public void changeSize (float multiplyer) {
-        width = width * multiplyer;
-        height = height * multiplyer;
+    public void changeSize (float multiplier) {
+        width = width * multiplier;
+        height = height * multiplier;
     }
 
     public void setFlashingColor(Color color) {
