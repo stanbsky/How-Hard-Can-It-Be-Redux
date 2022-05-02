@@ -52,10 +52,12 @@ public class MainGameScreen implements Screen {
      */
     public MainGameScreen(DeltaDucks game) {
         this.game = game;
+        SaveManager.Initialize();
         AssetManager.Initialize();
         EntityManager.Initialize();
         QuestManager.Initialise();
         PowerupManager.Initialise();
+        StatsManager.Initialise();
         Debug.Initialize();
         Gdx.input.setCursorCatched(true);
 

@@ -54,7 +54,6 @@ public class EndgameScreen implements Screen {
 
         switch (buttonPressed) {
             case "play":
-                StatsManager.reset();
                 game.setScreen(new MainMenuScreen(game));
                 break;
             case "exit":

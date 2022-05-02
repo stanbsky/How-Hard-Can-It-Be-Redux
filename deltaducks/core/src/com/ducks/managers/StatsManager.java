@@ -6,11 +6,21 @@ import com.ducks.ui.PauseMenu;
 
 public final class StatsManager {
 
-    private static int worldTimer = 300;
-    private static float timeProgress = 0;
-    private static int score = 0;
-    private static int gold = 0;
-    private static int goldEarned = 0;
+    private static int worldTimer;
+    private static float timeProgress;
+    private static int score;
+    private static int gold;
+    private static int goldEarned;
+
+    public static void Initialise() {
+        if (!SaveManager.LoadSave) {
+            worldTimer = 300;
+            timeProgress = 0;
+            score = 0;
+            gold = 0;
+            goldEarned = 0;
+        }
+    }
 
     public static int getWorldTimer() {
         return worldTimer;
@@ -46,11 +56,6 @@ public final class StatsManager {
     public static void spendGold(int gold) {
         StatsManager.gold -= gold;
         PauseMenu.updateGold();
-    }
-
-    public static void reset() {
-        worldTimer = 300;
-        timeProgress = score = gold = goldEarned = 0;
     }
 
     public static void update(float deltaTime) {

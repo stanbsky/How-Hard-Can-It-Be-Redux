@@ -34,8 +34,6 @@ public class DeltaDucks extends Game {
 	 */
 	@Override
 	public void create () {
-		SaveManager.Initialize();
-
 		batch = new SpriteBatch();
 		this.setScreen(new MainMenuScreen(this));
 	}
