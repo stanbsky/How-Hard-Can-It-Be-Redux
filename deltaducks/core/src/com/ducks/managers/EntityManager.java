@@ -65,7 +65,7 @@ public final class EntityManager {
             pirates = new Array<>();
             colleges = new Array<>(3);
             Load(SaveManager.saveData.entityManager);
-        }else {
+        } else {
             spawnPowerups();
             spawnColleges();
             spawnPirates();
@@ -211,6 +211,10 @@ public final class EntityManager {
     }
 
     // POWERUP FUNCTIONS
+
+    public static void killPowerup (Powerup powerup) {
+        powerups.removeValue(powerup, true);
+    }
 
     private static void spawnPowerups() {
         Powerup powerup;
