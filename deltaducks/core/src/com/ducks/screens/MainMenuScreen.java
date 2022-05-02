@@ -111,18 +111,20 @@ public class MainMenuScreen implements Screen {
 
     public static void setButtonPressed (String text) { buttonPressed = text; }
 
+    /**
+     * Sets the difficulty then loads the game into the screen
+     * @param Difficulty for game
+     */
     private void nextScreen (int Difficulty) {
         DifficultyControl.setDifficulty(Difficulty);
         this.dispose();
-//        game.setScreen(new InitialStorylineScreen(this.game));
         game.setScreen(new MainGameScreen(this.game));
-//        game.setScreen(new EndgameScreen(this.game, false));
     }
 
     /**
      * Resize the window
-     * @param width
-     * @param height
+     * @param width of window
+     * @param height of window
      */
     @Override
     public void resize(int width, int height) {
