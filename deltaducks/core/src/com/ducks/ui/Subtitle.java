@@ -13,14 +13,14 @@ import static com.ducks.managers.AssetManager.ui;
 public class Subtitle extends Table {
 
     private final String initialMessage = "Find your bearings and get ready!";
-    private final float maxWidth = 800f;
     private BitmapFont font;
 
     public Subtitle(BitmapFont font) {
         this.font = font;
         setBackground(button_up);
         setDebug(false);
-        this.defaults().prefWidth(maxWidth).center();
+        this.padLeft(200).padRight(200);
+        this.defaults().center();
         font.getData().setScale(0.8f);
         Label l = new Label(initialMessage, new Label.LabelStyle(font, Color.BLACK));
         l.setAlignment(Align.center);
