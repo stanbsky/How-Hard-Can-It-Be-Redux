@@ -41,6 +41,9 @@ public final class EntityManager {
     private static float pirateSpawnChance;
     private static float powerupSpawnChance;
 
+    /**
+     * Set/reset the difficulty values
+     */
     public static void Initialize() {
         entities = new Array<>();
         pirateSpawnChance = DifficultyControl.getValue(0.1f, 0.2f, 0.4f);
@@ -48,6 +51,7 @@ public final class EntityManager {
     }
 
     /**
+     * Spawn all entities needed at the start of each game
      * Separated from Initialize to simplify testing
      */
     public static void spawnEntities() {
@@ -84,12 +88,21 @@ public final class EntityManager {
         entities.insert(0, entity);
     }
 
+    /**
+     * Render entities from the bottom of the array to the top
+     */
     public static void render() {
         for (IDrawable entity : entities) {
             entity.draw();
         }
     }
 
+    /**
+     * Updates the entities
+     * Removes entities from the list with the cleanup flag
+     * Summons a new whirlpool if it has been enough time
+     * @param deltaTime of game
+     */
     public static void update(float deltaTime) {
         cleanup = new Array<>();
         for (IDrawable entity : entities) {
@@ -108,6 +121,11 @@ public final class EntityManager {
         }
     }
 
+    /**
+     * Returns an array containing rectangles from the map
+     * @param type of entity to spawn
+     * @return list of locations for entities to spawn in
+     */
     public static Array<Vector2> getListOfSpawns(String type) {
         Array<Vector2> spawns = new Array<>();
         Rectangle rectangle;
@@ -138,12 +156,14 @@ public final class EntityManager {
             pirate = new Pirate(collegeNames.random(), spawn);
             registerEntity(pirate);
             pirates.add(pirate);
-//            pirate.setId(pirates.size - 1);
         }
     }
 
     // COLLEGE FUNCTIONS
 
+    /**
+     * @return if any of the three colleges are still alive
+     */
     public static boolean livingCollegesExist() {
         for (College college : colleges) {
             if (college.isAlive()) {
@@ -153,14 +173,9 @@ public final class EntityManager {
         return false;
     }
 
-    public static Array<Vector2> getCollegeCoordinates() {
-        Array <Vector2> coordinates = new Array <Vector2>();
-        for (int i = 0; i < colleges.size; i++) {
-            coordinates.add(((Entity)entities.get(i)).getPosition());
-        }
-        return coordinates;
-    }
-
+    /**
+     * Spawns 3 colleges on random islands
+     */
     private static void spawnColleges() {
         String name;
         College college;
@@ -178,18 +193,24 @@ public final class EntityManager {
 
     // BULLET FUNCTIONS
 
+    /**
+     * Spawns a bullet with location and momentum
+     * @param shooter interface for the class shooting
+     */
     public static void spawnBullet(IShooter shooter) {
         if (shooter.ready()) {
             shooter.resetShootTimer();
-            //TODO: Add variable score, somehow
             registerEntity(new EnemyBullet(shooter.getPosition(),
                     Shooter.getDirection(shooter, player)));
         }
     }
 
+    /**
+     * Spawns three bullets if the boss is ready to shoot it
+     * @param boss interface for the boss shooting
+     */
     public static void spawnBossShot(IShooter boss) {
         if (boss.ready()) {
-//            System.out.println("BOSSSHOT");
             boss.resetShootTimer();
             registerEntity(new EnemyBullet(boss.getPosition(),
                     Shooter.getDirection(boss, player)));
@@ -200,6 +221,10 @@ public final class EntityManager {
         }
     }
 
+    /**
+     * Shoots a bullet for the player
+     * Shoots three bullets if the powerup multishot is active
+     */
     public static void spawnBullet() {
         if (PowerupManager.multishotActive()) {
             registerEntity(new PlayerBullet());
@@ -233,6 +258,9 @@ public final class EntityManager {
 
     // WHRILPOOL FUNCTIONS
 
+    /**
+     * Spawns the next whirlpool sequentially
+     */
     public static void spawnNextWhirlpool() {
         Whirlpool whirlpool;
         whirlpool = new Whirlpool(whirlpoolSpawns.get(whirlpoolNo++ % whirlpoolSpawns.size));
@@ -241,6 +269,10 @@ public final class EntityManager {
 
     // SAVING FUNCTIONS
 
+    /**
+     * Collects college, pirate, and powerup data
+     * @return data for saving
+     */
     public static ISaveData Save() {
         EntitiesSaveData save = new EntitiesSaveData();
         for(College c : colleges) {
@@ -265,6 +297,10 @@ public final class EntityManager {
         return save;
     }
 
+    /**
+     * Spawns entities with saved data, placing them in the correct positions
+     * @param data used to give to entities when spawned
+     */
     public static void Load(ISaveData data) {
         EntitiesSaveData save = (EntitiesSaveData) data;
         for(CollageSaveData c : save.collages) {

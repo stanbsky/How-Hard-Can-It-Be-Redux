@@ -9,6 +9,9 @@ public final class PowerupManager {
     private static int quickshotTime;
     private static int supersizeTime;
 
+    /**
+     * @return list of time left & count of powerups
+     */
     public static int[] getPowerUps() {
         int[] powers = {
           shields,
@@ -19,6 +22,11 @@ public final class PowerupManager {
         };
         return powers;
     }
+
+    /**
+     * Set time left & count of powerups
+     * @param powerUps time left & count of powerups
+     */
     public static void setPowerUps(int[] powerUps) {
         shields = powerUps[0];
         multishotTime = powerUps[1];
@@ -27,6 +35,9 @@ public final class PowerupManager {
         supersizeTime = powerUps[4];
     }
 
+    /**
+     * Set/reset values of powerups to 0, unless loading a save
+     */
     public static void Initialise () {
         if(!SaveManager.LoadSave) {
             shields = 0;
@@ -37,6 +48,9 @@ public final class PowerupManager {
         }
     }
 
+    /**
+     * Reduce values of time based powerups, if active
+     */
     public static void update(float deltaTime) {
         if (quickshotTime > 0) {
             quickshotTime -= 1;
@@ -49,6 +63,10 @@ public final class PowerupManager {
         }
     }
 
+    /**
+     * Activate a new powerup
+     * @param powerup to activate
+     */
     public static void newPowerup (String powerup) {
         switch (powerup) {
             case "quickfire":
@@ -69,6 +87,11 @@ public final class PowerupManager {
         }
     }
 
+    /**
+     * Get value of 1 powerup
+     * @param powerup to get value of
+     * @return time left/ count of powerup
+     */
     public static String powerupLeft (String powerup) {
         switch (powerup) {
             case "quickfire":

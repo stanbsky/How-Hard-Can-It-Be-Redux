@@ -12,6 +12,9 @@ public final class StatsManager {
     private static int gold;
     private static int goldEarned;
 
+    /**
+     * Set/reset player stats
+     */
     public static void Initialise() {
         if (!SaveManager.LoadSave) {
             worldTimer = 300;
@@ -63,6 +66,10 @@ public final class StatsManager {
         updateWorldTimer();
     }
 
+    /**
+     * Save player stats
+     * @return saved stats
+     */
     public static ISaveData Save() {
         StatsSaveData save = new StatsSaveData();
         save.gold = gold;
@@ -71,6 +78,10 @@ public final class StatsManager {
         return save;
     }
 
+    /**
+     * Load player stats from save
+     * @param data from save
+     */
     public static void Load(ISaveData data) {
         StatsSaveData save = (StatsSaveData) data;
         setGold(save.gold);

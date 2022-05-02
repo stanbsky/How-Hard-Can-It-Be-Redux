@@ -11,10 +11,11 @@ public interface IShooter {
      * Query if it is ready to shoot
      * @return true or false
      */
-    public boolean ready();
+    boolean ready();
+
     /**
      * sets the shooting timer to is default value
      */
-    public void resetShootTimer();
-    public Vector2 getPosition();
+    void resetShootTimer();
+    Vector2 getPosition();
 }

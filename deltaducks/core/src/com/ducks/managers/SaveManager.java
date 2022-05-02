@@ -17,10 +17,18 @@ public class SaveManager {
     public static boolean LoadSave = false;
     public static SaveData saveData;
     private static final Path SAVE_LOCATION = Paths.get("./Saves/Save.json");
+
+    /**
+     * Sets up save manager
+     */
     public static void Initialize() {
         saveData = null;
         LoadFile();
     }
+
+    /**
+     * Reads the save file, ready for loading
+     */
     private static void LoadFile() {
         try {
             File myObj = new File("./Saves");
@@ -43,6 +51,9 @@ public class SaveManager {
         }
     }
 
+    /**
+     * Reads and activates loaded save file if one exists
+     */
     public static void LoadSave() {
         if (saveData != null) {
             LoadSave = true;
@@ -55,6 +66,9 @@ public class SaveManager {
         }
     }
 
+    /**
+     * Saves current data
+     */
     public static void Save() {
         try {
             FileWriter out = new FileWriter(SAVE_LOCATION.toString());
