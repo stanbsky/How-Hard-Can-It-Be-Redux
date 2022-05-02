@@ -1,5 +1,8 @@
 package com.ducks.tools;
 
+/**
+ * Defines which fixtures are which
+ */
 public final class FixtureFilter {
     public static final short SCENERY = 0x1;
     public static final short PLAYER = 0x2;

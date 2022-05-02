@@ -9,7 +9,7 @@ import com.ducks.components.Texture;
 import com.ducks.intangibles.EntityData;
 import com.ducks.tools.IDrawable;
 
-public class Entity implements IDrawable {
+public abstract class Entity implements IDrawable {
     protected float width;
     protected float height;
     protected float x;
@@ -22,7 +22,6 @@ public class Entity implements IDrawable {
     protected float scale = 1f;
     protected EntityData data;
     protected boolean isAlive = true;
-    protected boolean isHit = false;
 
     public Entity() {
     }
@@ -31,6 +30,10 @@ public class Entity implements IDrawable {
 
     protected void handleSensorContact(Fixture contactor) { }
 
+    /**
+     * Updates entity
+     * @param deltaTime of game
+     */
     public void update(float deltaTime) {
         while (rigidBody.hasContacts())
             handleContact(rigidBody.getContact());

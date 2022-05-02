@@ -2,6 +2,9 @@ package com.ducks.tools.Saving;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * The data saved for QuestManager
+ */
 public class QuestSaveData implements ISaveData {
     public int finishedQuests;
     public boolean hasBoss;

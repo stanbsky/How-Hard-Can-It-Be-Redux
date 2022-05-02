@@ -11,7 +11,9 @@ import java.util.ArrayList;
 /**
  * Used to print messages to console with a given frequency,
  * displaying the name of the class registering the message.
+ * Not used in production due to java version errors
  */
+@Deprecated
 public final class Debug {
     private static int ticks = 0;
     private final static int tickFrequency = 240;

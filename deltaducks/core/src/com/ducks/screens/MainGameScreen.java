@@ -165,6 +165,10 @@ public class MainGameScreen implements Screen {
         pauseMenu.getViewport().update(width, height);
     }
 
+    /**
+     * ends the game by showing the end screen
+     * @param won true if the game was won false otherwise
+     */
     public void gameOver(boolean won) {
 //        this.dispose(); crashed the game
         game.setScreen(new EndgameScreen(game, won));
@@ -187,12 +191,19 @@ public class MainGameScreen implements Screen {
         Gdx.input.setCursorCatched(!isPaused);
     }
 
+    /**
+     * Updates the game unless it is paused
+     * @param delta
+     */
     private void updateGameUnlessPaused(float delta) {
         if (!isPaused){
             update(delta);
         }
     }
 
+    /**
+     * Toggles the pause if Esc is pressed
+     */
     private void checkPausedStatus() {
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             if (!escPressed) {
@@ -212,6 +223,9 @@ public class MainGameScreen implements Screen {
         }
     }
 
+    /**
+     * Wrapper fo the camera viewport and tilemap renderer
+     */
     private class Camera {
         public OrthographicCamera gameCam;
         public Viewport gamePort;
@@ -224,6 +238,10 @@ public class MainGameScreen implements Screen {
         public Camera() {
             setupGameCam();
         }
+
+        /**
+         * Initalises the canneras view ports and map renderer
+         */
 
         private void setupGameCam() {
             gameCam = new OrthographicCamera();
@@ -246,6 +264,9 @@ public class MainGameScreen implements Screen {
             projection = gameCam.combined;
         }
 
+        /**
+         * Followes the payers position with the camera
+         */
         public void update() {
             gameCam.position.x = player.getPosition().x;
             gameCam.position.y = player.getPosition().y;
@@ -260,6 +281,9 @@ public class MainGameScreen implements Screen {
             renderer.setView(gameCam);
         }
 
+        /**
+         * clears the buffers and render the map
+         */
         public void render() {
             Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

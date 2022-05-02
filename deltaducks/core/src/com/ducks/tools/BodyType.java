@@ -3,6 +3,9 @@ package com.ducks.tools;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
+/**
+ * Wrapper form box2d body types types
+ */
 public enum BodyType {
     /**
      * Has infinite mass doesn't move at all

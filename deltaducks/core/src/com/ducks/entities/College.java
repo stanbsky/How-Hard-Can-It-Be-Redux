@@ -31,10 +31,10 @@ public class College extends Entity implements IShooter {
 
     public int health;
     private Texture texture;
-    private HealthBar hpBar;
-    private Shooter shooter;
-    private Vector2 position;
-    private Indicator indicator;
+    private final HealthBar hpBar;
+    private final Shooter shooter;
+    private final Vector2 position;
+    private final Indicator indicator;
 
     private boolean isDestroyed;
 
@@ -111,12 +111,20 @@ public class College extends Entity implements IShooter {
         shooter.resetShootTimer();
     }
 
+    /**
+     * Damages college if shot by player bullet
+     * @param contactor of college
+     */
     @Override
     protected void handleContact(Fixture contactor) {
         if (EntityData.equals(contactor, PLAYER_BULLET))
             health -= 2;
     }
 
+    /**
+     * Lets college shoot at player if in range
+     * @param contactor of college
+     */
     @Override
     protected void handleSensorContact(Fixture contactor) {
         if (EntityData.equals(contactor, PLAYER))
