@@ -27,9 +27,8 @@ public class MainMenu extends Stage {
         table.setBackground(AssetManager.ui.newDrawable("blank", new Color(1,1,1,0.8f)));
         table.setFillParent(true);
         table.setDebug(false);
-        table.defaults().width(BUTTON_WIDTH);
         table.defaults().height(BUTTON_HEIGHT);
-        table.defaults().pad(15);
+        table.defaults().pad(15).expandX();
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/boy.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -37,12 +36,14 @@ public class MainMenu extends Stage {
         BitmapFont font = generator.generateFont(parameter);
 //        font.getData().setScale(.5f);
         Subtitle title = new Subtitle(font);
-        title.setNotice("~~ Pirates of York ~~");
+        title.setNotice("~~ Ship of Theseus ~~");
         Table subTable = new Table();
-        Cell<Subtitle> titleCell = table.add(title).colspan(3).width(700);
+        Cell<Subtitle> titleCell = table.add(title).width(950);
         table.row();
 
         PlainButton button;
+        Table middleRow = new Table();
+        middleRow.defaults().pad(40).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
         button = new PlainButton("EASY",
                 new ClickListener() {
@@ -51,7 +52,7 @@ public class MainMenu extends Stage {
                 MainMenuScreen.setButtonPressed("easy");
             }
         });
-        table.add(button);
+        middleRow.add(button);
 
         button = new PlainButton("MEDIUM", new ClickListener() {
             @Override
@@ -60,7 +61,7 @@ public class MainMenu extends Stage {
             }
         });
 
-        table.add(button);
+        middleRow.add(button);
 
         button = new PlainButton("HARD", new ClickListener() {
             @Override
@@ -69,11 +70,12 @@ public class MainMenu extends Stage {
             }
         });
 
-        table.add(button);
+        middleRow.add(button);
+        table.add(middleRow);
         table.row();
 
         Table bottomRow = new Table();
-        bottomRow.defaults().width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(15);
+        bottomRow.defaults().width(BUTTON_WIDTH).height(BUTTON_HEIGHT).pad(40);
 
         button = new PlainButton("LOAD", new ClickListener() {
             @Override
@@ -100,8 +102,8 @@ public class MainMenu extends Stage {
         instructions.setWrap(true);
         table.add(instructions).colspan(3).fillX().expandX().width(1000);
 
-        table.pack();
-        //titleCell.width(table.getWidth());
-        table.pack();
+//        table.pack();
+//        //titleCell.width(table.getWidth());
+//        table.pack();
     }
 }

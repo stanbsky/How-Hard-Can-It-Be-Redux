@@ -115,8 +115,8 @@ public class MainMenuScreen implements Screen {
         DifficultyControl.setDifficulty(Difficulty);
         this.dispose();
 //        game.setScreen(new InitialStorylineScreen(this.game));
-//        game.setScreen(new MainGameScreen(this.game));
-        game.setScreen(new EndgameScreen(this.game, false));
+        game.setScreen(new MainGameScreen(this.game));
+//        game.setScreen(new EndgameScreen(this.game, false));
     }
 
     /**
