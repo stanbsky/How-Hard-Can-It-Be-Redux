@@ -57,7 +57,7 @@ public class MainGameScreen implements Screen {
         QuestManager.Initialise();
         PowerupManager.Initialise();
         StatsManager.Initialise();
-        Debug.Initialize();
+        //Debug.Initialize();
         Gdx.input.setCursorCatched(true);
 
         // Pause menu variables
@@ -106,7 +106,7 @@ public class MainGameScreen implements Screen {
         QuestManager.update(deltaTime);
         PowerupManager.update(deltaTime);
         StatsManager.update(deltaTime);
-        Debug.update();
+        //Debug.update();
 
         camera.update();
     }
@@ -149,7 +149,7 @@ public class MainGameScreen implements Screen {
         map.dispose();
         camera.renderer.dispose();
 //        world.dispose();
-        Debug.dispose();
+        //Debug.dispose();
 //        hud.dispose();
         pauseMenu.dispose();
     }
@@ -265,7 +265,7 @@ public class MainGameScreen implements Screen {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             // Render our game map
             renderer.render();
-            Debug.render(world, gameCam);
+            // Debug.render(world, gameCam);
         }
 
         public void resize(int width, int height) {
