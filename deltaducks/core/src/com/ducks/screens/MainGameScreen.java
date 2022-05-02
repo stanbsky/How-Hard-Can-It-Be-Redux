@@ -86,8 +86,6 @@ public class MainGameScreen implements Screen {
         hud = new Hud();
         pauseMenu = new PauseMenu();
         crosshair = new Crosshair();
-
-        questManager = new QuestManager();
     }
 
     /**
@@ -95,7 +93,7 @@ public class MainGameScreen implements Screen {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
-        questManager.checkForGameOver(this);
+        QuestManager.checkForGameOver(this);
 
         // Step forward box2Dworld simulation
         world.step(deltaTime, 6, 2);
@@ -104,7 +102,7 @@ public class MainGameScreen implements Screen {
         crosshair.update(deltaTime);
         player.update(deltaTime);
         EntityManager.update(deltaTime);
-        questManager.update(deltaTime);
+        QuestManager.update(deltaTime);
         PowerupManager.update(deltaTime);
         StatsManager.update(deltaTime);
         Debug.update();
@@ -183,6 +181,7 @@ public class MainGameScreen implements Screen {
 
     public static void togglePause() {
         isPaused = !isPaused;
+        PauseMenu.saveButton.setText("Save");
         Gdx.input.setInputProcessor(isPaused ? pauseMenu : null);
         Gdx.input.setCursorCatched(!isPaused);
     }

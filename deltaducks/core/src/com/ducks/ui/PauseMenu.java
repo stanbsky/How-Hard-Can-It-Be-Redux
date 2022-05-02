@@ -20,6 +20,7 @@ public class PauseMenu extends Stage {
     private static final int BUTTON_WIDTH = 250;
     private static final int BUTTON_HEIGHT = 100;
     public static Label info;
+    public static PlainButton saveButton;
 
     private static Label goldLabel;
 
@@ -49,14 +50,15 @@ public class PauseMenu extends Stage {
         buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
         // Save the game
-        button = new PlainButton("Save", new ClickListener() {
+        saveButton = new PlainButton("Save", new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 SaveManager.Save();
+                PauseMenu.saveButton.setText("Saved");
             }
         });
 
-        buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+        buttons.add(saveButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
         // Save button functionality needed
         button = new PlainButton("Quit",
