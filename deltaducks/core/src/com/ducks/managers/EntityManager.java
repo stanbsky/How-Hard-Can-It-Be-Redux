@@ -13,7 +13,9 @@ import com.ducks.intangibles.DifficultyControl;
 import com.ducks.tools.B2WorldCreator;
 import com.ducks.tools.IDrawable;
 import com.ducks.tools.IShooter;
+import com.ducks.tools.Saving.*;
 
+import static com.ducks.DeltaDucks.PIXEL_PER_METER;
 import static com.ducks.screens.MainGameScreen.map;
 import static com.ducks.screens.MainGameScreen.player;
 
@@ -36,11 +38,13 @@ public final class EntityManager {
             new Array<>(new String[]{"goodricke", "constantine", "halifax"});
     private static final Array<String> powerupNames =
             new Array<>(new String[]{"quickfire", "shield", "spray", "supersize", "bullet_hotshot"});
-    private static final float pirateSpawnChance = DifficultyControl.getValue(0.1f, 0.2f, 0.4f);
-    private static final float powerupSpawnChance = DifficultyControl.getValue(0.8f, 0.6f, 0.5f);
+    private static float pirateSpawnChance;
+    private static float powerupSpawnChance;
 
     public static void Initialize() {
         entities = new Array<>();
+        pirateSpawnChance = DifficultyControl.getValue(0.1f, 0.2f, 0.4f);
+        powerupSpawnChance = DifficultyControl.getValue(0.8f, 0.6f, 0.5f);
     }
 
     /**
@@ -56,9 +60,16 @@ public final class EntityManager {
         whirlpoolSpawns.shuffle();
         whirlpoolNo = 0;
         spawnNextWhirlpool();
-        spawnColleges();
-        spawnPirates();
-        spawnPowerups();
+        if(SaveManager.LoadSave) {
+            powerups = new Array<>();
+            pirates = new Array<>();
+            colleges = new Array<>(3);
+            Load(SaveManager.saveData.entityManager);
+        } else {
+            spawnPowerups();
+            spawnColleges();
+            spawnPirates();
+        }
     }
 
     public static void buildWorldMap(World world) {
@@ -91,7 +102,7 @@ public final class EntityManager {
         }
         entities.removeAll(cleanup, true);
 
-        if (whirlpoolTime++ >= 40*60) {
+        if (whirlpoolTime++ >= 40 * 60) {
             spawnNextWhirlpool();
             whirlpoolTime = 0;
         }
@@ -101,8 +112,8 @@ public final class EntityManager {
         Array<Vector2> spawns = new Array<>();
         Rectangle rectangle;
         Vector2 location;
-        for (MapObject object : map.getLayers().get(type).getObjects().getByType(RectangleMapObject.class)) {
-            rectangle = ((RectangleMapObject) object).getRectangle();
+        for (RectangleMapObject object : map.getLayers().get(type).getObjects().getByType(RectangleMapObject.class)) {
+            rectangle = object.getRectangle();
             location = new Vector2(rectangle.getX(), rectangle.getY()).scl(DeltaDucks.TILEED_MAP_SCALE);
             spawns.add(location);
         }
@@ -201,6 +212,10 @@ public final class EntityManager {
 
     // POWERUP FUNCTIONS
 
+    public static void killPowerup (Powerup powerup) {
+        powerups.removeValue(powerup, true);
+    }
+
     private static void spawnPowerups() {
         Powerup powerup;
 
@@ -216,11 +231,58 @@ public final class EntityManager {
         }
     }
 
-    // WHRILPOOL FUCTIONS
+    // WHRILPOOL FUNCTIONS
 
     public static void spawnNextWhirlpool() {
         Whirlpool whirlpool;
         whirlpool = new Whirlpool(whirlpoolSpawns.get(whirlpoolNo++ % whirlpoolSpawns.size));
         registerBackgroundEntity(whirlpool);
+    }
+
+    // SAVING FUNCTIONS
+
+    public static ISaveData Save() {
+        EntitiesSaveData save = new EntitiesSaveData();
+        for(College c : colleges) {
+            CollageSaveData data = new CollageSaveData();
+            data.name = c.name;
+            data.health = c.health;
+            data.position = c.getPosition().scl(PIXEL_PER_METER);
+            save.collages.add(data);
+        }
+        for(Pirate p : pirates) {
+            PirateSaveData data = new PirateSaveData();
+            data.college = p.collegeName;
+            data.position = p.getPosition().scl(PIXEL_PER_METER);
+            save.pirates.add(data);
+        }
+        for(Powerup p : powerups) {
+            PowerupSaveData data = new PowerupSaveData();
+            data.powerup = p.name;
+            data.position = p.getPosition().scl(PIXEL_PER_METER);
+            save.powerups.add(data);
+        }
+        return save;
+    }
+
+    public static void Load(ISaveData data) {
+        EntitiesSaveData save = (EntitiesSaveData) data;
+        for(CollageSaveData c : save.collages) {
+            College coll = new College(c.position, c.name);
+            coll.health = c.health;
+
+            registerEntity(coll);
+            colleges.add(coll);
+        }
+        for(PirateSaveData p : save.pirates) {
+            Pirate pirate = new Pirate(p.college, p.position);
+            registerEntity(pirate);
+            pirates.add(pirate);
+        }
+        for(PowerupSaveData p : save.powerups) {
+            Powerup powerup = new Powerup(p.position, p.powerup);
+            registerEntity(powerup);
+            powerups.add(powerup);
+        }
     }
 }

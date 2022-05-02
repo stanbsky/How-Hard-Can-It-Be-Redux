@@ -14,6 +14,7 @@ public class PlainButton extends Table {
 
     private ClickListener clickListener;
     private boolean isPressed;
+    private final Label label;
 
     public PlainButton(String text, ClickListener listener) {
         setBackground(button_up);
@@ -21,7 +22,8 @@ public class PlainButton extends Table {
         this.defaults().pad(5).left();
         BitmapFont font = pixelFont;
         font.getData().setScale(0.7f);
-        this.add(new Label(text, new Label.LabelStyle(pixelFont, Color.BLACK)));
+        label = new Label(text, new Label.LabelStyle(pixelFont, Color.BLACK));
+        this.add(label);
         addListener(listener);
         addListener(clickListener = new ClickListener());
     }
@@ -46,5 +48,9 @@ public class PlainButton extends Table {
             isPressed = false;
         }
         super.draw(batch, parentAlpha);
+    }
+
+    public void setText(String text) {
+        label.setText(text);
     }
 }

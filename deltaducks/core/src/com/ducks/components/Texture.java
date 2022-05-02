@@ -107,4 +107,12 @@ public class Texture {
     public void removeColor() {
         renderColor = Color.WHITE;
     }
+
+    public Vector2 getPosition() {
+        return new Vector2(x, y);
+    }
+    public void setPosition(Vector2 pos) {
+        x = pos.x;
+        y = pos.y;
+    }
 }

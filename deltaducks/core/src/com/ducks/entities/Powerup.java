@@ -3,6 +3,7 @@ package com.ducks.entities;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.ducks.intangibles.EntityData;
+import com.ducks.managers.EntityManager;
 import com.ducks.managers.PowerupManager;
 import com.ducks.managers.StatsManager;
 import com.ducks.tools.BodyType;
@@ -119,6 +120,7 @@ public class Powerup extends Entity {
     public void dispose() {
         StatsManager.addScore(1000);
         PowerupManager.newPowerup(name);
+        EntityManager.killPowerup(this);
         rigidBody.dispose();
     }
 

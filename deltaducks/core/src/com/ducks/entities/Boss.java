@@ -5,18 +5,20 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ducks.components.HealthBar;
 import com.ducks.components.ShipAnimation;
 import com.ducks.components.Shooter;
+import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.EntityManager;
+import com.ducks.managers.SaveManager;
 import com.ducks.tools.Debug;
 
 import static com.ducks.tools.FixtureFilter.*;
 
 public class Boss extends Pirate {
 
-    private int health = 20;
+    private int health = DifficultyControl.getValue(8, 14,20);
     private HealthBar hpBar;
     private float bossShotTimer = 0f;
-    private final float bossShotThreshold = 15f;
+    private final float bossShotThreshold = DifficultyControl.getValue(25f, 20f,15f);
     public int bossShotCount = 0;
 
     public Boss(String college, Vector2 spawn) {
@@ -28,6 +30,10 @@ public class Boss extends Pirate {
 
         x = spawn.x - width / 2;
         y = spawn.y - height / 2;
+        if(SaveManager.LoadSave) {
+            x = spawn.x;
+            y = spawn.y;
+        }
         acceleration = 4f;
         max_velocity = 16f;
 
@@ -41,7 +47,7 @@ public class Boss extends Pirate {
         moving = false;
         animation = new ShipAnimation(college, new Vector2(x, y), radius*scale, 0.5f);
         data = new EntityData(category);
-
+        collegeName = college;
         defineShip();
     }
 
@@ -79,7 +85,6 @@ public class Boss extends Pirate {
     }
 
     public boolean bossShotReady() {
-        // TODO: bossshot bugs out and gets stuck inside the boss?
         if (bossShotCount > 0) {
             return true;
         }
@@ -93,6 +98,10 @@ public class Boss extends Pirate {
 
     public int getHealth(){
         return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 
 }

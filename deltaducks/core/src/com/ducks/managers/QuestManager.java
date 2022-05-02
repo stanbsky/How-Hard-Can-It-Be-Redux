@@ -2,30 +2,45 @@ package com.ducks.managers;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.ducks.entities.Boss;
 import com.ducks.entities.Player;
 import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.Quest;
 import com.ducks.screens.MainGameScreen;
+import com.ducks.tools.Saving.ISaveData;
+import com.ducks.tools.Saving.QuestSaveData;
 
+import java.util.Objects;
+
+import static com.ducks.DeltaDucks.PIXEL_PER_METER;
 import static com.ducks.managers.EntityManager.livingCollegesExist;
 import static com.ducks.managers.EntityManager.livingPiratesExist;
 import static com.ducks.screens.MainGameScreen.player;
 
-public class QuestManager {
+public final class QuestManager {
 
-    private Quest currentQuest;
-    private float stateTime;
-    private float spawnTime = 2;
-    private int finalQuestCounter = DifficultyControl.getValue(4, 6, 9);
-    private boolean finalQuestCompleted = false;
-    private int finishedQuests = 0;
-    private boolean debug = false;
+    private static Quest currentQuest;
+    private static float stateTime;
+    private static float spawnTime = 2;
+    private static int finalQuestCounter;
+    private static boolean finalQuestCompleted;
+    private static int finishedQuests;
+    private static boolean debug = false;
 
-    public QuestManager() {
-        this.currentQuest = null;
+    public static void Initialise() {
+        currentQuest = null;
+        finalQuestCompleted = false;
+        finishedQuests = 0;
+        finalQuestCounter = DifficultyControl.getValue(4, 6, 9);
+        if(SaveManager.LoadSave) {
+            if(SaveManager.saveData.quests.hasBoss) {
+                currentQuest = new Quest("boss", SaveManager.saveData.quests.position, SaveManager.saveData.quests.bossCollege);
+                Load(SaveManager.saveData.quests);
+            }
+        }
     }
 
-    private Vector2 pickSpawn(Array<Vector2> spawns) {
+    private static Vector2 pickSpawn(Array<Vector2> spawns) {
         if (debug)
             return player.getPosition().scl(100f).add(300,-300);
         int counter = 0;
@@ -43,26 +58,26 @@ public class QuestManager {
         }
     }
 
-    private void spawnQuest() {
+    private static void spawnQuest() {
         // TODO: revert after testing
         if (finishedQuests == finalQuestCounter) {
 //        if (true) {
-            currentQuest = new Quest("boss", null);
+            currentQuest = new Quest("boss", null, "");
         } else {
             float spawnRoll = (float) Math.random();
             if (spawnRoll < 0.4f && livingCollegesExist()) {
-                currentQuest = new Quest("college", EntityManager.colleges.random().getPosition());
+                currentQuest = new Quest("college", EntityManager.colleges.random().getPosition(), "");
             } else if (spawnRoll > 0.7f && livingPiratesExist()) {
-                currentQuest = new Quest("pirate", null);
+                currentQuest = new Quest("pirate", null, "");
             } else {
-                currentQuest = new Quest("chest", pickSpawn(EntityManager.chestSpawns));
+                currentQuest = new Quest("chest", pickSpawn(EntityManager.chestSpawns), "");
             }
         }
     }
 
-    private void checkQuestCompletion() {
+    private static void checkQuestCompletion() {
         if (currentQuest.isCompleted()) {
-            if (currentQuest.type == "boss") {
+            if (Objects.equals(currentQuest.type, "boss")) {
                 finalQuestCompleted = true;
                 // TODO: return here stops crash on game over, see
                 //  https://github.com/stanbsky/How-Hard-Can-It-Be-Redux/issues/33#issue-1218051196
@@ -74,7 +89,7 @@ public class QuestManager {
         }
     }
 
-    public void checkForGameOver(MainGameScreen gameScreen) {
+    public static void checkForGameOver(MainGameScreen gameScreen) {
         // Out of time
         if (StatsManager.getWorldTimer() <= 0)
             gameScreen.gameOver(false);
@@ -86,7 +101,7 @@ public class QuestManager {
             gameScreen.gameOver(true);
     }
 
-    public void update(float deltaTime) {
+    public static void update(float deltaTime) {
         if (currentQuest == null) {
             stateTime += deltaTime;
         } else {
@@ -97,5 +112,23 @@ public class QuestManager {
             spawnQuest();
             stateTime = 0;
         }
+    }
+
+
+    public static ISaveData Save() {
+        QuestSaveData save = new QuestSaveData();
+        save.finishedQuests = finishedQuests;
+        if(currentQuest != null) {
+            save.hasBoss = Objects.equals(currentQuest.type, "boss");
+            save.position = currentQuest.getPosition().scl(PIXEL_PER_METER);
+            save.bossCollege = currentQuest.getCollage();
+        }
+        return save;
+    }
+
+    public static void Load(ISaveData data) {
+        QuestSaveData save = (QuestSaveData) data;
+        finishedQuests = save.finishedQuests;
+        currentQuest.setBossHealth(save.bossHealth);
     }
 }

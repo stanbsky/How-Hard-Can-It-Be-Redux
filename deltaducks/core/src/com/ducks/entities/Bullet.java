@@ -50,7 +50,7 @@ public class Bullet extends Entity {
      * Define the Box2D body and fixture and map it onto the Box2D world
      */
     public void defineBullet(Vector2 position) {
-        rigidBody = new RigidBody(position, BodyType.Dynamic, 0.5f);
+        rigidBody = new RigidBody(position, BodyType.Dynamic, 0.25f);
         FixtureDef fixture = new FixtureDef();
         CircleShape shape = new CircleShape();
         shape.setRadius(radius);

@@ -739,7 +739,7 @@
   <object id="198" x="2592" y="32" width="128" height="64"/>
   <object id="199" x="2528" y="32" width="64" height="32"/>
  </objectgroup>
- <objectgroup id="3" name="colleges" offsetx="-66.8333" offsety="139.833">
+ <objectgroup id="3" name="colleges" visible="0" offsetx="-66.8333" offsety="139.833">
   <object id="355" x="2754.47" y="564.606">
    <point/>
   </object>
@@ -768,7 +768,7 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="2" name="pirates" visible="0">
+ <objectgroup id="2" name="pirates">
   <object id="200" x="2528" y="480">
    <point/>
   </object>
@@ -838,19 +838,16 @@
   <object id="222" x="1792" y="1280">
    <point/>
   </object>
-  <object id="224" x="1952" y="1600">
+  <object id="225" x="2011.03" y="1017.82">
    <point/>
   </object>
-  <object id="225" x="1888" y="1728">
-   <point/>
-  </object>
-  <object id="226" x="1696" y="1760">
+  <object id="226" x="1620" y="980">
    <point/>
   </object>
   <object id="227" x="1440" y="1792">
    <point/>
   </object>
-  <object id="228" x="1312" y="1728">
+  <object id="228" x="992" y="1736">
    <point/>
   </object>
   <object id="230" x="416" y="1952">
@@ -949,16 +946,16 @@
   <object id="275" x="1504" y="2400">
    <point/>
   </object>
-  <object id="276" x="1664" y="2304">
+  <object id="276" x="1240" y="2164">
    <point/>
   </object>
-  <object id="277" x="1920" y="2272">
+  <object id="277" x="1452" y="3328">
    <point/>
   </object>
-  <object id="278" x="2144" y="2368">
+  <object id="278" x="1132" y="3156">
    <point/>
   </object>
-  <object id="279" x="2304" y="2528">
+  <object id="279" x="2572" y="3000">
    <point/>
   </object>
   <object id="282" x="2336" y="2784">
@@ -1000,22 +997,22 @@
   <object id="297" x="3136" y="2176">
    <point/>
   </object>
-  <object id="299" x="2816" y="2080">
+  <object id="299" x="3000" y="2452">
    <point/>
   </object>
-  <object id="300" x="2752" y="1824">
+  <object id="300" x="2984" y="1244">
    <point/>
   </object>
-  <object id="301" x="2848" y="1600">
+  <object id="301" x="3532" y="1248">
    <point/>
   </object>
   <object id="302" x="3072" y="1568">
    <point/>
   </object>
-  <object id="303" x="2432" y="1376">
+  <object id="303" x="2544" y="1268">
    <point/>
   </object>
-  <object id="304" x="2656" y="2496">
+  <object id="304" x="2752" y="2720">
    <point/>
   </object>
   <object id="305" x="3616" y="2368">

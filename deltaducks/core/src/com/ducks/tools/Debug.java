@@ -23,8 +23,8 @@ public final class Debug {
     public static void Initialize() {
         walker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
         messages = new ArrayList<>();
-        b2dr = new Box2DDebugRenderer(true, true,
-                true, true, true, true);
+        b2dr = new Box2DDebugRenderer(false, false,
+                false, false, false, false);
     }
 
     public static void debug(Object message) {

@@ -2,6 +2,7 @@ package com.ducks;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.ducks.managers.SaveManager;
 import com.ducks.screens.MainMenuScreen;
 
 /***
@@ -14,8 +15,8 @@ public class DeltaDucks extends Game {
 	public static final int HEIGHT = 720;
 
 	// Ratio of Game Camera
-	public static final int VIRTUAL_WIDTH = 480*2; // 400
-	public static final int VIRTUAL_HEIGHT = 480; // 208
+	public static final int VIRTUAL_WIDTH = 540*2; // 400
+	public static final int VIRTUAL_HEIGHT = 540; // 208
 
 	// Ratio of real world : game
 	public static final float PIXEL_PER_METER = 100;

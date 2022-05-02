@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -24,7 +25,7 @@ public class MainMenu extends Stage {
         addActor(table);
         table.setBackground(AssetManager.ui.newDrawable("blank", new Color(1,1,1,0.8f)));
         table.setFillParent(true);
-        table.setDebug(true);
+        table.setDebug(false);
         table.defaults().width(BUTTON_WIDTH);
         table.defaults().height(BUTTON_HEIGHT);
         table.defaults().pad(15);
@@ -88,6 +89,14 @@ public class MainMenu extends Stage {
 
         bottomRow.add(button);
         table.add(bottomRow).colspan(3);
+
+        // Adding instructions
+        table.row();
+        BitmapFont instructionFont = generator.generateFont(parameter);
+        instructionFont.getData().setScale(0.4f);
+        Label instructions = new Label("Use W A S D to move the ship.\nUse the mouse to move the aim and fire with left click", new Label.LabelStyle(instructionFont, Color.BLACK));
+        instructions.setWrap(true);
+        table.add(instructions).colspan(3).fillX().expandX().width(1000);
 
         table.pack();
         titleCell.width(table.getWidth());

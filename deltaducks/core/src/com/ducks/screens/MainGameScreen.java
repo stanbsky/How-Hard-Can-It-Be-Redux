@@ -54,8 +54,15 @@ public class MainGameScreen implements Screen {
         this.game = game;
         AssetManager.Initialize();
         EntityManager.Initialize();
-        Debug.Initialize();
+        QuestManager.Initialise();
+        PowerupManager.Initialise();
+        StatsManager.Initialise();
+        //Debug.Initialize();
         Gdx.input.setCursorCatched(true);
+
+        // Pause menu variables
+        isPaused = false;
+        quitToMenu = false;
     }
 
     /**
@@ -80,8 +87,6 @@ public class MainGameScreen implements Screen {
         hud = new Hud();
         pauseMenu = new PauseMenu();
         crosshair = new Crosshair();
-
-        questManager = new QuestManager();
     }
 
     /**
@@ -89,7 +94,7 @@ public class MainGameScreen implements Screen {
      * @param deltaTime of the game
      */
     public void update(float deltaTime) {
-        questManager.checkForGameOver(this);
+        QuestManager.checkForGameOver(this);
 
         // Step forward box2Dworld simulation
         world.step(deltaTime, 6, 2);
@@ -98,10 +103,10 @@ public class MainGameScreen implements Screen {
         crosshair.update(deltaTime);
         player.update(deltaTime);
         EntityManager.update(deltaTime);
-        questManager.update(deltaTime);
+        QuestManager.update(deltaTime);
         PowerupManager.update(deltaTime);
         StatsManager.update(deltaTime);
-        Debug.update();
+        //Debug.update();
 
         camera.update();
     }
@@ -118,9 +123,9 @@ public class MainGameScreen implements Screen {
         camera.render();
         batch.setProjectionMatrix(camera.projection);
         batch.begin();
-        crosshair.draw();
         EntityManager.render();
         player.draw();
+        crosshair.draw();
         batch.end();
 
 
@@ -144,7 +149,7 @@ public class MainGameScreen implements Screen {
         map.dispose();
         camera.renderer.dispose();
 //        world.dispose();
-        Debug.dispose();
+        //Debug.dispose();
 //        hud.dispose();
         pauseMenu.dispose();
     }
@@ -173,16 +178,19 @@ public class MainGameScreen implements Screen {
 
     private static boolean isPaused = false;
     private boolean escPressed;
+    public static boolean quitToMenu = false;
 
     public static void togglePause() {
         isPaused = !isPaused;
+        PauseMenu.saveButton.setText("Save");
         Gdx.input.setInputProcessor(isPaused ? pauseMenu : null);
         Gdx.input.setCursorCatched(!isPaused);
     }
 
     private void updateGameUnlessPaused(float delta) {
-        if (!isPaused)
+        if (!isPaused){
             update(delta);
+        }
     }
 
     private void checkPausedStatus() {
@@ -199,6 +207,9 @@ public class MainGameScreen implements Screen {
     private void showPauseMenu() {
         pauseMenu.act();
         pauseMenu.draw();
+        if (quitToMenu) {
+            game.setScreen(new MainMenuScreen(game));
+        }
     }
 
     private class Camera {
@@ -254,7 +265,7 @@ public class MainGameScreen implements Screen {
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             // Render our game map
             renderer.render();
-            Debug.render(world, gameCam);
+            // Debug.render(world, gameCam);
         }
 
         public void resize(int width, int height) {

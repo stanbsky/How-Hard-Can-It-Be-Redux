@@ -36,8 +36,8 @@ Entities
 		Lose Health                 test_FR_COLLEGE_DAMAGE
 		Die
 		
-	Whirlpool
-		Spawns
+	Whirlpool                       Done
+		Spawns                      Done
 			Spawns new              test_FR_WHIRLPOOL_SPAWNING
 			Despawns (after 30s)    test_FR_WHIRLPOOL_SPAWNING
 			Loops                   test_FR_ENTITY_SPAWNS

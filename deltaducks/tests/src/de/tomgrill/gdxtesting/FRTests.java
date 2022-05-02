@@ -3,10 +3,14 @@ package de.tomgrill.gdxtesting;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.graphics.GL20;
+import com.ducks.DeltaDucks;
 import com.ducks.components.*;
 import com.ducks.entities.*;
 import com.ducks.intangibles.*;
@@ -18,11 +22,11 @@ import jdk.tools.jmod.Main;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.lwjgl.system.CallbackI;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.Test;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -371,5 +375,51 @@ public class FRTests {
         assert initial_health > new_health;
     }
 
+    //TODO move test to correct file
+    /*@Test
+    public void test_SCREENS(){
+
+        DeltaDucks deltaDucks = new DeltaDucks();
+        Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
+
+        cfg.setForegroundFPS(60);
+        cfg.setTitle("Delta Ducks");
+        cfg.setWindowedMode(DeltaDucks.WIDTH, DeltaDucks.HEIGHT);
+
+        new Lwjgl3Application(deltaDucks, cfg);
+
+        // Checking instance of MainMenuScreen can be created properly
+        MainMenuScreen mainMenuScreen = new MainMenuScreen(deltaDucks);
+
+        // Checking instance of MainMenuScreen can be disposed of properly
+        mainMenuScreen.dispose();
+
+        // Checking instance of InitialStorylineScreen can be created properly
+        InitialStorylineScreen initialStorylineScreen = new InitialStorylineScreen(deltaDucks);
+
+        // Checking instance of MainMenuScreen can be disposed of properly
+        initialStorylineScreen.dispose();
+
+        // Checking instance of MainGameScreen can be created properly
+        MainGameScreen mainGameScreen = new MainGameScreen(deltaDucks);
+
+        // Loading values of MainGameScreen
+        mainGameScreen.show();
+
+        // Checking instance of MainMenuScreen can be disposed of properly
+        mainGameScreen.dispose();
+
+        // Checking instance of FinalStorylineScreen can be created properly when the player wins
+        FinalStorylineScreen finalStorylineScreen = new FinalStorylineScreen(deltaDucks, "Won");
+
+        // Checking instance of FinalStorylineScreen can be disposed of properly
+        finalStorylineScreen.dispose();
+
+        // Checking instance of FinalStorylineScreen can be created properly when the player loses
+        finalStorylineScreen = new FinalStorylineScreen(deltaDucks, "Lost");
+
+        // Checking instance of FinalStorylineScreen can be disposed of properly
+        finalStorylineScreen.dispose();
+    }*/
 
 }

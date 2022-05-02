@@ -10,13 +10,16 @@ import com.ducks.components.Shooter;
 import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.EntityManager;
+import com.ducks.managers.SaveManager;
 import com.ducks.managers.StatsManager;
 import com.ducks.tools.IShooter;
 import com.ducks.tools.InputParser;
+import com.ducks.tools.Saving.ISaveData;
+import com.ducks.tools.Saving.ISaveable;
 
 import static com.ducks.tools.FixtureFilter.*;
 
-public class Pirate extends Ship {
+public class Pirate extends Ship implements ISaveable {
 
     private final float inputStickinessThreshold = 0.03f;
     private final float inputDurationThreshold = 0.7f;
@@ -26,6 +29,8 @@ public class Pirate extends Ship {
 
     protected boolean playerInRange = false;
     private boolean isAngry = false;
+
+    public String collegeName;
 
     public Pirate() {
     }
@@ -37,6 +42,7 @@ public class Pirate extends Ship {
     @Deprecated
     public Pirate(String college, float spawn_x, float spawn_y) {
         super();
+        collegeName = college;
         mask = MASK_ALL - ENEMY_BULLET;
         category = ENEMY;
         shootWaitTime = 1f;
@@ -45,6 +51,10 @@ public class Pirate extends Ship {
 
         x = spawn_x - width / 2;
         y = spawn_y - height / 2;
+        if(SaveManager.LoadSave) {
+            x = spawn_x;
+            y = spawn_y;
+        }
         acceleration = 2f;
         max_velocity = 8f;
 
@@ -111,6 +121,20 @@ public class Pirate extends Ship {
         rigidBody.dispose();
         StatsManager.addGold(100);
         StatsManager.addScore(1000);
+
+    }
+
+    public ISaveData Save() {
+        return new ISaveData() {
+            @Override
+            public int hashCode() {
+                return super.hashCode();
+            }
+        };
+    }
+
+    @Override
+    public void Load(ISaveData data) {
 
     }
 }

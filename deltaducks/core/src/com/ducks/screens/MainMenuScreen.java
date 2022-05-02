@@ -11,6 +11,7 @@ import com.ducks.DeltaDucks;
 import com.ducks.intangibles.DifficultyControl;
 import com.ducks.managers.AssetManager;
 import com.ducks.ui.MainMenu;
+import com.ducks.managers.SaveManager;
 
 /***
  * Main Menu Screen
@@ -32,6 +33,8 @@ public class MainMenuScreen implements Screen {
      */
     public MainMenuScreen(DeltaDucks game) {
         this.game = game;
+        SaveManager.LoadSave = false;
+        SaveManager.Initialize();
     }
 
     /**
@@ -94,6 +97,10 @@ public class MainMenuScreen implements Screen {
                 break;
             case "hard":
                 nextScreen(2);
+                break;
+            case "load":
+                SaveManager.LoadSave();
+                nextScreen(DifficultyControl.getDifficulty());
                 break;
             case "exit":
                 this.dispose();

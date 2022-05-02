@@ -7,7 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.ducks.managers.AssetManager;
+import com.ducks.managers.SaveManager;
 import com.ducks.managers.StatsManager;
+import com.ducks.screens.MainGameScreen;
+import com.ducks.screens.MainMenuScreen;
 
 import static com.ducks.managers.AssetManager.*;
 import static com.ducks.screens.MainGameScreen.*;
@@ -17,6 +20,7 @@ public class PauseMenu extends Stage {
     private static final int BUTTON_WIDTH = 250;
     private static final int BUTTON_HEIGHT = 100;
     public static Label info;
+    public static PlainButton saveButton;
 
     private static Label goldLabel;
 
@@ -45,22 +49,23 @@ public class PauseMenu extends Stage {
 
         buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
-        // Add 10000 to gold
-        button = new PlainButton("Load", new ClickListener() {
+        // Save the game
+        saveButton = new PlainButton("Save", new ClickListener() {
             @Override
             public void clicked (InputEvent event, float x, float y) {
-                StatsManager.addGold(10000);
+                SaveManager.Save();
+                PauseMenu.saveButton.setText("Saved");
             }
         });
 
-        buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
+        buttons.add(saveButton).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
 
         // Save button functionality needed
-        button = new PlainButton("Exit",
+        button = new PlainButton("Quit",
                 new ClickListener() {
                     @Override
                     public void clicked (InputEvent event, float x, float y) {
-                        StatsManager.addGold(10000);
+                        quitToMenu = true;
                     }
                 });
         buttons.add(button).width(BUTTON_WIDTH).height(BUTTON_HEIGHT);
