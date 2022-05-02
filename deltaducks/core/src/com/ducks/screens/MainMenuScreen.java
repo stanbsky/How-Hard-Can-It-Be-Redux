@@ -116,6 +116,7 @@ public class MainMenuScreen implements Screen {
         this.dispose();
 //        game.setScreen(new InitialStorylineScreen(this.game));
         game.setScreen(new MainGameScreen(this.game));
+//        game.setScreen(new EndgameScreen(this.game, false));
     }
 
     /**
