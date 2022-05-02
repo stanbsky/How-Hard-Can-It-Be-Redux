@@ -10,3 +10,11 @@ project.ext.assetsDir = new File("../core/assets")
 eclipse.project {
     name = appName + "-tests"
 }
+
+test {
+    useJUnitPlatform()
+}
+
+dependencies {
+    implementation 'org.mockito:mockito-inline:4.4.0'
+}

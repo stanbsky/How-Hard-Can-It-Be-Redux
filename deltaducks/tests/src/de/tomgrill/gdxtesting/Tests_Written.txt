@@ -1,0 +1,56 @@
+Ship
+	Spawning
+	Movement (W + A + S + D)        test_FR_W,test_FR_A,test_FR_S,test_FR_D
+	Shooting
+	Losing health                   test_FR_PLAYER_DAMAGE
+	Dying
+	Stopping on Collision
+
+Entities
+    Spawns entities
+
+	Powerups
+	    Spawning
+		Functionality
+		Shop function
+		Timer/count counting down
+		Display active powerups
+
+	Pirates
+	    Boss
+	        Spawn
+	        Health                  test_FR_BOSS_DAMAGE
+	        Triple shot
+
+	    Spawning
+		Move
+		Shoot
+		Die
+		Collision
+
+
+
+	Colleges
+	    Spawning
+		Shoot
+		Lose Health                 test_FR_COLLEGE_DAMAGE
+		Die
+		
+	Whirlpool                       Done
+		Spawns                      Done
+			Spawns new              test_FR_WHIRLPOOL_SPAWNING
+			Despawns (after 30s)    test_FR_WHIRLPOOL_SPAWNING
+			Loops                   test_FR_ENTITY_SPAWNS
+			
+		Pull ships in               test_FR_WHIRLPOOL_EFFECT
+	
+	Chests
+	    Spawning
+		Opened
+	
+	Bullets
+	    Spawning
+		Slow down
+		Despawns
+		Collide with opposite team
+	

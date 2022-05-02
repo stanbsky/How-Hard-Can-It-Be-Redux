@@ -23,6 +23,7 @@ task debug(dependsOn: classes, type: JavaExec) {
 }
 
 task dist(type: Jar) {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     manifest {
         attributes 'Main-Class': project.mainClassName
     }
@@ -31,6 +32,10 @@ task dist(type: Jar) {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
     with jar
+}
+
+dependencies {
+    implementation 'org.mockito:mockito-inline:4.4.0'
 }
 
 

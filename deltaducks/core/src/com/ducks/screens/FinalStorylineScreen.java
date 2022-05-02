@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.ducks.DeltaDucks;
-import com.ducks.scenes.Hud;
+import com.ducks.managers.StatsManager;
 
 /***
  * Final Story Line
@@ -97,7 +97,7 @@ public class FinalStorylineScreen implements Screen {
                     Layout.setText(font,"I mean, you tried HAHAHA..");
                 break;
             case 1:
-                Layout.setText(font,"You gained " + Hud.getGold() + " gold and earned " + Hud.getScore()+" EXP!");
+                Layout.setText(font,"You gained " + StatsManager.getGold() + " gold and earned " + StatsManager.getScore()+" EXP!");
                 break;
             default:
                 Layout.setText(font,"Thanks for Playing!");

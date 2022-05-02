@@ -14,6 +14,15 @@ buildscript {
     }
 }
 
+dependencyLocking {
+    lockAllConfigurations()
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 30, 'days'
+    resolutionStrategy.cacheDynamicVersionsFor 30, 'days'
+}
+
 allprojects {
     apply plugin: "eclipse"
 
@@ -26,6 +35,8 @@ allprojects {
         ashleyVersion = '1.7.3'
         aiVersion = '1.8.2'
         gdxControllersVersion = '2.1.0'
+        mockitoversion = '4.0.0'
+
     }
 
     repositories {
@@ -35,12 +46,12 @@ allprojects {
         gradlePluginPortal()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://jitpack.io' }
     }
 }
 
 project(":desktop") {
     apply plugin: "java-library"
-
 
     dependencies {
         implementation project(":core")
@@ -48,8 +59,10 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-        api "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
-        
+        api 'com.github.tommyettinger:textramode:0.0.2'
+        api ("com.badlogicgames.gdx:gdx-tools:$gdxVersion") {
+            exclude group: 'com.badlogicgames.gdx', module: 'gdx-backend-lwjgl'
+        }
     }
 }
 
@@ -74,33 +87,19 @@ project(":tests") {
 
     dependencies {
 
-        /**
-         * If you do have some classes to test in os specific code you may want to uncomment
-         * some of these lines.
-         *
-         * BUT: I recommend to create seperate test sub projects for each platform. Trust me :)
-         *
-         */
-
-//        compile project(":android")
-//        compile project(":html")
-//        compile project(":desktop")
-
-
-//        if(System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) {
-//        	compile project(":ios")
-//        }
-
         implementation project(":core")
+        implementation project(":desktop")
 
-        implementation "junit:junit:4.+"
-        implementation "org.mockito:mockito-all:1.9.+"
+        implementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+        implementation 'org.mockito:mockito-junit-jupiter:4.3.1'
+        implementation 'org.mockito:mockito-inline:4.4.0'
 
         implementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
 
-        testImplementation 'junit:junit:4.+'
-        testImplementation "org.mockito:mockito-all:1.9.+"
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+        testImplementation 'org.mockito:mockito-junit-jupiter:4.3.1'
+        testImplementation 'org.mockito:mockito-inline:4.4.0'
 
         testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
         testImplementation "com.badlogicgames.gdx:gdx:$gdxVersion"
