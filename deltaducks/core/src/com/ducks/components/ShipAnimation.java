@@ -9,7 +9,7 @@ import static com.ducks.managers.AssetManager.atlas;
 
 public class ShipAnimation extends Texture {
 
-    private Animation[][] animation;
+    private final Animation[][] animation;
     private static final int DEFAULT_DIRECTION = 6;
 
     /**

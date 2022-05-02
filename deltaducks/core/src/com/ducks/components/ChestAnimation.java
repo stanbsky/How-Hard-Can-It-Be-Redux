@@ -8,7 +8,7 @@ import static com.ducks.managers.AssetManager.atlas;
 
 public class ChestAnimation extends Texture {
 
-    private Animation<TextureRegion> animation;
+    private final Animation<TextureRegion> animation;
 
     /**
      * Places animation for chest in location

@@ -8,11 +8,10 @@ import com.ducks.tools.BodyType;
 
 public class RigidBody {
 
-    private BodyDef bodyDef;
-    private FixtureDef fixtureDef;
+    private final BodyDef bodyDef;
     private boolean hasSensor = false;
 
-    private int bodyId;
+    private final int bodyId;
 
     public Body getBody() {
         return PhysicsManager.box2DBodies.get(this.bodyId);
@@ -26,7 +25,7 @@ public class RigidBody {
         bodyDef.type = type.getType();
         bodyDef.linearDamping = damping;
 
-        this.fixtureDef = new FixtureDef();
+        FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.filter.categoryBits = category;
         fixtureDef.filter.maskBits = mask;
