@@ -8,11 +8,10 @@ import com.ducks.tools.BodyType;
 
 public class RigidBody {
 
-    private BodyDef bodyDef;
-    private FixtureDef fixtureDef;
+    private final BodyDef bodyDef;
     private boolean hasSensor = false;
 
-    private int bodyId;
+    private final int bodyId;
 
     public Body getBody() {
         return PhysicsManager.box2DBodies.get(this.bodyId);
@@ -26,7 +25,7 @@ public class RigidBody {
         bodyDef.type = type.getType();
         bodyDef.linearDamping = damping;
 
-        this.fixtureDef = new FixtureDef();
+        FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.filter.categoryBits = category;
         fixtureDef.filter.maskBits = mask;
@@ -34,6 +33,12 @@ public class RigidBody {
         this.bodyId = PhysicsManager.createBody(bodyDef, fixtureDef);
     }
 
+    /**
+     * Creation of a RigidBody
+     * @param position of body
+     * @param type of body
+     * @param damping slowdown when moving
+     */
     public RigidBody(Vector2 position, BodyType type, float damping) {
         this.bodyDef = new BodyDef();
         bodyDef.position.set(position);
@@ -43,17 +48,32 @@ public class RigidBody {
         this.bodyId = PhysicsManager.createBody(bodyDef);
     }
 
+    /**
+     * Adds new fixture
+     * @param fixture to add
+     * @return fixture that has been added
+     */
     public Fixture addFixture(FixtureDef fixture) {
         fixture.restitution = 0.2f;
         return getBody().createFixture(fixture);
     }
 
+    /**
+     * Adds new sensor
+     * @param fixture to use for the sensor
+     * @param category of sensor
+     * @param name of sensor
+     */
     public void addSensor(FixtureDef fixture, short category, String name) {
         hasSensor = true;
         fixture.isSensor = true;
         getBody().createFixture(fixture).setUserData(new EntityData(category, name));
     }
 
+    /**
+     * Sets new data
+     * @param data to set
+     */
     public void setData(EntityData data) {
         getBody().getFixtureList().get(0).setUserData(data);
     }

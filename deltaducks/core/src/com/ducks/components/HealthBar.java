@@ -15,6 +15,16 @@ public class HealthBar extends Texture {
     private final boolean horizontal;
     private float hp;
 
+    /**
+     * Instantiates the health for the colleges and boss
+     * @param x location
+     * @param y location
+     * @param width size
+     * @param height size
+     * @param horizontal display direction
+     * @param hp amount of starting hp
+     * @param ui whether or not to scale the bar before displaying
+     */
     public HealthBar(float x, float y, float width, float height, boolean horizontal, float hp, boolean ui) {
         frame = atlas.findRegion("blank");
         this.maxHP = this.hp = hp;
@@ -31,16 +41,28 @@ public class HealthBar extends Texture {
         this.height = height;
     }
 
+    /**
+     * Updates the health bar
+     * @param hp health to set the bar to
+     */
     public void update(float hp) {
         this.hp = hp;
     }
 
+    /**
+     * Updates the health bar
+     * @param hp health to set the bar to
+     * @param pos position of health bar to move to
+     */
     public void update(float hp, Vector2 pos) {
         this.hp = hp;
         this.x = pos.x - width/2;
         this.y = pos.y + width/2;
     }
 
+    /**
+     * Renders the health bar to screen
+     */
     public void render() {
         if (this.hp <= 0f)
             return;
