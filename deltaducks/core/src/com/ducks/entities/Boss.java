@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.ducks.components.HealthBar;
 import com.ducks.components.ShipAnimation;
 import com.ducks.components.Shooter;
+import com.ducks.intangibles.DifficultyControl;
 import com.ducks.intangibles.EntityData;
 import com.ducks.managers.EntityManager;
 import com.ducks.managers.SaveManager;
@@ -14,10 +15,10 @@ import static com.ducks.tools.FixtureFilter.*;
 
 public class Boss extends Pirate {
 
-    private int health = 20;
+    private int health = DifficultyControl.getValue(8, 14,20);
     private HealthBar hpBar;
     private float bossShotTimer = 0f;
-    private final float bossShotThreshold = 15f;
+    private final float bossShotThreshold = DifficultyControl.getValue(25f, 20f,15f);
     public int bossShotCount = 0;
 
     public Boss(String college, Vector2 spawn) {
