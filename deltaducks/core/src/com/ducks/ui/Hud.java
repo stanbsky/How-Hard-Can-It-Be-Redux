@@ -46,6 +46,9 @@ public class Hud extends Stage {
     private static Table quickshotCell;
     private static Table supersizeCell;
 
+    /**
+     * Sets up table representing the overlay for regular gameplay
+     */
     public Hud() {
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/futur.ttf"));
@@ -99,6 +102,10 @@ public class Hud extends Stage {
 
     }
 
+    /**
+     * Sets up tables for displaying player stats
+     * @param topBar table to put items in
+     */
     private void createTopBarUI(Table topBar) {
         expSymbol = new Image(ui.newDrawable("trophy"));
         expTagLabel = new Label("USER EXP", new Label.LabelStyle(topBarFont, Color.WHITE));
@@ -154,6 +161,9 @@ public class Hud extends Stage {
         topBar.add(timeTable).width(timeTable.getWidth() + 32);
     }
 
+    /**
+     * Draws powerups as well as the time left on them over the previous frame
+     */
     public static void drawPowerups() {
         powerupList.reset();
         if (PowerupManager.shieldActive()) {
@@ -182,6 +192,11 @@ public class Hud extends Stage {
         }
     }
 
+    /**
+     * Makes table for given powerup
+     * @param powerup given
+     * @return table of powerup logo and count
+     */
     private static Table makePowerupUI(String powerup) {
         Table thisPowerupCell = new Table();
 
@@ -194,6 +209,10 @@ public class Hud extends Stage {
 
         return thisPowerupCell;
     }
+
+    /**
+     * Draw table to screen
+     */
     public void draw() {
         countdownLabel.setText(String.format("%d", StatsManager.getWorldTimer()));
         goldLabel.setText(String.format("%d", StatsManager.getGold()));
