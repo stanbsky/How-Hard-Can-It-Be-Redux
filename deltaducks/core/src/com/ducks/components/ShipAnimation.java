@@ -12,6 +12,13 @@ public class ShipAnimation extends Texture {
     private Animation[][] animation;
     private static final int DEFAULT_DIRECTION = 6;
 
+    /**
+     * Instantiation of new ship animation
+     * @param name of ship
+     * @param pos of ship
+     * @param radius of ship
+     * @param frameDuration speed of animation
+     */
     public ShipAnimation(String name, Vector2 pos, float radius, float frameDuration) {
         animation = new Animation[2][9];
         for (int i = 0; i < 9; i++) {
@@ -32,6 +39,13 @@ public class ShipAnimation extends Texture {
         update(0f, pos, DEFAULT_DIRECTION, false);
     }
 
+    /**
+     * Updating animation
+     * @param deltaTime of game
+     * @param pos of ship
+     * @param direction of ship
+     * @param moving whether the ship is moving
+     */
     public void update(float deltaTime, Vector2 pos, int direction, boolean moving) {
         stateTime += deltaTime;
         updateFrame(stateTime, direction, moving);
@@ -39,21 +53,15 @@ public class ShipAnimation extends Texture {
         updateRenderColor();
     }
 
-    private void updateDimensions() {
-        // TODO: see https://github.com/stanbsky/How-Hard-Can-It-Be-Redux/issues/11#issue-1198623843
-        width = (float)frame.getRegionWidth();
-        height = (float)frame.getRegionHeight();
-    }
-
+    /**
+     * Updating animation
+     * @param stateTime point of animation
+     * @param direction of ship
+     * @param moving whether the ship is moving
+     */
     public void updateFrame(float stateTime, int direction, boolean moving) {
         int movingKey = moving ? 1 : 0;
         frame = (AtlasRegion) animation[movingKey][direction-1].getKeyFrame(stateTime, true);
-    }
-
-    @Deprecated
-    public AtlasRegion getFrame(float stateTime, int direction, boolean moving) {
-        int movingKey = moving ? 1 : 0;
-        return (AtlasRegion) animation[movingKey][direction-1].getKeyFrame(stateTime, true);
     }
 
 }

@@ -34,6 +34,12 @@ public class RigidBody {
         this.bodyId = PhysicsManager.createBody(bodyDef, fixtureDef);
     }
 
+    /**
+     * Creation of a RigidBody
+     * @param position of body
+     * @param type of body
+     * @param damping slowdown when moving
+     */
     public RigidBody(Vector2 position, BodyType type, float damping) {
         this.bodyDef = new BodyDef();
         bodyDef.position.set(position);
@@ -43,17 +49,32 @@ public class RigidBody {
         this.bodyId = PhysicsManager.createBody(bodyDef);
     }
 
+    /**
+     * Adds new fixture
+     * @param fixture to add
+     * @return fixture that has been added
+     */
     public Fixture addFixture(FixtureDef fixture) {
         fixture.restitution = 0.2f;
         return getBody().createFixture(fixture);
     }
 
+    /**
+     * Adds new sensor
+     * @param fixture to use for the sensor
+     * @param category of sensor
+     * @param name of sensor
+     */
     public void addSensor(FixtureDef fixture, short category, String name) {
         hasSensor = true;
         fixture.isSensor = true;
         getBody().createFixture(fixture).setUserData(new EntityData(category, name));
     }
 
+    /**
+     * Sets new data
+     * @param data to set
+     */
     public void setData(EntityData data) {
         getBody().getFixtureList().get(0).setUserData(data);
     }

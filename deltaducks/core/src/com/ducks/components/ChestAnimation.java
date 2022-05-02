@@ -10,6 +10,11 @@ public class ChestAnimation extends Texture {
 
     private Animation<TextureRegion> animation;
 
+    /**
+     * Places animation for chest in location
+     * @param pos position of the chest
+     * @param radius size of the animation
+     */
     public ChestAnimation(Vector2 pos, float radius) {
         animation = new Animation<>(1f, atlas.findRegions("chest"), Animation.PlayMode.NORMAL);
         width = height = radius * 2;
@@ -17,6 +22,10 @@ public class ChestAnimation extends Texture {
         update(0f);
     }
 
+    /**
+     * Updates the animation
+     * @param deltaTime of the game
+     */
     public void update(float deltaTime) {
         stateTime += deltaTime;
         frame = animation.getKeyFrame(stateTime);
