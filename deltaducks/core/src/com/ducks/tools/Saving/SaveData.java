@@ -1,5 +1,8 @@
 package com.ducks.tools.Saving;
 
+/**
+ * The data to be serialized into json and saved
+ */
 public class SaveData implements ISaveData {
     public PlayerSaveData player;
     public StatsSaveData stats;

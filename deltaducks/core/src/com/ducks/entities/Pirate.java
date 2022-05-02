@@ -14,12 +14,10 @@ import com.ducks.managers.SaveManager;
 import com.ducks.managers.StatsManager;
 import com.ducks.tools.IShooter;
 import com.ducks.tools.InputParser;
-import com.ducks.tools.Saving.ISaveData;
-import com.ducks.tools.Saving.ISaveable;
 
 import static com.ducks.tools.FixtureFilter.*;
 
-public class Pirate extends Ship implements ISaveable {
+public class Pirate extends Ship {
 
     private final float inputStickinessThreshold = 0.03f;
     private final float inputDurationThreshold = 0.7f;
@@ -121,20 +119,6 @@ public class Pirate extends Ship implements ISaveable {
         rigidBody.dispose();
         StatsManager.addGold(100);
         StatsManager.addScore(1000);
-
-    }
-
-    public ISaveData Save() {
-        return new ISaveData() {
-            @Override
-            public int hashCode() {
-                return super.hashCode();
-            }
-        };
-    }
-
-    @Override
-    public void Load(ISaveData data) {
 
     }
 }
