@@ -19,7 +19,7 @@ public class Subtitle extends Table {
     public Subtitle(BitmapFont font) {
         this.font = font;
         setBackground(button_up);
-        setDebug(true);
+        setDebug(false);
         this.defaults().prefWidth(maxWidth).center();
         font.getData().setScale(0.8f);
         Label l = new Label(initialMessage, new Label.LabelStyle(font, Color.BLACK));

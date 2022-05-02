@@ -30,7 +30,7 @@ public class Endgame extends Stage {
         addActor(table);
         table.setBackground(AssetManager.ui.newDrawable("blank", new Color(1,1,1,0.8f)));
         table.setFillParent(true);
-        table.setDebug(true);
+        table.setDebug(false);
         table.defaults().pad(20);
 
         Subtitle title = new Subtitle(AssetManager.pixelFont);
@@ -43,7 +43,7 @@ public class Endgame extends Stage {
         table.row();
 
         Table infoBox = new Table();
-        infoBox.setDebug(true);
+        infoBox.setDebug(false);
         Label.LabelStyle style = new Label.LabelStyle(pixelFont, Color.BLACK);
         infoBox.setBackground(ui_background);
         infoBox.defaults().right().pad(20);

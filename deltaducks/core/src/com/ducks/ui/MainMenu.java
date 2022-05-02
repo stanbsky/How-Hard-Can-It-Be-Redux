@@ -25,7 +25,7 @@ public class MainMenu extends Stage {
         addActor(table);
         table.setBackground(AssetManager.ui.newDrawable("blank", new Color(1,1,1,0.8f)));
         table.setFillParent(true);
-        table.setDebug(true);
+        table.setDebug(false);
         table.defaults().width(BUTTON_WIDTH);
         table.defaults().height(BUTTON_HEIGHT);
         table.defaults().pad(15);
