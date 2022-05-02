@@ -48,11 +48,10 @@ public class Quest {
                 indicator.setAngry(true);
                 break;
             case "boss":
-                Vector2 spawn = null;
-                if(!SaveManager.LoadSave) {
+                Vector2 spawn;
+                if(!SaveManager.LoadSave && location != null) {
                     spawn = pirateSpawns.random();
-                }
-                if(location != null) {
+                } else {
                     spawn = location.cpy();
                 }
                 objective = new Boss(Objects.equals(collageName, "") ? collegeNames.random() : collageName,
