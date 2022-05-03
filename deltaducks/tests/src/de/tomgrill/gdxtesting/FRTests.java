@@ -405,5 +405,8 @@ public class FRTests {
         // Execute load
         SaveManager.LoadSave();
         assert Arrays.equals(PowerupManager.getPowerUps(), new int[]{1, 1, 1, 1, 1});
+
+        // Reset state for other tests
+        PowerupManager.setPowerUps( new int[] { 0, 0, 0, 0, 0 } );
     }
 }
