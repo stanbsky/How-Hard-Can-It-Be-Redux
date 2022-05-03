@@ -16,6 +16,10 @@ public class Subtitle extends Table {
     private final float maxWidth = 800f;
     private BitmapFont font;
 
+    /**
+     * Instantiate subtitle
+     * @param font for label
+     */
     public Subtitle(BitmapFont font) {
         this.font = font;
         setBackground(button_up);
@@ -27,6 +31,12 @@ public class Subtitle extends Table {
         this.add(l);
     }
 
+    /**
+     * Updates label with new text
+     * @param first block of text
+     * @param icon in middle (relates to indicator)
+     * @param second block of text
+     */
     public void setQuestNotice(String first, String icon, String second) {
         this.clearChildren();
         Label l = new Label(first, new Label.LabelStyle(font, Color.BLACK));
@@ -38,6 +48,10 @@ public class Subtitle extends Table {
         this.add(l);
     }
 
+    /**
+     * Updates label with new text
+     * @param notice block of text
+     */
     public void setNotice(String notice) {
         this.clearChildren();
         Label l = new Label(notice, new Label.LabelStyle(font, Color.BLACK));
@@ -45,6 +59,11 @@ public class Subtitle extends Table {
         this.add(l);
     }
 
+    /**
+     * Updates label with new text
+     * @param notice block of text
+     * @param icon before and after text
+     */
     public void setDoubleIconNotice(String notice, String icon) {
         this.clearChildren();
         Image i = new Image(ui.newDrawable(icon));

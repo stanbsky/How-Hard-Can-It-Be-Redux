@@ -14,14 +14,19 @@ import static com.ducks.managers.AssetManager.*;
 
 public class ShopButton extends Table {
 
-    private ClickListener clickListener;
+    private final ClickListener clickListener;
     private boolean isPressed;
-    private String powerup;
-    private String price;
-    private String name;
-    private String description;
-    private Label powerupInfo;
+    private final String powerup;
+    private final String price;
+    private final String name;
+    private final String description;
+    private final Label powerupInfo;
 
+    /**
+     * Instantiate button for shop
+     * @param powerup in button
+     * @param font in button
+     */
     public ShopButton(String powerup, BitmapFont font) {
         setBackground(button_up);
         this.powerup = powerup;
@@ -44,7 +49,10 @@ public class ShopButton extends Table {
         addListener(clickListener = new ClickListener());
     }
 
-    private void getBackgroundDrawable() {
+    /**
+     * Sets background depending on the clickListener
+     */
+    private void updateBackgroundDrawable() {
         if (clickListener.isPressed()) {
             setBackground(button_down);
             return;
@@ -57,8 +65,13 @@ public class ShopButton extends Table {
         }
     }
 
+    /**
+     * Draw button
+     * @param batch for drawing
+     * @param parentAlpha for drawing
+     */
     public void draw(Batch batch, float parentAlpha) {
-        getBackgroundDrawable();
+        updateBackgroundDrawable();
         if (clickListener.isPressed() && !isPressed) {
             isPressed = true;
             ShopManager.buyItem(powerup);

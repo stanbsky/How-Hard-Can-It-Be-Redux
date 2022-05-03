@@ -11,6 +11,9 @@ import com.ducks.DeltaDucks;
 import com.ducks.managers.StatsManager;
 import com.ducks.ui.Endgame;
 
+/**
+ * The end game screen
+ */
 public class EndgameScreen implements Screen {
     private DeltaDucks game;
     private OrthographicCamera gameCam;
@@ -18,11 +21,19 @@ public class EndgameScreen implements Screen {
     private static Endgame endgame;
     private static String buttonPressed;
 
+    /**
+     * ints the ui
+     * @param game the game
+     * @param won true if won false otherwise
+     */
     public EndgameScreen(DeltaDucks game, boolean won) {
         this.game = game;
         endgame = new Endgame(won);
     }
 
+    /**
+     * sets the camera and viewport data
+     */
     @Override
     public void show() {
         Gdx.input.setCursorCatched(false);
@@ -32,6 +43,10 @@ public class EndgameScreen implements Screen {
         Gdx.input.setInputProcessor(endgame);
     }
 
+    /**
+     * Quits if Esc is pressed
+     * @param deltaTime the time since the last frame
+     */
     public void handleInput(float deltaTime) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             this.dispose();
@@ -43,6 +58,10 @@ public class EndgameScreen implements Screen {
         handleInput(deltaTime);
     }
 
+    /**
+     * clears the screen and draws the up also checks for button press
+     * @param delta The time in seconds since the last render.
+     */
     @Override
     public void render(float delta) {
         update(delta);

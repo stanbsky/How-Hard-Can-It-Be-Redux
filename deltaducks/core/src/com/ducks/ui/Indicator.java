@@ -27,16 +27,31 @@ public class Indicator implements IDrawable {
     private int midX = Gdx.graphics.getWidth()/2;
     private int midY = Gdx.graphics.getHeight()/2;
 
+    /**
+     * Initiates indicator
+     * @param target of indicator
+     * @param texture of target
+     * @param scale of indicator
+     */
     public Indicator(Entity target, String texture, float scale) {
         this.target = target;
         position = new Vector2(0, 0);
         this.texture = new Texture(texture, position, scl(scale));
     }
 
+    /**
+     * Initiates indicator
+     * @param target of indicator
+     * @param texture of target
+     */
     public Indicator(Entity target, String texture) {
         this(target, texture, 25.6f);
     }
 
+    /**
+     * Updates texture and position
+     * @param deltaTime the time elapsed since the last draw call
+     */
     public void update(float deltaTime) {
         updatePosition();
         this.texture.update(deltaTime, position);
@@ -52,6 +67,10 @@ public class Indicator implements IDrawable {
 
     public boolean cleanup() { return cleanup; }
 
+    /**
+     * Set the indicator to flash red
+     * @param status of indicator
+     */
     public void setAngry(boolean status) {
         isAngry = status;
         texture.setFlashingColor(Color.RED);

@@ -18,14 +18,17 @@ import static com.ducks.tools.FixtureFilter.*;
 
 public class Whirlpool extends Entity {
 
-    private Vector2 position;
-    private Array<Body> bodiesInRange;
-    private int ticks = 0;
+    private final Vector2 position;
+    private final Array<Body> bodiesInRange;
     private int timer = 30 * 60; // 30 seconds before the whirlpool disappears
     private final float pullRadius = DifficultyControl.getValue(2f, 3f, 4f);
     private final float minForce = 1f;
     private final float maxForce = DifficultyControl.getValue(3f, 4f, 5f);
 
+    /**
+     * Defines whirlpool
+     * @param position of whirlpool
+     */
     public Whirlpool(Vector2 position) {
         radius = 50f;
         scale = 0.7f;
@@ -39,17 +42,24 @@ public class Whirlpool extends Entity {
         bodiesInRange = new Array<>();
     }
 
+    /**
+     * Updates whirlpool
+     * reduces timer and advances animation
+     * @param deltaTime of game
+     */
     public void update(float deltaTime) {
         super.update(deltaTime);
-        timer--;
         pullEntities();
         timer--;
         texture.update(deltaTime, position);
     }
 
+    /**
+     * Tags ships to effect with pull
+     * @param contactor of whirlpool
+     */
     @Override
     protected void handleSensorContact(Fixture contactor) {
-//        System.out.println("TICK");
         if (EntityData.equals(contactor, PLAYER) || EntityData.equals(contactor, ENEMY)) {
             Body body = contactor.getBody();
             if (bodiesInRange.contains(body, false)) {
@@ -60,20 +70,23 @@ public class Whirlpool extends Entity {
         }
     }
 
+    /**
+     * Applies pull on relevant ships
+     */
     private void pullEntities() {
-        // Apply pull once every 20 frames
-//        if (ticks % 20 != 0) {
-//            return;
-//        }
         for (Body body : bodiesInRange) {
             Vector2 direction = getDirection(body);
             float distance = getPosition().dst(body.getPosition());
-            // At d=0, f=maxForce, at d=pullRadius, f=minForce
             float force = minForce + (maxForce - minForce) * (-1f / pullRadius * distance + 1);
             body.applyForceToCenter(direction.scl(force),true);
         }
     }
 
+    /**
+     * Finds direction for force to apply in
+     * @param body of object pulled in
+     * @return direction to center of whirlpool
+     */
     private Vector2 getDirection(Body body) {
         return new Vector2(body.getPosition().x - getPosition().x,
                 body.getPosition().y - getPosition().y).nor().scl(-1);
@@ -83,6 +96,10 @@ public class Whirlpool extends Entity {
         return timer <= 0;
     }
 
+    /**
+     * Defines whirlpool fixture and sensor
+     * @param position of whirlpool/fixtures
+     */
     public void defineWhirlpool(Vector2 position) {
         rigidBody = new RigidBody(position, BodyType.Static, 1f);
 

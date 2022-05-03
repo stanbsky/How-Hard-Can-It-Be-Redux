@@ -27,6 +27,10 @@ public final class QuestManager {
     private static int finishedQuests;
     private static boolean debug = false;
 
+    /**
+     * Set/reset quest list
+     * Also load saved quest list if loading from save
+     */
     public static void Initialise() {
         currentQuest = null;
         finalQuestCompleted = false;
@@ -40,6 +44,11 @@ public final class QuestManager {
         }
     }
 
+    /**
+     * Picks random element from a list of spawn locations further than a certain distance removing that value
+     * @param spawns List of spawn locations
+     * @return Spawn location
+     */
     private static Vector2 pickSpawn(Array<Vector2> spawns) {
         if (debug)
             return player.getPosition().scl(100f).add(300,-300);
@@ -58,10 +67,13 @@ public final class QuestManager {
         }
     }
 
+    /**
+     * Set up next quest onto the list
+     * If list is empty, activate boss
+     */
     private static void spawnQuest() {
         // TODO: revert after testing
         if (finishedQuests == finalQuestCounter) {
-//        if (true) {
             currentQuest = new Quest("boss", null, "");
         } else {
             float spawnRoll = (float) Math.random();
@@ -75,12 +87,13 @@ public final class QuestManager {
         }
     }
 
+    /**
+     * If quest is completed, this will mark it as such and dispose of the completed quest
+     */
     private static void checkQuestCompletion() {
         if (currentQuest.isCompleted()) {
             if (Objects.equals(currentQuest.type, "boss")) {
                 finalQuestCompleted = true;
-                // TODO: return here stops crash on game over, see
-                //  https://github.com/stanbsky/How-Hard-Can-It-Be-Redux/issues/33#issue-1218051196
                 return;
             }
             finishedQuests++;
@@ -89,6 +102,10 @@ public final class QuestManager {
         }
     }
 
+    /**
+     * Goes to the end screen if the player either loses or wins
+     * @param gameScreen of game
+     */
     public static void checkForGameOver(MainGameScreen gameScreen) {
         // Out of time
         if (StatsManager.getWorldTimer() <= 0)
@@ -101,6 +118,12 @@ public final class QuestManager {
             gameScreen.gameOver(true);
     }
 
+    /**
+     * Updates quests:
+     * Waits for next quest activation, then creates it
+     * Checks if current quest is completed
+     * @param deltaTime
+     */
     public static void update(float deltaTime) {
         if (currentQuest == null) {
             stateTime += deltaTime;
@@ -114,7 +137,10 @@ public final class QuestManager {
         }
     }
 
-
+    /**
+     * Saves current quest data
+     * @return save data
+     */
     public static ISaveData Save() {
         QuestSaveData save = new QuestSaveData();
         save.finishedQuests = finishedQuests;
@@ -126,6 +152,10 @@ public final class QuestManager {
         return save;
     }
 
+    /**
+     * Loads saved quest data
+     * @param data from save
+     */
     public static void Load(ISaveData data) {
         QuestSaveData save = (QuestSaveData) data;
         finishedQuests = save.finishedQuests;

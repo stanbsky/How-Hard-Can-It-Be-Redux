@@ -24,6 +24,9 @@ public class PauseMenu extends Stage {
 
     private static Label goldLabel;
 
+    /**
+     * Sets up table representing the pause menu
+     */
     public PauseMenu() {
 
         Table root = new Table();

@@ -25,6 +25,10 @@ public class Endgame extends Stage {
     private static final int BUTTON_WIDTH = 300;
     private static final int BUTTON_HEIGHT = 130;
 
+    /**
+     * Sets up table representing the end screen of the game
+     * @param won if game was won or lost
+     */
     public Endgame(boolean won) {
         Table table = new Table();
         addActor(table);

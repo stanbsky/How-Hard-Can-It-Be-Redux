@@ -16,6 +16,11 @@ public class PlainButton extends Table {
     private boolean isPressed;
     private final Label label;
 
+    /**
+     * Sets up button
+     * @param text of button
+     * @param listener of button
+     */
     public PlainButton(String text, ClickListener listener) {
         setBackground(button_up);
         this.setTouchable(Touchable.enabled);
@@ -28,7 +33,10 @@ public class PlainButton extends Table {
         addListener(clickListener = new ClickListener());
     }
 
-    private void getBackgroundDrawable() {
+    /**
+     * Sets background depending on the clickListener
+     */
+    private void updateBackgroundDrawable() {
         if (clickListener.isPressed()) {
             setBackground(button_down);
             return;
@@ -40,8 +48,13 @@ public class PlainButton extends Table {
         }
     }
 
+    /**
+     * Draw button
+     * @param batch for drawing
+     * @param parentAlpha for drawing
+     */
     public void draw(Batch batch, float parentAlpha) {
-        getBackgroundDrawable();
+        updateBackgroundDrawable();
         if (clickListener.isPressed() && !isPressed) {
             isPressed = true;
         } else if (!clickListener.isPressed()) {

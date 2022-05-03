@@ -16,17 +16,10 @@ import static com.ducks.tools.FixtureFilter.*;
 
 public class Player extends Ship {
 
-    //    private final int SHIP_SPAWN_X = 29;
-//    private final int SHIP_SPAWN_Y = 52;
-//    private final int SHIP_SPAWN_X = 1370;
-//    private final int SHIP_SPAWN_Y = 1340;
-    //TODO: reset to one of the above (maybe) for production
     private final int SHIP_SPAWN_X = 1358;
     private final int SHIP_SPAWN_Y = 1563;
 
-    private final float SHIP_FRAME_DURATION = 0.5f;
-
-    private FixtureDef fixture2 = new FixtureDef();
+    private final FixtureDef fixture2 = new FixtureDef();
     private Fixture fx;
 
     private boolean supersized = false;
@@ -35,6 +28,9 @@ public class Player extends Ship {
     private static float health;
     private static float fullHealth;
 
+    /**
+     * Defines player with necessary variables
+     */
     public Player() {
         super();
         shootWaitTime = 0.3f;
@@ -54,23 +50,25 @@ public class Player extends Ship {
             x = SaveManager.saveData.player.position.x;
             y = SaveManager.saveData.player.position.y;
         }
-        //TODO: reset to 1 & 4 for production
         acceleration = 4f;
         max_velocity = 16f;
 
         // Set up ShipAnimation
         direction = 6;
         moving = false;
+        float SHIP_FRAME_DURATION = 0.5f;
         animation = new ShipAnimation("player", new Vector2(x, y), radius*scale, SHIP_FRAME_DURATION);
         data = new EntityData(category);
 
         defineShip();
     }
 
+    /**
+     * Defines the ship's fixture
+     */
     @Override
     public void defineShip() {
         super.defineShip();
-
 
         CircleShape shape = new CircleShape();
         shape.setRadius(radius*1.5f);
@@ -80,6 +78,10 @@ public class Player extends Ship {
         fx = rigidBody.addFixture(fixture2);
     }
 
+    /**
+     * Sets the size of the ship to fix the current powerup
+     * @param large state of ship
+     */
     private void toggleSize(boolean large) {
         rigidBody.getBody().destroyFixture(fx);
         if (large) {
@@ -92,6 +94,11 @@ public class Player extends Ship {
         rigidBody.addFixture(fixture2);
     }
 
+    /**
+     * Updates player
+     * Activates powerups
+     * @param deltaTime of game
+     */
     @Override
     public void update(float deltaTime) {
         super.update(deltaTime);
@@ -115,6 +122,10 @@ public class Player extends Ship {
 //        Debug.debug(getPosition());
     }
 
+    /**
+     * Takes damage when contacts with ENEMY_BULLET
+     * @param contactor to player
+     */
     @Override
     protected void handleContact(Fixture contactor) {
         if (EntityData.equals(contactor, ENEMY_BULLET)) {
@@ -122,6 +133,9 @@ public class Player extends Ship {
         }
     }
 
+    /**
+     * Takes damage unless a powerup is active to nullify it
+     */
     private void sufferHit() {
         if (PowerupManager.supersizeActive()) {
 

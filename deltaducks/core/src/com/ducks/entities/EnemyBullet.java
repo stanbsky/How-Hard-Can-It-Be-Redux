@@ -9,12 +9,20 @@ import com.ducks.managers.StatsManager;
 import static com.ducks.tools.FixtureFilter.*;
 public class EnemyBullet extends Bullet {
 
+    /**
+     * Gives offset of bullet as it's defined
+     * @param position of bullet
+     * @param direction of bullet
+     * @param offset of direction
+     */
     public EnemyBullet(Vector2 position, Vector2 direction, float offset) {
         this(position, direction.cpy().rotateDeg(offset));
     }
 
     /**
-     * Constructor
+     * Defines the enemy bullet
+     * @param position of bullet
+     * @param direction of bullet
      */
     public EnemyBullet(Vector2 position, Vector2 direction) {
 //        System.out.println(position);

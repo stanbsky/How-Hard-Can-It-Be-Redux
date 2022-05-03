@@ -15,14 +15,30 @@ public class ShopManager {
         addItem("bullet_hotshot", 900, "Hot Shot", "Flaming bullets fly at supersonic speeds, also traveling much further before hitting the water.\n(15x)");
     }
 
+    /**
+     * Sets up new item in the shop
+     * @param item id of item
+     * @param price of item
+     * @param name displayed of item
+     * @param description of item
+     */
     public static void addItem (String item, Integer price, String name, String description) {
         items.insert(items.size, item, new Triplet<> (price, name, description));
     }
 
+    /**
+     * Gets item data
+     * @param item id
+     * @return item data
+     */
     public static Triplet<Integer,String,String> getItem (String item) {
         return items.get(item);
     }
 
+    /**
+     * Buys an item my taking money out of coins if there is enough
+     * @param item wanted
+     */
     public static void buyItem(String item) {
         int itemPrice = items.get(item).x;
         if (StatsManager.getGold() > itemPrice) {

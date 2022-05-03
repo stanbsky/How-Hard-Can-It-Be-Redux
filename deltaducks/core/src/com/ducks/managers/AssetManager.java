@@ -16,6 +16,9 @@ public final class AssetManager {
     public static BitmapFont newFont;
     public static NinePatchDrawable button_up, button_down, button_over, ui_background, topbar_background;
 
+    /**
+     * Loading assets used in the program
+     */
     public static void Initialize() {
         atlas = new TextureAtlas("all_assets.atlas");
         ui = new Skin(new TextureAtlas("ui_assets.atlas"));

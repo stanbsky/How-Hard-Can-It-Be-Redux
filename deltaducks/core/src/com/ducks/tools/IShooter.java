@@ -2,9 +2,20 @@ package com.ducks.tools;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Facilitates the shooter class
+ */
 public interface IShooter {
 
-    public boolean ready();
-    public void resetShootTimer();
-    public Vector2 getPosition();
+    /**
+     * Query if it is ready to shoot
+     * @return true or false
+     */
+    boolean ready();
+
+    /**
+     * sets the shooting timer to is default value
+     */
+    void resetShootTimer();
+    Vector2 getPosition();
 }
