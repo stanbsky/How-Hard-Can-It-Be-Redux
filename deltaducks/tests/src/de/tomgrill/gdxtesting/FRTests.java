@@ -6,6 +6,7 @@ import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -17,6 +18,9 @@ import com.ducks.intangibles.*;
 import com.ducks.managers.*;
 import com.ducks.screens.*;
 import com.ducks.tools.*;
+import com.ducks.tools.Saving.EntitiesSaveData;
+import com.ducks.tools.Saving.QuestSaveData;
+import com.ducks.tools.Saving.StatsSaveData;
 import com.ducks.ui.*;
 import jdk.tools.jmod.Main;
 import org.junit.jupiter.api.BeforeAll;
@@ -30,7 +34,10 @@ import org.junit.jupiter.api.Test;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
 
+import static com.ducks.DeltaDucks.PIXEL_PER_METER;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -53,6 +60,9 @@ public class FRTests {
         conf.updatesPerSecond = 60;
         game = new DDHeadless();
         app = new HeadlessApplication(game, conf);
+
+        TmxMapLoader mapLoader = new TmxMapLoader();
+        MainGameScreen.map = mapLoader.load("abi_map.tmx");
     }
 
     @BeforeEach
@@ -205,18 +215,26 @@ public class FRTests {
     @Test
     public void test_FR_ENTITY_SPAWNS() {
         // Load the map for pulling the spawn locations
-        TmxMapLoader mapLoader = new TmxMapLoader();
-        MainGameScreen.map = mapLoader.load("abi_map.tmx");
+//        TmxMapLoader mapLoader = new TmxMapLoader();
+//        MainGameScreen.map = mapLoader.load("abi_map.tmx");
         EntityManager.spawnEntities();
 
         // There should be at least one powerup spawned at the start of the game
         assert EntityManager.powerups.size >= 1;
 
         // There should be at least one pirate spawned at the start of the game
-        assert EntityManager.pirates.size >= 1;
+        int pirateCount = EntityManager.pirates.size;
+
+        assert EntityManager.livingPiratesExist();
+        assert pirateCount >= 1;
+
+        // If a pirate is killed, the list should be smaller
+        EntityManager.killPirate(EntityManager.pirates.get(0));
+        assert pirateCount > EntityManager.pirates.size;
 
         // There should be 3 colleges spawned at the start of the game
         assert EntityManager.colleges.size == 3;
+        assert EntityManager.livingCollegesExist();
 
         // The program should be able to spawn 'unlimited' whirlpools, never in the same place
         for (int i = 0; i <= EntityManager.whirlpoolSpawns.size + 1; i++) {
@@ -375,51 +393,32 @@ public class FRTests {
         assert initial_health > new_health;
     }
 
-    //TODO move test to correct file
-    /*@Test
-    public void test_SCREENS(){
+    @Test
+    public void test_FR_SAVE_LOAD() {
+        SaveManager.Initialize();
 
-        DeltaDucks deltaDucks = new DeltaDucks();
-        Lwjgl3ApplicationConfiguration cfg = new Lwjgl3ApplicationConfiguration();
+        // Set up data to save
 
-        cfg.setForegroundFPS(60);
-        cfg.setTitle("Delta Ducks");
-        cfg.setWindowedMode(DeltaDucks.WIDTH, DeltaDucks.HEIGHT);
+        Player.setHealth(2);
+        MainGameScreen.player = new Player();
 
-        new Lwjgl3Application(deltaDucks, cfg);
+        DifficultyControl.setDifficulty(1);
+        PowerupManager.setPowerUps( new int[] { 1, 1, 1, 1, 1 } );
 
-        // Checking instance of MainMenuScreen can be created properly
-        MainMenuScreen mainMenuScreen = new MainMenuScreen(deltaDucks);
+        StatsManager.Initialise();
+        EntityManager.Initialize();
+        EntityManager.spawnEntities();
+        QuestManager.Initialise();
 
-        // Checking instance of MainMenuScreen can be disposed of properly
-        mainMenuScreen.dispose();
+        // Execute save
+        SaveManager.Save();
 
-        // Checking instance of InitialStorylineScreen can be created properly
-        InitialStorylineScreen initialStorylineScreen = new InitialStorylineScreen(deltaDucks);
+        // Change data
+        PowerupManager.setPowerUps( new int[] { 0, 0, 0, 0, 0 } );
+        assert Arrays.equals(PowerupManager.getPowerUps(), new int[]{0, 0, 0, 0, 0});
 
-        // Checking instance of MainMenuScreen can be disposed of properly
-        initialStorylineScreen.dispose();
-
-        // Checking instance of MainGameScreen can be created properly
-        MainGameScreen mainGameScreen = new MainGameScreen(deltaDucks);
-
-        // Loading values of MainGameScreen
-        mainGameScreen.show();
-
-        // Checking instance of MainMenuScreen can be disposed of properly
-        mainGameScreen.dispose();
-
-        // Checking instance of FinalStorylineScreen can be created properly when the player wins
-        FinalStorylineScreen finalStorylineScreen = new FinalStorylineScreen(deltaDucks, "Won");
-
-        // Checking instance of FinalStorylineScreen can be disposed of properly
-        finalStorylineScreen.dispose();
-
-        // Checking instance of FinalStorylineScreen can be created properly when the player loses
-        finalStorylineScreen = new FinalStorylineScreen(deltaDucks, "Lost");
-
-        // Checking instance of FinalStorylineScreen can be disposed of properly
-        finalStorylineScreen.dispose();
-    }*/
-
+        // Execute load
+        SaveManager.LoadSave();
+        assert Arrays.equals(PowerupManager.getPowerUps(), new int[]{1, 1, 1, 1, 1});
+    }
 }

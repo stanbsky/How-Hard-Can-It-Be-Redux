@@ -94,6 +94,7 @@ public class SaveManager {
             saveData = save;
         }
         catch (Exception ignored) {
+            System.out.println(ignored);
             int i = 0;
         }
     }
