@@ -26,6 +26,12 @@ public class Quest {
         this(type, null, "");
     }
 
+    /**
+     * Instantiate new quest
+     * @param type of quest
+     * @param location of quest
+     * @param collageName of quest
+     */
     public Quest (String type, Vector2 location, String collageName) {
         this.type = type;
         switch (type) {
@@ -64,10 +70,18 @@ public class Quest {
         }
     }
 
+    /**
+     * Checks for the completion of the quest
+     * @return completion status
+     */
     public boolean isCompleted() {
         return isCompleted;
     }
 
+    /**
+     * Returns the college assigned to the boss
+     * @return college name
+     */
     public String getCollage() {
         try {
             return ((Boss) objective).collegeName;
@@ -76,6 +90,11 @@ public class Quest {
             return "";
         }
     }
+
+    /**
+     * Updates objective if there is an uncompleted quest
+     * @param deltaTime of game
+     */
     public void update(float deltaTime) {
         if (!objective.isAlive()) {
             isCompleted = true;
@@ -86,11 +105,18 @@ public class Quest {
         objective.update(deltaTime);
     }
 
+    /**
+     * Add relevant indicator for quest
+     * @param texture of indicator
+     */
     private void registerIndicator(String texture) {
         indicator = new Indicator(objective, texture, 15f);
         registerEntity(indicator);
     }
 
+    /**
+     * Remove quest and give player reward
+     */
     public void dispose() {
         indicator.dispose();
 //        objective.dispose(); This stalls the game indefinitely
