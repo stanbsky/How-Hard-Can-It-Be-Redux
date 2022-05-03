@@ -21,7 +21,7 @@ public class MainMenuScreen implements Screen {
     private DeltaDucks game;
 
     private OrthographicCamera gameCam;
-    private Viewport gamePort;
+    private FitViewport gamePort;
 
     private static MainMenu mainMenu;
 
@@ -126,8 +126,9 @@ public class MainMenuScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-        gamePort.update(width, height);
-        mainMenu.getViewport().update(width, height);
+        gamePort.update(width, height, true);
+        mainMenu.setViewport(gamePort);
+//        mainMenu.getViewport().update(width, height);
     }
 
     @Override

@@ -17,7 +17,7 @@ import com.ducks.ui.Endgame;
 public class EndgameScreen implements Screen {
     private DeltaDucks game;
     private OrthographicCamera gameCam;
-    private Viewport gamePort;
+    private FitViewport gamePort;
     private static Endgame endgame;
     private static String buttonPressed;
 
@@ -86,8 +86,9 @@ public class EndgameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        gamePort.update(width, height);
-        endgame.getViewport().update(width, height);
+        gamePort.update(width, height, true);
+        endgame.setViewport(gamePort);
+//        endgame.getViewport().update(width, height);
     }
 
     @Override

@@ -162,7 +162,7 @@ public class MainGameScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         camera.resize(width, height);
-        pauseMenu.getViewport().update(width, height);
+//        pauseMenu.getViewport().update(width, height);
     }
 
     /**
@@ -228,7 +228,7 @@ public class MainGameScreen implements Screen {
      */
     private class Camera {
         public OrthographicCamera gameCam;
-        public Viewport gamePort;
+        public FitViewport gamePort;
         public MapProperties prop;
         public OrthogonalTiledMapRenderer renderer;
         public int mapPixelWidth;
@@ -245,7 +245,8 @@ public class MainGameScreen implements Screen {
 
         private void setupGameCam() {
             gameCam = new OrthographicCamera();
-            gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
+//            gamePort = new FitViewport(DeltaDucks.VIRTUAL_WIDTH / DeltaDucks.PIXEL_PER_METER, DeltaDucks.VIRTUAL_HEIGHT / DeltaDucks.PIXEL_PER_METER, gameCam);
+            gamePort = new FitViewport(DeltaDucks.WIDTH, DeltaDucks.HEIGHT, gameCam);
 
             // Create Map
             TmxMapLoader mapLoader = new TmxMapLoader();
@@ -259,8 +260,11 @@ public class MainGameScreen implements Screen {
             int tilePixelHeight = prop.get("tileheight", Integer.class);
             mapPixelWidth = mapWidth * tilePixelWidth;
             mapPixelHeight = mapHeight * tilePixelHeight;
+            System.out.printf("%d,%d,%d",mapWidth,tilePixelWidth,mapPixelWidth);
 
             gameCam.position.set(gamePort.getWorldWidth()/2, gamePort.getWorldHeight()/2, 0);
+//            gameCam.position.set(gameCam.viewportWidth/2f, gameCam.viewportHeight/2f, 0);
+            gameCam.zoom = 1/DeltaDucks.PIXEL_PER_METER;
             projection = gameCam.combined;
         }
 
@@ -268,15 +272,23 @@ public class MainGameScreen implements Screen {
          * Followes the payers position with the camera
          */
         public void update() {
-            gameCam.position.x = player.getPosition().x;
-            gameCam.position.y = player.getPosition().y;
+            gameCam.position.x = player.getPosition().x;// * DeltaDucks.PIXEL_PER_METER;
+            gameCam.position.y = player.getPosition().y;// * DeltaDucks.PIXEL_PER_METER;
+            float effectiveViewportWidth = gameCam.viewportWidth * gameCam.zoom;
+            float effectiveViewportHeight = gameCam.viewportHeight * gameCam.zoom;
+
+            gameCam.position.x = MathUtils.clamp(gameCam.position.x,
+                    effectiveViewportWidth / 2f, mapPixelWidth * gameCam.zoom - effectiveViewportWidth / 2f);
+            gameCam.position.x = MathUtils.clamp(gameCam.position.x,
+                    effectiveViewportHeight / 2f, mapPixelHeight * gameCam.zoom - effectiveViewportHeight / 2f);
 
             // Keeps camera centered if the ship reaches the edge of the map
-            gameCam.position.x = MathUtils.clamp(gameCam.position.x,
-                    gameCam.viewportWidth/2, scl(mapPixelWidth) - gameCam.viewportWidth/2);
-            gameCam.position.y = MathUtils.clamp(gameCam.position.y,
-                    gameCam.viewportHeight/2, scl(mapPixelHeight) - gameCam.viewportHeight/2);
-
+//            gameCam.position.x = MathUtils.clamp(gameCam.position.x,
+//                    gameCam.viewportWidth/2, scl(mapPixelWidth) - gameCam.viewportWidth/2);
+//            gameCam.position.y = MathUtils.clamp(gameCam.position.y,
+//                    gameCam.viewportHeight/2, scl(mapPixelHeight) - gameCam.viewportHeight/2);
+            System.out.printf("%f,%f,%f\n", gameCam.position.x,
+                    effectiveViewportWidth, mapPixelWidth * gameCam.zoom - effectiveViewportWidth / 2f);
             gameCam.update();
             renderer.setView(gameCam);
         }
@@ -294,6 +306,7 @@ public class MainGameScreen implements Screen {
 
         public void resize(int width, int height) {
             gamePort.update(width, height);
+            pauseMenu.setViewport(gamePort);
         }
 
         public void dispose() {
