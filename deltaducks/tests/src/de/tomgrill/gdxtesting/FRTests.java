@@ -3,44 +3,28 @@ package de.tomgrill.gdxtesting;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.graphics.GL20;
-import com.ducks.DeltaDucks;
-import com.ducks.components.*;
 import com.ducks.entities.*;
 import com.ducks.intangibles.*;
 import com.ducks.managers.*;
 import com.ducks.screens.*;
 import com.ducks.tools.*;
-import com.ducks.tools.Saving.EntitiesSaveData;
-import com.ducks.tools.Saving.QuestSaveData;
-import com.ducks.tools.Saving.StatsSaveData;
-import com.ducks.ui.*;
-import jdk.tools.jmod.Main;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.lwjgl.system.CallbackI;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.Test;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
-import static com.ducks.DeltaDucks.PIXEL_PER_METER;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class FRTests {
@@ -67,6 +51,7 @@ public class FRTests {
 
     @BeforeEach
     public void setupWorld() {
+        Mockito.reset(Gdx.gl);
         world = new World(new Vector2(0, 0), true);
         contactListener = new EntityContactListener();
         world.setContactListener(contactListener);
@@ -190,8 +175,8 @@ public class FRTests {
     }
 
     @Test
-    public void test_FR_COMBAT() throws NoSuchMethodException, SecurityException,
-            IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+    public void test_FR_COMBAT() throws SecurityException,
+            IllegalAccessException, IllegalArgumentException,
             NoSuchFieldException {
         Player player = new Player();
         Vector2 playerLocation = player.getPosition().cpy();
@@ -257,7 +242,7 @@ public class FRTests {
         // The whirlpool should no longer exist after 30 seconds (1800 frames) have passed
         assert whirlpool.cleanup();
 
-        try (MockedStatic<EntityManager> entityManager = Mockito.mockStatic(EntityManager.class)) {
+        try (MockedStatic<EntityManager> ignored = Mockito.mockStatic(EntityManager.class)) {
             whirlpool.dispose();
         }
 

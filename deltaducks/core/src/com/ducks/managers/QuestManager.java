@@ -72,7 +72,6 @@ public final class QuestManager {
      * If list is empty, activate boss
      */
     private static void spawnQuest() {
-        // TODO: revert after testing
         if (finishedQuests == finalQuestCounter) {
             currentQuest = new Quest("boss", null, "");
         } else {

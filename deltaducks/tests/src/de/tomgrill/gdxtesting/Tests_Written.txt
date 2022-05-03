@@ -53,4 +53,5 @@ Entities
 		Slow down
 		Despawns
 		Collide with opposite team
-	
+
+Saving/Loading                      test_FR_SAVE_LOAD
