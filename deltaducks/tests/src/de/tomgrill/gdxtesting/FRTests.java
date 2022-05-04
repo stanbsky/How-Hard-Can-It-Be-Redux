@@ -492,4 +492,19 @@ public class FRTests {
         // Player bullet does despawn
         playerBullet.dispose();
     }
+
+    @Test
+    public void test_FR_PLAYER_SPAWN() {
+        Player p = new Player();
+        assert p.isAlive();
+    }
+
+    @Test
+    public void test_FR_PLAYER_SHOOT() {
+        Player p = new Player();
+        assert p.isAlive();
+        p.getShooter().playerShootsMock();
+
+
+    }
 }

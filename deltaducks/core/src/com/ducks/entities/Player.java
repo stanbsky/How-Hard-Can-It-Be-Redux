@@ -164,4 +164,8 @@ public class Player extends Ship {
     public static void decHealth() {
         health -= .2f;
     }
+
+    public Shooter getShooter() {
+        return shooter;
+    }
 }

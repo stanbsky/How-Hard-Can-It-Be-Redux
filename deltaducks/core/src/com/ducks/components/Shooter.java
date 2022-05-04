@@ -40,6 +40,10 @@ public class Shooter {
         }
     }
 
+    public void playerShootsMock() {
+        EntityManager.spawnBullet();
+    }
+
     public void update(float deltaTime) {
         shootTimer += deltaTime * randomFactor();
     }
