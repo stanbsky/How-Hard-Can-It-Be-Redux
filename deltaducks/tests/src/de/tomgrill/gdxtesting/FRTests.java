@@ -55,9 +55,14 @@ public class FRTests {
         world = new World(new Vector2(0, 0), true);
         contactListener = new EntityContactListener();
         world.setContactListener(contactListener);
+        SaveManager.Initialize();
+        DifficultyControl.setDifficulty(1);
+        StatsManager.Initialise();
         PhysicsManager.Initialize(world);
         AssetManager.Initialize();
         EntityManager.Initialize();
+        PowerupManager.Initialise();
+
     }
 
     /**
@@ -283,7 +288,7 @@ public class FRTests {
     }
 
     @Test
-    public void test_Pirate_Move() {
+    public void test_PIRATE_MOVE() {
         // Create a pirate and record their initial position
         Pirate pirate = new Pirate(collegeName, zero);
         Vector2 initialPosition = pirate.getPosition().cpy();
@@ -407,6 +412,57 @@ public class FRTests {
         assert Arrays.equals(PowerupManager.getPowerUps(), new int[]{1, 1, 1, 1, 1});
 
         // Reset state for other tests
-        PowerupManager.setPowerUps( new int[] { 0, 0, 0, 0, 0 } );
+        SaveManager.LoadSave = false;
+    }
+
+    @Test
+    public void test_FR_DIFFICULTY() {
+        DifficultyControl.setDifficulty(0);
+
+        // Sees if difficulty set and get works
+        assert DifficultyControl.getDifficulty() == 0;
+
+        // Sees if getting difficulty value with difficulty works
+        assert DifficultyControl.getValue(1, 2 ,3) == 1;
+    }
+
+    @Test
+    public void test_FR_BULLET() {
+        EnemyBullet enemyBullet = new EnemyBullet(zero, new Vector2(1, 1));
+
+        // checks enemy bullet can exist and flag that it does
+        assert enemyBullet.isAlive();
+
+        PlayerBullet playerBullet = new PlayerBullet(new Vector2(100, 100), new Vector2(1, 1), zero);
+
+        // checks enemy bullet can exist and flag that it does
+        assert playerBullet.isAlive();
+
+        // Step world
+        world.step(deltaTime, 6, 2);
+        enemyBullet.update(deltaTime);
+        playerBullet.update(deltaTime);
+
+        Vector2 enemySpeed = enemyBullet.getVelocity().cpy();
+        Vector2 playerSpeed = playerBullet.getVelocity().cpy();
+
+        // Step world
+        world.step(deltaTime, 6, 2);
+        enemyBullet.update(deltaTime);
+        playerBullet.update(deltaTime);
+
+        // Enemy bullet slows down after fired
+        assert enemySpeed.x > enemyBullet.getVelocity().x;
+        assert enemySpeed.y > enemyBullet.getVelocity().y;
+
+        // Player bullet slows down after fired
+        assert playerSpeed.x > playerBullet.getVelocity().x;
+        assert playerSpeed.y > playerBullet.getVelocity().y;
+
+        // Enemy bullet does despawn
+        enemyBullet.dispose();
+
+        // Player bullet does despawn
+        playerBullet.dispose();
     }
 }
