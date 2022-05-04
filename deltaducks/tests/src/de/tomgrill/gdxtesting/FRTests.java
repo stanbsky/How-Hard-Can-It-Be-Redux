@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.ducks.entities.*;
 import com.ducks.intangibles.*;
 import com.ducks.managers.*;
 import com.ducks.screens.*;
 import com.ducks.tools.*;
+import com.ducks.ui.Hud;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -63,7 +65,7 @@ public class FRTests {
         AssetManager.Initialize();
         EntityManager.Initialize();
         PowerupManager.Initialise();
-
+        QuestManager.Initialise();
     }
 
     /**
