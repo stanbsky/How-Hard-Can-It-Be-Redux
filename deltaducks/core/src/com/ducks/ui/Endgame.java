@@ -1,22 +1,15 @@
 package com.ducks.ui;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.ducks.DeltaDucks;
 import com.ducks.managers.AssetManager;
 import com.ducks.managers.StatsManager;
 import com.ducks.screens.EndgameScreen;
-import com.ducks.screens.MainMenuScreen;
-import com.ducks.ui.MainMenu;
-import com.ducks.ui.Subtitle;
 
 import static com.ducks.managers.AssetManager.*;
 
@@ -24,18 +17,19 @@ public class Endgame extends Stage {
 
     private static final int BUTTON_WIDTH = 300;
     private static final int BUTTON_HEIGHT = 130;
+    public static Table table, infoBox, bottomRow;
 
     /**
-     * Sets up table representing the end screen of the game
-     * @param won if game was won or lost
+     * instantiates the tables with the appropriate UI
+     * @param won
      */
-    public Endgame(boolean won) {
-        Table table = new Table();
-        addActor(table);
+    public static void createLayout(boolean won) {
+        table = new Table();
         table.setBackground(AssetManager.ui.newDrawable("blank", new Color(1,1,1,0.8f)));
         table.setFillParent(true);
         table.setDebug(false);
         table.defaults().pad(10);
+
 
         Subtitle title = new Subtitle(AssetManager.pixelFont);
         if (won) {
@@ -46,7 +40,7 @@ public class Endgame extends Stage {
         table.add(title);
         table.row();
 
-        Table infoBox = new Table();
+        infoBox = new Table();
         infoBox.setDebug(false);
         Label.LabelStyle style = new Label.LabelStyle(pixelFont, Color.BLACK);
         infoBox.setBackground(ui_background);
@@ -74,7 +68,7 @@ public class Endgame extends Stage {
         table.add(infoBox);
         table.row();
 
-        Table bottomRow = new Table();
+        bottomRow = new Table();
         bottomRow.defaults().width(BUTTON_WIDTH).height(BUTTON_HEIGHT).padRight(55).padLeft(55);
 
         PlainButton button = new PlainButton("PLAY", new ClickListener() {
@@ -93,5 +87,14 @@ public class Endgame extends Stage {
         });
         bottomRow.add(button);
         table.add(bottomRow);
+    }
+
+    /**
+     * Sets up table representing the end screen of the game
+     * @param won if game was won or lost
+     */
+    public Endgame(boolean won) {
+        createLayout(won);
+        addActor(table);
     }
 }

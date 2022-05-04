@@ -1,19 +1,23 @@
 package de.tomgrill.gdxtesting;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.ducks.entities.*;
 import com.ducks.intangibles.*;
 import com.ducks.managers.*;
 import com.ducks.screens.*;
 import com.ducks.tools.*;
-import com.ducks.ui.Hud;
+import com.ducks.ui.Endgame;
+import com.ducks.ui.Subtitle;
+import jdk.internal.loader.AbstractClassLoaderValue;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,9 +29,12 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
+import static com.ducks.managers.AssetManager.ui;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class FRTests {
@@ -576,11 +583,69 @@ public class FRTests {
     }
 
     @Test
-    public void test_FR_PLAYER_SHOOT() {
+    public void test_FR_PLAYER_SHOOT() throws NoSuchFieldException, IllegalAccessException {
         Player p = new Player();
         assert p.isAlive();
-        p.getShooter().playerShootsMock();
 
+        MainGameScreen.player = p;
 
+        Gdx gdx = mock(Gdx.class);
+        Input input = mock(Input.class);
+        when(input.isButtonJustPressed(Input.Buttons.LEFT)).thenReturn(true);
+        Field inputfield = Gdx.class.getDeclaredField("input");
+        inputfield.set(gdx, input);
+
+        int timeout = 0;
+        boolean shoot = false;
+        while(!shoot && timeout < 1) {
+            p.update(deltaTime);
+            try{
+                shoot = EntityManager.entities.get(EntityManager.entities.size - 1) instanceof Bullet;
+            }
+            catch (Exception ignore) {
+
+            }
+            timeout += deltaTime;
+        }
+
+        //p.getShooter().playerShoots();
+        assert shoot;
+    }
+
+    @Test
+    public void test_FR_PLAYER_DIE() {
+        new Player();
+
+        Player.setHealth(-1);
+
+        assert Player.getHealth() < 0.0f;
+    }
+    @Test
+    public void test_UI_ENDSCREEN() {
+        Endgame.createLayout(true);
+        assert !Endgame.table.getDebug();
+    }
+
+    @Test
+    public void test_UI_SUBTITLE() {
+        Subtitle s = new Subtitle(AssetManager.pixelFont);
+
+        assert s.hasChildren();
+        assert s.getChild(0) instanceof Label;
+
+        s.setQuestNotice("Open the ", "chest", " chest");
+
+        Label l0 = (Label) s.getChild(0);
+        assert l0.textEquals("Open the ");
+        Image i = (Image) s.getChild(1);
+        // assert Objects.equals(i, new Image(ui.newDrawable("chest")));
+        Label l1 = (Label) s.getChild(2);
+        assert l1.textEquals(" chest");
+    }
+
+    @Test
+    public void test_B2_WORLDCREATOR() {
+        World w = new World(new Vector2(0, 0), true);
+        B2WorldCreator wc = new B2WorldCreator(w);
     }
 }

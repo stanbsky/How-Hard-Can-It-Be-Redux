@@ -12,7 +12,7 @@ import com.ducks.tools.IShooter;
 public class Shooter {
 
     private final float shootWaitTime;
-    private float shootTimer;
+    private float shootTimer = 0;
     private boolean randomize = false;
 
     public Shooter(float shootWaitTime) {

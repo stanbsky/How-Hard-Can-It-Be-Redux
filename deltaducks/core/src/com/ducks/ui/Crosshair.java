@@ -15,7 +15,7 @@ import static com.ducks.screens.MainGameScreen.player;
 public class Crosshair {
 
     private Texture texture;
-    private static Vector2 direction;
+    private static Vector2 direction = new Vector2(0, 0);
     private Vector2 position;
 
     private float crosshairRadius = 1.2f;
