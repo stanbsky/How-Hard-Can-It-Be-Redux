@@ -180,33 +180,8 @@ public class FRTests {
     }
 
     @Test
-    public void test_FR_COMBAT() throws SecurityException,
-            IllegalAccessException, IllegalArgumentException,
-            NoSuchFieldException {
-        Player player = new Player();
-        Vector2 playerLocation = player.getPosition().cpy();
-        playerLocation.x -= 0.5;
-        float originalHealth = Player.getHealth();
-        College college = new College(playerLocation.scl(100), collegeName);
-        EntityManager.registerEntity(college);
-        try (MockedStatic<MainGameScreen> mgs = Mockito.mockStatic(MainGameScreen.class)) {
-            Field playerField = MainGameScreen.class.getDeclaredField("player");
-            playerField.setAccessible(true);
-            playerField.set(mgs, player);
-            for (int i = 0; i < 600; i++) {
-                world.step(deltaTime, 6, 2);
-                player.update(deltaTime);
-                EntityManager.update(deltaTime);
-            }
-        }
-        assert Player.getHealth() < originalHealth;
-    }
-
-    @Test
     public void test_FR_ENTITY_SPAWNS() {
         // Load the map for pulling the spawn locations
-//        TmxMapLoader mapLoader = new TmxMapLoader();
-//        MainGameScreen.map = mapLoader.load("abi_map.tmx");
         EntityManager.spawnEntities();
 
         // There should be at least one powerup spawned at the start of the game
@@ -283,8 +258,23 @@ public class FRTests {
             chest.update(deltaTime);
         }
 
-        // The whirlpool should be open after the player is in its range for 4 seconds
+        // The chest should be open after the player is in its range for 4 seconds
         assert !chest.isAlive();
+    }
+
+    @Test
+    public void test_PIRATE_SPAWN() {
+        Pirate pirate = new Pirate(collegeName, zero);
+
+        assert pirate.isAlive();
+
+        PlayerBullet bullet = new PlayerBullet(zero, zero, zero);
+        world.step(deltaTime, 6, 2);
+        pirate.update(deltaTime);
+        bullet.update(deltaTime);
+
+        //The pirate should die
+        assert !pirate.isAlive();
     }
 
     @Test
@@ -342,9 +332,23 @@ public class FRTests {
     }
 
     @Test
+    public void test_FR_COLLEGE_SPAWN(){
+        //Ensure colleges' health goes down after a bullet hits them
+        College college = new College(new Vector2(0,0),collegeName);
+
+        // Checks college is alive
+        assert college.isAlive();
+
+        // Set health to 0
+        college.health = 0;
+
+        assert !college.isAlive();
+    }
+
+    @Test
     public void test_FR_COLLEGE_DAMAGE(){
         //Ensure colleges' health goes down after a bullet hits them
-        College college = new College(new Vector2(0,0),"constantine");
+        College college = new College(zero ,collegeName);
         int initial_health = college.health;
         PlayerBullet bullet = new PlayerBullet(zero, zero, zero);
         world.step(deltaTime, 6, 2);
@@ -352,6 +356,29 @@ public class FRTests {
         bullet.update(deltaTime);
         //The current health should be less than it started with
         assert initial_health > college.health;
+    }
+
+    @Test
+    public void test_FR_COLLEGE_COMBAT() throws SecurityException,
+            IllegalAccessException, IllegalArgumentException,
+            NoSuchFieldException {
+        Player player = new Player();
+        Vector2 playerLocation = player.getPosition().cpy();
+        playerLocation.x -= 0.5;
+        float originalHealth = Player.getHealth();
+        College college = new College(playerLocation.scl(100), collegeName);
+        EntityManager.registerEntity(college);
+        try (MockedStatic<MainGameScreen> mgs = Mockito.mockStatic(MainGameScreen.class)) {
+            Field playerField = MainGameScreen.class.getDeclaredField("player");
+            playerField.setAccessible(true);
+            playerField.set(mgs, player);
+            for (int i = 0; i < 600; i++) {
+                world.step(deltaTime, 6, 2);
+                player.update(deltaTime);
+                EntityManager.update(deltaTime);
+            }
+        }
+        assert Player.getHealth() < originalHealth;
     }
 
     @Test
@@ -372,7 +399,7 @@ public class FRTests {
     @Test
     public void test_FR_BOSS_DAMAGE(){
         //Ensure boss's health goes down after a bullet hits it
-        Boss boss = new Boss("constantine", zero);
+        Boss boss = new Boss(collegeName, zero);
         float initial_health = boss.getHealth();
         PlayerBullet bullet = new PlayerBullet(zero, zero, zero);
         world.step(deltaTime, 6, 2);
@@ -382,6 +409,9 @@ public class FRTests {
         //The current health should be less than it started with
         assert initial_health > new_health;
     }
+
+    @Test
+    public void
 
     @Test
     public void test_FR_SAVE_LOAD() {
