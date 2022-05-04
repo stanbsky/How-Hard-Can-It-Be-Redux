@@ -273,7 +273,7 @@ public class FRTests {
     }
 
     @Test
-    public void test_PIRATE_SPAWN() {
+    public void test_FR_PIRATE_SPAWN() {
         Pirate pirate = new Pirate(collegeName, zero);
 
         assert pirate.isAlive();
@@ -288,7 +288,7 @@ public class FRTests {
     }
 
     @Test
-    public void test_PIRATE_MOVE() {
+    public void test_FR_PIRATE_MOVE() {
         // Create a pirate and record their initial position
         Pirate pirate = new Pirate(collegeName, zero);
         Vector2 initialPosition = pirate.getPosition().cpy();
