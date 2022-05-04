@@ -332,6 +332,29 @@ public class FRTests {
     }
 
     @Test
+    public void test_FR_PIRATE_COMBAT() throws SecurityException,
+            IllegalAccessException, IllegalArgumentException,
+            NoSuchFieldException {
+        Player player = new Player();
+        Vector2 playerLocation = player.getPosition().cpy();
+        playerLocation.x -= 0.5;
+        float originalHealth = Player.getHealth();
+        Pirate pirate = new Pirate(collegeName, playerLocation.scl(100));
+        EntityManager.registerEntity(pirate);
+        try (MockedStatic<MainGameScreen> mgs = Mockito.mockStatic(MainGameScreen.class)) {
+            Field playerField = MainGameScreen.class.getDeclaredField("player");
+            playerField.setAccessible(true);
+            playerField.set(mgs, player);
+            for (int i = 0; i < 600; i++) {
+                world.step(deltaTime, 6, 2);
+                player.update(deltaTime);
+                EntityManager.update(deltaTime);
+            }
+        }
+        assert Player.getHealth() < originalHealth;
+    }
+
+    @Test
     public void test_FR_COLLEGE_SPAWN(){
         //Ensure colleges' health goes down after a bullet hits them
         College college = new College(new Vector2(0,0),collegeName);
@@ -397,6 +420,18 @@ public class FRTests {
     }
 
     @Test
+    public void test_FR_BOSS_SPAWN() {
+        Boss boss = new Boss(collegeName, zero);
+
+        // Confirm that boss is alive
+        assert boss.isAlive();
+
+        boss.setHealth(0);
+
+        assert !boss.isAlive();
+    }
+
+    @Test
     public void test_FR_BOSS_DAMAGE(){
         //Ensure boss's health goes down after a bullet hits it
         Boss boss = new Boss(collegeName, zero);
@@ -408,6 +443,24 @@ public class FRTests {
         float new_health = boss.getHealth();
         //The current health should be less than it started with
         assert initial_health > new_health;
+    }
+
+    @Test
+    public void test_FR_BOSS_TRIPLE_SHOT() {
+        Player player = new Player();
+        MainGameScreen.player = player;
+        Vector2 playerLocation = player.getPosition().cpy();
+
+        Boss boss = new Boss(collegeName, playerLocation.scl(100));
+
+        assert boss.bossShotCount == 0;
+
+        world.step(deltaTime, 6, 2);
+        for (int i = 0; i <= 21; i++) {
+            boss.update(1);
+        }
+
+        assert boss.bossShotCount > 0;
     }
 
     @Test
