@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.ducks.entities.*;
 import com.ducks.intangibles.*;
 import com.ducks.managers.*;
 import com.ducks.screens.*;
 import com.ducks.tools.*;
+import com.ducks.ui.Hud;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -555,6 +557,18 @@ public class FRTests {
 //        currentQuestField.setAccessible(true);
 //        // We don't have a quest set
 //        assert currentQuestField.get(QuestManager.class) == null;
+//        EntityManager.spawnEntities();
+//        Hud.everything();
+//        Player player = new Player();
+        // Create conditions for a quest to be spawned
+//        Field colleges = EntityManager.class.getDeclaredField("colleges");
+//        colleges.setAccessible(true);
+//        colleges.
+//        colleges.set(new Array<College>());
+//        Field pirates = EntityManager.class.getDeclaredField("pirates");
+//        pirates.setAccessible(true);
+//        Field chestSpawns = EntityManager.class.getDeclaredField("chestSpawns");
+//        chestSpawns.setAccessible(true);
 //        QuestManager.update(3f);
 //        assert currentQuestField.get(QuestManager.class) != null;
     }

@@ -34,8 +34,8 @@ public class Hud extends Stage {
     private static Label goldLabel;
     private static Table goldTable = new Table();
 
-    private FreeTypeFontGenerator generator;
-    private FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+    private static FreeTypeFontGenerator generator;
+    private static FreeTypeFontGenerator.FreeTypeFontParameter parameter;
     private static BitmapFont topBarFont;
 
     private static Table powerupList;
@@ -45,11 +45,16 @@ public class Hud extends Stage {
     private static Table hotshotCell;
     private static Table quickshotCell;
     private static Table supersizeCell;
+    private static Table root;
 
     /**
      * Sets up table representing the overlay for regular gameplay
      */
     public Hud() {
+        everything();
+        addActor(root);
+    }
+    public static void everything() {
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("font/futur.ttf"));
         parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -59,8 +64,8 @@ public class Hud extends Stage {
         topBarFont.getData().setScale(.8f);
 
         // root
-        Table root = new Table();
-        addActor(root);
+        root = new Table();
+
         root.setFillParent(true);
         root.setDebug(false);
         root.top();
@@ -106,7 +111,7 @@ public class Hud extends Stage {
      * Sets up tables for displaying player stats
      * @param topBar table to put items in
      */
-    private void createTopBarUI(Table topBar) {
+    private static void createTopBarUI(Table topBar) {
         expSymbol = new Image(ui.newDrawable("trophy"));
         expTagLabel = new Label("USER EXP", new Label.LabelStyle(topBarFont, Color.WHITE));
         expLabel = new Label(String.format("%d", 0), new Label.LabelStyle(topBarFont, Color.WHITE));
