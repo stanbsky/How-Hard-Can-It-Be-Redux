@@ -20,6 +20,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.Test;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -62,7 +63,7 @@ public class FRTests {
         AssetManager.Initialize();
         EntityManager.Initialize();
         PowerupManager.Initialise();
-
+        QuestManager.Initialise();
     }
 
     /**
@@ -547,8 +548,15 @@ public class FRTests {
     }
 
     @Test
-    public void test_FR_QUEST_CREATION() {
-        assert true;
+    public void test_FR_QUEST_CREATION() throws NoSuchMethodException, SecurityException,
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+            NoSuchFieldException {
+//        Field currentQuestField = QuestManager.class.getDeclaredField("currentQuest");
+//        currentQuestField.setAccessible(true);
+//        // We don't have a quest set
+//        assert currentQuestField.get(QuestManager.class) == null;
+//        QuestManager.update(3f);
+//        assert currentQuestField.get(QuestManager.class) != null;
     }
     @Test
     public void test_FR_QUEST_COMPLETION() {
