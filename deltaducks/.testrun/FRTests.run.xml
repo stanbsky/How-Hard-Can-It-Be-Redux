@@ -22,6 +22,16 @@
     <EXTENSION ID="com.intellij.execution.ExternalSystemRunConfigurationJavaExtension">
       <extension name="coverage">
         <pattern>
+          <option name="PATTERN" value="com.ducks.tools.Debug" />
+          <option name="ENABLED" value="true" />
+          <option name="INCLUDE" value="false" />
+        </pattern>
+        <pattern>
+          <option name="PATTERN" value="com.ducks.desktop.DesktopLauncher" />
+          <option name="ENABLED" value="true" />
+          <option name="INCLUDE" value="false" />
+        </pattern>
+        <pattern>
           <option name="PATTERN" value="com.ducks.tools.*" />
           <option name="ENABLED" value="true" />
         </pattern>
