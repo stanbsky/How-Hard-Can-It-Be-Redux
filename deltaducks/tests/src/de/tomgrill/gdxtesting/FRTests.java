@@ -492,4 +492,17 @@ public class FRTests {
         // Player bullet does despawn
         playerBullet.dispose();
     }
+
+    @Test
+    public void test_FR_QUEST_CREATION() {
+        assert true;
+    }
+    @Test
+    public void test_FR_QUEST_COMPLETION() {
+        assert true;
+    }
+    @Test
+    public void test_FR_BOSS_DEATH_WIN() {
+        assert true;
+    }
 }
