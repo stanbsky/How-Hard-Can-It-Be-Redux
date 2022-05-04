@@ -1,0 +1,205 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > SaveManager</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ducks.managers</a>
+</div>
+
+<h1>Coverage Summary for Class: SaveManager (com.ducks.managers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SaveManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    83.3%
+  </span>
+  <span class="absValue">
+    (5/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    88.6%
+  </span>
+  <span class="absValue">
+    (39/44)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.ducks.managers;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.badlogic.gdx.utils.Json;
+<i class="no-highlight">4</i>&nbsp;import com.ducks.entities.Player;
+<i class="no-highlight">5</i>&nbsp;import com.ducks.intangibles.DifficultyControl;
+<i class="no-highlight">6</i>&nbsp;import com.ducks.screens.MainGameScreen;
+<i class="no-highlight">7</i>&nbsp;import com.ducks.tools.Saving.*;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;import java.io.*;
+<i class="no-highlight">10</i>&nbsp;import java.nio.file.Path;
+<i class="no-highlight">11</i>&nbsp;import java.nio.file.Paths;
+<i class="no-highlight">12</i>&nbsp;import java.util.Scanner;
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;import static com.ducks.DeltaDucks.PIXEL_PER_METER;
+<i class="no-highlight">15</i>&nbsp;
+<b class="nc"><i class="no-highlight">16</i>&nbsp;public class SaveManager {</b>
+<b class="fc"><i class="no-highlight">17</i>&nbsp;    public static boolean LoadSave = false;</b>
+<i class="no-highlight">18</i>&nbsp;    public static SaveData saveData;
+<b class="fc"><i class="no-highlight">19</i>&nbsp;    private static final Path SAVE_LOCATION = Paths.get(&quot;./Saves/Save.json&quot;);</b>
+<i class="no-highlight">20</i>&nbsp;
+<i class="no-highlight">21</i>&nbsp;    /**
+<i class="no-highlight">22</i>&nbsp;     * Sets up save manager
+<i class="no-highlight">23</i>&nbsp;     */
+<i class="no-highlight">24</i>&nbsp;    public static void Initialize() {
+<b class="fc"><i class="no-highlight">25</i>&nbsp;        saveData = null;</b>
+<b class="fc"><i class="no-highlight">26</i>&nbsp;        LoadFile();</b>
+<i class="no-highlight">27</i>&nbsp;    }
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    /**
+<i class="no-highlight">30</i>&nbsp;     * Reads the save file, ready for loading
+<i class="no-highlight">31</i>&nbsp;     */
+<i class="no-highlight">32</i>&nbsp;    private static void LoadFile() {
+<i class="no-highlight">33</i>&nbsp;        try {
+<b class="fc"><i class="no-highlight">34</i>&nbsp;            File myObj = new File(&quot;./Saves&quot;);</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;            if(myObj.exists()) {</b>
+<b class="fc"><i class="no-highlight">36</i>&nbsp;                myObj = new File(SAVE_LOCATION.toString());</b>
+<b class="fc"><i class="no-highlight">37</i>&nbsp;                Scanner myReader = new Scanner(myObj);</b>
+<b class="fc"><i class="no-highlight">38</i>&nbsp;                while (myReader.hasNextLine()) {</b>
+<b class="fc"><i class="no-highlight">39</i>&nbsp;                    String txt = myReader.nextLine();</b>
+<b class="fc"><i class="no-highlight">40</i>&nbsp;                    Json j = new Json();</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;                    saveData = j.fromJson(SaveData.class, txt);</b>
+<b class="fc"><i class="no-highlight">42</i>&nbsp;                }</b>
+<b class="fc"><i class="no-highlight">43</i>&nbsp;                myReader.close();</b>
+<b class="fc"><i class="no-highlight">44</i>&nbsp;            }</b>
+<i class="no-highlight">45</i>&nbsp;            else {
+<b class="nc"><i class="no-highlight">46</i>&nbsp;                myObj.mkdirs();</b>
+<i class="no-highlight">47</i>&nbsp;            }
+<i class="no-highlight">48</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">49</i>&nbsp;        catch (Exception ignored) {</b>
+<i class="no-highlight">50</i>&nbsp;
+<b class="fc"><i class="no-highlight">51</i>&nbsp;        }</b>
+<i class="no-highlight">52</i>&nbsp;    }
+<i class="no-highlight">53</i>&nbsp;
+<i class="no-highlight">54</i>&nbsp;    /**
+<i class="no-highlight">55</i>&nbsp;     * Reads and activates loaded save file if one exists
+<i class="no-highlight">56</i>&nbsp;     */
+<i class="no-highlight">57</i>&nbsp;    public static void LoadSave() {
+<b class="fc"><i class="no-highlight">58</i>&nbsp;        if (saveData != null) {</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;            LoadSave = true;</b>
+<b class="fc"><i class="no-highlight">60</i>&nbsp;            Player.setHealth(saveData.player.health);</b>
+<b class="fc"><i class="no-highlight">61</i>&nbsp;            DifficultyControl.setDifficulty(saveData.difficulty);</b>
+<b class="fc"><i class="no-highlight">62</i>&nbsp;            PowerupManager.setPowerUps(saveData.powerUps);</b>
+<i class="no-highlight">63</i>&nbsp;
+<b class="fc"><i class="no-highlight">64</i>&nbsp;            StatsManager.Load(saveData.stats);</b>
+<i class="no-highlight">65</i>&nbsp;            // EntityManager.Load(saveData.entityManager);
+<i class="no-highlight">66</i>&nbsp;        }
+<i class="no-highlight">67</i>&nbsp;    }
+<i class="no-highlight">68</i>&nbsp;
+<i class="no-highlight">69</i>&nbsp;    /**
+<i class="no-highlight">70</i>&nbsp;     * Saves current data
+<i class="no-highlight">71</i>&nbsp;     */
+<i class="no-highlight">72</i>&nbsp;    public static void Save() {
+<i class="no-highlight">73</i>&nbsp;        try {
+<b class="fc"><i class="no-highlight">74</i>&nbsp;            FileWriter out = new FileWriter(SAVE_LOCATION.toString());</b>
+<i class="no-highlight">75</i>&nbsp;
+<b class="fc"><i class="no-highlight">76</i>&nbsp;            SaveData save = new SaveData();</b>
+<i class="no-highlight">77</i>&nbsp;
+<b class="fc"><i class="no-highlight">78</i>&nbsp;            PlayerSaveData pData = new PlayerSaveData();</b>
+<b class="fc"><i class="no-highlight">79</i>&nbsp;            pData.health = Player.getHealth();</b>
+<b class="fc"><i class="no-highlight">80</i>&nbsp;            pData.position = MainGameScreen.player.getPosition().scl(PIXEL_PER_METER);</b>
+<i class="no-highlight">81</i>&nbsp;
+<b class="fc"><i class="no-highlight">82</i>&nbsp;            save.difficulty = DifficultyControl.getDifficulty();</b>
+<b class="fc"><i class="no-highlight">83</i>&nbsp;            save.powerUps = PowerupManager.getPowerUps();</b>
+<i class="no-highlight">84</i>&nbsp;
+<b class="fc"><i class="no-highlight">85</i>&nbsp;            save.player = pData;</b>
+<b class="fc"><i class="no-highlight">86</i>&nbsp;            save.stats = (StatsSaveData) StatsManager.Save();</b>
+<b class="fc"><i class="no-highlight">87</i>&nbsp;            save.entityManager = (EntitiesSaveData) EntityManager.Save();</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;            save.quests = (QuestSaveData) QuestManager.Save();</b>
+<i class="no-highlight">89</i>&nbsp;
+<b class="fc"><i class="no-highlight">90</i>&nbsp;            Json j = new Json();</b>
+<b class="fc"><i class="no-highlight">91</i>&nbsp;            String d = j.toJson(save);</b>
+<b class="fc"><i class="no-highlight">92</i>&nbsp;            out.write(d);</b>
+<b class="fc"><i class="no-highlight">93</i>&nbsp;            out.close();</b>
+<b class="fc"><i class="no-highlight">94</i>&nbsp;            saveData = save;</b>
+<i class="no-highlight">95</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">96</i>&nbsp;        catch (Exception ignored) {</b>
+<b class="nc"><i class="no-highlight">97</i>&nbsp;            int i = 0;</b>
+<b class="fc"><i class="no-highlight">98</i>&nbsp;        }</b>
+<i class="no-highlight">99</i>&nbsp;    }
+<i class="no-highlight">100</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-05-04 04:47</div>
+</div>
+</body>
+</html>

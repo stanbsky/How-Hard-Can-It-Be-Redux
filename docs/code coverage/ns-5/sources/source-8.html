@@ -1,0 +1,206 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > StatsManager</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ducks.managers</a>
+</div>
+
+<h1>Coverage Summary for Class: StatsManager (com.ducks.managers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">StatsManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    62.5%
+  </span>
+  <span class="absValue">
+    (10/16)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    64.7%
+  </span>
+  <span class="absValue">
+    (22/34)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.ducks.managers;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.ducks.tools.Saving.ISaveData;
+<i class="no-highlight">4</i>&nbsp;import com.ducks.tools.Saving.StatsSaveData;
+<i class="no-highlight">5</i>&nbsp;import com.ducks.ui.PauseMenu;
+<i class="no-highlight">6</i>&nbsp;
+<b class="nc"><i class="no-highlight">7</i>&nbsp;public final class StatsManager {</b>
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;    private static int worldTimer;
+<i class="no-highlight">10</i>&nbsp;    private static float timeProgress;
+<i class="no-highlight">11</i>&nbsp;    private static int score;
+<i class="no-highlight">12</i>&nbsp;    private static int gold;
+<i class="no-highlight">13</i>&nbsp;    private static int goldEarned;
+<i class="no-highlight">14</i>&nbsp;
+<i class="no-highlight">15</i>&nbsp;    /**
+<i class="no-highlight">16</i>&nbsp;     * Set/reset player stats
+<i class="no-highlight">17</i>&nbsp;     */
+<i class="no-highlight">18</i>&nbsp;    public static void Initialise() {
+<b class="fc"><i class="no-highlight">19</i>&nbsp;        if (!SaveManager.LoadSave) {</b>
+<b class="fc"><i class="no-highlight">20</i>&nbsp;            worldTimer = 300;</b>
+<b class="fc"><i class="no-highlight">21</i>&nbsp;            timeProgress = 0;</b>
+<b class="fc"><i class="no-highlight">22</i>&nbsp;            score = 0;</b>
+<b class="fc"><i class="no-highlight">23</i>&nbsp;            gold = 0;</b>
+<b class="fc"><i class="no-highlight">24</i>&nbsp;            goldEarned = 0;</b>
+<i class="no-highlight">25</i>&nbsp;        }
+<i class="no-highlight">26</i>&nbsp;    }
+<i class="no-highlight">27</i>&nbsp;
+<i class="no-highlight">28</i>&nbsp;    public static int getWorldTimer() {
+<b class="fc"><i class="no-highlight">29</i>&nbsp;        return worldTimer;</b>
+<i class="no-highlight">30</i>&nbsp;    }
+<i class="no-highlight">31</i>&nbsp;
+<i class="no-highlight">32</i>&nbsp;    private static void updateWorldTimer() {
+<b class="nc"><i class="no-highlight">33</i>&nbsp;        if (timeProgress &gt; 1) {</b>
+<b class="nc"><i class="no-highlight">34</i>&nbsp;            timeProgress = 0;</b>
+<b class="nc"><i class="no-highlight">35</i>&nbsp;            worldTimer--;</b>
+<i class="no-highlight">36</i>&nbsp;        }
+<i class="no-highlight">37</i>&nbsp;    }
+<i class="no-highlight">38</i>&nbsp;
+<i class="no-highlight">39</i>&nbsp;    public static int getScore() {
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        return score;</b>
+<i class="no-highlight">41</i>&nbsp;    }
+<i class="no-highlight">42</i>&nbsp;
+<i class="no-highlight">43</i>&nbsp;    public static void addScore(int score) {
+<b class="fc"><i class="no-highlight">44</i>&nbsp;        StatsManager.score += score;</b>
+<i class="no-highlight">45</i>&nbsp;    }
+<i class="no-highlight">46</i>&nbsp;
+<i class="no-highlight">47</i>&nbsp;    public static int getGold() {
+<b class="nc"><i class="no-highlight">48</i>&nbsp;        return gold;</b>
+<i class="no-highlight">49</i>&nbsp;    }
+<i class="no-highlight">50</i>&nbsp;
+<b class="fc"><i class="no-highlight">51</i>&nbsp;    public static int getTotalEarnedGold() { return goldEarned; }</b>
+<i class="no-highlight">52</i>&nbsp;
+<i class="no-highlight">53</i>&nbsp;    public static void addGold(int gold) {
+<b class="nc"><i class="no-highlight">54</i>&nbsp;        StatsManager.gold += gold;</b>
+<b class="nc"><i class="no-highlight">55</i>&nbsp;        StatsManager.goldEarned += gold;</b>
+<b class="nc"><i class="no-highlight">56</i>&nbsp;        PauseMenu.updateGold();</b>
+<i class="no-highlight">57</i>&nbsp;    }
+<i class="no-highlight">58</i>&nbsp;
+<i class="no-highlight">59</i>&nbsp;    public static void spendGold(int gold) {
+<b class="nc"><i class="no-highlight">60</i>&nbsp;        StatsManager.gold -= gold;</b>
+<b class="nc"><i class="no-highlight">61</i>&nbsp;        PauseMenu.updateGold();</b>
+<i class="no-highlight">62</i>&nbsp;    }
+<i class="no-highlight">63</i>&nbsp;
+<i class="no-highlight">64</i>&nbsp;    public static void update(float deltaTime) {
+<b class="nc"><i class="no-highlight">65</i>&nbsp;        timeProgress += deltaTime;</b>
+<b class="nc"><i class="no-highlight">66</i>&nbsp;        updateWorldTimer();</b>
+<i class="no-highlight">67</i>&nbsp;    }
+<i class="no-highlight">68</i>&nbsp;
+<i class="no-highlight">69</i>&nbsp;    /**
+<i class="no-highlight">70</i>&nbsp;     * Save player stats
+<i class="no-highlight">71</i>&nbsp;     * @return saved stats
+<i class="no-highlight">72</i>&nbsp;     */
+<i class="no-highlight">73</i>&nbsp;    public static ISaveData Save() {
+<b class="fc"><i class="no-highlight">74</i>&nbsp;        StatsSaveData save = new StatsSaveData();</b>
+<b class="fc"><i class="no-highlight">75</i>&nbsp;        save.gold = gold;</b>
+<b class="fc"><i class="no-highlight">76</i>&nbsp;        save.xp = score;</b>
+<b class="fc"><i class="no-highlight">77</i>&nbsp;        save.time = worldTimer;</b>
+<b class="fc"><i class="no-highlight">78</i>&nbsp;        return save;</b>
+<i class="no-highlight">79</i>&nbsp;    }
+<i class="no-highlight">80</i>&nbsp;
+<i class="no-highlight">81</i>&nbsp;    /**
+<i class="no-highlight">82</i>&nbsp;     * Load player stats from save
+<i class="no-highlight">83</i>&nbsp;     * @param data from save
+<i class="no-highlight">84</i>&nbsp;     */
+<i class="no-highlight">85</i>&nbsp;    public static void Load(ISaveData data) {
+<b class="fc"><i class="no-highlight">86</i>&nbsp;        StatsSaveData save = (StatsSaveData) data;</b>
+<b class="fc"><i class="no-highlight">87</i>&nbsp;        setGold(save.gold);</b>
+<b class="fc"><i class="no-highlight">88</i>&nbsp;        setScore(save.xp);</b>
+<b class="fc"><i class="no-highlight">89</i>&nbsp;        setWorldTimer(save.time);</b>
+<i class="no-highlight">90</i>&nbsp;    }
+<i class="no-highlight">91</i>&nbsp;
+<i class="no-highlight">92</i>&nbsp;    public static void setGold(int gold) {
+<b class="fc"><i class="no-highlight">93</i>&nbsp;        StatsManager.gold = gold;</b>
+<i class="no-highlight">94</i>&nbsp;    }
+<i class="no-highlight">95</i>&nbsp;    public static void setScore(int score) {
+<b class="fc"><i class="no-highlight">96</i>&nbsp;        StatsManager.score = score;</b>
+<i class="no-highlight">97</i>&nbsp;    }
+<i class="no-highlight">98</i>&nbsp;    public static void setWorldTimer(int time) {
+<b class="fc"><i class="no-highlight">99</i>&nbsp;        StatsManager.worldTimer = time;</b>
+<i class="no-highlight">100</i>&nbsp;    }
+<i class="no-highlight">101</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-05-04 04:47</div>
+</div>
+</body>
+</html>

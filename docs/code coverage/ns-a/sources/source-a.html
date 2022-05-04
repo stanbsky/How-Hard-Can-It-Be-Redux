@@ -1,0 +1,184 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Subtitle</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ducks.ui</a>
+</div>
+
+<h1>Coverage Summary for Class: Subtitle (com.ducks.ui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Subtitle</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/33)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.ducks.ui;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.badlogic.gdx.graphics.Color;
+<i class="no-highlight">4</i>&nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
+<i class="no-highlight">5</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Image;
+<i class="no-highlight">6</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Label;
+<i class="no-highlight">7</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Table;
+<i class="no-highlight">8</i>&nbsp;import com.badlogic.gdx.utils.Align;
+<i class="no-highlight">9</i>&nbsp;
+<i class="no-highlight">10</i>&nbsp;import static com.ducks.managers.AssetManager.button_up;
+<i class="no-highlight">11</i>&nbsp;import static com.ducks.managers.AssetManager.ui;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;public class Subtitle extends Table {
+<i class="no-highlight">14</i>&nbsp;
+<b class="nc"><i class="no-highlight">15</i>&nbsp;    private final String initialMessage = &quot;Find your bearings and get ready!&quot;;</b>
+<b class="nc"><i class="no-highlight">16</i>&nbsp;    private final float maxWidth = 800f;</b>
+<i class="no-highlight">17</i>&nbsp;    private BitmapFont font;
+<i class="no-highlight">18</i>&nbsp;
+<i class="no-highlight">19</i>&nbsp;    /**
+<i class="no-highlight">20</i>&nbsp;     * Instantiate subtitle
+<i class="no-highlight">21</i>&nbsp;     * @param font for label
+<i class="no-highlight">22</i>&nbsp;     */
+<b class="nc"><i class="no-highlight">23</i>&nbsp;    public Subtitle(BitmapFont font) {</b>
+<b class="nc"><i class="no-highlight">24</i>&nbsp;        this.font = font;</b>
+<b class="nc"><i class="no-highlight">25</i>&nbsp;        setBackground(button_up);</b>
+<b class="nc"><i class="no-highlight">26</i>&nbsp;        setDebug(false);</b>
+<b class="nc"><i class="no-highlight">27</i>&nbsp;        this.defaults().prefWidth(maxWidth).center();</b>
+<b class="nc"><i class="no-highlight">28</i>&nbsp;        font.getData().setScale(0.8f);</b>
+<b class="nc"><i class="no-highlight">29</i>&nbsp;        Label l = new Label(initialMessage, new Label.LabelStyle(font, Color.BLACK));</b>
+<b class="nc"><i class="no-highlight">30</i>&nbsp;        l.setAlignment(Align.center);</b>
+<b class="nc"><i class="no-highlight">31</i>&nbsp;        this.add(l);</b>
+<i class="no-highlight">32</i>&nbsp;    }
+<i class="no-highlight">33</i>&nbsp;
+<i class="no-highlight">34</i>&nbsp;    /**
+<i class="no-highlight">35</i>&nbsp;     * Updates label with new text
+<i class="no-highlight">36</i>&nbsp;     * @param first block of text
+<i class="no-highlight">37</i>&nbsp;     * @param icon in middle (relates to indicator)
+<i class="no-highlight">38</i>&nbsp;     * @param second block of text
+<i class="no-highlight">39</i>&nbsp;     */
+<i class="no-highlight">40</i>&nbsp;    public void setQuestNotice(String first, String icon, String second) {
+<b class="nc"><i class="no-highlight">41</i>&nbsp;        this.clearChildren();</b>
+<b class="nc"><i class="no-highlight">42</i>&nbsp;        Label l = new Label(first, new Label.LabelStyle(font, Color.BLACK));</b>
+<b class="nc"><i class="no-highlight">43</i>&nbsp;        l.setAlignment(Align.right);</b>
+<b class="nc"><i class="no-highlight">44</i>&nbsp;        this.add(l);</b>
+<b class="nc"><i class="no-highlight">45</i>&nbsp;        this.add(new Image(ui.newDrawable(icon))).size(40);</b>
+<b class="nc"><i class="no-highlight">46</i>&nbsp;        l = new Label(second, new Label.LabelStyle(font, Color.BLACK));</b>
+<b class="nc"><i class="no-highlight">47</i>&nbsp;        l.setAlignment(Align.left);</b>
+<b class="nc"><i class="no-highlight">48</i>&nbsp;        this.add(l);</b>
+<i class="no-highlight">49</i>&nbsp;    }
+<i class="no-highlight">50</i>&nbsp;
+<i class="no-highlight">51</i>&nbsp;    /**
+<i class="no-highlight">52</i>&nbsp;     * Updates label with new text
+<i class="no-highlight">53</i>&nbsp;     * @param notice block of text
+<i class="no-highlight">54</i>&nbsp;     */
+<i class="no-highlight">55</i>&nbsp;    public void setNotice(String notice) {
+<b class="nc"><i class="no-highlight">56</i>&nbsp;        this.clearChildren();</b>
+<b class="nc"><i class="no-highlight">57</i>&nbsp;        Label l = new Label(notice, new Label.LabelStyle(font, Color.BLACK));</b>
+<b class="nc"><i class="no-highlight">58</i>&nbsp;        l.setAlignment(Align.center);</b>
+<b class="nc"><i class="no-highlight">59</i>&nbsp;        this.add(l);</b>
+<i class="no-highlight">60</i>&nbsp;    }
+<i class="no-highlight">61</i>&nbsp;
+<i class="no-highlight">62</i>&nbsp;    /**
+<i class="no-highlight">63</i>&nbsp;     * Updates label with new text
+<i class="no-highlight">64</i>&nbsp;     * @param notice block of text
+<i class="no-highlight">65</i>&nbsp;     * @param icon before and after text
+<i class="no-highlight">66</i>&nbsp;     */
+<i class="no-highlight">67</i>&nbsp;    public void setDoubleIconNotice(String notice, String icon) {
+<b class="nc"><i class="no-highlight">68</i>&nbsp;        this.clearChildren();</b>
+<b class="nc"><i class="no-highlight">69</i>&nbsp;        Image i = new Image(ui.newDrawable(icon));</b>
+<b class="nc"><i class="no-highlight">70</i>&nbsp;        i.setAlign(Align.right);</b>
+<b class="nc"><i class="no-highlight">71</i>&nbsp;        this.add(i).size(40);</b>
+<b class="nc"><i class="no-highlight">72</i>&nbsp;        Label l = new Label(notice, new Label.LabelStyle(font, Color.BLACK));</b>
+<b class="nc"><i class="no-highlight">73</i>&nbsp;        l.setAlignment(Align.center);</b>
+<b class="nc"><i class="no-highlight">74</i>&nbsp;        this.add(l);</b>
+<b class="nc"><i class="no-highlight">75</i>&nbsp;        i = new Image(ui.newDrawable(icon));</b>
+<b class="nc"><i class="no-highlight">76</i>&nbsp;        i.setAlign(Align.left);</b>
+<b class="nc"><i class="no-highlight">77</i>&nbsp;        this.add(i).size(40);</b>
+<i class="no-highlight">78</i>&nbsp;    }
+<i class="no-highlight">79</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-05-03 23:43</div>
+</div>
+</body>
+</html>

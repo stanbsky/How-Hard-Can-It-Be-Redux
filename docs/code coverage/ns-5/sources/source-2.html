@@ -1,0 +1,429 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > EntityManager</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ducks.managers</a>
+</div>
+
+<h1>Coverage Summary for Class: EntityManager (com.ducks.managers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">EntityManager</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    78.3%
+  </span>
+  <span class="absValue">
+    (18/23)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75.2%
+  </span>
+  <span class="absValue">
+    (103/137)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.ducks.managers;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.badlogic.gdx.maps.MapObject;
+<i class="no-highlight">4</i>&nbsp;import com.badlogic.gdx.maps.objects.RectangleMapObject;
+<i class="no-highlight">5</i>&nbsp;import com.badlogic.gdx.math.Rectangle;
+<i class="no-highlight">6</i>&nbsp;import com.badlogic.gdx.math.Vector2;
+<i class="no-highlight">7</i>&nbsp;import com.badlogic.gdx.physics.box2d.World;
+<i class="no-highlight">8</i>&nbsp;import com.badlogic.gdx.utils.Array;
+<i class="no-highlight">9</i>&nbsp;import com.ducks.DeltaDucks;
+<i class="no-highlight">10</i>&nbsp;import com.ducks.components.Shooter;
+<i class="no-highlight">11</i>&nbsp;import com.ducks.entities.*;
+<i class="no-highlight">12</i>&nbsp;import com.ducks.intangibles.DifficultyControl;
+<i class="no-highlight">13</i>&nbsp;import com.ducks.tools.B2WorldCreator;
+<i class="no-highlight">14</i>&nbsp;import com.ducks.tools.IDrawable;
+<i class="no-highlight">15</i>&nbsp;import com.ducks.tools.IShooter;
+<i class="no-highlight">16</i>&nbsp;import com.ducks.tools.Saving.*;
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;import static com.ducks.DeltaDucks.PIXEL_PER_METER;
+<i class="no-highlight">19</i>&nbsp;import static com.ducks.screens.MainGameScreen.map;
+<i class="no-highlight">20</i>&nbsp;import static com.ducks.screens.MainGameScreen.player;
+<i class="no-highlight">21</i>&nbsp;
+<b class="nc"><i class="no-highlight">22</i>&nbsp;public final class EntityManager {</b>
+<i class="no-highlight">23</i>&nbsp;    public static Array&lt;Vector2&gt; powerupSpawns;
+<i class="no-highlight">24</i>&nbsp;    public static Array&lt;Vector2&gt; pirateSpawns;
+<i class="no-highlight">25</i>&nbsp;    public static Array&lt;Vector2&gt; collegeSpawns;
+<i class="no-highlight">26</i>&nbsp;    public static Array&lt;Vector2&gt; chestSpawns;
+<i class="no-highlight">27</i>&nbsp;    public static Array&lt;Vector2&gt; whirlpoolSpawns;
+<i class="no-highlight">28</i>&nbsp;    public static int whirlpoolNo;
+<b class="fc"><i class="no-highlight">29</i>&nbsp;    private static int whirlpoolTime = 0;</b>
+<i class="no-highlight">30</i>&nbsp;    public static Array&lt;IDrawable&gt; entities;
+<i class="no-highlight">31</i>&nbsp;    public static Array&lt;College&gt; colleges;
+<i class="no-highlight">32</i>&nbsp;    public static Array&lt;Pirate&gt; pirates;
+<i class="no-highlight">33</i>&nbsp;    public static Array&lt;Powerup&gt; powerups;
+<i class="no-highlight">34</i>&nbsp;    private static Array&lt;IDrawable&gt; cleanup;
+<i class="no-highlight">35</i>&nbsp;
+<i class="no-highlight">36</i>&nbsp;    // TODO: these belong in some kind of constants class - maybe play difficulty related?
+<b class="fc"><i class="no-highlight">37</i>&nbsp;    public static final Array&lt;String&gt; collegeNames =</b>
+<i class="no-highlight">38</i>&nbsp;            new Array&lt;&gt;(new String[]{&quot;goodricke&quot;, &quot;constantine&quot;, &quot;halifax&quot;});
+<b class="fc"><i class="no-highlight">39</i>&nbsp;    private static final Array&lt;String&gt; powerupNames =</b>
+<i class="no-highlight">40</i>&nbsp;            new Array&lt;&gt;(new String[]{&quot;quickfire&quot;, &quot;shield&quot;, &quot;spray&quot;, &quot;supersize&quot;, &quot;bullet_hotshot&quot;});
+<i class="no-highlight">41</i>&nbsp;    private static float pirateSpawnChance;
+<i class="no-highlight">42</i>&nbsp;    private static float powerupSpawnChance;
+<i class="no-highlight">43</i>&nbsp;
+<i class="no-highlight">44</i>&nbsp;    /**
+<i class="no-highlight">45</i>&nbsp;     * Set/reset the difficulty values
+<i class="no-highlight">46</i>&nbsp;     */
+<i class="no-highlight">47</i>&nbsp;    public static void Initialize() {
+<b class="fc"><i class="no-highlight">48</i>&nbsp;        entities = new Array&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        pirateSpawnChance = DifficultyControl.getValue(0.1f, 0.2f, 0.4f);</b>
+<b class="fc"><i class="no-highlight">50</i>&nbsp;        powerupSpawnChance = DifficultyControl.getValue(0.8f, 0.6f, 0.5f);</b>
+<i class="no-highlight">51</i>&nbsp;    }
+<i class="no-highlight">52</i>&nbsp;
+<i class="no-highlight">53</i>&nbsp;    /**
+<i class="no-highlight">54</i>&nbsp;     * Spawn all entities needed at the start of each game
+<i class="no-highlight">55</i>&nbsp;     * Separated from Initialize to simplify testing
+<i class="no-highlight">56</i>&nbsp;     */
+<i class="no-highlight">57</i>&nbsp;    public static void spawnEntities() {
+<b class="fc"><i class="no-highlight">58</i>&nbsp;        powerupSpawns = getListOfSpawns(&quot;powerups&quot;);</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;        pirateSpawns = getListOfSpawns(&quot;pirates&quot;);</b>
+<b class="fc"><i class="no-highlight">60</i>&nbsp;        collegeSpawns = getListOfSpawns(&quot;colleges&quot;);</b>
+<b class="fc"><i class="no-highlight">61</i>&nbsp;        collegeSpawns.shuffle();</b>
+<b class="fc"><i class="no-highlight">62</i>&nbsp;        chestSpawns = getListOfSpawns(&quot;chests&quot;);</b>
+<b class="fc"><i class="no-highlight">63</i>&nbsp;        whirlpoolSpawns = getListOfSpawns(&quot;whirlpools&quot;);</b>
+<b class="fc"><i class="no-highlight">64</i>&nbsp;        whirlpoolSpawns.shuffle();</b>
+<b class="fc"><i class="no-highlight">65</i>&nbsp;        whirlpoolNo = 0;</b>
+<b class="fc"><i class="no-highlight">66</i>&nbsp;        spawnNextWhirlpool();</b>
+<b class="fc"><i class="no-highlight">67</i>&nbsp;        if(SaveManager.LoadSave) {</b>
+<b class="nc"><i class="no-highlight">68</i>&nbsp;            powerups = new Array&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">69</i>&nbsp;            pirates = new Array&lt;&gt;();</b>
+<b class="nc"><i class="no-highlight">70</i>&nbsp;            colleges = new Array&lt;&gt;(3);</b>
+<b class="nc"><i class="no-highlight">71</i>&nbsp;            Load(SaveManager.saveData.entityManager);</b>
+<i class="no-highlight">72</i>&nbsp;        } else {
+<b class="fc"><i class="no-highlight">73</i>&nbsp;            spawnPowerups();</b>
+<b class="fc"><i class="no-highlight">74</i>&nbsp;            spawnColleges();</b>
+<b class="fc"><i class="no-highlight">75</i>&nbsp;            spawnPirates();</b>
+<i class="no-highlight">76</i>&nbsp;        }
+<i class="no-highlight">77</i>&nbsp;    }
+<i class="no-highlight">78</i>&nbsp;
+<i class="no-highlight">79</i>&nbsp;    public static void buildWorldMap(World world) {
+<b class="nc"><i class="no-highlight">80</i>&nbsp;        new B2WorldCreator(world);</b>
+<i class="no-highlight">81</i>&nbsp;    }
+<i class="no-highlight">82</i>&nbsp;
+<i class="no-highlight">83</i>&nbsp;    public static void registerEntity(IDrawable entity) {
+<b class="fc"><i class="no-highlight">84</i>&nbsp;        entities.add(entity);</b>
+<i class="no-highlight">85</i>&nbsp;    }
+<i class="no-highlight">86</i>&nbsp;
+<i class="no-highlight">87</i>&nbsp;    public static void registerBackgroundEntity(IDrawable entity) {
+<b class="fc"><i class="no-highlight">88</i>&nbsp;        entities.insert(0, entity);</b>
+<i class="no-highlight">89</i>&nbsp;    }
+<i class="no-highlight">90</i>&nbsp;
+<i class="no-highlight">91</i>&nbsp;    /**
+<i class="no-highlight">92</i>&nbsp;     * Render entities from the bottom of the array to the top
+<i class="no-highlight">93</i>&nbsp;     */
+<i class="no-highlight">94</i>&nbsp;    public static void render() {
+<b class="nc"><i class="no-highlight">95</i>&nbsp;        for (IDrawable entity : entities) {</b>
+<b class="nc"><i class="no-highlight">96</i>&nbsp;            entity.draw();</b>
+<b class="nc"><i class="no-highlight">97</i>&nbsp;        }</b>
+<i class="no-highlight">98</i>&nbsp;    }
+<i class="no-highlight">99</i>&nbsp;
+<i class="no-highlight">100</i>&nbsp;    /**
+<i class="no-highlight">101</i>&nbsp;     * Updates the entities
+<i class="no-highlight">102</i>&nbsp;     * Removes entities from the list with the cleanup flag
+<i class="no-highlight">103</i>&nbsp;     * Summons a new whirlpool if it has been enough time
+<i class="no-highlight">104</i>&nbsp;     * @param deltaTime of game
+<i class="no-highlight">105</i>&nbsp;     */
+<i class="no-highlight">106</i>&nbsp;    public static void update(float deltaTime) {
+<b class="fc"><i class="no-highlight">107</i>&nbsp;        cleanup = new Array&lt;&gt;();</b>
+<b class="fc"><i class="no-highlight">108</i>&nbsp;        for (IDrawable entity : entities) {</b>
+<b class="fc"><i class="no-highlight">109</i>&nbsp;            entity.update(deltaTime);</b>
+<b class="fc"><i class="no-highlight">110</i>&nbsp;            if (entity.cleanup()) {</b>
+<b class="fc"><i class="no-highlight">111</i>&nbsp;                cleanup.add(entity);</b>
+<b class="fc"><i class="no-highlight">112</i>&nbsp;                entity.dispose();</b>
+<i class="no-highlight">113</i>&nbsp;            }
+<i class="no-highlight">114</i>&nbsp;
+<b class="fc"><i class="no-highlight">115</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">116</i>&nbsp;        entities.removeAll(cleanup, true);</b>
+<i class="no-highlight">117</i>&nbsp;
+<b class="fc"><i class="no-highlight">118</i>&nbsp;        if (whirlpoolTime++ &gt;= 40 * 60) {</b>
+<b class="nc"><i class="no-highlight">119</i>&nbsp;            spawnNextWhirlpool();</b>
+<b class="nc"><i class="no-highlight">120</i>&nbsp;            whirlpoolTime = 0;</b>
+<i class="no-highlight">121</i>&nbsp;        }
+<i class="no-highlight">122</i>&nbsp;    }
+<i class="no-highlight">123</i>&nbsp;
+<i class="no-highlight">124</i>&nbsp;    /**
+<i class="no-highlight">125</i>&nbsp;     * Returns an array containing rectangles from the map
+<i class="no-highlight">126</i>&nbsp;     * @param type of entity to spawn
+<i class="no-highlight">127</i>&nbsp;     * @return list of locations for entities to spawn in
+<i class="no-highlight">128</i>&nbsp;     */
+<i class="no-highlight">129</i>&nbsp;    public static Array&lt;Vector2&gt; getListOfSpawns(String type) {
+<b class="fc"><i class="no-highlight">130</i>&nbsp;        Array&lt;Vector2&gt; spawns = new Array&lt;&gt;();</b>
+<i class="no-highlight">131</i>&nbsp;        Rectangle rectangle;
+<i class="no-highlight">132</i>&nbsp;        Vector2 location;
+<b class="fc"><i class="no-highlight">133</i>&nbsp;        for (RectangleMapObject object : map.getLayers().get(type).getObjects().getByType(RectangleMapObject.class)) {</b>
+<b class="fc"><i class="no-highlight">134</i>&nbsp;            rectangle = object.getRectangle();</b>
+<b class="fc"><i class="no-highlight">135</i>&nbsp;            location = new Vector2(rectangle.getX(), rectangle.getY()).scl(DeltaDucks.TILEED_MAP_SCALE);</b>
+<b class="fc"><i class="no-highlight">136</i>&nbsp;            spawns.add(location);</b>
+<b class="fc"><i class="no-highlight">137</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">138</i>&nbsp;        return spawns;</b>
+<i class="no-highlight">139</i>&nbsp;    }
+<i class="no-highlight">140</i>&nbsp;
+<i class="no-highlight">141</i>&nbsp;    // PIRATE FUNCTIONS
+<i class="no-highlight">142</i>&nbsp;
+<b class="fc"><i class="no-highlight">143</i>&nbsp;    public static boolean livingPiratesExist() { return !pirates.isEmpty(); }</b>
+<i class="no-highlight">144</i>&nbsp;
+<i class="no-highlight">145</i>&nbsp;    public static void killPirate (Pirate pirate) {
+<b class="fc"><i class="no-highlight">146</i>&nbsp;        pirates.removeValue(pirate, true);</b>
+<i class="no-highlight">147</i>&nbsp;    }
+<i class="no-highlight">148</i>&nbsp;
+<i class="no-highlight">149</i>&nbsp;    private static void spawnPirates() {
+<i class="no-highlight">150</i>&nbsp;        Pirate pirate;
+<b class="fc"><i class="no-highlight">151</i>&nbsp;        pirates = new Array&lt;&gt;();</b>
+<i class="no-highlight">152</i>&nbsp;
+<b class="fc"><i class="no-highlight">153</i>&nbsp;        for (Vector2 spawn : pirateSpawns) {</b>
+<b class="fc"><i class="no-highlight">154</i>&nbsp;            if (Math.random() &gt; pirateSpawnChance)</b>
+<b class="fc"><i class="no-highlight">155</i>&nbsp;                continue;</b>
+<b class="fc"><i class="no-highlight">156</i>&nbsp;            pirate = new Pirate(collegeNames.random(), spawn);</b>
+<b class="fc"><i class="no-highlight">157</i>&nbsp;            registerEntity(pirate);</b>
+<b class="fc"><i class="no-highlight">158</i>&nbsp;            pirates.add(pirate);</b>
+<b class="fc"><i class="no-highlight">159</i>&nbsp;        }</b>
+<i class="no-highlight">160</i>&nbsp;    }
+<i class="no-highlight">161</i>&nbsp;
+<i class="no-highlight">162</i>&nbsp;    // COLLEGE FUNCTIONS
+<i class="no-highlight">163</i>&nbsp;
+<i class="no-highlight">164</i>&nbsp;    /**
+<i class="no-highlight">165</i>&nbsp;     * @return if any of the three colleges are still alive
+<i class="no-highlight">166</i>&nbsp;     */
+<i class="no-highlight">167</i>&nbsp;    public static boolean livingCollegesExist() {
+<b class="fc"><i class="no-highlight">168</i>&nbsp;        for (College college : colleges) {</b>
+<b class="fc"><i class="no-highlight">169</i>&nbsp;            if (college.isAlive()) {</b>
+<b class="fc"><i class="no-highlight">170</i>&nbsp;                return true;</b>
+<i class="no-highlight">171</i>&nbsp;            }
+<b class="nc"><i class="no-highlight">172</i>&nbsp;        }</b>
+<b class="nc"><i class="no-highlight">173</i>&nbsp;        return false;</b>
+<i class="no-highlight">174</i>&nbsp;    }
+<i class="no-highlight">175</i>&nbsp;
+<i class="no-highlight">176</i>&nbsp;    /**
+<i class="no-highlight">177</i>&nbsp;     * Spawns 3 colleges on random islands
+<i class="no-highlight">178</i>&nbsp;     */
+<i class="no-highlight">179</i>&nbsp;    private static void spawnColleges() {
+<i class="no-highlight">180</i>&nbsp;        String name;
+<i class="no-highlight">181</i>&nbsp;        College college;
+<b class="fc"><i class="no-highlight">182</i>&nbsp;        colleges = new Array&lt;&gt;(3);</b>
+<b class="fc"><i class="no-highlight">183</i>&nbsp;        Array&lt;String&gt; names = new Array&lt;&gt;(collegeNames);</b>
+<b class="fc"><i class="no-highlight">184</i>&nbsp;        names.shuffle();</b>
+<i class="no-highlight">185</i>&nbsp;
+<b class="fc"><i class="no-highlight">186</i>&nbsp;        for (int i = 0; i &lt; 3; i++) {</b>
+<b class="fc"><i class="no-highlight">187</i>&nbsp;            name = names.pop();</b>
+<b class="fc"><i class="no-highlight">188</i>&nbsp;            college = new College(collegeSpawns.get(i), name);</b>
+<b class="fc"><i class="no-highlight">189</i>&nbsp;            registerEntity(college);</b>
+<b class="fc"><i class="no-highlight">190</i>&nbsp;            colleges.insert(i, college);</b>
+<i class="no-highlight">191</i>&nbsp;        }
+<i class="no-highlight">192</i>&nbsp;    }
+<i class="no-highlight">193</i>&nbsp;
+<i class="no-highlight">194</i>&nbsp;    // BULLET FUNCTIONS
+<i class="no-highlight">195</i>&nbsp;
+<i class="no-highlight">196</i>&nbsp;    /**
+<i class="no-highlight">197</i>&nbsp;     * Spawns a bullet with location and momentum
+<i class="no-highlight">198</i>&nbsp;     * @param shooter interface for the class shooting
+<i class="no-highlight">199</i>&nbsp;     */
+<i class="no-highlight">200</i>&nbsp;    public static void spawnBullet(IShooter shooter) {
+<b class="fc"><i class="no-highlight">201</i>&nbsp;        if (shooter.ready()) {</b>
+<b class="fc"><i class="no-highlight">202</i>&nbsp;            shooter.resetShootTimer();</b>
+<b class="fc"><i class="no-highlight">203</i>&nbsp;            registerEntity(new EnemyBullet(shooter.getPosition(),</b>
+<b class="fc"><i class="no-highlight">204</i>&nbsp;                    Shooter.getDirection(shooter, player)));</b>
+<i class="no-highlight">205</i>&nbsp;        }
+<i class="no-highlight">206</i>&nbsp;    }
+<i class="no-highlight">207</i>&nbsp;
+<i class="no-highlight">208</i>&nbsp;    /**
+<i class="no-highlight">209</i>&nbsp;     * Spawns three bullets if the boss is ready to shoot it
+<i class="no-highlight">210</i>&nbsp;     * @param boss interface for the boss shooting
+<i class="no-highlight">211</i>&nbsp;     */
+<i class="no-highlight">212</i>&nbsp;    public static void spawnBossShot(IShooter boss) {
+<b class="fc"><i class="no-highlight">213</i>&nbsp;        if (boss.ready()) {</b>
+<b class="fc"><i class="no-highlight">214</i>&nbsp;            boss.resetShootTimer();</b>
+<b class="fc"><i class="no-highlight">215</i>&nbsp;            registerEntity(new EnemyBullet(boss.getPosition(),</b>
+<b class="fc"><i class="no-highlight">216</i>&nbsp;                    Shooter.getDirection(boss, player)));</b>
+<b class="fc"><i class="no-highlight">217</i>&nbsp;            registerEntity(new EnemyBullet(boss.getPosition(),</b>
+<b class="fc"><i class="no-highlight">218</i>&nbsp;                    Shooter.getDirection(boss, player), 30f));</b>
+<b class="fc"><i class="no-highlight">219</i>&nbsp;            registerEntity(new EnemyBullet(boss.getPosition(),</b>
+<b class="fc"><i class="no-highlight">220</i>&nbsp;                    Shooter.getDirection(boss, player), -30f));</b>
+<i class="no-highlight">221</i>&nbsp;        }
+<i class="no-highlight">222</i>&nbsp;    }
+<i class="no-highlight">223</i>&nbsp;
+<i class="no-highlight">224</i>&nbsp;    /**
+<i class="no-highlight">225</i>&nbsp;     * Shoots a bullet for the player
+<i class="no-highlight">226</i>&nbsp;     * Shoots three bullets if the powerup multishot is active
+<i class="no-highlight">227</i>&nbsp;     */
+<i class="no-highlight">228</i>&nbsp;    public static void spawnBullet() {
+<b class="fc"><i class="no-highlight">229</i>&nbsp;        if (PowerupManager.multishotActive()) {</b>
+<b class="nc"><i class="no-highlight">230</i>&nbsp;            registerEntity(new PlayerBullet());</b>
+<b class="nc"><i class="no-highlight">231</i>&nbsp;            registerEntity(new PlayerBullet(30f));</b>
+<b class="nc"><i class="no-highlight">232</i>&nbsp;            registerEntity(new PlayerBullet(-30f));</b>
+<i class="no-highlight">233</i>&nbsp;        } else {
+<b class="fc"><i class="no-highlight">234</i>&nbsp;            registerEntity(new PlayerBullet());</b>
+<i class="no-highlight">235</i>&nbsp;        }
+<i class="no-highlight">236</i>&nbsp;    }
+<i class="no-highlight">237</i>&nbsp;
+<i class="no-highlight">238</i>&nbsp;    // POWERUP FUNCTIONS
+<i class="no-highlight">239</i>&nbsp;
+<i class="no-highlight">240</i>&nbsp;    public static void killPowerup (Powerup powerup) {
+<b class="nc"><i class="no-highlight">241</i>&nbsp;        powerups.removeValue(powerup, true);</b>
+<i class="no-highlight">242</i>&nbsp;    }
+<i class="no-highlight">243</i>&nbsp;
+<i class="no-highlight">244</i>&nbsp;    private static void spawnPowerups() {
+<i class="no-highlight">245</i>&nbsp;        Powerup powerup;
+<i class="no-highlight">246</i>&nbsp;
+<b class="fc"><i class="no-highlight">247</i>&nbsp;        powerups = new Array&lt;&gt;();</b>
+<i class="no-highlight">248</i>&nbsp;
+<b class="fc"><i class="no-highlight">249</i>&nbsp;        for (Vector2 spawn : powerupSpawns) {</b>
+<i class="no-highlight">250</i>&nbsp;
+<b class="fc"><i class="no-highlight">251</i>&nbsp;            if (Math.random() &gt; powerupSpawnChance)</b>
+<b class="fc"><i class="no-highlight">252</i>&nbsp;                continue;</b>
+<b class="fc"><i class="no-highlight">253</i>&nbsp;            powerup = new Powerup(spawn, powerupNames.random());</b>
+<b class="fc"><i class="no-highlight">254</i>&nbsp;            registerEntity(powerup);</b>
+<b class="fc"><i class="no-highlight">255</i>&nbsp;            powerups.add(powerup);</b>
+<b class="fc"><i class="no-highlight">256</i>&nbsp;        }</b>
+<i class="no-highlight">257</i>&nbsp;    }
+<i class="no-highlight">258</i>&nbsp;
+<i class="no-highlight">259</i>&nbsp;    // WHRILPOOL FUNCTIONS
+<i class="no-highlight">260</i>&nbsp;
+<i class="no-highlight">261</i>&nbsp;    /**
+<i class="no-highlight">262</i>&nbsp;     * Spawns the next whirlpool sequentially
+<i class="no-highlight">263</i>&nbsp;     */
+<i class="no-highlight">264</i>&nbsp;    public static void spawnNextWhirlpool() {
+<i class="no-highlight">265</i>&nbsp;        Whirlpool whirlpool;
+<b class="fc"><i class="no-highlight">266</i>&nbsp;        whirlpool = new Whirlpool(whirlpoolSpawns.get(whirlpoolNo++ % whirlpoolSpawns.size));</b>
+<b class="fc"><i class="no-highlight">267</i>&nbsp;        registerBackgroundEntity(whirlpool);</b>
+<i class="no-highlight">268</i>&nbsp;    }
+<i class="no-highlight">269</i>&nbsp;
+<i class="no-highlight">270</i>&nbsp;    // SAVING FUNCTIONS
+<i class="no-highlight">271</i>&nbsp;
+<i class="no-highlight">272</i>&nbsp;    /**
+<i class="no-highlight">273</i>&nbsp;     * Collects college, pirate, and powerup data
+<i class="no-highlight">274</i>&nbsp;     * @return data for saving
+<i class="no-highlight">275</i>&nbsp;     */
+<i class="no-highlight">276</i>&nbsp;    public static ISaveData Save() {
+<b class="fc"><i class="no-highlight">277</i>&nbsp;        EntitiesSaveData save = new EntitiesSaveData();</b>
+<b class="fc"><i class="no-highlight">278</i>&nbsp;        for(College c : colleges) {</b>
+<b class="fc"><i class="no-highlight">279</i>&nbsp;            CollageSaveData data = new CollageSaveData();</b>
+<b class="fc"><i class="no-highlight">280</i>&nbsp;            data.name = c.name;</b>
+<b class="fc"><i class="no-highlight">281</i>&nbsp;            data.health = c.health;</b>
+<b class="fc"><i class="no-highlight">282</i>&nbsp;            data.position = c.getPosition().scl(PIXEL_PER_METER);</b>
+<b class="fc"><i class="no-highlight">283</i>&nbsp;            save.collages.add(data);</b>
+<b class="fc"><i class="no-highlight">284</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">285</i>&nbsp;        for(Pirate p : pirates) {</b>
+<b class="fc"><i class="no-highlight">286</i>&nbsp;            PirateSaveData data = new PirateSaveData();</b>
+<b class="fc"><i class="no-highlight">287</i>&nbsp;            data.college = p.collegeName;</b>
+<b class="fc"><i class="no-highlight">288</i>&nbsp;            data.position = p.getPosition().scl(PIXEL_PER_METER);</b>
+<b class="fc"><i class="no-highlight">289</i>&nbsp;            save.pirates.add(data);</b>
+<b class="fc"><i class="no-highlight">290</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">291</i>&nbsp;        for(Powerup p : powerups) {</b>
+<b class="fc"><i class="no-highlight">292</i>&nbsp;            PowerupSaveData data = new PowerupSaveData();</b>
+<b class="fc"><i class="no-highlight">293</i>&nbsp;            data.powerup = p.name;</b>
+<b class="fc"><i class="no-highlight">294</i>&nbsp;            data.position = p.getPosition().scl(PIXEL_PER_METER);</b>
+<b class="fc"><i class="no-highlight">295</i>&nbsp;            save.powerups.add(data);</b>
+<b class="fc"><i class="no-highlight">296</i>&nbsp;        }</b>
+<b class="fc"><i class="no-highlight">297</i>&nbsp;        return save;</b>
+<i class="no-highlight">298</i>&nbsp;    }
+<i class="no-highlight">299</i>&nbsp;
+<i class="no-highlight">300</i>&nbsp;    /**
+<i class="no-highlight">301</i>&nbsp;     * Spawns entities with saved data, placing them in the correct positions
+<i class="no-highlight">302</i>&nbsp;     * @param data used to give to entities when spawned
+<i class="no-highlight">303</i>&nbsp;     */
+<i class="no-highlight">304</i>&nbsp;    public static void Load(ISaveData data) {
+<b class="nc"><i class="no-highlight">305</i>&nbsp;        EntitiesSaveData save = (EntitiesSaveData) data;</b>
+<b class="nc"><i class="no-highlight">306</i>&nbsp;        for(CollageSaveData c : save.collages) {</b>
+<b class="nc"><i class="no-highlight">307</i>&nbsp;            College coll = new College(c.position, c.name);</b>
+<b class="nc"><i class="no-highlight">308</i>&nbsp;            coll.health = c.health;</b>
+<i class="no-highlight">309</i>&nbsp;
+<b class="nc"><i class="no-highlight">310</i>&nbsp;            registerEntity(coll);</b>
+<b class="nc"><i class="no-highlight">311</i>&nbsp;            colleges.add(coll);</b>
+<b class="nc"><i class="no-highlight">312</i>&nbsp;        }</b>
+<b class="nc"><i class="no-highlight">313</i>&nbsp;        for(PirateSaveData p : save.pirates) {</b>
+<b class="nc"><i class="no-highlight">314</i>&nbsp;            Pirate pirate = new Pirate(p.college, p.position);</b>
+<b class="nc"><i class="no-highlight">315</i>&nbsp;            registerEntity(pirate);</b>
+<b class="nc"><i class="no-highlight">316</i>&nbsp;            pirates.add(pirate);</b>
+<b class="nc"><i class="no-highlight">317</i>&nbsp;        }</b>
+<b class="nc"><i class="no-highlight">318</i>&nbsp;        for(PowerupSaveData p : save.powerups) {</b>
+<b class="nc"><i class="no-highlight">319</i>&nbsp;            Powerup powerup = new Powerup(p.position, p.powerup);</b>
+<b class="nc"><i class="no-highlight">320</i>&nbsp;            registerEntity(powerup);</b>
+<b class="nc"><i class="no-highlight">321</i>&nbsp;            powerups.add(powerup);</b>
+<b class="nc"><i class="no-highlight">322</i>&nbsp;        }</b>
+<i class="no-highlight">323</i>&nbsp;    }
+<i class="no-highlight">324</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-05-04 04:47</div>
+</div>
+</body>
+</html>

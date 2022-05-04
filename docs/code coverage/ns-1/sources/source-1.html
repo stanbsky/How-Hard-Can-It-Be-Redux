@@ -1,0 +1,138 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ChestAnimation</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ducks.components</a>
+</div>
+
+<h1>Coverage Summary for Class: ChestAnimation (com.ducks.components)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ChestAnimation</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.ducks.components;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.badlogic.gdx.graphics.g2d.Animation;
+<i class="no-highlight">4</i>&nbsp;import com.badlogic.gdx.graphics.g2d.TextureRegion;
+<i class="no-highlight">5</i>&nbsp;import com.badlogic.gdx.math.Vector2;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;import static com.ducks.managers.AssetManager.atlas;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;public class ChestAnimation extends Texture {
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;    private final Animation&lt;TextureRegion&gt; animation;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;    /**
+<i class="no-highlight">14</i>&nbsp;     * Places animation for chest in location
+<i class="no-highlight">15</i>&nbsp;     * @param pos position of the chest
+<i class="no-highlight">16</i>&nbsp;     * @param radius size of the animation
+<i class="no-highlight">17</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">18</i>&nbsp;    public ChestAnimation(Vector2 pos, float radius) {</b>
+<b class="fc"><i class="no-highlight">19</i>&nbsp;        animation = new Animation&lt;&gt;(1f, atlas.findRegions(&quot;chest&quot;), Animation.PlayMode.NORMAL);</b>
+<b class="fc"><i class="no-highlight">20</i>&nbsp;        width = height = radius * 2;</b>
+<b class="fc"><i class="no-highlight">21</i>&nbsp;        updatePosition(pos);</b>
+<b class="fc"><i class="no-highlight">22</i>&nbsp;        update(0f);</b>
+<i class="no-highlight">23</i>&nbsp;    }
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;    /**
+<i class="no-highlight">26</i>&nbsp;     * Updates the animation
+<i class="no-highlight">27</i>&nbsp;     * @param deltaTime of the game
+<i class="no-highlight">28</i>&nbsp;     */
+<i class="no-highlight">29</i>&nbsp;    public void update(float deltaTime) {
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        stateTime += deltaTime;</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        frame = animation.getKeyFrame(stateTime);</b>
+<i class="no-highlight">32</i>&nbsp;    }
+<i class="no-highlight">33</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-05-04 04:47</div>
+</div>
+</body>
+</html>

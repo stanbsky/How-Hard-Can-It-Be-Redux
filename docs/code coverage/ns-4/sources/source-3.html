@@ -1,0 +1,242 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Quest</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ducks.intangibles</a>
+</div>
+
+<h1>Coverage Summary for Class: Quest (com.ducks.intangibles)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Quest</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/44)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.ducks.intangibles;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.badlogic.gdx.math.Vector2;
+<i class="no-highlight">4</i>&nbsp;import com.ducks.entities.*;
+<i class="no-highlight">5</i>&nbsp;import com.ducks.managers.EntityManager;
+<i class="no-highlight">6</i>&nbsp;import com.ducks.managers.SaveManager;
+<i class="no-highlight">7</i>&nbsp;import com.ducks.managers.StatsManager;
+<i class="no-highlight">8</i>&nbsp;import com.ducks.ui.Indicator;
+<i class="no-highlight">9</i>&nbsp;import com.ducks.ui.Hud;
+<i class="no-highlight">10</i>&nbsp;
+<i class="no-highlight">11</i>&nbsp;import java.util.Objects;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;import static com.ducks.managers.EntityManager.*;
+<i class="no-highlight">14</i>&nbsp;import static com.ducks.ui.Hud.subtitle;
+<i class="no-highlight">15</i>&nbsp;
+<i class="no-highlight">16</i>&nbsp;
+<i class="no-highlight">17</i>&nbsp;public class Quest {
+<i class="no-highlight">18</i>&nbsp;
+<b class="nc"><i class="no-highlight">19</i>&nbsp;    private boolean isCompleted = false;</b>
+<i class="no-highlight">20</i>&nbsp;    private Entity objective;
+<i class="no-highlight">21</i>&nbsp;    private String description;
+<i class="no-highlight">22</i>&nbsp;    private Indicator indicator;
+<i class="no-highlight">23</i>&nbsp;    public String type;
+<i class="no-highlight">24</i>&nbsp;
+<i class="no-highlight">25</i>&nbsp;    public Quest (String type) {
+<b class="nc"><i class="no-highlight">26</i>&nbsp;        this(type, null, &quot;&quot;);</b>
+<i class="no-highlight">27</i>&nbsp;    }
+<i class="no-highlight">28</i>&nbsp;
+<i class="no-highlight">29</i>&nbsp;    /**
+<i class="no-highlight">30</i>&nbsp;     * Instantiate new quest
+<i class="no-highlight">31</i>&nbsp;     * @param type of quest
+<i class="no-highlight">32</i>&nbsp;     * @param location of quest
+<i class="no-highlight">33</i>&nbsp;     * @param collageName of quest
+<i class="no-highlight">34</i>&nbsp;     */
+<b class="nc"><i class="no-highlight">35</i>&nbsp;    public Quest (String type, Vector2 location, String collageName) {</b>
+<b class="nc"><i class="no-highlight">36</i>&nbsp;        this.type = type;</b>
+<b class="nc"><i class="no-highlight">37</i>&nbsp;        switch (type) {</b>
+<i class="no-highlight">38</i>&nbsp;            case &quot;chest&quot;:
+<b class="nc"><i class="no-highlight">39</i>&nbsp;                objective = new Chest(location);</b>
+<b class="nc"><i class="no-highlight">40</i>&nbsp;                registerEntity(objective);</b>
+<b class="nc"><i class="no-highlight">41</i>&nbsp;                Hud.subtitle.setQuestNotice(&quot;Open the &quot;, &quot;chest&quot;, &quot; chest&quot;);</b>
+<b class="nc"><i class="no-highlight">42</i>&nbsp;                registerIndicator(type);</b>
+<b class="nc"><i class="no-highlight">43</i>&nbsp;                break;</b>
+<i class="no-highlight">44</i>&nbsp;            case &quot;pirate&quot;:
+<b class="nc"><i class="no-highlight">45</i>&nbsp;                objective = pirates.random();</b>
+<b class="nc"><i class="no-highlight">46</i>&nbsp;                ((Pirate) objective).setAngry();</b>
+<b class="nc"><i class="no-highlight">47</i>&nbsp;                Hud.subtitle.setQuestNotice(&quot;Defeat the &quot;, &quot;warning&quot;, &quot; angry pirate!&quot;);</b>
+<b class="nc"><i class="no-highlight">48</i>&nbsp;                registerIndicator(&quot;warning&quot;);</b>
+<b class="nc"><i class="no-highlight">49</i>&nbsp;                break;</b>
+<i class="no-highlight">50</i>&nbsp;            case &quot;college&quot;:
+<b class="nc"><i class="no-highlight">51</i>&nbsp;                objective = colleges.random();</b>
+<b class="nc"><i class="no-highlight">52</i>&nbsp;                Hud.subtitle.setQuestNotice(&quot;Destroy the &quot;, ((College)objective).name, &quot; marked college!&quot;);</b>
+<b class="nc"><i class="no-highlight">53</i>&nbsp;                indicator = ((College) objective).getIndicator();</b>
+<b class="nc"><i class="no-highlight">54</i>&nbsp;                indicator.setAngry(true);</b>
+<b class="nc"><i class="no-highlight">55</i>&nbsp;                break;</b>
+<i class="no-highlight">56</i>&nbsp;            case &quot;boss&quot;:
+<i class="no-highlight">57</i>&nbsp;                Vector2 spawn;
+<b class="nc"><i class="no-highlight">58</i>&nbsp;                if(SaveManager.LoadSave &amp;&amp; location != null) {</b>
+<b class="nc"><i class="no-highlight">59</i>&nbsp;                    spawn = location.cpy();</b>
+<i class="no-highlight">60</i>&nbsp;                } else {
+<b class="nc"><i class="no-highlight">61</i>&nbsp;                    spawn = pirateSpawns.random();</b>
+<i class="no-highlight">62</i>&nbsp;                }
+<b class="nc"><i class="no-highlight">63</i>&nbsp;                objective = new Boss(Objects.equals(collageName, &quot;&quot;) ? collegeNames.random() : collageName,</b>
+<i class="no-highlight">64</i>&nbsp;                        spawn);
+<b class="nc"><i class="no-highlight">65</i>&nbsp;                registerEntity(objective);</b>
+<b class="nc"><i class="no-highlight">66</i>&nbsp;                Hud.subtitle.setQuestNotice(&quot;Defeat the &quot;, &quot;warning&quot;, &quot; Pirate Boss!&quot;);</b>
+<b class="nc"><i class="no-highlight">67</i>&nbsp;                registerIndicator(&quot;warning&quot;);</b>
+<b class="nc"><i class="no-highlight">68</i>&nbsp;                indicator.setAngry(true);</b>
+<i class="no-highlight">69</i>&nbsp;                break;
+<i class="no-highlight">70</i>&nbsp;        }
+<i class="no-highlight">71</i>&nbsp;    }
+<i class="no-highlight">72</i>&nbsp;
+<i class="no-highlight">73</i>&nbsp;    /**
+<i class="no-highlight">74</i>&nbsp;     * Checks for the completion of the quest
+<i class="no-highlight">75</i>&nbsp;     * @return completion status
+<i class="no-highlight">76</i>&nbsp;     */
+<i class="no-highlight">77</i>&nbsp;    public boolean isCompleted() {
+<b class="nc"><i class="no-highlight">78</i>&nbsp;        return isCompleted;</b>
+<i class="no-highlight">79</i>&nbsp;    }
+<i class="no-highlight">80</i>&nbsp;
+<i class="no-highlight">81</i>&nbsp;    /**
+<i class="no-highlight">82</i>&nbsp;     * Returns the college assigned to the boss
+<i class="no-highlight">83</i>&nbsp;     * @return college name
+<i class="no-highlight">84</i>&nbsp;     */
+<i class="no-highlight">85</i>&nbsp;    public String getCollage() {
+<i class="no-highlight">86</i>&nbsp;        try {
+<b class="nc"><i class="no-highlight">87</i>&nbsp;            return ((Boss) objective).collegeName;</b>
+<i class="no-highlight">88</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">89</i>&nbsp;        catch (Exception e) {</b>
+<b class="nc"><i class="no-highlight">90</i>&nbsp;            return &quot;&quot;;</b>
+<i class="no-highlight">91</i>&nbsp;        }
+<i class="no-highlight">92</i>&nbsp;    }
+<i class="no-highlight">93</i>&nbsp;
+<i class="no-highlight">94</i>&nbsp;    /**
+<i class="no-highlight">95</i>&nbsp;     * Updates objective if there is an uncompleted quest
+<i class="no-highlight">96</i>&nbsp;     * @param deltaTime of game
+<i class="no-highlight">97</i>&nbsp;     */
+<i class="no-highlight">98</i>&nbsp;    public void update(float deltaTime) {
+<b class="nc"><i class="no-highlight">99</i>&nbsp;        if (!objective.isAlive()) {</b>
+<b class="nc"><i class="no-highlight">100</i>&nbsp;            isCompleted = true;</b>
+<i class="no-highlight">101</i>&nbsp;            return;
+<i class="no-highlight">102</i>&nbsp;        }
+<i class="no-highlight">103</i>&nbsp;        // Note: if a pirate or boss quest is spawned, they will have
+<i class="no-highlight">104</i>&nbsp;        //  twice the update rolls. This is a feature.
+<b class="nc"><i class="no-highlight">105</i>&nbsp;        objective.update(deltaTime);</b>
+<i class="no-highlight">106</i>&nbsp;    }
+<i class="no-highlight">107</i>&nbsp;
+<i class="no-highlight">108</i>&nbsp;    /**
+<i class="no-highlight">109</i>&nbsp;     * Add relevant indicator for quest
+<i class="no-highlight">110</i>&nbsp;     * @param texture of indicator
+<i class="no-highlight">111</i>&nbsp;     */
+<i class="no-highlight">112</i>&nbsp;    private void registerIndicator(String texture) {
+<b class="nc"><i class="no-highlight">113</i>&nbsp;        indicator = new Indicator(objective, texture, 15f);</b>
+<b class="nc"><i class="no-highlight">114</i>&nbsp;        registerEntity(indicator);</b>
+<i class="no-highlight">115</i>&nbsp;    }
+<i class="no-highlight">116</i>&nbsp;
+<i class="no-highlight">117</i>&nbsp;    /**
+<i class="no-highlight">118</i>&nbsp;     * Remove quest and give player reward
+<i class="no-highlight">119</i>&nbsp;     */
+<i class="no-highlight">120</i>&nbsp;    public void dispose() {
+<b class="nc"><i class="no-highlight">121</i>&nbsp;        indicator.dispose();</b>
+<i class="no-highlight">122</i>&nbsp;//        objective.dispose(); This stalls the game indefinitely
+<b class="nc"><i class="no-highlight">123</i>&nbsp;        subtitle.setNotice(&quot;Well done!&quot;);</b>
+<b class="nc"><i class="no-highlight">124</i>&nbsp;        StatsManager.addGold(500);</b>
+<b class="nc"><i class="no-highlight">125</i>&nbsp;        StatsManager.addScore(1000);</b>
+<i class="no-highlight">126</i>&nbsp;    }
+<i class="no-highlight">127</i>&nbsp;
+<i class="no-highlight">128</i>&nbsp;    public Vector2 getPosition(){
+<b class="nc"><i class="no-highlight">129</i>&nbsp;        return objective.getPosition();</b>
+<i class="no-highlight">130</i>&nbsp;    }
+<i class="no-highlight">131</i>&nbsp;
+<i class="no-highlight">132</i>&nbsp;    public void setBossHealth(int health) {
+<b class="nc"><i class="no-highlight">133</i>&nbsp;        if(type == &quot;Boss&quot;) {</b>
+<b class="nc"><i class="no-highlight">134</i>&nbsp;            ((Boss) objective).setHealth(health);</b>
+<i class="no-highlight">135</i>&nbsp;        }
+<i class="no-highlight">136</i>&nbsp;    }
+<i class="no-highlight">137</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-05-04 04:47</div>
+</div>
+</body>
+</html>

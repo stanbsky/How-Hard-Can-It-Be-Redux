@@ -1,0 +1,187 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > HealthBar</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ducks.components</a>
+</div>
+
+<h1>Coverage Summary for Class: HealthBar (com.ducks.components)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">HealthBar</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    63%
+  </span>
+  <span class="absValue">
+    (17/27)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.ducks.components;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.badlogic.gdx.graphics.Color;
+<i class="no-highlight">4</i>&nbsp;import com.badlogic.gdx.math.Vector2;
+<i class="no-highlight">5</i>&nbsp;import com.ducks.tools.Debug;
+<i class="no-highlight">6</i>&nbsp;
+<i class="no-highlight">7</i>&nbsp;import java.util.Vector;
+<i class="no-highlight">8</i>&nbsp;
+<i class="no-highlight">9</i>&nbsp;import static com.ducks.DeltaDucks.scl;
+<i class="no-highlight">10</i>&nbsp;import static com.ducks.DeltaDucks.batch;
+<i class="no-highlight">11</i>&nbsp;import static com.ducks.managers.AssetManager.atlas;
+<i class="no-highlight">12</i>&nbsp;
+<i class="no-highlight">13</i>&nbsp;public class HealthBar extends Texture {
+<i class="no-highlight">14</i>&nbsp;    private final float maxHP;
+<i class="no-highlight">15</i>&nbsp;    private final boolean horizontal;
+<i class="no-highlight">16</i>&nbsp;    private float hp;
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;    /**
+<i class="no-highlight">19</i>&nbsp;     * Instantiates the health for the colleges and boss
+<i class="no-highlight">20</i>&nbsp;     * @param x location
+<i class="no-highlight">21</i>&nbsp;     * @param y location
+<i class="no-highlight">22</i>&nbsp;     * @param width size
+<i class="no-highlight">23</i>&nbsp;     * @param height size
+<i class="no-highlight">24</i>&nbsp;     * @param horizontal display direction
+<i class="no-highlight">25</i>&nbsp;     * @param hp amount of starting hp
+<i class="no-highlight">26</i>&nbsp;     * @param ui whether or not to scale the bar before displaying
+<i class="no-highlight">27</i>&nbsp;     */
+<b class="fc"><i class="no-highlight">28</i>&nbsp;    public HealthBar(float x, float y, float width, float height, boolean horizontal, float hp, boolean ui) {</b>
+<b class="fc"><i class="no-highlight">29</i>&nbsp;        frame = atlas.findRegion(&quot;blank&quot;);</b>
+<b class="fc"><i class="no-highlight">30</i>&nbsp;        this.maxHP = this.hp = hp;</b>
+<b class="fc"><i class="no-highlight">31</i>&nbsp;        this.horizontal = horizontal;</b>
+<b class="fc"><i class="no-highlight">32</i>&nbsp;        if (!ui) {</b>
+<b class="fc"><i class="no-highlight">33</i>&nbsp;            x = scl(x);</b>
+<b class="fc"><i class="no-highlight">34</i>&nbsp;            y = scl(y);</b>
+<b class="fc"><i class="no-highlight">35</i>&nbsp;            width = scl(width);</b>
+<b class="fc"><i class="no-highlight">36</i>&nbsp;            height = scl(height);</b>
+<i class="no-highlight">37</i>&nbsp;        }
+<b class="fc"><i class="no-highlight">38</i>&nbsp;        this.x = x;</b>
+<b class="fc"><i class="no-highlight">39</i>&nbsp;        this.y = y;</b>
+<b class="fc"><i class="no-highlight">40</i>&nbsp;        this.width = width;</b>
+<b class="fc"><i class="no-highlight">41</i>&nbsp;        this.height = height;</b>
+<i class="no-highlight">42</i>&nbsp;    }
+<i class="no-highlight">43</i>&nbsp;
+<i class="no-highlight">44</i>&nbsp;    /**
+<i class="no-highlight">45</i>&nbsp;     * Updates the health bar
+<i class="no-highlight">46</i>&nbsp;     * @param hp health to set the bar to
+<i class="no-highlight">47</i>&nbsp;     */
+<i class="no-highlight">48</i>&nbsp;    public void update(float hp) {
+<b class="fc"><i class="no-highlight">49</i>&nbsp;        this.hp = hp;</b>
+<i class="no-highlight">50</i>&nbsp;    }
+<i class="no-highlight">51</i>&nbsp;
+<i class="no-highlight">52</i>&nbsp;    /**
+<i class="no-highlight">53</i>&nbsp;     * Updates the health bar
+<i class="no-highlight">54</i>&nbsp;     * @param hp health to set the bar to
+<i class="no-highlight">55</i>&nbsp;     * @param pos position of health bar to move to
+<i class="no-highlight">56</i>&nbsp;     */
+<i class="no-highlight">57</i>&nbsp;    public void update(float hp, Vector2 pos) {
+<b class="fc"><i class="no-highlight">58</i>&nbsp;        this.hp = hp;</b>
+<b class="fc"><i class="no-highlight">59</i>&nbsp;        this.x = pos.x - width/2;</b>
+<b class="fc"><i class="no-highlight">60</i>&nbsp;        this.y = pos.y + width/2;</b>
+<i class="no-highlight">61</i>&nbsp;    }
+<i class="no-highlight">62</i>&nbsp;
+<i class="no-highlight">63</i>&nbsp;    /**
+<i class="no-highlight">64</i>&nbsp;     * Renders the health bar to screen
+<i class="no-highlight">65</i>&nbsp;     */
+<i class="no-highlight">66</i>&nbsp;    public void render() {
+<b class="nc"><i class="no-highlight">67</i>&nbsp;        if (this.hp &lt;= 0f)</b>
+<i class="no-highlight">68</i>&nbsp;            return;
+<i class="no-highlight">69</i>&nbsp;
+<b class="nc"><i class="no-highlight">70</i>&nbsp;        if (hp / maxHP &gt; .6f)</b>
+<b class="nc"><i class="no-highlight">71</i>&nbsp;            batch.setColor(Color.GREEN);</b>
+<b class="nc"><i class="no-highlight">72</i>&nbsp;        else if (hp / maxHP &gt; .4f)</b>
+<b class="nc"><i class="no-highlight">73</i>&nbsp;            batch.setColor(Color.ORANGE);</b>
+<i class="no-highlight">74</i>&nbsp;        else
+<b class="nc"><i class="no-highlight">75</i>&nbsp;            batch.setColor(Color.RED);</b>
+<b class="nc"><i class="no-highlight">76</i>&nbsp;        if (horizontal)</b>
+<b class="nc"><i class="no-highlight">77</i>&nbsp;            batch.draw(frame, x, y, width*(hp/maxHP), height);</b>
+<i class="no-highlight">78</i>&nbsp;        else
+<b class="nc"><i class="no-highlight">79</i>&nbsp;            batch.draw(frame, x, y, width, height*(hp/maxHP));</b>
+<b class="nc"><i class="no-highlight">80</i>&nbsp;        batch.setColor(Color.WHITE);</b>
+<i class="no-highlight">81</i>&nbsp;    }
+<i class="no-highlight">82</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-05-03 23:43</div>
+</div>
+</body>
+</html>

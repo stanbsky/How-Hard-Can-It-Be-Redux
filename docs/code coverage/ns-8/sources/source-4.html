@@ -1,0 +1,336 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Hud</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/highlight-idea.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.ducks.ui</a>
+</div>
+
+<h1>Coverage Summary for Class: Hud (com.ducks.ui)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Hud</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/104)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<div class="sourceCode" id="sourceCode"><i class="no-highlight">1</i>&nbsp;package com.ducks.ui;
+<i class="no-highlight">2</i>&nbsp;
+<i class="no-highlight">3</i>&nbsp;import com.badlogic.gdx.Gdx;
+<i class="no-highlight">4</i>&nbsp;import com.badlogic.gdx.graphics.Color;
+<i class="no-highlight">5</i>&nbsp;import com.badlogic.gdx.graphics.g2d.BitmapFont;
+<i class="no-highlight">6</i>&nbsp;import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+<i class="no-highlight">7</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.Stage;
+<i class="no-highlight">8</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Image;
+<i class="no-highlight">9</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Label;
+<i class="no-highlight">10</i>&nbsp;import com.badlogic.gdx.scenes.scene2d.ui.Table;
+<i class="no-highlight">11</i>&nbsp;import com.ducks.managers.AssetManager;
+<i class="no-highlight">12</i>&nbsp;import com.ducks.managers.PowerupManager;
+<i class="no-highlight">13</i>&nbsp;
+<i class="no-highlight">14</i>&nbsp;import java.util.Objects;
+<i class="no-highlight">15</i>&nbsp;
+<i class="no-highlight">16</i>&nbsp;import com.ducks.managers.StatsManager;
+<i class="no-highlight">17</i>&nbsp;
+<i class="no-highlight">18</i>&nbsp;import static com.ducks.managers.AssetManager.*;
+<i class="no-highlight">19</i>&nbsp;
+<i class="no-highlight">20</i>&nbsp;public class Hud extends Stage {
+<i class="no-highlight">21</i>&nbsp;
+<i class="no-highlight">22</i>&nbsp;
+<i class="no-highlight">23</i>&nbsp;    public static Subtitle subtitle;
+<i class="no-highlight">24</i>&nbsp;    private static Image expSymbol;
+<i class="no-highlight">25</i>&nbsp;    private static Label expLabel;
+<i class="no-highlight">26</i>&nbsp;    private static Label expTagLabel;
+<b class="nc"><i class="no-highlight">27</i>&nbsp;    private static Table expTable = new Table();</b>
+<i class="no-highlight">28</i>&nbsp;    private static Label countdownLabel;
+<i class="no-highlight">29</i>&nbsp;    private static Image timeSymbol;
+<i class="no-highlight">30</i>&nbsp;    private static Label timeLabel;
+<b class="nc"><i class="no-highlight">31</i>&nbsp;    private static Table timeTable = new Table();</b>
+<i class="no-highlight">32</i>&nbsp;    private static Image goldSymbol;
+<i class="no-highlight">33</i>&nbsp;    private static Label goldTagLabel;
+<i class="no-highlight">34</i>&nbsp;    private static Label goldLabel;
+<b class="nc"><i class="no-highlight">35</i>&nbsp;    private static Table goldTable = new Table();</b>
+<i class="no-highlight">36</i>&nbsp;
+<i class="no-highlight">37</i>&nbsp;    private static FreeTypeFontGenerator generator;
+<i class="no-highlight">38</i>&nbsp;    private static FreeTypeFontGenerator.FreeTypeFontParameter parameter;
+<i class="no-highlight">39</i>&nbsp;    private static BitmapFont topBarFont;
+<i class="no-highlight">40</i>&nbsp;
+<i class="no-highlight">41</i>&nbsp;    private static Table powerupList;
+<i class="no-highlight">42</i>&nbsp;
+<i class="no-highlight">43</i>&nbsp;    private static Table shieldCell;
+<i class="no-highlight">44</i>&nbsp;    private static Table multishotCell;
+<i class="no-highlight">45</i>&nbsp;    private static Table hotshotCell;
+<i class="no-highlight">46</i>&nbsp;    private static Table quickshotCell;
+<i class="no-highlight">47</i>&nbsp;    private static Table supersizeCell;
+<i class="no-highlight">48</i>&nbsp;    private static Table root;
+<i class="no-highlight">49</i>&nbsp;
+<i class="no-highlight">50</i>&nbsp;    /**
+<i class="no-highlight">51</i>&nbsp;     * Sets up table representing the overlay for regular gameplay
+<i class="no-highlight">52</i>&nbsp;     */
+<b class="nc"><i class="no-highlight">53</i>&nbsp;    public Hud() {</b>
+<b class="nc"><i class="no-highlight">54</i>&nbsp;        everything();</b>
+<b class="nc"><i class="no-highlight">55</i>&nbsp;        addActor(root);</b>
+<i class="no-highlight">56</i>&nbsp;    }
+<i class="no-highlight">57</i>&nbsp;    public static void everything() {
+<i class="no-highlight">58</i>&nbsp;
+<b class="nc"><i class="no-highlight">59</i>&nbsp;        generator = new FreeTypeFontGenerator(Gdx.files.internal(&quot;font/futur.ttf&quot;));</b>
+<b class="nc"><i class="no-highlight">60</i>&nbsp;        parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();</b>
+<b class="nc"><i class="no-highlight">61</i>&nbsp;        parameter.size = 25;</b>
+<i class="no-highlight">62</i>&nbsp;
+<b class="nc"><i class="no-highlight">63</i>&nbsp;        topBarFont = generator.generateFont(parameter);</b>
+<b class="nc"><i class="no-highlight">64</i>&nbsp;        topBarFont.getData().setScale(.8f);</b>
+<i class="no-highlight">65</i>&nbsp;
+<i class="no-highlight">66</i>&nbsp;        // root
+<b class="nc"><i class="no-highlight">67</i>&nbsp;        root = new Table();</b>
+<i class="no-highlight">68</i>&nbsp;
+<b class="nc"><i class="no-highlight">69</i>&nbsp;        root.setFillParent(true);</b>
+<b class="nc"><i class="no-highlight">70</i>&nbsp;        root.setDebug(false);</b>
+<b class="nc"><i class="no-highlight">71</i>&nbsp;        root.top();</b>
+<i class="no-highlight">72</i>&nbsp;
+<i class="no-highlight">73</i>&nbsp;        // topBar
+<b class="nc"><i class="no-highlight">74</i>&nbsp;        Table topBar = new Table();</b>
+<b class="nc"><i class="no-highlight">75</i>&nbsp;        topBar.setDebug(false);</b>
+<b class="nc"><i class="no-highlight">76</i>&nbsp;        topBar.defaults().pad(10).expandX().height(70);</b>
+<i class="no-highlight">77</i>&nbsp;//        topBar.setFillParent(true);
+<b class="nc"><i class="no-highlight">78</i>&nbsp;        root.add(topBar).expandX().fillX();</b>
+<i class="no-highlight">79</i>&nbsp;
+<b class="nc"><i class="no-highlight">80</i>&nbsp;        createTopBarUI(topBar);</b>
+<i class="no-highlight">81</i>&nbsp;
+<b class="nc"><i class="no-highlight">82</i>&nbsp;        root.row();</b>
+<i class="no-highlight">83</i>&nbsp;
+<i class="no-highlight">84</i>&nbsp;        // bottomUI
+<b class="nc"><i class="no-highlight">85</i>&nbsp;        Table bottomUI = new Table();</b>
+<b class="nc"><i class="no-highlight">86</i>&nbsp;        bottomUI.bottom().left();</b>
+<b class="nc"><i class="no-highlight">87</i>&nbsp;        bottomUI.setDebug(false);</b>
+<b class="nc"><i class="no-highlight">88</i>&nbsp;        bottomUI.defaults().pad(10);</b>
+<b class="nc"><i class="no-highlight">89</i>&nbsp;        root.add(bottomUI).expand().fill();</b>
+<i class="no-highlight">90</i>&nbsp;
+<i class="no-highlight">91</i>&nbsp;        // HP bar
+<b class="nc"><i class="no-highlight">92</i>&nbsp;        HealthBar hpBar = new HealthBar();</b>
+<b class="nc"><i class="no-highlight">93</i>&nbsp;        bottomUI.add(hpBar).height(300).width(50);</b>
+<i class="no-highlight">94</i>&nbsp;
+<i class="no-highlight">95</i>&nbsp;        // TODO: add powerup info box here
+<b class="nc"><i class="no-highlight">96</i>&nbsp;        powerupList = new Table();</b>
+<b class="nc"><i class="no-highlight">97</i>&nbsp;        powerupList.setBackground(ui_background);</b>
+<i class="no-highlight">98</i>&nbsp;        //powerupList.setColor(1, 1, 1, 0.7f); // makes background transparent
+<i class="no-highlight">99</i>&nbsp;
+<b class="nc"><i class="no-highlight">100</i>&nbsp;        bottomUI.add(powerupList).width(120).bottom();</b>
+<i class="no-highlight">101</i>&nbsp;        // Subtitle button - ShopButton placeholder for layout purposes
+<i class="no-highlight">102</i>&nbsp;//        ShopButton sub = new ShopButton(&quot;shield&quot;, font);
+<i class="no-highlight">103</i>&nbsp;//        bottomUI.add(sub).expandX().bottom();
+<i class="no-highlight">104</i>&nbsp;
+<b class="nc"><i class="no-highlight">105</i>&nbsp;        subtitle = new Subtitle(plainFont);</b>
+<b class="nc"><i class="no-highlight">106</i>&nbsp;        bottomUI.add(subtitle).expandX().bottom();</b>
+<i class="no-highlight">107</i>&nbsp;
+<i class="no-highlight">108</i>&nbsp;    }
+<i class="no-highlight">109</i>&nbsp;
+<i class="no-highlight">110</i>&nbsp;    /**
+<i class="no-highlight">111</i>&nbsp;     * Sets up tables for displaying player stats
+<i class="no-highlight">112</i>&nbsp;     * @param topBar table to put items in
+<i class="no-highlight">113</i>&nbsp;     */
+<i class="no-highlight">114</i>&nbsp;    private static void createTopBarUI(Table topBar) {
+<b class="nc"><i class="no-highlight">115</i>&nbsp;        expSymbol = new Image(ui.newDrawable(&quot;trophy&quot;));</b>
+<b class="nc"><i class="no-highlight">116</i>&nbsp;        expTagLabel = new Label(&quot;USER EXP&quot;, new Label.LabelStyle(topBarFont, Color.WHITE));</b>
+<b class="nc"><i class="no-highlight">117</i>&nbsp;        expLabel = new Label(String.format(&quot;%d&quot;, 0), new Label.LabelStyle(topBarFont, Color.WHITE));</b>
+<i class="no-highlight">118</i>&nbsp;
+<b class="nc"><i class="no-highlight">119</i>&nbsp;        goldSymbol = new Image(ui.newDrawable(&quot;coin2&quot;));</b>
+<b class="nc"><i class="no-highlight">120</i>&nbsp;        goldTagLabel = new Label(&quot;GOLD&quot;, new Label.LabelStyle(topBarFont, Color.WHITE));</b>
+<b class="nc"><i class="no-highlight">121</i>&nbsp;        goldLabel = new Label(String.format(&quot;%d&quot;, 0), new Label.LabelStyle(topBarFont, Color.WHITE));</b>
+<i class="no-highlight">122</i>&nbsp;
+<b class="nc"><i class="no-highlight">123</i>&nbsp;        timeSymbol = new Image(ui.newDrawable(&quot;time&quot;));</b>
+<b class="nc"><i class="no-highlight">124</i>&nbsp;        timeLabel = new Label(&quot;TIME&quot;, new Label.LabelStyle(topBarFont, Color.WHITE));</b>
+<b class="nc"><i class="no-highlight">125</i>&nbsp;        countdownLabel = new Label(String.format(&quot;%d&quot;, 0), new Label.LabelStyle(topBarFont, Color.WHITE));</b>
+<i class="no-highlight">126</i>&nbsp;
+<b class="nc"><i class="no-highlight">127</i>&nbsp;        Table expTableS = new Table();</b>
+<b class="nc"><i class="no-highlight">128</i>&nbsp;        expTableS.add(expTagLabel);</b>
+<b class="nc"><i class="no-highlight">129</i>&nbsp;        expTableS.row();</b>
+<b class="nc"><i class="no-highlight">130</i>&nbsp;        expTableS.add(expLabel);</b>
+<i class="no-highlight">131</i>&nbsp;
+<b class="nc"><i class="no-highlight">132</i>&nbsp;        Table goldTableS = new Table();</b>
+<b class="nc"><i class="no-highlight">133</i>&nbsp;        goldTableS.add(goldTagLabel);</b>
+<b class="nc"><i class="no-highlight">134</i>&nbsp;        goldTableS.row();</b>
+<b class="nc"><i class="no-highlight">135</i>&nbsp;        goldTableS.add(goldLabel);</b>
+<i class="no-highlight">136</i>&nbsp;
+<b class="nc"><i class="no-highlight">137</i>&nbsp;        Table timeTableS = new Table();</b>
+<b class="nc"><i class="no-highlight">138</i>&nbsp;        timeTableS.add(timeLabel);</b>
+<b class="nc"><i class="no-highlight">139</i>&nbsp;        timeTableS.row();</b>
+<b class="nc"><i class="no-highlight">140</i>&nbsp;        timeTableS.add(countdownLabel);</b>
+<i class="no-highlight">141</i>&nbsp;
+<b class="nc"><i class="no-highlight">142</i>&nbsp;        Table expTable = new Table();</b>
+<b class="nc"><i class="no-highlight">143</i>&nbsp;        expTable.add(expSymbol).size(64);</b>
+<b class="nc"><i class="no-highlight">144</i>&nbsp;        expTable.add(expTableS);</b>
+<i class="no-highlight">145</i>&nbsp;
+<b class="nc"><i class="no-highlight">146</i>&nbsp;        Table goldTable = new Table();</b>
+<b class="nc"><i class="no-highlight">147</i>&nbsp;        goldTable.add(goldSymbol).size(64);</b>
+<b class="nc"><i class="no-highlight">148</i>&nbsp;        goldTable.add(goldTableS);</b>
+<i class="no-highlight">149</i>&nbsp;
+<b class="nc"><i class="no-highlight">150</i>&nbsp;        Table timeTable = new Table();</b>
+<b class="nc"><i class="no-highlight">151</i>&nbsp;        timeTable.add(timeSymbol).size(64);</b>
+<b class="nc"><i class="no-highlight">152</i>&nbsp;        timeTable.add(timeTableS);</b>
+<i class="no-highlight">153</i>&nbsp;
+<b class="nc"><i class="no-highlight">154</i>&nbsp;        topbar_background.setRightWidth(32);</b>
+<i class="no-highlight">155</i>&nbsp;
+<b class="nc"><i class="no-highlight">156</i>&nbsp;        expTable.pack();</b>
+<b class="nc"><i class="no-highlight">157</i>&nbsp;        expTable.setBackground(topbar_background);</b>
+<b class="nc"><i class="no-highlight">158</i>&nbsp;        topBar.add(expTable).width(expTable.getWidth() + 32);</b>
+<i class="no-highlight">159</i>&nbsp;
+<b class="nc"><i class="no-highlight">160</i>&nbsp;        goldTable.pack();</b>
+<b class="nc"><i class="no-highlight">161</i>&nbsp;        goldTable.setBackground(topbar_background);</b>
+<b class="nc"><i class="no-highlight">162</i>&nbsp;        topBar.add(goldTable).width(goldTable.getWidth() + 32);</b>
+<i class="no-highlight">163</i>&nbsp;
+<b class="nc"><i class="no-highlight">164</i>&nbsp;        timeTable.pack();</b>
+<b class="nc"><i class="no-highlight">165</i>&nbsp;        timeTable.setBackground(topbar_background);</b>
+<b class="nc"><i class="no-highlight">166</i>&nbsp;        topBar.add(timeTable).width(timeTable.getWidth() + 32);</b>
+<i class="no-highlight">167</i>&nbsp;    }
+<i class="no-highlight">168</i>&nbsp;
+<i class="no-highlight">169</i>&nbsp;    /**
+<i class="no-highlight">170</i>&nbsp;     * Draws powerups as well as the time left on them over the previous frame
+<i class="no-highlight">171</i>&nbsp;     */
+<i class="no-highlight">172</i>&nbsp;    public static void drawPowerups() {
+<b class="nc"><i class="no-highlight">173</i>&nbsp;        powerupList.reset();</b>
+<b class="nc"><i class="no-highlight">174</i>&nbsp;        if (PowerupManager.shieldActive()) {</b>
+<b class="nc"><i class="no-highlight">175</i>&nbsp;            shieldCell = makePowerupUI(&quot;shield&quot;);</b>
+<b class="nc"><i class="no-highlight">176</i>&nbsp;            powerupList.add(shieldCell).size(60);</b>
+<b class="nc"><i class="no-highlight">177</i>&nbsp;            powerupList.row();</b>
+<i class="no-highlight">178</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">179</i>&nbsp;        if (PowerupManager.multishotActive()) {</b>
+<b class="nc"><i class="no-highlight">180</i>&nbsp;            multishotCell = makePowerupUI(&quot;spray&quot;);</b>
+<b class="nc"><i class="no-highlight">181</i>&nbsp;            powerupList.add(multishotCell).size(60);</b>
+<b class="nc"><i class="no-highlight">182</i>&nbsp;            powerupList.row();</b>
+<i class="no-highlight">183</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">184</i>&nbsp;        if (PowerupManager.hotshotActive()) {</b>
+<b class="nc"><i class="no-highlight">185</i>&nbsp;            hotshotCell = makePowerupUI(&quot;bullet_hotshot&quot;);</b>
+<b class="nc"><i class="no-highlight">186</i>&nbsp;            powerupList.add(hotshotCell).size(60);</b>
+<b class="nc"><i class="no-highlight">187</i>&nbsp;            powerupList.row();</b>
+<i class="no-highlight">188</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">189</i>&nbsp;        if (PowerupManager.quickshotActive()) {</b>
+<b class="nc"><i class="no-highlight">190</i>&nbsp;            quickshotCell = makePowerupUI(&quot;quickfire&quot;);</b>
+<b class="nc"><i class="no-highlight">191</i>&nbsp;            powerupList.add(quickshotCell).size(60);</b>
+<b class="nc"><i class="no-highlight">192</i>&nbsp;            powerupList.row();</b>
+<i class="no-highlight">193</i>&nbsp;        }
+<b class="nc"><i class="no-highlight">194</i>&nbsp;        if (PowerupManager.supersizeActive()) {</b>
+<b class="nc"><i class="no-highlight">195</i>&nbsp;            supersizeCell = makePowerupUI(&quot;supersize&quot;);</b>
+<b class="nc"><i class="no-highlight">196</i>&nbsp;            powerupList.add(supersizeCell).size(60);</b>
+<i class="no-highlight">197</i>&nbsp;        }
+<i class="no-highlight">198</i>&nbsp;    }
+<i class="no-highlight">199</i>&nbsp;
+<i class="no-highlight">200</i>&nbsp;    /**
+<i class="no-highlight">201</i>&nbsp;     * Makes table for given powerup
+<i class="no-highlight">202</i>&nbsp;     * @param powerup given
+<i class="no-highlight">203</i>&nbsp;     * @return table of powerup logo and count
+<i class="no-highlight">204</i>&nbsp;     */
+<i class="no-highlight">205</i>&nbsp;    private static Table makePowerupUI(String powerup) {
+<b class="nc"><i class="no-highlight">206</i>&nbsp;        Table thisPowerupCell = new Table();</b>
+<i class="no-highlight">207</i>&nbsp;
+<b class="nc"><i class="no-highlight">208</i>&nbsp;        if (!Objects.equals(powerup, &quot;&quot;)) {</b>
+<b class="nc"><i class="no-highlight">209</i>&nbsp;            thisPowerupCell.add(new Image(AssetManager.ui.newDrawable(powerup))).size(60);</b>
+<i class="no-highlight">210</i>&nbsp;
+<b class="nc"><i class="no-highlight">211</i>&nbsp;            Label powerupLabel = new Label(PowerupManager.powerupLeft(powerup), new Label.LabelStyle(topBarFont, Color.BLACK));</b>
+<b class="nc"><i class="no-highlight">212</i>&nbsp;            thisPowerupCell.add(powerupLabel);</b>
+<i class="no-highlight">213</i>&nbsp;        }
+<i class="no-highlight">214</i>&nbsp;
+<b class="nc"><i class="no-highlight">215</i>&nbsp;        return thisPowerupCell;</b>
+<i class="no-highlight">216</i>&nbsp;    }
+<i class="no-highlight">217</i>&nbsp;
+<i class="no-highlight">218</i>&nbsp;    /**
+<i class="no-highlight">219</i>&nbsp;     * Draw table to screen
+<i class="no-highlight">220</i>&nbsp;     */
+<i class="no-highlight">221</i>&nbsp;    public void draw() {
+<b class="nc"><i class="no-highlight">222</i>&nbsp;        countdownLabel.setText(String.format(&quot;%d&quot;, StatsManager.getWorldTimer()));</b>
+<b class="nc"><i class="no-highlight">223</i>&nbsp;        goldLabel.setText(String.format(&quot;%d&quot;, StatsManager.getGold()));</b>
+<b class="nc"><i class="no-highlight">224</i>&nbsp;        expLabel.setText(String.format(&quot;%d&quot;, StatsManager.getScore()));</b>
+<i class="no-highlight">225</i>&nbsp;
+<b class="nc"><i class="no-highlight">226</i>&nbsp;        drawPowerups();</b>
+<i class="no-highlight">227</i>&nbsp;
+<b class="nc"><i class="no-highlight">228</i>&nbsp;        super.draw();</b>
+<i class="no-highlight">229</i>&nbsp;    }
+<i class="no-highlight">230</i>&nbsp;
+<i class="no-highlight">231</i>&nbsp;}
+</div>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+        var codeBlock = document.getElementById('sourceCode');
+
+        if (codeBlock) {
+            hljs.highlightBlock(codeBlock);
+        }
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-05-04 04:47</div>
+</div>
+</body>
+</html>
