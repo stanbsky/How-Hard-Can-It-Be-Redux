@@ -549,35 +549,4 @@ public class FRTests {
         playerBullet.dispose();
     }
 
-    @Test
-    public void test_FR_QUEST_CREATION() throws NoSuchMethodException, SecurityException,
-            IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-            NoSuchFieldException {
-//        Field currentQuestField = QuestManager.class.getDeclaredField("currentQuest");
-//        currentQuestField.setAccessible(true);
-//        // We don't have a quest set
-//        assert currentQuestField.get(QuestManager.class) == null;
-//        EntityManager.spawnEntities();
-//        Hud.everything();
-//        Player player = new Player();
-        // Create conditions for a quest to be spawned
-//        Field colleges = EntityManager.class.getDeclaredField("colleges");
-//        colleges.setAccessible(true);
-//        colleges.
-//        colleges.set(new Array<College>());
-//        Field pirates = EntityManager.class.getDeclaredField("pirates");
-//        pirates.setAccessible(true);
-//        Field chestSpawns = EntityManager.class.getDeclaredField("chestSpawns");
-//        chestSpawns.setAccessible(true);
-//        QuestManager.update(3f);
-//        assert currentQuestField.get(QuestManager.class) != null;
-    }
-    @Test
-    public void test_FR_QUEST_COMPLETION() {
-        assert true;
-    }
-    @Test
-    public void test_FR_BOSS_DEATH_WIN() {
-        assert true;
-    }
 }
